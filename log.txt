@@ -1,0 +1,49 @@
+[5:23:24 pm] Starting compilation in watch mode...
+
+[5:23:31 pm] Found 0 errors. Watching for file changes.
+
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [NestFactory] Starting Nest application...
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 3188  - 12/07/2026, 5:23:37 pm   ERROR [ExceptionHandler] UndefinedDependencyException [Error]: Nest can't resolve dependencies of the BasePrismaService (Symbol(PRISMA_CLIENT), ?). Please make sure that the argument at index [1] is available in the current module.
+
+Potential solutions:
+- The dependency at index [1] appears to be undefined at runtime
+- This commonly occurs when using 'import type' instead of 'import' for injectable classes
+- Check your imports and change:
+  ❌ import type { SomeService } from './some.service';
+  ✅ import { SomeService } from './some.service';
+- Ensure the imported class is decorated with @Injectable() or is a valid provider
+- If using dynamic imports, ensure the class is available at runtime, not just for type checking
+
+For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+    at Injector.resolveSingleParam (D:\Workspaces\Nabarun-Workspace\ngo-nabarun-be-nestjs2\node_modules\@nestjs\core\injector\injector.js:234:19)
+    at resolveParam (D:\Workspaces\Nabarun-Workspace\ngo-nabarun-be-nestjs2\node_modules\@nestjs\core\injector\injector.js:150:49)
+    at Array.map (<anonymous>)
+    at Injector.resolveConstructorParams (D:\Workspaces\Nabarun-Workspace\ngo-nabarun-be-nestjs2\node_modules\@nestjs\core\injector\injector.js:179:58)
+    at Injector.loadInstance (D:\Workspaces\Nabarun-Workspace\ngo-nabarun-be-nestjs2\node_modules\@nestjs\core\injector\injector.js:77:24)
+    at Injector.loadProvider (D:\Workspaces\Nabarun-Workspace\ngo-nabarun-be-nestjs2\node_modules\@nestjs\core\injector\injector.js:111:20)
+    at D:\Workspaces\Nabarun-Workspace\ngo-nabarun-be-nestjs2\node_modules\@nestjs\core\injector\instance-loader.js:56:33
+    at Array.map (<anonymous>)
+    at InstanceLoader.createInstancesOfProviders (D:\Workspaces\Nabarun-Workspace\ngo-nabarun-be-nestjs2\node_modules\@nestjs\core\injector\instance-loader.js:55:36)
+    at D:\Workspaces\Nabarun-Workspace\ngo-nabarun-be-nestjs2\node_modules\@nestjs\core\injector\instance-loader.js:40:24
