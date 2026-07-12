@@ -1,34 +1,33 @@
-[5:23:24 pm] Starting compilation in watch mode...
+[5:48:52 pm] Starting compilation in watch mode...
 
-[5:23:31 pm] Found 0 errors. Watching for file changes.
+[5:49:03 pm] Found 0 errors. Watching for file changes.
 
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [NestFactory] Starting Nest application...
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
-[Nest] 3188  - 12/07/2026, 5:23:37 pm   ERROR [ExceptionHandler] UndefinedDependencyException [Error]: Nest can't resolve dependencies of the BasePrismaService (Symbol(PRISMA_CLIENT), ?). Please make sure that the argument at index [1] is available in the current module.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [NestFactory] Starting Nest application...
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm     LOG [InjectorLogger] Nest encountered an undefined dependency. This may be due to a circular import or a missing dependency declaration.
+[Nest] 27932  - 12/07/2026, 5:49:15 pm   ERROR [ExceptionHandler] UndefinedDependencyException [Error]: Nest can't resolve dependencies of the UnifiedAuthGuard (Symbol(IJwtVerifierPort), Symbol(IApiKeyVerifierPort), Symbol(IRecaptchaPort), ?, +, Symbol(AUTH2_OPTIONS)). Please make sure that the argument at index [3] is available in the current module.
 
 Potential solutions:
-- The dependency at index [1] appears to be undefined at runtime
+- The dependency at index [3] appears to be undefined at runtime
 - This commonly occurs when using 'import type' instead of 'import' for injectable classes
 - Check your imports and change:
   ❌ import type { SomeService } from './some.service';
