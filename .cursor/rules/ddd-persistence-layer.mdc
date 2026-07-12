@@ -1,0 +1,406 @@
+---
+description: DDD infrastructure layer rules — Prisma repositories, external HTTP clients, distributed messaging producers/consumers, and caching patterns.
+globs: src/**/infrastructure/**/*.ts
+alwaysApply: false
+---
+
+# DDD Infrastructure / Persistence Layer
+
+**Rule: implements domain interfaces using Prisma. Never leaks Prisma types into the domain or application layers.**
+
+## Infrastructure Folder Structure
+
+```
+infrastructure/
+│
+├── persistence/                        ← Database — Prisma repository implementations
+│   ├── order.repository.ts             ← extends PrismaCrudRepositoryBase, implements IOrderRepository
+│   ├── order-item.repository.ts        ← child entity repo (only if independently persisted)
+│
+├── external/                           ← Outbound HTTP — REST / GraphQL / SOAP clients
+│   ├── exchange-rate/
+│   │   ├── exchange-rate.client.ts     ← implements IExchangeRatePort
+│   │   ├── exchange-rate.client.spec.ts
+│   │   └── index.ts
+│   └── inventory/
+│       ├── inventory.client.ts         ← implements IInventoryPort
+│       └── index.ts
+│
+├── messaging/                          ← Message broker — Kafka / RabbitMQ / SQS
+│   ├── producers/
+│   │   └── order-events.producer.ts    ← implements IOrderEventPublisher port
+│   └── consumers/
+│       └── order-events.consumer.ts    ← subscribes to topic, delegates to use case
+│
+├── cache/                              ← Caching wrappers (Redis, in-memory)
+│   ├── cached-order.repository.ts      ← wraps OrderPrismaRepository with cache
+│   └── cached-exchange-rate.client.ts  ← wraps ExchangeRateHttpClient with cache
+│
+└── adapters/                           ← Other port implementations (storage, email, SMS, etc.)
+    ├── google-drive-storage.adapter.ts ← implements IStoragePort
+    └── sendgrid-email.adapter.ts       ← implements IEmailPort
+```
+
+**Key principle:** Every file in `infrastructure/` implements a domain or application interface. Nothing in this folder is ever imported by `domain/` or `application/` directly — they always consume through their interface token.
+
+---
+
+## Concrete Repository (`infrastructure/persistence/*.repository.ts`)
+
+Every Prisma repository:
+- Extends `PrismaCrudRepositoryBase<PrismaClient, 'delegateKey', DomainEntity, Id, Filter>`
+- Implements the domain-layer interface `IXxxRepository`
+- Is decorated with `@Injectable()`
+
+### Five required mapping hooks
+
+These are the only methods that touch Prisma types. Everything else stays in the domain.
+
+| Hook | Direction | Purpose |
+|---|---|---|
+| `toDomain(row)` | Prisma row → Domain entity | Reconstruct the aggregate from a DB row |
+| `toCreateInput(entity)` | Domain entity → Prisma `create.data` | Map domain fields to DB columns for insert |
+| `toUpdateInput(id, entity)` | Domain entity → Prisma `update.data` | Map domain fields to DB columns for update (exclude `id`) |
+| `toUniqueWhere(id)` | id → `where: { id }` | Build the unique lookup clause |
+| `toFilterWhere(filter?)` | Filter DTO → Prisma `where` | Build list/count filter clause |
+
+### Two behavioural flags
+
+| Flag | Default | When to override |
+|---|---|---|
+| `defaultOrderBy()` | `undefined` | Return e.g. `{ createdAt: 'desc' }` for consistent list ordering |
+| `supportsSoftDelete()` | `false` | Return `true` if the table has a `deletedAt` column |
+
+```ts
+// ✅ Canonical example — ApiKeyRepository
+@Injectable()
+export class ApiKeyRepository
+  extends PrismaCrudRepositoryBase<PrismaClient, 'authApiKey', ApiKey, string, ApiKeyFilter>
+  implements IApiKeyRepository {
+
+  constructor(database: BasePrismaService, eventEmitter: EventEmitter2) {
+    super(database as any, 'authApiKey', eventEmitter);
+  }
+
+  // Prisma row → Domain model
+  protected toDomain(row: { id: string; apiKey: string; ... }): ApiKey {
+    return new ApiKey({
+      id: row.id,
+      key: row.apiKey,          // DB column name differs from domain field name
+      expiresAt: row.expiresAt ?? undefined,
+    });
+  }
+
+  // Domain model → Prisma create payload
+  protected toCreateInput(entity: ApiKey) {
+    return {
+      id: entity.id,
+      apiKey: entity.key,       // domain field name differs from DB column name
+      permissions: entity.permissions,
+      expiresAt: entity.expiresAt,
+    };
+  }
+
+  // Domain model → Prisma update payload (never include id in data)
+  protected toUpdateInput(_id: string, entity: ApiKey) {
+    return {
+      permissions: entity.permissions,
+      expiresAt: entity.expiresAt,
+      lastUsedAt: entity.lastUsedAt,
+      updatedAt: entity.updatedAt,
+    };
+  }
+
+  protected toUniqueWhere(id: string) { return { id }; }
+
+  protected toFilterWhere(filter?: ApiKeyFilter) {
+    return {
+      ...(filter?.name && { name: { contains: filter.name, mode: 'insensitive' } }),
+      ...(filter?.permissions && { permissions: { hasSome: filter.permissions } }),
+    };
+  }
+
+  protected defaultOrderBy() { return { createdAt: 'desc' }; }
+  protected supportsSoftDelete() { return false; }
+
+  // Custom query beyond standard CRUD — use this.delegate directly
+  async findByKeyId(key: string): Promise<ApiKey | null> {
+    const row = await this.delegate.findUnique({ where: { apiKeyId: key } });
+    return row ? this.toDomain(row) : null;
+  }
+}
+```
+
+---
+
+## Port Adapters (`infrastructure/adapters/*.adapter.ts`)
+
+Implement domain `ports/` interfaces (e.g. `IPaymentGateway`, `INotificationPort`) using third-party SDKs.
+
+**Rules:**
+- `@Injectable()` allowed.
+- Implements the domain interface — no extra public methods.
+- SDK/infrastructure types stay inside this class. Never leak them to domain or application.
+- Registered in the module with the domain `Symbol` token.
+
+```ts
+// ✅ GOOD
+@Injectable()
+export class StripePaymentGateway implements IPaymentGateway {
+  async charge(orderId: string, amount: Money): Promise<PaymentResult> {
+    // Stripe SDK call here — Stripe types never leave this class
+    const intent = await stripe.paymentIntents.create({ amount: amount.amount * 100, ... });
+    return { paymentId: intent.id, status: 'SUCCESS' };
+  }
+
+  async refund(paymentId: string): Promise<void> {
+    await stripe.refunds.create({ payment_intent: paymentId });
+  }
+}
+
+// Module registration:
+// { provide: IPaymentGateway, useClass: StripePaymentGateway }
+```
+
+---
+
+## External HTTP / API Calls (`infrastructure/http/*.client.ts`)
+
+Any call to an external HTTP service (REST API, SOAP, GraphQL) is infrastructure. The domain defines **what** it needs via a port interface; the HTTP client implements **how** to get it.
+
+**Structure:**
+```
+infrastructure/
+└── http/
+    └── exchange-rate/
+        ├── exchange-rate.client.ts    ← implements IExchangeRatePort
+        └── exchange-rate.client.spec.ts
+```
+
+**Rules:**
+- Implements a domain port interface (`IXxxPort`) — never exposes HTTP-specific types to callers.
+- Handles all transport concerns here: auth headers, retries, timeout, response parsing, error mapping.
+- Maps HTTP errors to domain `BusinessError` subclasses before throwing — the application layer must never catch raw HTTP errors.
+- Never inject an HTTP client into the domain or application layer directly — always go through the port.
+
+```ts
+// ✅ GOOD
+@Injectable()
+export class ExchangeRateHttpClient implements IExchangeRatePort {
+  constructor(private readonly httpService: HttpService) {}
+
+  async getRate(from: string, to: string, date: Date): Promise<number> {
+    try {
+      const { data } = await this.httpService.axiosRef.get('/rates', {
+        params: { from, to, date: date.toISOString().slice(0, 10) },
+        timeout: 5000,
+      });
+      return data.rate;
+    } catch (e) {
+      // Map transport error → domain error before it leaves infrastructure
+      if (e.response?.status === 404)
+        throw new ExchangeRateNotFoundError(from, to, date);
+      throw new ExternalServiceUnavailableError('exchange-rate', e.message);
+    }
+  }
+}
+
+// ❌ BAD — HTTP client injected directly into application layer
+@Injectable()
+export class PricingService {
+  constructor(private readonly httpService: HttpService) {} // ← leaks infrastructure
+}
+```
+
+---
+
+## Distributed Messaging (`infrastructure/messaging/*.producer.ts`)
+
+Message producers publish domain events or commands to a message broker (Kafka, RabbitMQ, SQS, etc.). They implement a domain port so the application layer never knows which broker is in use.
+
+**Structure:**
+```
+infrastructure/
+└── messaging/
+    ├── order-events.producer.ts    ← implements IOrderEventPublisher port
+    └── order-events.consumer.ts    ← subscribes and calls application use cases
+```
+
+**Rules — Producers:**
+- Implement a domain port interface (`IXxxPublisher`) — named from the domain's perspective, not the broker's.
+- Serialize domain events to broker-specific format inside the producer. Domain objects never leave the process as-is — always map to a versioned message schema.
+- Always include a `messageId` (idempotency key), `occurredAt`, and `eventType` in the message envelope.
+- Never call the broker directly from the application layer.
+
+```ts
+// Domain port (lives in domain/ports/)
+export const IOrderEventPublisher = Symbol('IOrderEventPublisher');
+export interface IOrderEventPublisher {
+  publishOrderPlaced(event: OrderPlacedEvent): Promise<void>;
+}
+
+// ✅ Producer — infrastructure implementation
+@Injectable()
+export class KafkaOrderEventProducer implements IOrderEventPublisher {
+  constructor(private readonly kafka: KafkaService) {}
+
+  async publishOrderPlaced(event: OrderPlacedEvent): Promise<void> {
+    await this.kafka.emit('order.placed', {
+      messageId: randomUUID(),          // ← idempotency key
+      eventType: 'ORDER_PLACED',
+      occurredAt: event.occurredAt,
+      payload: event.order.toJson(),    // ← serialised domain snapshot, not the object itself
+    });
+  }
+}
+```
+
+**Rules — Consumers:**
+- A consumer is infrastructure — it subscribes to a topic and calls an **application use case** or **command handler**. It does not contain business logic.
+- Map the incoming message to a command/DTO, then delegate to the use case.
+- Handle deserialization errors and poison messages at this layer — never let a malformed message reach the domain.
+
+```ts
+// ✅ Consumer delegates entirely to application layer
+@Injectable()
+export class OrderEventsConsumer {
+  constructor(private readonly cancelOrderUseCase: CancelOrderUseCase) {}
+
+  @EventPattern('order.cancellation_requested')
+  async handleCancellationRequested(@Payload() message: OrderCancellationMessage) {
+    await this.cancelOrderUseCase.execute(message.orderId);
+  }
+}
+```
+
+---
+
+## Caching (`infrastructure/cache/*.cache.ts`)
+
+Caching is an infrastructure concern. The domain and application layers never know whether a result is cached — they call a repository or port interface and receive data. The cache sits transparently inside the infrastructure implementation.
+
+**Two valid patterns:**
+
+**Pattern A — Cache inside the repository (read-through / write-through):**
+Wrap repository reads with a cache. On write, invalidate or update the cache entry. The application layer calls the repository normally.
+
+```ts
+@Injectable()
+export class CachedOrderRepository implements IOrderRepository {
+  constructor(
+    private readonly db: OrderPrismaRepository,
+    private readonly cache: CacheService,
+  ) {}
+
+  async findById(id: string): Promise<Order | null> {
+    return this.cache.getOrSet(
+      `order:${id}`,
+      () => this.db.findById(id),
+      60_000,   // TTL ms
+    );
+  }
+
+  async update(id: string, order: Order): Promise<Order> {
+    const saved = await this.db.update(id, order);
+    await this.cache.del(`order:${id}`);  // ← invalidate on write
+    return saved;
+  }
+}
+```
+
+**Pattern B — Cache inside a port adapter (external service responses):**
+Cache responses from slow external APIs to reduce latency and rate-limit exposure. Same principle — the domain port interface is unchanged.
+
+```ts
+@Injectable()
+export class CachedExchangeRateClient implements IExchangeRatePort {
+  constructor(
+    private readonly http: ExchangeRateHttpClient,
+    private readonly cache: CacheService,
+  ) {}
+
+  async getRate(from: string, to: string, date: Date): Promise<number> {
+    const key = `fx:${from}:${to}:${date.toISOString().slice(0, 10)}`;
+    return this.cache.getOrSet(key, () => this.http.getRate(from, to, date), 300_000);
+  }
+}
+```
+
+**Rules:**
+- Cache keys must be **deterministic and namespaced** by entity type: `order:{id}`, `fx:{from}:{to}:{date}`.
+- Always set a **TTL** — never cache indefinitely unless the data is truly immutable.
+- **Invalidate on write** — when an aggregate is updated or deleted, delete or update its cache entry in the same operation.
+- Never cache inside the domain layer. Domain methods must always operate on authoritative, up-to-date state.
+- Cache short-lived RBAC / permission resolution results (30 s TTL) to avoid repeated DB joins per request.
+
+---
+
+## Query Efficiency — Mandatory Rules
+
+Infrastructure must use the **minimum possible number of queries and API calls**. Every design decision in `infrastructure/` must be evaluated against this constraint.
+
+### N+1 is always wrong
+
+Never loop over IDs or keys and fire individual queries inside a `Promise.all` or `for` loop:
+
+```ts
+// ❌ NEVER — fires N separate SELECT statements
+const results = await Promise.all(ids.map((id) => this.repo.findById(id)));
+
+// ❌ NEVER — same problem with external API calls
+const results = await Promise.all(subs.map((sub) => this.repo.findByIdPSub(sub)));
+```
+
+### Batch methods at every layer
+
+When a port interface (`IUserLookupPort`, etc.) needs to resolve multiple entities by ID or key, the **repository interface** must expose a dedicated batch method. The port adapter then delegates to that single batch call:
+
+```ts
+// ✅ Domain interface — batch contract
+export interface IUserRepository extends IRepository<User, string, UserFilter> {
+  findByIds(ids: string[]): Promise<User[]>;
+  findByIdPSubs(subs: string[]): Promise<User[]>;
+}
+
+// ✅ Infrastructure — single query, not a loop
+async findByIds(ids: string[]): Promise<User[]> {
+  if (ids.length === 0) return [];
+  const rows = await this.delegate.findMany({
+    where: { id: { in: ids }, deletedAt: null },
+    include: INCLUDE_CHILDREN,
+  });
+  return (rows as UserProfileRow[]).map((r) => this.toDomain(r));
+}
+
+// ✅ Port adapter — one delegation, zero loops
+async findByIds(ids: string[]): Promise<UserInfo[]> {
+  const users = await this.repo.findByIds(ids);
+  return users.map((u) => this.toUserInfo(u));
+}
+```
+
+### Rules
+
+| Scenario | Rule |
+|---|---|
+| Resolve many entities by ID | Add `findByIds` to repo interface; use `{ id: { in: ids } }` in Prisma |
+| Resolve many entities by alternate key | Add `findByXxxs` to repo interface; use `{ xxx: { in: values } }` |
+| Resolve many records via external API | Port must expose a batch method; HTTP client must use bulk endpoint if available |
+| Early-exit on empty input | Always guard with `if (ids.length === 0) return [];` — avoids unnecessary DB round-trips |
+| Ordered results required | Sort the result array in the adapter after the single query if DB ordering is insufficient |
+
+---
+
+## What belongs here vs. in the domain
+
+| Concern | Where it lives |
+|---|---|
+| DB column ↔ domain field mapping | `toDomain` / `toCreateInput` / `toUpdateInput` |
+| Prisma `where` / `orderBy` clauses | `toFilterWhere` / `defaultOrderBy` |
+| Transaction logic (`$transaction`) | Repository subclass, using `this.$transaction(...)` |
+| Business rules (invariant checks) | Domain aggregate method — never the repository |
+| External HTTP calls | Port adapter (`infrastructure/http/`) |
+| Message broker publish | Messaging producer (`infrastructure/messaging/`) |
+| Message broker subscribe | Messaging consumer → delegates to use case |
+| Caching | Repository or port adapter wrapper (`infrastructure/cache/`) |
+| Error mapping (HTTP/broker → domain) | Infrastructure adapter — must map before throwing |

@@ -1,0 +1,496 @@
+---
+description: DDD presentation layer rules — controllers, guards, pipes, interceptors, filters, and decorators. HTTP boundary only — no domain logic, no Prisma, no direct repository access.
+globs: src/**/presentation/**/*.ts,src/**/*.controller.ts,src/**/*.guard.ts,src/**/*.interceptor.ts,src/**/*.filter.ts,src/**/*.pipe.ts
+alwaysApply: false
+---
+
+# DDD Presentation Layer
+
+**Rule: the HTTP boundary. Translates HTTP ↔ application layer. Zero business logic. Zero domain imports.**
+
+The presentation layer is the **outermost layer**. It:
+- Receives HTTP requests and maps them to **Commands** or **Queries**
+- Dispatches via `CommandBus` / `QueryBus` — never calls handlers, repositories, or domain services directly
+- Returns the result from the application layer as an HTTP response — never raw domain aggregates
+- Handles cross-cutting HTTP concerns: auth, validation, logging, error mapping
+
+**Dependency rule:**
+```
+Presentation → Application (CommandBus / QueryBus only)
+Presentation ✗ Domain          (no aggregate imports)
+Presentation ✗ Infrastructure  (no Prisma, no repositories)
+```
+
+---
+
+## Where Each Concern Lives
+
+Presentation concerns are split between **per-module** and **global**. The distinction is simple: if it knows about a specific module's types (commands, queries, DTOs), it is per-module. If it operates purely on the HTTP context, it is global.
+
+```
+src/
+│
+├── main.ts                                 ← GLOBAL: ValidationPipe, ExceptionFilter
+├── app.module.ts                           ← GLOBAL: UnifiedAuthGuard, LoggingInterceptor
+│
+├── core/                                   ← GLOBAL SHARED (@lib/core)
+│   └── filters/
+│       └── global-exception.filter.ts      ← BusinessError → HTTP (already exists)
+│
+├── auth/                                   ← GLOBAL SHARED (@lib/auth)
+│   └── application/
+│       └── guards/                         ← UnifiedAuthGuard, RolesGuard, PermissionsGuard
+│
+└── modules/
+    └── order/                              ← PER MODULE
+        ├── presentation/
+        │   ├── http/
+        │   │   ├── order.controller.ts     ← dispatches PlaceOrderCommand, GetOrderByIdQuery
+        │   │   └── order.controller.spec.ts
+        │   ├── guards/                     ← feature-specific only (e.g. ownership check)
+        │   │   └── order-owner.guard.ts
+        │   └── decorators/                 ← feature-specific only
+        ├── application/
+        └── domain/
+```
+
+**Global registration in `main.ts`:**
+
+```ts
+// main.ts
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  app.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
+  );
+  app.useGlobalFilters(new GlobalExceptionFilter());   // ← from @lib/core
+
+  await app.listen(3000);
+}
+```
+
+---
+
+## Controllers — Per Module
+
+Controllers are **thin routers**. Their only job:
+1. Extract and validate input from the HTTP request.
+2. Construct a command or query object.
+3. Dispatch via `CommandBus` (mutating) or `QueryBus` (read-only).
+4. Return the result directly — no mapping in the controller.
+
+### Full controller example
+
+```ts
+// src/modules/order/presentation/http/order.controller.ts
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { UnifiedAuthGuard, RolesGuard, RequireRoles, CurrentUser, AuthUser } from '@lib/auth';
+
+// Commands (write side)
+import { PlaceOrderCommand } from '../../application/commands/place-order/place-order.command';
+import { CancelOrderCommand } from '../../application/commands/cancel-order/cancel-order.command';
+import { AddItemToOrderCommand } from '../../application/commands/add-item-to-order/add-item-to-order.command';
+
+// Queries (read side)
+import { GetOrderByIdQuery } from '../../application/queries/get-order-by-id/get-order-by-id.query';
+import { ListOrdersQuery } from '../../application/queries/list-orders/list-orders.query';
+
+// DTOs
+import { PlaceOrderRequestDto } from '../../application/dtos/request/place-order-request.dto';
+import { AddItemRequestDto } from '../../application/dtos/request/add-item-request.dto';
+import { ListOrdersRequestDto } from '../../application/dtos/request/list-orders-request.dto';
+import { OrderResponseDto } from '../../application/dtos/response/order-response.dto';
+
+@Controller('orders')
+@UseGuards(UnifiedAuthGuard)   // ← applies to all endpoints; from @lib/auth
+export class OrderController {
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
+
+  // ── Commands (POST / PUT / PATCH / DELETE) ────────────────────────────────
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  placeOrder(
+    @Body() dto: PlaceOrderRequestDto,
+    @CurrentUser() user: AuthUser,
+  ): Promise<OrderResponseDto> {
+    return this.commandBus.execute(
+      new PlaceOrderCommand(dto.customerId, dto.items, user.idpSub),
+    );
+  }
+
+  @Post(':id/items')
+  addItem(
+    @Param('id', ParseUUIDPipe) orderId: string,
+    @Body() dto: AddItemRequestDto,
+  ): Promise<OrderResponseDto> {
+    return this.commandBus.execute(
+      new AddItemToOrderCommand(orderId, dto.productId, dto.quantity),
+    );
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(RolesGuard)
+  @RequireRoles('admin', 'order-manager')   // ← from @lib/auth
+  cancel(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: AuthUser,
+  ): Promise<void> {
+    return this.commandBus.execute(new CancelOrderCommand(id, user.idpSub));
+  }
+
+  // ── Queries (GET) ─────────────────────────────────────────────────────────
+
+  @Get(':id')
+  getById(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<OrderResponseDto> {
+    return this.queryBus.execute(new GetOrderByIdQuery(id));
+  }
+
+  @Get()
+  list(
+    @Query() query: ListOrdersRequestDto,
+  ): Promise<OrderResponseDto[]> {
+    return this.queryBus.execute(
+      new ListOrdersQuery(query.customerId, query.status, query.page, query.limit),
+    );
+  }
+}
+```
+
+### How CommandBus and QueryBus dispatch works
+
+```
+HTTP POST /orders
+    │
+    ▼
+OrderController.placeOrder()
+    │  constructs PlaceOrderCommand
+    ▼
+CommandBus.execute(new PlaceOrderCommand(...))
+    │  routes by @CommandHandler(PlaceOrderCommand) metadata
+    ▼
+PlaceOrderHandler.execute(command)         ← application layer
+    │  loads aggregate, calls domain method, persists, publishes events
+    ▼
+Returns OrderResponseDto                   ← mapped inside the handler
+    │
+    ▼
+HTTP 201 { id, status, totalAmount, ... }
+```
+
+```
+HTTP GET /orders/:id
+    │
+    ▼
+OrderController.getById()
+    │  constructs GetOrderByIdQuery
+    ▼
+QueryBus.execute(new GetOrderByIdQuery(id))
+    │  routes by @QueryHandler(GetOrderByIdQuery) metadata
+    ▼
+GetOrderByIdHandler.execute(query)         ← application layer
+    │  loads aggregate, maps to DTO
+    ▼
+Returns OrderResponseDto
+    │
+    ▼
+HTTP 200 { id, status, totalAmount, ... }
+```
+
+**Rules:**
+- Inject only `CommandBus` and `QueryBus`. Never inject repositories, domain services, or handlers directly.
+- Never import domain aggregates or value objects — only commands, queries, and DTOs.
+- Never put `if/else` business logic in a controller. All decisions belong in the aggregate.
+- Always use `@HttpCode()` for non-200 success responses (`201 Created`, `204 No Content`).
+- Use NestJS built-in pipes (`ParseUUIDPipe`, `ParseIntPipe`) for path/query param coercion.
+- The controller never maps the result — the application layer handler returns the correct DTO.
+- **Every method must declare an explicit `Promise<T>` return type.** Never rely on CQRS bus `any`.
+- **Every method must use an `@ApiAutoResponse*` decorator** (see Swagger Response Decorators section).
+- **Controllers never construct `SuccessResponse` directly.** The global interceptor handles wrapping.
+
+```ts
+// ❌ BAD — injects handler or repository directly
+constructor(private readonly placeOrderHandler: PlaceOrderHandler) {}
+constructor(private readonly orderRepo: IOrderRepository) {}
+
+// ❌ BAD — business logic in controller
+if (order.status === 'CANCELLED') throw new BadRequestException('Already cancelled');
+
+// ❌ BAD — maps aggregate in controller (belongs in application/mappers/)
+return { id: order.id, status: order.status };
+
+// ❌ BAD — implicit any return type
+async getUser(@Param('id') id: string) {                    // ← no return type
+  return this.queryBus.execute(new GetUserQuery(id));       // ← inferred as any
+}
+
+// ❌ BAD — controller wraps SuccessResponse manually
+return new SuccessResponse(await this.queryBus.execute(...));
+
+// ✅ GOOD — explicit return type, interceptor handles SuccessResponse wrapping
+async getUser(@Param('id') id: string): Promise<UserResponseDto> {
+  return this.queryBus.execute(new GetUserQuery(id));
+}
+```
+
+---
+
+## Module Registration
+
+Each feature module imports `CqrsModule` and declares its own handlers and controller:
+
+```ts
+// order.module.ts
+import { CqrsModule } from '@nestjs/cqrs';
+import { AuthModule } from '@lib/auth';
+
+@Module({
+  imports: [
+    CqrsModule,       // ← registers CommandBus, QueryBus, EventBus for this module
+    AuthModule,       // ← makes UnifiedAuthGuard, RolesGuard etc. injectable
+  ],
+  controllers: [OrderController],
+  providers: [
+    // Commands
+    PlaceOrderHandler,
+    CancelOrderHandler,
+    AddItemToOrderHandler,
+    // Queries
+    GetOrderByIdHandler,
+    ListOrdersHandler,
+    // Event handlers
+    OnOrderPlacedHandler,
+    // Infrastructure
+    { provide: IOrderRepository, useClass: OrderPrismaRepository },
+  ],
+})
+export class OrderModule {}
+```
+
+---
+
+## Guards — Auth from `@lib/auth`, Feature Guards Per Module
+
+**Never write JWT or RBAC guards inside a feature module.** Import from `@lib/auth`.
+
+| Guard | Source | Usage |
+|---|---|---|
+| `UnifiedAuthGuard` | `@lib/auth` | JWT + API key + reCAPTCHA in one. Apply at controller class level. |
+| `RolesGuard` | `@lib/auth` | Checks `user.user_roles`. Pair with `@RequireRoles()`. |
+| `PermissionsGuard` | `@lib/auth` | Checks `user.permissions`. Pair with `@RequirePermissions()`. |
+| `RoleGroupsGuard` | `@lib/auth` | Checks `user.role_groups`. Pair with `@RequireRoleGroups()`. |
+
+| Decorator | Source | Usage |
+|---|---|---|
+| `@CurrentUser()` | `@lib/auth` | Extracts `AuthUser` from `request.user` |
+| `@RequireRoles(...roles)` | `@lib/auth` | Sets role metadata for `RolesGuard` |
+| `@RequirePermissions(...perms)` | `@lib/auth` | Sets permission metadata for `PermissionsGuard` |
+| `@Public()` | `@lib/auth` | Skips auth — add a comment explaining why |
+| `@UseApiKey()` | `@lib/auth` | Forces API key auth even when JWT is present |
+
+Feature-specific guards (e.g. "does this user own this order?") live in `presentation/guards/` but must not re-implement JWT or RBAC logic.
+
+---
+
+## Pipes — Global Registration Only
+
+`ValidationPipe` is registered **globally in `main.ts`** — never per-controller.
+
+```ts
+app.useGlobalPipes(
+  new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
+);
+```
+
+Request DTOs live in `application/dtos/request/` and use `class-validator`:
+
+```ts
+export class PlaceOrderRequestDto {
+  @IsUUID()
+  customerId: string;
+
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => OrderItemRequestDto)
+  items: OrderItemRequestDto[];
+}
+```
+
+---
+
+## Response Envelope Contract
+
+Every HTTP response uses one of two shapes, wired automatically by `CoreModule`:
+
+| Outcome | Shape | Wired by |
+|---------|-------|----------|
+| **Success** | `SuccessResponse<T>` — `{ info, timestamp, traceId, responsePayload: T }` | `SuccessResponseInterceptor` (global, via `CoreModule`) |
+| **Error** | `ErrorResponse` — `{ info, timestamp, traceId, messages[], errorCode?, status? }` | `GlobalExceptionFilter` (global, via `CoreModule`) |
+
+**Consuming apps** register both via a single `CoreModule` import in their root `AppModule`:
+
+```ts
+// app.module.ts
+@Module({ imports: [CoreModule, ...] })
+export class AppModule {}
+```
+
+`CoreModule` is `@Global()` and registers:
+- `APP_FILTER → GlobalExceptionFilter`
+- `APP_INTERCEPTOR → SuccessResponseInterceptor`
+- `APP_INTERCEPTOR → TimingInterceptor`
+
+**Controllers return raw DTOs** — `SuccessResponse<T>` is applied transparently by the interceptor. Controllers must never construct `SuccessResponse` themselves.
+
+---
+
+## Swagger Response Decorators
+
+Every controller method **must** declare both an explicit `Promise<T>` return type **and** one `@ApiAutoResponse*` decorator from `@lib/core`. These decorators document the final `SuccessResponse<T>` envelope shape in Swagger (matching what the interceptor actually returns at runtime).
+
+| Scenario | Decorator | Example |
+|----------|-----------|---------|
+| Single DTO (GET by id, PATCH, DELETE returning DTO) | `@ApiAutoResponse(Dto)` | `@ApiAutoResponse(UserDto)` |
+| POST creating a resource (201) | `@ApiAutoResponse(Dto, { status: 201 })` | `@ApiAutoResponse(OrderDto, { status: 201 })` |
+| Paginated list — `PagedResponse<Dto>` | `@ApiAutoPagedResponse(Dto)` | `@ApiAutoPagedResponse(OrderDto)` |
+| Flat array of DTOs | `@ApiAutoResponse(Dto, { isArray: true })` | `@ApiAutoResponse(RoleDto, { isArray: true })` |
+| No payload / 204 | `@ApiAutoVoidResponse()` | `@ApiAutoVoidResponse({ status: 204 })` |
+| Scalar primitive | `@ApiAutoPrimitiveResponse('boolean'\|'string'\|'number')` | `@ApiAutoPrimitiveResponse('boolean')` |
+| Interface or primitive array (last resort) | Raw `@ApiOkResponse({ schema: ... })` | — |
+
+All decorators are exported from `@lib/core`. Import path: `import { ApiAutoResponse, ApiAutoPagedResponse, ... } from '@lib/core'`.
+
+```ts
+// ✅ GOOD — full example with all decorator types
+@Get(':id')
+@ApiAutoResponse(OrderDto)
+getById(@Param('id') id: string): Promise<OrderDto> { ... }
+
+@Post()
+@ApiAutoResponse(OrderDto, { status: 201 })
+create(@Body() dto: CreateOrderDto): Promise<OrderDto> { ... }
+
+@Get()
+@ApiAutoPagedResponse(OrderDto)
+list(): Promise<PagedResponse<OrderDto>> { ... }
+
+@Get('roles')
+@ApiAutoResponse(RoleDto, { isArray: true })
+listRoles(): Promise<RoleDto[]> { ... }
+
+@Delete(':id')
+@ApiAutoVoidResponse({ status: 204 })
+delete(@Param('id') id: string): Promise<void> { ... }
+
+@Delete('revoke/:id')
+@ApiAutoPrimitiveResponse('boolean')
+revoke(@Param('id') id: string): Promise<boolean> { ... }
+
+// ❌ BAD — no return type, no Swagger decorator
+async getUser(@Param('id') id: string) {
+  return this.queryBus.execute(new GetUserQuery(id));
+}
+```
+
+---
+
+## Filters — Global Registration Only
+
+`GlobalExceptionFilter` from `@lib/core` handles all exceptions globally. It is registered by `CoreModule` — consuming apps do not need to call `app.useGlobalFilters()`.
+
+It maps `BusinessError`, `HttpException`, and unknown errors to a structured `ErrorResponse` shape. **Do not add a feature-level filter that duplicates this.**
+
+---
+
+## Interceptors — Global Registration Only
+
+`SuccessResponseInterceptor` and `TimingInterceptor` are registered globally by `CoreModule`. Additional interceptors for features register in `AppModule` via `APP_INTERCEPTOR`:
+
+```ts
+// app.module.ts
+@Module({
+  imports: [CoreModule],   // ← wires SuccessResponseInterceptor + TimingInterceptor + GlobalExceptionFilter
+  providers: [
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },  // feature-specific additions
+  ],
+})
+export class AppModule {}
+```
+
+---
+
+---
+
+## Permission String Convention
+
+All `@RequirePermissions()` strings **must** follow the `action:resource` format:
+
+```
+action  = read | create | update | delete
+resource = snake_case plural noun (matches the domain concept)
+```
+
+### Examples
+
+| HTTP verb | Action | Example permission |
+|---|---|---|
+| `GET` (list / get) | `read` | `read:api_keys`, `read:roles`, `read:permissions` |
+| `POST` (create / grant) | `create` | `create:api_keys`, `create:user_roles` |
+| `PATCH` / `PUT` (update) | `update` | `update:api_keys` |
+| `DELETE` (delete / revoke) | `delete` | `delete:api_keys`, `delete:user_roles` |
+
+### Registered resources in `auth2`
+
+| Resource | Covers |
+|---|---|
+| `api_keys` | API key CRUD |
+| `roles` | Role catalogue (read-only at runtime) |
+| `permissions` | Permission catalogue (read-only at runtime) |
+| `role_groups` | Role group catalogue (read-only at runtime) |
+| `user_roles` | Granting / revoking roles and group memberships on users |
+
+### Rules
+- **Never** use `verb:noun` order (e.g. `role:read`, `role:write`) — always `action:resource`.
+- Use the **most specific action**: prefer `create` and `delete` over a generic `write`.
+- Resources are **plural snake_case** — `api_keys`, not `apiKey` or `api-key`.
+- Every endpoint that is not decorated with `@Public()` **must** declare `@RequirePermissions()`.
+
+```ts
+// ❌ BAD
+@RequirePermissions('role:read')
+@RequirePermissions('role:write')
+
+// ✅ GOOD
+@RequirePermissions('read:roles')
+@RequirePermissions('create:user_roles')
+@RequirePermissions('delete:user_roles')
+```
+
+---
+
+## Key Rules Summary
+
+| Concern | Global / Shared | Per Module |
+|---|---|---|
+| `ValidationPipe` | ✅ `main.ts` | — |
+| `GlobalExceptionFilter` | ✅ `CoreModule` (`@lib/core`) | — |
+| `SuccessResponseInterceptor` | ✅ `CoreModule` (`@lib/core`) | — |
+| `TimingInterceptor` | ✅ `CoreModule` (`@lib/core`) | — |
+| JWT / RBAC guards | ✅ `@lib/auth` | — |
+| `@CurrentUser`, `@RequireRoles`, etc. | ✅ `@lib/auth` | — |
+| Controllers | — | ✅ per module |
+| Commands / Queries | — | ✅ per module |
+| Request / Response DTOs | — | ✅ per module |
+| Feature-specific guards | — | ✅ per module |
+| `CqrsModule` import | — | ✅ per module |
+| Permission strings | `action:resource` (e.g. `read:roles`) | — |
+| Explicit `Promise<T>` return type | — | ✅ every controller method |
+| `@ApiAutoResponse*` Swagger decorator | — | ✅ every controller method |

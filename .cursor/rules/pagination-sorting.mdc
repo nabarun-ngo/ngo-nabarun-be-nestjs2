@@ -1,0 +1,88 @@
+---
+description: Pagination and sorting conventions for BaseFilter, PaginatedQueryDto, and PrismaCrudRepositoryBase
+globs: **/*.ts
+alwaysApply: false
+---
+# Pagination & Sorting Infrastructure
+
+## Key Types
+
+| Type | Layer | Source |
+|---|---|---|
+| `SortOrder` | Domain | `@lib/core` — `ASC = 'asc'` / `DESC = 'desc'` |
+| `BaseFilter<T>` | Domain | `@lib/core` — carries `pageIndex`, `pageSize`, `sortBy`, `sortDir`, `props` |
+| `PaginatedQueryDto` | Presentation | `@lib/core` — class-validator + Swagger decorated base query DTO |
+
+## Controller List Endpoints
+
+Use `@Query() query: PaginatedQueryDto` — never raw `@Query('pageIndex')` / `@Query('pageSize')`.
+Pass all four pagination/sort fields into `BaseFilter`:
+
+```typescript
+// ✅ GOOD
+@Get()
+@ApiAutoPagedResponse(RoleResponseDto)
+listRoles(@Query() query: PaginatedQueryDto): Promise<PagedResponse<RoleResponseDto>> {
+  return this.queryBus.execute(
+    new ListRolesQuery(
+      new BaseFilter(undefined, query.pageIndex, query.pageSize, query.sortBy, query.sortDir),
+    ),
+  );
+}
+
+// ❌ BAD — raw params, no shared DTO
+listRoles(
+  @Query('pageIndex') pageIndex?: number,
+  @Query('pageSize') pageSize?: number,
+) { ... }
+```
+
+Do NOT add manual `@ApiQuery({ name: 'pageIndex', ... })` decorators — `PaginatedQueryDto` documents them automatically.
+
+## Module-Specific Query DTOs
+
+When a list endpoint has extra filter fields, extend `PaginatedQueryDto` — never redeclare `pageIndex`/`pageSize`:
+
+```typescript
+// ✅ GOOD
+export class ListOrdersRequestDto extends PaginatedQueryDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  status?: string;
+
+  // Constrain sortBy to allowed columns
+  @IsIn(['createdAt', 'totalAmount'])
+  override sortBy?: string;
+}
+
+// ❌ BAD — redeclares pageIndex/pageSize
+export class ListOrdersRequestDto {
+  @IsOptional() pageIndex?: number;
+  @IsOptional() pageSize?: number;
+  @IsOptional() status?: string;
+}
+```
+
+## Domain Layer — BaseFilter
+
+`BaseFilter<T>` constructor signature (all optional, positions 4–5 are new):
+
+```typescript
+new BaseFilter(props?, pageIndex?, pageSize?, sortBy?, sortDir?)
+```
+
+All existing 3-arg call sites are unaffected.
+
+## Infrastructure — PrismaCrudRepositoryBase
+
+`findPaged()` resolves sort dynamically: if `filter?.sortBy` is set it builds `{ [sortBy]: sortDir ?? SortOrder.ASC }`; otherwise it falls back to the protected `defaultOrderBy()` hook — no change needed for existing repos.
+
+## Layer Rules
+
+- `SortOrder` lives in **domain** (`src/core/domain/models/sort-order.enum.ts`) — `BaseFilter` (domain) depends on it; domain must not import from presentation.
+- `PaginatedQueryDto` lives in **presentation** (`src/core/presentation/models/paginated-query.dto.ts`) — it carries `@nestjs/swagger` and `class-validator` decorators which must not enter the domain layer.
+
+## Do NOT Migrate
+
+The `queue` module pagination feeds BullMQ's Redis range API — it is not `BaseFilter`-based and must stay as-is.

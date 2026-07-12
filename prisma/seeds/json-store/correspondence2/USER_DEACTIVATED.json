@@ -1,0 +1,5 @@
+{
+  "subject": "Your account has been deactivated",
+  "htmlTemplate": "<p>Hi,</p><p>Your account (<strong>{{email}}</strong>) has been deactivated.</p><p>If you believe this is an error, please contact your administrator.</p>",
+  "textTemplate": "Hi,\n\nYour account ({{email}}) has been deactivated.\n\nIf you believe this is an error, please contact your administrator."
+}

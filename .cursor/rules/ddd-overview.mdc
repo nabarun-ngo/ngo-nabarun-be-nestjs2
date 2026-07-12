@@ -1,0 +1,92 @@
+---
+description: DDD architecture overview — module structure, layer responsibilities, dependency direction, and new-feature checklist. Always in context.
+alwaysApply: true
+---
+
+# DDD Architecture Overview
+
+Every business module in this codebase follows a strict four-layer structure. Layers only reference each other in one direction — inner layers never know about outer layers.
+
+## Module Folder Structure
+
+```
+src/
+└── <module>/                          ← One folder per Bounded Context
+    ├── domain/                        ← Zero framework deps — pure TypeScript
+    │   ├── aggregates/                ← Aggregate Roots (*.aggregate.ts)
+    │   ├── entities/                  ← Child entities (*.entity.ts)
+    │   ├── value-objects/             ← Immutable, equality by value (*.vo.ts)
+    │   ├── events/                    ← Domain events, past tense (*.event.ts)
+    │   ├── errors/                    ← Domain exceptions (*.error.ts)
+    │   ├── services/                  ← Domain services, spans aggregates
+    │   ├── repositories/              ← Interfaces only — no implementation
+    │   ├── factories/                 ← Complex object creation (*.factory.ts)
+    │   ├── policies/                  ← Business rules / specs (*.policy.ts)
+    │   ├── enums/                     ← Domain enumerations (*.enum.ts)
+    │   └── ports/                     ← External service interfaces (*.port.ts)
+    ├── application/                   ← Orchestration — handlers, use-cases, services
+    ├── infrastructure/                ← DB, ORM, HTTP adapters — concrete implementations
+    └── presentation/                  ← Controllers, DTOs, guards — HTTP edge
+```
+
+## Dependency Direction (enforce strictly)
+
+```
+Presentation  →  Application  →  Domain  ✅
+Infrastructure               →  Domain  ✅
+Application   →  Infrastructure  via interface tokens only ✅
+
+Domain  →  Application      ❌
+Domain  →  Infrastructure   ❌
+Domain  →  Presentation     ❌
+```
+
+The domain layer must have **zero** `@nestjs/*` or Prisma imports.
+The only permitted exception is `BusinessError` which extends `Error` (see domain layer rule).
+
+## Layer Responsibilities at a Glance
+
+| Layer | Allowed imports | Must NOT import |
+|---|---|---|
+| `domain/` | Pure TypeScript, `@lib/core` models | `@nestjs/*`, Prisma, HTTP, DB |
+| `application/` | Domain interfaces/events, `@nestjs/*` DI | Prisma, HTTP response types |
+| `infrastructure/` | Prisma, domain interfaces | HTTP, presentation types |
+| `presentation/` | Application services, DTOs, `@nestjs/*` | Prisma, domain internals |
+
+## Quick Checklist for a New Feature
+
+- [ ] Aggregate in `domain/aggregates/` extends `AggregateRoot<T>` with `#` private fields
+- [ ] Static `create(...)` factory — no `new` called from outside the domain
+- [ ] Every state-changing method: invariant guard → mutate → `touch()` → `addDomainEvent(...)`
+- [ ] Invariant violations throw a typed error extending `BusinessError` from `domain/errors/`
+- [ ] Child entities in `domain/entities/` extend `BaseDomain<T>` — no repository, no events
+- [ ] Value objects in `domain/value-objects/` are immutable, no `id`, equality by value
+- [ ] Domain events in `domain/events/` extend `DomainEvent`, past-tense names, one per method
+- [ ] Repository interface in `domain/repositories/` — `Symbol` token = interface name, extends `IRepository<T,ID,F>`
+- [ ] External service contracts in `domain/ports/` — interface only, implemented in infrastructure
+- [ ] Business rules in `domain/policies/` — pure, testable, no I/O
+- [ ] Application handlers (`application/handler/`) inject via token, never import Prisma
+- [ ] Prisma repository in `infrastructure/persistence/` implements the domain interface
+- [ ] All five mapping hooks implemented (`toDomain`, `toCreateInput`, `toUpdateInput`, `toUniqueWhere`, `toFilterWhere`)
+- [ ] `supportsSoftDelete()` overridden if the model has a `deletedAt` column
+
+## Post-Implementation Validation (MANDATORY)
+
+After **every** implementation — no exceptions — run these three gates in order:
+
+```powershell
+# 1. Type check — zero errors required
+npx tsc --noEmit
+
+# 2. Build — must succeed before shipping
+npm run build
+
+# 3. Tests — all must pass
+npm test
+```
+
+**Rules:**
+- Run all three even if earlier steps succeed — a passing typecheck does not guarantee a passing build.
+- Do NOT consider the task done until all three commands exit with code `0`.
+- If any command fails, fix the errors and re-run that command (and all subsequent ones) before marking the task complete.
+- When Prisma models have changed, run `npm run generate:db` first, then the three gates above.

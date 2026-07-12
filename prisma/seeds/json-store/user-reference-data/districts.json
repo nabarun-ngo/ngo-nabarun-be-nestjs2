@@ -1,0 +1,25 @@
+{
+  "_comment": "District list. key = district code, value = display name, countryCode + stateCode identify the parent.",
+  "items": [
+    { "key": "MH_MUMBAI",        "value": "Mumbai",        "countryCode": "IN", "stateCode": "MH" },
+    { "key": "MH_PUNE",          "value": "Pune",          "countryCode": "IN", "stateCode": "MH" },
+    { "key": "MH_NAGPUR",        "value": "Nagpur",        "countryCode": "IN", "stateCode": "MH" },
+    { "key": "MH_THANE",         "value": "Thane",         "countryCode": "IN", "stateCode": "MH" },
+    { "key": "KA_BENGALURU",     "value": "Bengaluru",     "countryCode": "IN", "stateCode": "KA" },
+    { "key": "KA_MYSURU",        "value": "Mysuru",        "countryCode": "IN", "stateCode": "KA" },
+    { "key": "DL_CENTRAL",       "value": "Central Delhi", "countryCode": "IN", "stateCode": "DL" },
+    { "key": "DL_SOUTH",         "value": "South Delhi",   "countryCode": "IN", "stateCode": "DL" },
+    { "key": "DL_NORTH",         "value": "North Delhi",   "countryCode": "IN", "stateCode": "DL" },
+    { "key": "WB_KOLKATA",       "value": "Kolkata",       "countryCode": "IN", "stateCode": "WB" },
+    { "key": "TN_CHENNAI",       "value": "Chennai",       "countryCode": "IN", "stateCode": "TN" },
+    { "key": "TN_COIMBATORE",    "value": "Coimbatore",    "countryCode": "IN", "stateCode": "TN" },
+    { "key": "TS_HYDERABAD",     "value": "Hyderabad",     "countryCode": "IN", "stateCode": "TS" },
+    { "key": "GJ_AHMEDABAD",     "value": "Ahmedabad",     "countryCode": "IN", "stateCode": "GJ" },
+    { "key": "GJ_SURAT",         "value": "Surat",         "countryCode": "IN", "stateCode": "GJ" },
+    { "key": "RJ_JAIPUR",        "value": "Jaipur",        "countryCode": "IN", "stateCode": "RJ" },
+    { "key": "UP_LUCKNOW",       "value": "Lucknow",       "countryCode": "IN", "stateCode": "UP" },
+    { "key": "UP_NOIDA",         "value": "Gautam Buddha Nagar (Noida)", "countryCode": "IN", "stateCode": "UP" },
+    { "key": "MP_BHOPAL",        "value": "Bhopal",        "countryCode": "IN", "stateCode": "MP" },
+    { "key": "MP_INDORE",        "value": "Indore",        "countryCode": "IN", "stateCode": "MP" }
+  ]
+}

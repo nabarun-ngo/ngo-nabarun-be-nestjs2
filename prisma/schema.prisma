@@ -1,0 +1,18 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Root schema file — datasource + generator only.
+//
+// Models are defined in prisma/models/*.prisma (multi-file schema, Prisma 7).
+// All *.prisma files under prisma/ are merged at generate time.
+//
+// Generated client output: ../generated/prisma  (gitignored via generated/)
+// ─────────────────────────────────────────────────────────────────────────────
+
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}

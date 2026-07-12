@@ -1,0 +1,99 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// User bounded context schema — admin-only provisioning, no self-signup.
+// Roles are owned by Auth2 (auth_user_role). Phone + Address = child rows for
+// VOs (queryability); SocialLink = child entity with stable linkType key.
+// ─────────────────────────────────────────────────────────────────────────────
+
+model UserProfile {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  idpSub      String?   @unique
+
+  // Name
+  title      String?
+  firstName  String
+  middleName String?
+  lastName   String
+
+  // Profile
+  dateOfBirth DateTime?
+  gender      String?
+  about       String?
+  picture     String?
+
+  // Status / flags
+  status            String
+  isPublic          Boolean @default(true)
+  isSameAddress     Boolean?
+  isProfileComplete Boolean @default(false)
+
+  // Optimistic lock
+  version Int @default(0)
+
+  // Audit — app profile UUID of the acting user (NEVER idpSub)// 
+  createdById String?
+  updatedById String?
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  phoneNumbers     UserPhoneNumber[]
+  addresses        UserAddress[]
+  socialMediaLinks UserSocialLink[]
+
+  @@map("user_profile")
+}
+
+// ── Phone (VO stored as row) ──────────────────────────────────────────────────
+model UserPhoneNumber {
+  id     String      @id @default(cuid())
+  userId String
+  user   UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  phoneCode   String
+  phoneNumber String
+  hidden      Boolean @default(false)
+  isPrimary   Boolean // true = primary slot, false = secondary slot
+
+  @@unique([userId, isPrimary])
+  @@map("user_phone_number")
+}
+
+// ── Address (VO stored as row) ────────────────────────────────────────────────
+model UserAddress {
+  id     String      @id @default(cuid())
+  userId String
+  user   UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  addressType  String // PRESENT | PERMANENT
+  addressLine1 String
+  addressLine2 String?
+  addressLine3 String?
+  hometown     String
+  zipCode      String
+  state        String
+  district     String
+  country      String
+
+  @@unique([userId, addressType])
+  @@map("user_address")
+}
+
+// ── Social link (child entity — mutable, keyed by linkType) ──────────────────
+model UserSocialLink {
+  id     String      @id @default(cuid())
+  userId String
+  user   UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  linkName  String
+  linkType  String // facebook | linkedin | twitter | instagram | youtube | website
+  linkValue String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, linkType])
+  @@map("user_social_link")
+}

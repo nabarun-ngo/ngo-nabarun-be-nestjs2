@@ -1,0 +1,498 @@
+---
+description: DDD domain layer rules — aggregates, entities, value objects, events, errors, domain services, repository interfaces, factories, policies, enums, and ports.
+globs: src/**/domain/**/*.ts
+alwaysApply: false
+---
+
+# DDD Domain Layer
+
+**Rule: zero framework imports (`@nestjs/*`, Prisma, etc.). Pure TypeScript only.**
+
+## Domain Folder Structure
+
+```
+domain/
+│
+├── aggregates/                             ← Aggregate Roots — consistency boundary entry points
+│   └── order/
+│       ├── order.aggregate.ts              ← extends AggregateRoot<T>, static factory, domain methods
+│       ├── order.aggregate.spec.ts         ← pure unit tests (no DB, no framework)
+│       └── index.ts
+│
+├── entities/                               ← Child entities — live inside an aggregate, no repository
+│   └── order-item/
+│       ├── order-item.entity.ts            ← extends BaseDomain<T>
+│       ├── order-item.entity.spec.ts
+│       └── index.ts
+│
+├── value-objects/                          ← Immutable, equality by value, no identity
+│   ├── money/
+│   │   ├── money.vo.ts                     ← readonly props, static factory, structural equals()
+│   │   ├── money.vo.spec.ts
+│   │   └── index.ts
+│   ├── quantity/
+│   │   ├── quantity.vo.ts
+│   │   └── index.ts
+│   └── address/
+│       ├── address.vo.ts
+│       └── index.ts
+│
+├── events/                                 ← Domain events — past tense, immutable, one file each
+│   ├── order-placed.event.ts               ← extends DomainEvent
+│   ├── order-cancelled.event.ts
+│   ├── order-item-added.event.ts
+│   └── index.ts
+│
+├── errors/                                 ← Typed domain exceptions — extend BusinessError
+│   ├── order-not-found.error.ts            ← statusCode 404
+│   ├── order-already-cancelled.error.ts    ← statusCode 400 (default)
+│   ├── insufficient-stock.error.ts
+│   └── index.ts
+│
+├── services/                               ← Domain services — logic spanning multiple aggregates
+│   └── pricing/
+│       ├── pricing.service.ts              ← pure class, no @Injectable, no repository calls
+│       ├── pricing.service.spec.ts
+│       └── index.ts
+│
+├── repositories/                           ← Repository interfaces (ports) — no implementation
+│   ├── order.repository.ts                 ← export const IOrderRepository + interface IOrderRepository
+│   └── index.ts
+│
+├── factories/                              ← Complex object creation — used when static create() is not enough
+│   ├── order.factory.ts                    ← pure class, assembles aggregate from multiple sources
+│   ├── order.factory.spec.ts
+│   └── index.ts
+│
+├── policies/                               ← Named business rules — pure, testable, no I/O
+│   ├── order-cancellation.policy.ts        ← isSatisfiedBy(order): boolean
+│   ├── free-shipping.policy.ts
+│   └── index.ts
+│
+├── enums/                                  ← Domain enumerations — string enums only
+│   ├── order-status.enum.ts
+│   ├── payment-method.enum.ts
+│   └── index.ts
+│
+└── ports/                                  ← External service interfaces — implemented in infrastructure/
+    ├── payment-gateway.port.ts             ← export const IPaymentGateway + interface IPaymentGateway
+    ├── notification.port.ts
+    ├── inventory.port.ts
+    └── index.ts
+```
+
+**Key principles:**
+- Every file imports only from within `domain/` or `@lib/core` (base classes, `BusinessError`).
+- No `@nestjs/*`, no Prisma, no HTTP types — ever.
+- `repositories/` and `ports/` define contracts only. Their implementations live in `infrastructure/`.
+
+---
+
+## `aggregates/` — Aggregate Roots (`*.aggregate.ts`)
+
+The only public entry point to a consistency boundary. Loaded and saved as one atomic unit by a repository. Emits domain events on every meaningful state transition.
+
+**File layout:**
+```
+aggregates/
+└── order/
+    ├── order.aggregate.ts       ← the class
+    ├── order.aggregate.spec.ts  ← pure unit tests (no DB, no framework)
+    └── index.ts
+```
+
+**Rules:**
+- Extends `AggregateRoot<T>` — always.
+- All fields are ES private (`#`). Expose read-only values via getters only.
+- Creation goes through a **static factory** (`static create(...)`) — never `new` from outside.
+- Every mutating method: guard invariants → mutate field → `this.touch()` → `this.addDomainEvent(...)`.
+- Throw a domain error from `domain/errors/` if an invariant is violated.
+
+```ts
+// ✅ GOOD
+export class Order extends AggregateRoot<string> {
+  #status: OrderStatus;
+  #items: OrderItem[] = [];
+
+  static create(data: { customerId: string }): Order {
+    const order = new Order({ id: randomUUID(), status: OrderStatus.Pending, ...data });
+    order.addDomainEvent(new OrderPlacedEvent(order));
+    return order;
+  }
+
+  addItem(item: OrderItem): void {
+    if (this.#status !== OrderStatus.Pending)
+      throw new OrderAlreadyCancelledError(this.id);   // ← guard first
+    this.#items.push(item);
+    this.touch();
+    this.addDomainEvent(new OrderItemAddedEvent(this));
+  }
+
+  cancel(): void {
+    if (this.#status === OrderStatus.Cancelled)
+      throw new OrderAlreadyCancelledError(this.id);
+    this.#status = OrderStatus.Cancelled;
+    this.touch();
+    this.addDomainEvent(new OrderCancelledEvent(this));
+  }
+
+  get status() { return this.#status; }
+  get items(): ReadonlyArray<OrderItem> { return this.#items; }
+}
+
+// ❌ BAD — public fields, public setter, no events, no invariant guard
+export class Order {
+  public status: OrderStatus;
+  cancel() { this.status = OrderStatus.Cancelled; }
+}
+```
+
+---
+
+## `entities/` — Child Entities (`*.entity.ts`)
+
+Objects with identity that live **inside** an aggregate and are **never** loaded or saved independently.
+
+**Rules:**
+- Extends `BaseDomain<T>`.
+- **No repository — ever.** Accessed only through the aggregate root.
+- Never referenced from outside the aggregate boundary.
+
+```ts
+// ✅ Child entity — no repository, no domain events
+export class OrderItem extends BaseDomain<string> {
+  readonly #productId: string;
+  #quantity: number;
+
+  adjustQuantity(qty: number): void {
+    if (qty <= 0) throw new InvalidQuantityError(qty);
+    this.#quantity = qty;
+    this.touch();
+    // No event here — Order (the root) raises the event
+  }
+
+  get quantity() { return this.#quantity; }
+}
+```
+
+---
+
+## `value-objects/` — Value Objects (`*.vo.ts`)
+
+Immutable. No identity. Equality by attribute values. Replace entirely rather than mutate.
+
+**File layout:**
+```
+value-objects/
+└── money/
+    ├── money.vo.ts
+    ├── money.vo.spec.ts
+    └── index.ts
+```
+
+**Rules:**
+- No `id`, no `createdAt`, no `touch()` — does **not** extend `BaseDomain`.
+- All properties are `readonly`.
+- Provide a static factory that validates on construction.
+- Equality is structural, not referential.
+
+```ts
+// ✅ GOOD
+export class Money {
+  private constructor(
+    readonly amount: number,
+    readonly currency: string,
+  ) {}
+
+  static of(amount: number, currency: string): Money {
+    if (amount < 0) throw new BusinessError('Amount cannot be negative', 'INVALID_AMOUNT');
+    return new Money(amount, currency);
+  }
+
+  add(other: Money): Money {
+    if (other.currency !== this.currency)
+      throw new BusinessError('Currency mismatch', 'CURRENCY_MISMATCH');
+    return Money.of(this.amount + other.amount, this.currency);
+  }
+
+  equals(other: Money): boolean {
+    return this.amount === other.amount && this.currency === other.currency;
+  }
+}
+
+// ❌ BAD — mutable, no validation, identity-like
+export class Money {
+  public amount: number;
+  public currency: string;
+}
+```
+
+---
+
+## `events/` — Domain Events (`*.event.ts`)
+
+### Event class hierarchy
+
+```
+RootEvent                    ← logging (log/warn/error) — base for everything
+  └── DomainEvent            ← adds aggregateId, occurredAt, domain ref
+        └── OrderPlacedEvent ← concrete domain events (past tense)
+```
+
+### Structure — always the same shape
+
+Past-tense name. One `public readonly` field carrying the aggregate root. Pass `(aggregateId, aggregateRoot)` to `super`.
+
+```ts
+export class OrderPlacedEvent extends DomainEvent {
+  constructor(public readonly order: Order) {
+    super(order.id, order);
+  }
+}
+```
+
+### When to create a `DomainEvent`
+
+Create one when **all three** are true:
+1. An Aggregate Root changed state (`touch()` was called).
+2. The change is a **named business operation** in the ubiquitous language.
+3. Another part of the system might need to react (persistence, notification, audit, cache).
+
+| ✅ Create | ❌ Skip |
+|---|---|
+| `OrderPlacedEvent` | Simple query — no state change |
+| `OrderCancelledEvent` | Change internal to one aggregate, no reactor |
+| `OrderItemAddedEvent` | Multiple fields changed → one event for the whole operation |
+
+### Naming rules
+- **Past tense**, named after the **business operation**: `OrderCancelledEvent` not `OrderStatusSetEvent`
+- **One event per domain method**: `cancel()` → `OrderCancelledEvent`
+- One file per event class
+
+### When to use `RootEvent` directly
+
+Use `RootEvent` (skip `DomainEvent`) when the event is **not tied to a specific Aggregate Root's state change** — e.g. cross-module technical signals.
+
+```ts
+export class AppTechnicalErrorEvent extends RootEvent {
+  public readonly occurredAt: Date = new Date();
+  constructor(public readonly error: Error) { super(); }
+}
+```
+
+### `CorrespondenceRequestEvent` — application layer only
+
+Use `CorrespondenceRequestEvent` to imperatively trigger emails or push notifications from an **application service or handler**. Never emit it from inside a domain model.
+
+---
+
+## `errors/` — Domain Errors (`*.error.ts`)
+
+Typed exceptions that express **why a business rule was violated**.
+
+**Rules:**
+- One class per failure scenario, named after the violated rule.
+- **Must extend `BusinessError`** from `@lib/core/exceptions/business-error`.
+- Pass a human-readable `message` and a `SCREAMING_SNAKE_CASE` `errorCode`.
+- `statusCode` defaults to `400` — override only when semantically appropriate (e.g. `404`).
+- Never throw raw `Error` or any NestJS `HttpException` from the domain layer.
+
+```ts
+// ✅ GOOD
+import { BusinessError } from '@lib/core/exceptions/business-error';
+
+export class OrderAlreadyCancelledError extends BusinessError {
+  constructor(orderId: string) {
+    super(`Order ${orderId} has already been cancelled.`, 'ORDER_ALREADY_CANCELLED');
+  }
+}
+
+export class OrderNotFoundError extends BusinessError {
+  constructor(orderId: string) {
+    super(`Order ${orderId} not found.`, 'ORDER_NOT_FOUND', 404);
+  }
+}
+
+// ❌ BAD — raw Error, no errorCode, not caught by GlobalExceptionFilter as a business error
+export class OrderAlreadyCancelledError extends Error { ... }
+
+// ❌ BAD — NestJS HttpException leaking into the domain layer
+throw new BadRequestException('Order already cancelled');
+```
+
+---
+
+## `services/` — Domain Services
+
+Logic that is domain logic but **does not naturally belong to a single aggregate** — e.g. calculations that span multiple roots or are shared across several commands.
+
+**File layout:**
+```
+services/
+└── pricing/
+    ├── pricing.service.ts
+    ├── pricing.service.spec.ts
+    └── index.ts
+```
+
+**Rules:**
+- No `@Injectable()`, no NestJS imports — pure TypeScript class.
+- Does not call repositories — that is the application layer's job.
+- If a method fits naturally on a single aggregate, put it there first.
+
+```ts
+// ✅ GOOD — pure domain service
+export class PricingService {
+  calculate(items: OrderItem[], discounts: Discount[]): Money {
+    const subtotal = items.reduce(
+      (sum, i) => sum.add(i.unitPrice.multiply(i.quantity)),
+      Money.of(0, 'USD'),
+    );
+    return discounts.reduce((total, d) => d.apply(total), subtotal);
+  }
+}
+
+// ❌ BAD — NestJS @Injectable() in the domain layer
+@Injectable()
+export class PricingService { ... }
+
+// ❌ BAD — repository call inside a domain service
+export class PricingService {
+  constructor(private readonly productRepo: IProductRepository) {}
+}
+```
+
+---
+
+## `repositories/` — Repository Interfaces (`*.repository.ts`)
+
+Contract only — no Prisma types, no `@Injectable`. Implementation lives in `infrastructure/`.
+
+**DDD rule: Repositories exist ONLY for Aggregate Roots.**
+
+Giving a child entity its own repository breaks the consistency boundary — it can be mutated independently, bypassing the root's invariant checks.
+
+```
+✅ Correct                              ❌ Wrong
+  OrderRepository → Order (root)          OrderItemRepository → OrderItem
+    └── OrderItem  (no repository)          ← bypasses Order's invariants
+```
+
+**If an object needs its own repository, it IS an Aggregate Root — by definition.**
+
+| Situation | Base class | Repository? |
+|---|---|---|
+| Root of its own consistency boundary | `AggregateRoot<T>` | ✅ Yes |
+| Root, domain events not yet needed | `BaseDomain<T>` | ✅ Yes — add events when behaviour grows |
+| Child entity inside an aggregate | `BaseDomain<T>` | ❌ No — load via the root |
+
+**Token naming rule — Symbol name = interface name** (one import = both token and type):
+
+```ts
+// ✅ GOOD — one import serves as @Inject() token AND type annotation
+export const IOrderRepository = Symbol('IOrderRepository');
+
+export interface IOrderRepository
+  extends IRepository<Order, string, OrderFilter> {
+  // Only methods BEYOND standard CRUD
+  findByCustomerId(customerId: string): Promise<Order[]>;
+}
+// IRepository already provides: findById / findAll / findPaged / create / update / delete / count
+
+// ❌ BAD — two separate names, easy to mismatch
+export const ORDER_REPOSITORY = Symbol('ORDER_REPOSITORY');
+export interface IOrderRepository extends IRepository<...> { ... }
+```
+
+---
+
+## `factories/` — Domain Factories (`*.factory.ts`)
+
+Complex object creation too involved for a static `create()` method — e.g. assembling an aggregate from multiple sources.
+
+**Rules:**
+- No `@Injectable()` — pure domain class.
+- Callers receive a fully valid aggregate with the appropriate `Created` event already raised.
+- Use the aggregate's own `static create()` for simple cases; only add a factory when creation logic is non-trivial or shared.
+
+```ts
+export class OrderFactory {
+  static fromCheckout(cart: Cart, address: Address): Order {
+    const order = new Order({ id: randomUUID(), customerId: cart.customerId, ... });
+    cart.items.forEach(i => order.addItem(OrderItem.from(i)));
+    order.addDomainEvent(new OrderPlacedEvent(order));
+    return order;
+  }
+}
+```
+
+---
+
+## `policies/` — Domain Policies (`*.policy.ts`)
+
+A single named business rule, encapsulated as a testable object.
+
+**Rules:**
+- No `@Injectable()` — pure domain class.
+- Method name is a question: `isSatisfiedBy(entity)` or `canBeCancelled(order)`.
+- Never perform I/O — evaluate only in-memory state.
+
+```ts
+// ✅ GOOD
+export class OrderCancellationPolicy {
+  isSatisfiedBy(order: Order): boolean {
+    return order.status === OrderStatus.Pending
+        && order.placedAt > subHours(new Date(), 24);
+  }
+}
+
+// Usage:
+if (!new OrderCancellationPolicy().isSatisfiedBy(order))
+  throw new OrderCancellationNotAllowedError(order.id);
+order.cancel();
+```
+
+---
+
+## `enums/` — Domain Enumerations (`*.enum.ts`)
+
+**Rules:**
+- **String enums only** — value is self-documenting in logs and DB columns.
+- No business logic inside an enum — logic belongs in policies or aggregate methods.
+- One enum per concept, one file per enum.
+
+```ts
+// ✅ GOOD
+export enum OrderStatus {
+  Pending   = 'PENDING',
+  Confirmed = 'CONFIRMED',
+  Cancelled = 'CANCELLED',
+}
+
+// ❌ BAD — numeric, opaque in logs and DB
+export enum OrderStatus { Pending, Confirmed, Cancelled }
+```
+
+---
+
+## `ports/` — External Service Ports (`*.port.ts`)
+
+Interfaces for external services the domain needs (payment, notification, inventory). The domain defines the contract; infrastructure provides the implementation.
+
+**Rules:**
+- No `@Injectable()` — pure TypeScript interface.
+- Define only what the domain needs — no infrastructure details (no Stripe types, no SDK imports).
+- Same token naming rule as repositories: `Symbol` name = interface name.
+
+```ts
+// ✅ GOOD — no mention of Stripe, Twilio, etc.
+export const IPaymentGateway = Symbol('IPaymentGateway');
+
+export interface IPaymentGateway {
+  charge(orderId: string, amount: Money): Promise<PaymentResult>;
+  refund(paymentId: string): Promise<void>;
+}
+
+// Implemented in infrastructure/:
+// @Injectable() export class StripePaymentGateway implements IPaymentGateway { ... }
+```

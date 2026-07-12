@@ -1,0 +1,9 @@
+{
+  "_comment": "Gender options shown in the user profile form.",
+  "items": [
+    { "key": "MALE",              "value": "Male" },
+    { "key": "FEMALE",            "value": "Female" },
+    { "key": "NON_BINARY",        "value": "Non-binary" },
+    { "key": "PREFER_NOT_TO_SAY", "value": "Prefer not to say" }
+  ]
+}

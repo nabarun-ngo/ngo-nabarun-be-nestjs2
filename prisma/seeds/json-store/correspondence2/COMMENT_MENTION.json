@@ -1,0 +1,5 @@
+{
+  "subject": "You were mentioned in a comment",
+  "htmlTemplate": "<p>Hi {{recipientName}}, <strong>{{mentionedByName}}</strong> mentioned you in a comment: <em>{{commentText}}</em></p>",
+  "textTemplate": "Hi {{recipientName}}, {{mentionedByName}} mentioned you: {{commentText}}"
+}

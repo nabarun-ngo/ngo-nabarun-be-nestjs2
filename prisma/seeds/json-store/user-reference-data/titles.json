@@ -1,0 +1,10 @@
+{
+  "_comment": "Salutation titles shown in the user profile form.",
+  "items": [
+    { "key": "MR",   "value": "Mr." },
+    { "key": "MRS",  "value": "Mrs." },
+    { "key": "MS",   "value": "Ms." },
+    { "key": "DR",   "value": "Dr." },
+    { "key": "PROF", "value": "Prof." }
+  ]
+}

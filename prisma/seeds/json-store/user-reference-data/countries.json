@@ -1,0 +1,13 @@
+{
+  "_comment": "Country list. key = ISO 3166-1 alpha-2 code, value = display name.",
+  "items": [
+    { "key": "IN", "value": "India" },
+    { "key": "US", "value": "United States" },
+    { "key": "GB", "value": "United Kingdom" },
+    { "key": "AU", "value": "Australia" },
+    { "key": "CA", "value": "Canada" },
+    { "key": "SG", "value": "Singapore" },
+    { "key": "AE", "value": "United Arab Emirates" },
+    { "key": "NZ", "value": "New Zealand" }
+  ]
+}

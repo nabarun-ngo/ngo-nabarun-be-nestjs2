@@ -1,0 +1,23 @@
+{
+  "_comment": "International dialling codes. key = ISO alpha-2 country code, value = display label with the dial code.",
+  "items": [
+    { "key": "IN",  "value": "India (+91)",                "description": "+91"  },
+    { "key": "US",  "value": "United States (+1)",         "description": "+1"   },
+    { "key": "GB",  "value": "United Kingdom (+44)",       "description": "+44"  },
+    { "key": "AU",  "value": "Australia (+61)",            "description": "+61"  },
+    { "key": "CA",  "value": "Canada (+1)",                "description": "+1"   },
+    { "key": "SG",  "value": "Singapore (+65)",            "description": "+65"  },
+    { "key": "AE",  "value": "United Arab Emirates (+971)","description": "+971" },
+    { "key": "NZ",  "value": "New Zealand (+64)",          "description": "+64"  },
+    { "key": "DE",  "value": "Germany (+49)",              "description": "+49"  },
+    { "key": "FR",  "value": "France (+33)",               "description": "+33"  },
+    { "key": "JP",  "value": "Japan (+81)",                "description": "+81"  },
+    { "key": "CN",  "value": "China (+86)",                "description": "+86"  },
+    { "key": "ZA",  "value": "South Africa (+27)",         "description": "+27"  },
+    { "key": "NG",  "value": "Nigeria (+234)",             "description": "+234" },
+    { "key": "PK",  "value": "Pakistan (+92)",             "description": "+92"  },
+    { "key": "BD",  "value": "Bangladesh (+880)",          "description": "+880" },
+    { "key": "LK",  "value": "Sri Lanka (+94)",            "description": "+94"  },
+    { "key": "NP",  "value": "Nepal (+977)",               "description": "+977" }
+  ]
+}

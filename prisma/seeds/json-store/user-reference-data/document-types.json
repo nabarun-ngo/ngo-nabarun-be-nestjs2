@@ -1,0 +1,10 @@
+{
+  "_comment": "Identity document types used for KYC / verification.",
+  "items": [
+    { "key": "PASSPORT",        "value": "Passport" },
+    { "key": "AADHAAR",         "value": "Aadhaar Card" },
+    { "key": "PAN",             "value": "PAN Card" },
+    { "key": "VOTER_ID",        "value": "Voter ID" },
+    { "key": "DRIVING_LICENSE", "value": "Driving License" }
+  ]
+}

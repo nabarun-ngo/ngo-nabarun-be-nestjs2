@@ -1,0 +1,11 @@
+{
+  "_comment": "Roles surfaced in the FE role picker. Add or remove entries here to control visibility without a code deployment. Keys must match Auth2 role keys.",
+  "items": [
+    { "key": "MEMBER",             "value": "Member" },
+    { "key": "PRESIDENT",          "value": "President" },
+    { "key": "VICE_PRESIDENT",     "value": "Vice President" },
+    { "key": "SECRETARY",          "value": "Secretary" },
+    { "key": "ASSISTANT_SECRETARY","value": "Assistant Secretary" },
+    { "key": "TREASURER",          "value": "Treasurer" }
+  ]
+}

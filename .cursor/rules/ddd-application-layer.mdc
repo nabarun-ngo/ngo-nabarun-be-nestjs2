@@ -1,0 +1,428 @@
+---
+description: DDD application layer rules — commands, queries, event handlers, DTOs, mappers, and application-level ports. Orchestration only — no Prisma, no HTTP concerns.
+globs: src/**/application/**/*.ts
+alwaysApply: false
+---
+
+# DDD Application Layer
+
+**Rule: orchestrates domain and infrastructure via interfaces. No Prisma imports. No HTTP response types.**
+
+This application uses **`@nestjs/cqrs`** for command/query routing and `EventBus` for domain event dispatch.
+
+The application layer is the **use-case layer**. It:
+- Receives intent from the presentation layer via `CommandBus` / `QueryBus`
+- Loads aggregates via repository interfaces (injected by token)
+- Calls domain methods — all invariants are enforced inside the domain
+- Persists the aggregate, then **manually dispatches domain events** via `EventBus.publishAll()` — the repository never dispatches events
+- Returns response DTOs — never raw domain aggregates
+
+**Domain event lifecycle — owned by the command handler:**
+```
+load aggregate → call domain method → repository.save() → eventBus.publishAll(aggregate.domainEvents) → aggregate.clearEvents()
+```
+Handlers implement `ICommandHandler` from `@nestjs/cqrs` directly — no custom base class.
+
+## Application Folder Structure
+
+```
+application/
+│
+├── commands/                               ← Write side — operations that mutate state
+│   └── cancel-order/
+│       ├── cancel-order.command.ts         ← Plain data object (input, no methods)
+│       ├── cancel-order.handler.ts         ← @Injectable, orchestrates the use case
+│       ├── cancel-order.handler.spec.ts    ← Unit test with mocked repository
+│       └── index.ts
+│
+├── queries/                                ← Read side — never mutates state
+│   └── get-order-by-id/
+│       ├── get-order-by-id.query.ts        ← Plain data object (input)
+│       ├── get-order-by-id.handler.ts      ← Loads and maps to response DTO
+│       ├── get-order-by-id.handler.spec.ts
+│       └── index.ts
+│
+├── event-handlers/                         ← React to domain events (side effects)
+│   └── on-order-placed/
+│       ├── on-order-placed.handler.ts      ← @OnEvent, triggers notifications / projections
+│       └── index.ts
+│
+├── dtos/                                   ← Input/output contracts for this layer
+│   ├── request/
+│   │   ├── place-order-request.dto.ts      ← Validated input from presentation
+│   │   └── cancel-order-request.dto.ts
+│   └── response/
+│       ├── order-response.dto.ts           ← What the caller receives back
+│       └── order-summary-response.dto.ts
+│
+├── mappers/                                ← Domain aggregate → response DTO
+│   ├── order-response.mapper.ts
+│   └── index.ts
+│
+└── ports/                                  ← Application-level interfaces (not domain ports)
+    ├── current-user.port.ts                ← Who is making this request?
+    ├── authorization.port.ts               ← Can they perform this action?
+    └── unit-of-work.port.ts                ← Transaction boundary abstraction
+```
+
+---
+
+## Command & Query Handlers — @nestjs/cqrs patterns
+
+### Module setup — required once per feature module
+
+```ts
+import { CqrsModule } from '@nestjs/cqrs';
+
+@Module({
+  imports: [CqrsModule],   // ← registers CommandBus, QueryBus, EventBus
+  providers: [
+    CancelOrderHandler,
+    GetOrderByIdHandler,
+    OnOrderCancelledHandler,
+  ],
+})
+export class OrderModule {}
+```
+
+---
+
+## `commands/` — Command Handlers (write side)
+
+A command is a **single user intent that changes state**. Each command has exactly one handler, auto-registered with `CommandBus` via `@CommandHandler`.
+
+**Command object — plain data, no methods:**
+
+```ts
+// cancel-order.command.ts
+export class CancelOrderCommand {
+  constructor(
+    readonly orderId: string,
+    readonly cancelledBy: string,
+  ) {}
+}
+```
+
+**Handler — load → call domain method → persist → publishAll:**
+
+```ts
+// cancel-order.handler.ts
+@CommandHandler(CancelOrderCommand)
+@Injectable()
+export class CancelOrderHandler implements ICommandHandler<CancelOrderCommand> {
+  constructor(
+    @Inject(IOrderRepository) private readonly orderRepository: IOrderRepository,
+    private readonly eventBus: EventBus,
+  ) {}
+
+  async execute(command: CancelOrderCommand): Promise<void> {
+    const order = await this.orderRepository.findById(command.orderId);
+    if (!order) throw new OrderNotFoundError(command.orderId);
+
+    order.cancel();   // ← invariant guard + events queued on aggregate
+
+    await this.orderRepository.update(order.id, order);
+
+    this.eventBus.publishAll(order.domainEvents);   // ← publish after successful write
+    order.clearEvents();
+  }
+}
+```
+
+**Dispatching from a controller:**
+
+```ts
+// order.controller.ts
+@Controller('orders')
+export class OrderController {
+  constructor(private readonly commandBus: CommandBus) {}
+
+  @Delete(':id')
+  cancel(@Param('id') id: string, @CurrentUser() user: User) {
+    return this.commandBus.execute(new CancelOrderCommand(id, user.id));
+  }
+}
+```
+
+**Rules:**
+- Always use `@CommandHandler(CommandClass)` — required for `CommandBus` routing.
+- Always implement `ICommandHandler<TCommand, TResult>` from `@nestjs/cqrs`.
+- Always call `eventBus.publishAll(aggregate.domainEvents)` **after** the repository write — never before.
+- Always call `aggregate.clearEvents()` immediately after `publishAll`.
+- `@Injectable()` — NestJS DI is allowed here.
+- Inject via domain-layer tokens only (`@Inject(IXxxRepository)`).
+- **No business logic** — the handler is a thin orchestrator. All rules live in the aggregate.
+- Never throw raw `Error` or `HttpException` — throw `BusinessError` subclasses only.
+- Never import Prisma types or call `prisma.*` directly.
+
+```ts
+// ❌ BAD — publishes before persisting (events reflect uncommitted state)
+order.cancel();
+this.eventBus.publishAll(order.domainEvents);
+await this.orderRepository.update(order.id, order);
+
+// ❌ BAD — missing clearEvents() (events re-fire if aggregate is saved again)
+this.eventBus.publishAll(order.domainEvents);
+// order.clearEvents() ← missing
+```
+
+---
+
+## `queries/` — Query Handlers (read side)
+
+A query reads state and returns a DTO. It **never mutates** anything — no domain methods, no repository writes, no event dispatch.
+
+**Query object:**
+
+```ts
+// get-order-by-id.query.ts
+export class GetOrderByIdQuery {
+  constructor(readonly orderId: string) {}
+}
+```
+
+**Handler — `@QueryHandler` + `IQueryHandler`:**
+
+```ts
+// get-order-by-id.handler.ts
+@QueryHandler(GetOrderByIdQuery)
+@Injectable()
+export class GetOrderByIdHandler implements IQueryHandler<GetOrderByIdQuery, OrderResponseDto> {
+  constructor(
+    @Inject(IOrderRepository)
+    private readonly orderRepository: IOrderRepository,
+  ) {}
+
+  async execute(query: GetOrderByIdQuery): Promise<OrderResponseDto> {
+    const order = await this.orderRepository.findById(query.orderId);
+    if (!order) throw new OrderNotFoundError(query.orderId);
+    return OrderResponseMapper.toDto(order);   // ← always return a DTO, never a raw aggregate
+  }
+}
+```
+
+**Dispatching from a controller:**
+
+```ts
+@Get(':id')
+getById(@Param('id') id: string) {
+  return this.queryBus.execute(new GetOrderByIdQuery(id));
+}
+```
+
+**Rules:**
+- Always use `@QueryHandler(QueryClass)` — required for `QueryBus` routing.
+- Always implement `IQueryHandler<TQuery, TResult>` from `@nestjs/cqrs`.
+- **Read-only** — no aggregate method calls, no repository writes, no event dispatch.
+- Always return a **DTO**, never a raw domain aggregate.
+- For complex read models (dashboards, reports), query handlers may use dedicated read-model repositories that bypass the domain layer entirely for performance.
+
+---
+
+## `event-handlers/` — Domain Event Handlers (side effects)
+
+React to domain events published via `EventBus`. Each handler is responsible for **one side effect** triggered by one event. Side effects include: sending notifications, updating projections, triggering downstream workflows.
+
+**Rules:**
+- Use `@EventsHandler(SomeDomainEvent)` from `@nestjs/cqrs` — required for `EventBus` routing.
+- `@Injectable()` — NestJS DI is allowed.
+- One handler file per event → one side effect. Do not pile multiple unrelated reactions into one handler class.
+- Never mutate domain state inside an event handler — if mutation is needed, dispatch a new command via `CommandBus`.
+- Never import Prisma types or call `prisma.*` directly.
+
+```ts
+// ✅ GOOD — single focused side effect, registered with EventBus
+@EventsHandler(OrderPlacedEvent)
+@Injectable()
+export class OnOrderPlacedHandler implements IEventHandler<OrderPlacedEvent> {
+  constructor(private readonly commandBus: CommandBus) {}
+
+  async handle(event: OrderPlacedEvent): Promise<void> {
+    // e.g. trigger a downstream command or call an application port
+    await this.commandBus.execute(
+      new SendOrderConfirmationCommand(event.orderId, event.customerId),
+    );
+  }
+}
+
+// ❌ BAD — mutates domain state inside an event handler
+async handle(event: OrderPlacedEvent) {
+  event.order.cancel();   // ← mutation belongs in a command handler
+}
+
+// ❌ BAD — calls Prisma directly
+async handle(event: OrderPlacedEvent) {
+  await this.prisma.order.update({ where: { id: event.orderId }, data: { notified: true } });
+}
+```
+
+---
+
+## `dtos/` — Data Transfer Objects
+
+DTOs are the contracts between the application layer and the outside world (presentation layer or external callers).
+
+**Rules:**
+- `request/` DTOs carry validated input coming **into** the application layer. Apply `class-validator` decorators here.
+- `response/` DTOs carry data going **out**. Plain classes or interfaces — no domain logic.
+- DTOs must never expose domain aggregate instances — always map first.
+- Name clearly: `PlaceOrderRequestDto`, `OrderResponseDto`, `OrderSummaryResponseDto`.
+
+```ts
+// ✅ request DTO — validated at the boundary
+export class PlaceOrderRequestDto {
+  @IsUUID()
+  customerId: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  items: OrderItemRequestDto[];
+}
+
+// ✅ response DTO — plain output shape
+export class OrderResponseDto {
+  id: string;
+  status: string;
+  totalAmount: number;
+  placedAt: string;
+}
+```
+
+---
+
+## `mappers/` — Domain → DTO Mappers
+
+Mappers translate a domain aggregate into a response DTO. They are the **only place** where domain internals are read and serialised for callers.
+
+**Rules:**
+- Static methods only — no state, no injection.
+- One mapper per aggregate / DTO pair.
+- Never expose domain aggregate instances beyond the mapper.
+
+```ts
+// order-response.mapper.ts
+export class OrderResponseMapper {
+  static toDto(order: Order): OrderResponseDto {
+    return {
+      id: order.id,
+      status: order.status,
+      totalAmount: order.totalAmount.amount,
+      placedAt: order.createdAt.toISOString(),
+    };
+  }
+}
+```
+
+---
+
+## `ports/` — Application-Level Ports
+
+These interfaces represent cross-cutting concerns that the application layer needs but that are not domain concepts. Implemented in the presentation or infrastructure layer and injected via DI tokens.
+
+| Port | Interface token | Implementation |
+|---|---|---|
+| `ICurrentUserPort` | `Symbol('ICurrentUserPort')` | `CurrentUserAdapter` from `@lib/core` |
+| `IAuthorizationPort` | `Symbol('IAuthorizationPort')` | feature-specific or shared |
+
+**Rules:**
+- Pure TypeScript interfaces — no `@Injectable()`, no NestJS types.
+- Same token naming rule: `Symbol` name = interface name.
+- Implementations live in the **presentation** or **infrastructure** layer, never in the application or domain layer.
+
+### `ICurrentUserPort` — full implementation guide
+
+The port, adapter, and interceptor all ship in `@lib/core`. Feature modules only need to register the binding.
+
+**Port (application layer — defines the contract):**
+
+```ts
+// src/core/application/ports/current-user.port.ts
+export const ICurrentUserPort = Symbol('ICurrentUserPort');
+
+export interface ICurrentUserPort {
+  getUserId(): string;           // stable user identifier (sub claim)
+  getEmail(): string | undefined;
+  getRoles(): string[];
+  getPermissions(): string[];
+  hasRole(role: string): boolean;
+  hasPermission(permission: string): boolean;
+}
+```
+
+**How it flows end-to-end:**
+
+```
+HTTP request arrives
+    │
+    ▼
+UnifiedAuthGuard               ← sets request.user (AuthUser) — from @lib/auth
+    │
+    ▼
+CommandHandler.execute()
+    │  (NestJS injects a fresh CurrentUserAdapter instance for this request)
+    ▼
+this.currentUser.getUserId()   ← CurrentUserAdapter reads request.user directly
+                                  same mechanism as @CurrentUser() decorator
+```
+
+**No extra setup needed** — `CurrentUserAdapter` uses `@Inject(REQUEST)` and `Scope.REQUEST`, exactly the same way `@CurrentUser()` reads `request.user`.
+
+**Global registration in `AppModule`:**
+
+```ts
+// app.module.ts
+// Nothing extra needed globally — just register the binding per module below.
+```
+
+**Per-module binding (in each module that needs current user in handlers):**
+
+```ts
+// order.module.ts
+import { CurrentUserAdapter, ICurrentUserPort } from '@lib/core';
+
+@Module({
+  providers: [
+    { provide: ICurrentUserPort, useClass: CurrentUserAdapter },
+    PlaceOrderHandler,
+  ],
+})
+export class OrderModule {}
+```
+
+**Using in a command handler:**
+
+```ts
+@CommandHandler(PlaceOrderCommand)
+@Injectable()
+export class PlaceOrderHandler implements ICommandHandler<PlaceOrderCommand> {
+  constructor(
+    @Inject(IOrderRepository) private readonly repo: IOrderRepository,
+    @Inject(ICurrentUserPort) private readonly currentUser: ICurrentUserPort,
+    private readonly eventBus: EventBus,
+  ) {}
+
+  async execute(command: PlaceOrderCommand): Promise<OrderResponseDto> {
+    const userId = this.currentUser.getUserId();   // ← reads request.user, no HTTP import
+
+    const order = Order.create(command.items, userId);
+    await this.repo.save(order);
+
+    this.eventBus.publishAll(order.domainEvents);
+    order.clearEvents();
+    return OrderResponseMapper.toDto(order);
+  }
+}
+```
+
+**Scope cascade — what it means in practice:**
+
+`CurrentUserAdapter` is `Scope.REQUEST`. NestJS automatically makes any handler that injects it REQUEST-scoped too — a fresh instance per request. For most handlers this is invisible and harmless. If you need to avoid it (e.g. a hot-path handler with expensive construction), pass `userId` through the command instead.
+
+**Pass via command vs inject via port — when to use which:**
+
+| Scenario | Use |
+|---|---|
+| User identity is part of the business intent (e.g. `cancelledBy`) | Pass in command constructor |
+| Handler needs `hasRole()` / `hasPermission()` checks | Inject `ICurrentUserPort` |
+| User identity is needed in many nested calls | Inject `ICurrentUserPort` |
+

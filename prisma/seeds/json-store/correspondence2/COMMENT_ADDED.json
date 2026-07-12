@@ -1,0 +1,5 @@
+{
+  "subject": "New comment on {{resourceName}}",
+  "htmlTemplate": "<p>Hi {{recipientName}}, a new comment was added to <strong>{{resourceName}}</strong> by <strong>{{authorName}}</strong>: <em>{{commentText}}</em></p>",
+  "textTemplate": "Hi {{recipientName}}, {{authorName}} commented on {{resourceName}}: {{commentText}}"
+}

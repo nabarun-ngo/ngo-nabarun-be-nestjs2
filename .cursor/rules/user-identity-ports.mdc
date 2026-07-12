@@ -1,0 +1,172 @@
+---
+description: User identity ports — idpSub vs userId convention, three-port architecture guide, consuming-app template.
+globs:
+  - "src/**/*.ts"
+alwaysApply: true
+---
+
+# User Identity Ports — Architecture Guide
+
+## Core Principle
+
+`idpSub` (JWT `sub` claim) is **auth2-internal**. It is decoded in auth2, translated to `userId`
+(app profile UUID) via `IUserLookupPort`, and **never passed raw to any other module**.
+All domain modules use `userId` exclusively.
+
+---
+
+## Identity Field Convention
+
+| Field | Type | Where | Who may use |
+|---|---|---|---|
+| `idpSub` | IdP subject (`JWT.idpSub`) | `AuthUser.idpSub` | auth2 guards, adapters, token-vault2 only |
+| `userId` | App profile UUID | `AuthUser.userId` | All domain modules — audit fields, access control |
+| `userInfo` | `UserInfo` (full profile) | `AuthUser.userInfo` | Any module needing display data from `AuthUser` |
+
+---
+
+## Three-Port Decision Guide
+
+| Question | Answer |
+|---|---|
+| I need to look up a user by app UUID | Use `IUserLookupPort.findById(id)` |
+| I need to look up multiple users by app UUIDs | Use `IUserLookupPort.findByIds(ids)` |
+| I need to find a user by IdP subject (auth2 only) | Use `IUserLookupPort.findByIdPSub(idpSub)` |
+| I need all members of a role | Use `IUserRolePort.findIdPSubsByRole(roleName)` → then `IUserLookupPort.findByIdPSubs(subs)` |
+| I need to grant/revoke/list roles programmatically | Use `AuthFacade` — never call CommandBus directly |
+
+---
+
+## Port Locations
+
+```
+src/core/domain/ports/user-lookup.port.ts      ← IUserLookupPort + UserInfo (host app implements)
+src/auth2/domain/ports/user-role.port.ts       ← IUserRolePort (AuthModule provides, do NOT implement in host)
+src/auth2/application/services/auth.facade.ts  ← AuthFacade (AuthModule provides)
+```
+
+---
+
+## What NOT to Do
+
+```ts
+// ❌ NEVER read user.idpSub outside auth2
+const userId = user.idpSub;   // wrong — sub is opaque, use user.userId
+
+// ❌ NEVER store idpSub in any audit field
+createdById: user.idpSub     // wrong — ALWAYS use user.userId
+updatedById: user.idpSub     // wrong — ALWAYS use user.userId
+
+// ❌ NEVER fall back to idpSub when userId is unavailable
+const auditId = caller.userId ?? caller.idpSub; // wrong — throw instead
+
+// ❌ NEVER implement IUserRolePort in the host app
+// IUserRolePort is provided by AuthModule — it queries authUserRole/authUserRoleGroup tables
+
+// ❌ NEVER import Prisma types into IUserLookupPort
+// The port returns UserInfo — a pure TypeScript interface with no Prisma dependency
+
+// ❌ NEVER pass idpSub to correspondence2 or any other non-auth2 module
+// All cross-module user references MUST use userId (app profile UUID)
+```
+
+---
+
+## Correct Audit Field Pattern
+
+`userId` must always be available by the time an authenticated request reaches a command handler.
+If it is absent, the caller has a misconfigured module wiring — throw, never silently fall back.
+
+```ts
+// ✅ Controller helper — use this everywhere a userId is needed for audit
+private requireUserId(caller: AuthUser): string {
+  if (!caller.userId) {
+    throw new Error(
+      'userId not available on AuthUser — ensure UserModule is imported AFTER AuthModule',
+    );
+  }
+  return caller.userId;
+}
+
+// ✅ Correct usage in controller actions
+createUser(...) {
+  return this.commandBus.execute(
+    new CreateUserCommand({ ..., createdById: this.requireUserId(user) }),
+  );
+}
+
+updateUser(...) {
+  return this.commandBus.execute(
+    new UpdateUserAdminCommand({ ..., adminId: this.requireUserId(user) }),
+  );
+}
+```
+
+### Naming convention for audit params in Commands
+
+| Field | Carries | Previously (❌) | Now (✅) |
+|---|---|---|---|
+| `createdById` | userId of creator | `createdBySub` | `createdById` |
+| `updatedById` / `adminId` / `requestorId` | userId of actor | `adminSub`, `requestorSub` | `adminId`, `requestorId` |
+
+All command fields that represent "who performed this action" must end in `Id` and carry the app profile UUID, never the IdP subject.
+
+---
+
+## Consuming App — Registration Template
+
+```ts
+// UserModule (host app):
+@Module({
+  providers: [
+    { provide: IUserLookupPort, useClass: UserAdapter },
+  ],
+  exports: [IUserLookupPort],
+})
+export class UserModule {}
+
+// UserAdapter implements IUserLookupPort:
+@Injectable()
+export class UserAdapter implements IUserLookupPort {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async findById(id: string): Promise<UserInfo | null> { ... }
+  async findByIds(ids: string[]): Promise<UserInfo[]> { ... }
+  async findByIdPSub(idpSub: string): Promise<UserInfo | null> { ... }
+  async findByIdPSubs(idpSubs: string[]): Promise<UserInfo[]> { ... }
+}
+
+// AppModule — wire everything:
+AuthModule.forRoot({ ... }), // registers IUserRolePort + AuthFacade automatically
+UserModule,                   // registers IUserLookupPort
+CorrespondenceModule.forRoot({ ..., imports: [AuthModule, UserModule] }),
+```
+
+---
+
+## Caching Reference
+
+| Call site | Cached? | Where |
+|---|---|---|
+| `UserAccessAdapter.resolve(idpSub)` → `IUserLookupPort.findByIdPSub` | Yes — TTL from `userAccessTtlMs` (default 30 min) | `CacheService` inside `UserAccessAdapter` |
+| `ApiKeyVerifierAdapter.validate` | Yes — TTL from `apiKeyTtlMs` (default 30 min) | `CacheService` inside `ApiKeyVerifierAdapter` — `IUserLookupPort` not called |
+| `SubscriptionResolutionService` dispatch path | No — hits port fresh per dispatch | Consuming app's `UserAdapter` may add own cache |
+| `AuthFacade.getUsersByRole` | No | Consuming app's `UserAdapter` may add own cache |
+
+---
+
+## Breaking Changes (from old `sub`/`userSub` approach)
+
+- `AuthUser.idpSub` → `AuthUser.idpSub` — update all `user.idpSub` reads
+- `AuthUser.claims` → `AuthUser.idpClaims` — update all `user.claims` reads
+- REST URL `auth2/rbac/users/:sub` → `auth2/rbac/users/:idpSub` — clients must update
+- `UserRoleResponseDto.userSub` → `idpSub` — Swagger schema changed
+- DB columns: `auth_user_role.userSub` → `idpSub`, `auth_user_role_group.userSub` → `idpSub` (migration required)
+- `IUserQueryPort` and `USER_QUERY_PORT` are **removed** — replace with `IUserLookupPort` + `IUserRolePort`
+
+---
+
+## Justified Exceptions
+
+- `token-vault2` uses `ownerSub` — IdP-bound by design, accepted exception
+- Within `auth2` guards and adapters, `idpSub` is the local identifier — that is intentional
