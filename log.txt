@@ -1,0 +1,17 @@
+D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\services\schema-object-factory.js:340
+            throw new Error(`A circular dependency has been detected ${errorIn}(property key: "${key}"). To resolve this, use a lazy resolver for the property type ("type: () => ClassType") on each side of the relationship, or break the cycle by introducing a reference via @ApiExtraModels.`);
+                  ^
+
+Error: [SuccessResponse] A circular dependency has been detected (property key: "info"). To resolve this, use a lazy resolver for the property type ("type: () => ClassType") on each side of the relationship, or break the cycle by introducing a reference via @ApiExtraModels.
+    at SchemaObjectFactory.createNotBuiltInTypeReference (D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\services\schema-object-factory.js:340:19)
+    at SchemaObjectFactory.createSchemaMetadata (D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\services\schema-object-factory.js:486:25)
+    at SchemaObjectFactory.mergePropertyWithMetadata (D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\services\schema-object-factory.js:270:21)
+    at D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\services\schema-object-factory.js:180:33
+    at Array.map (<anonymous>)
+    at SchemaObjectFactory.extractPropertiesFromType (D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\services\schema-object-factory.js:177:52)
+    at SchemaObjectFactory.exploreModelSchema (D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\services\schema-object-factory.js:217:41)
+    at D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\swagger-scanner.js:81:38
+    at Array.forEach (<anonymous>)
+    at SwaggerScanner.addExtraModels (D:\Workspaces\Nabarun-Workspace\nestjs-shared\node_modules\@nestjs\swagger\dist\swagger-scanner.js:80:21)
+
+Node.js v22.20.0
