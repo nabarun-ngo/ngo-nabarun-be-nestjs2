@@ -1,0 +1,9 @@
+export enum SubscribedVia {
+  CREATED = 'CREATED',
+  COMMENTED = 'COMMENTED',
+  CONFIRMED = 'CONFIRMED',
+  ASSIGNED = 'ASSIGNED',
+  MANUAL = 'MANUAL',
+  ROLE_DEFAULT = 'ROLE_DEFAULT',
+  AUTO = 'AUTO',
+}

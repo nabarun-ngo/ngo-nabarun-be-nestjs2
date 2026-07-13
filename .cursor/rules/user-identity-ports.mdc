@@ -41,8 +41,8 @@ All domain modules use `userId` exclusively.
 
 ```
 src/core/domain/ports/user-lookup.port.ts      ← IUserLookupPort + UserInfo (host app implements)
-src/auth2/domain/ports/user-role.port.ts       ← IUserRolePort (AuthModule provides, do NOT implement in host)
-src/auth2/application/services/auth.facade.ts  ← AuthFacade (AuthModule provides)
+src/auth2/domain/ports/user-role.port.ts       ← IUserRolePort (Auth2Module provides, do NOT implement in host)
+src/auth2/application/services/auth.facade.ts  ← AuthFacade (Auth2Module provides)
 ```
 
 ---
@@ -51,17 +51,13 @@ src/auth2/application/services/auth.facade.ts  ← AuthFacade (AuthModule provid
 
 ```ts
 // ❌ NEVER read user.idpSub outside auth2
-const userId = user.idpSub;   // wrong — sub is opaque, use user.userId
+const userId = user.idpSub;   // wrong — sub is gone, use user.userId
 
-// ❌ NEVER store idpSub in any audit field
-createdById: user.idpSub     // wrong — ALWAYS use user.userId
-updatedById: user.idpSub     // wrong — ALWAYS use user.userId
-
-// ❌ NEVER fall back to idpSub when userId is unavailable
-const auditId = caller.userId ?? caller.idpSub; // wrong — throw instead
+// ❌ NEVER use idpSub in audit fields outside auth2
+createdBy: user.idpSub     // wrong — use user.userId ?? user.idpSub
 
 // ❌ NEVER implement IUserRolePort in the host app
-// IUserRolePort is provided by AuthModule — it queries authUserRole/authUserRoleGroup tables
+// IUserRolePort is provided by Auth2Module — it queries authUserRole/authUserRoleGroup tables
 
 // ❌ NEVER import Prisma types into IUserLookupPort
 // The port returns UserInfo — a pure TypeScript interface with no Prisma dependency
@@ -74,42 +70,15 @@ const auditId = caller.userId ?? caller.idpSub; // wrong — throw instead
 
 ## Correct Audit Field Pattern
 
-`userId` must always be available by the time an authenticated request reaches a command handler.
-If it is absent, the caller has a misconfigured module wiring — throw, never silently fall back.
-
 ```ts
-// ✅ Controller helper — use this everywhere a userId is needed for audit
-private requireUserId(caller: AuthUser): string {
-  if (!caller.userId) {
-    throw new Error(
-      'userId not available on AuthUser — ensure UserModule is imported AFTER AuthModule',
-    );
-  }
-  return caller.userId;
-}
+// In controllers and command handlers:
+const auditId = caller.userId ?? caller.idpSub;
 
-// ✅ Correct usage in controller actions
-createUser(...) {
-  return this.commandBus.execute(
-    new CreateUserCommand({ ..., createdById: this.requireUserId(user) }),
-  );
-}
-
-updateUser(...) {
-  return this.commandBus.execute(
-    new UpdateUserAdminCommand({ ..., adminId: this.requireUserId(user) }),
-  );
+// In auth2 controllers, use the private helper:
+private auditId(caller: AuthUser): string {
+  return caller.userId ?? caller.idpSub;
 }
 ```
-
-### Naming convention for audit params in Commands
-
-| Field | Carries | Previously (❌) | Now (✅) |
-|---|---|---|---|
-| `createdById` | userId of creator | `createdBySub` | `createdById` |
-| `updatedById` / `adminId` / `requestorId` | userId of actor | `adminSub`, `requestorSub` | `adminId`, `requestorId` |
-
-All command fields that represent "who performed this action" must end in `Id` and carry the app profile UUID, never the IdP subject.
 
 ---
 
@@ -137,9 +106,9 @@ export class UserAdapter implements IUserLookupPort {
 }
 
 // AppModule — wire everything:
-AuthModule.forRoot({ ... }), // registers IUserRolePort + AuthFacade automatically
+Auth2Module.forRoot({ ... }), // registers IUserRolePort + AuthFacade automatically
 UserModule,                   // registers IUserLookupPort
-CorrespondenceModule.forRoot({ ..., imports: [AuthModule, UserModule] }),
+Correspondence2Module.forRoot({ ..., imports: [Auth2Module, UserModule] }),
 ```
 
 ---

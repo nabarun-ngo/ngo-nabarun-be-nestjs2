@@ -1,0 +1,161 @@
+import { DynamicModule } from '@nestjs/common';
+import { DatabaseModule, DATABASE_OPTIONS } from '@ce/nestjs-shared-persistence/database.module';
+import { PRISMA_CLIENT } from '@ce/nestjs-shared-persistence/prisma/base-prisma.service';
+
+const validOptions = {
+  postgresUrl: 'postgresql://user:pass@localhost:5432/db',
+  redisUrl: 'redis://localhost:6379',
+  prismaClientFactory: (_url: string) => ({
+    $connect: jest.fn(),
+    $disconnect: jest.fn(),
+    $extends: jest.fn().mockReturnThis(),
+    $transaction: jest.fn(),
+  }),
+};
+
+describe('DatabaseModule', () => {
+  describe('forRoot()', () => {
+    it('returns a DynamicModule', () => {
+      const mod = DatabaseModule.forRoot(validOptions);
+      expect(mod).toBeDefined();
+      expect(mod.module).toBe(DatabaseModule);
+    });
+
+    it('is marked as global', () => {
+      const mod = DatabaseModule.forRoot(validOptions) as any;
+      expect(mod.global).toBe(true);
+    });
+
+    it('provides DATABASE_OPTIONS token with validated options', () => {
+      const mod = DatabaseModule.forRoot(validOptions) as DynamicModule;
+      const optionsProvider = (mod.providers as any[]).find(
+        (p) => p.provide === DATABASE_OPTIONS,
+      );
+      expect(optionsProvider).toBeDefined();
+      expect(optionsProvider.useValue.postgresUrl).toBe(validOptions.postgresUrl);
+    });
+
+    it('provides PRISMA_CLIENT token', () => {
+      const mod = DatabaseModule.forRoot(validOptions) as DynamicModule;
+      const prismaProvider = (mod.providers as any[]).find(
+        (p) => p.provide === PRISMA_CLIENT,
+      );
+      expect(prismaProvider).toBeDefined();
+      expect(typeof prismaProvider.useFactory).toBe('function');
+    });
+
+    it('creates Prisma client from sync validated options', () => {
+      const prismaClient = { $connect: jest.fn(), $disconnect: jest.fn() };
+      const prismaClientFactory = jest.fn().mockReturnValue(prismaClient);
+      const mod = DatabaseModule.forRoot({
+        ...validOptions,
+        prismaClientFactory,
+      }) as DynamicModule;
+      const prismaProvider = (mod.providers as any[]).find(
+        (p) => p.provide === PRISMA_CLIENT,
+      );
+
+      expect(prismaProvider.useFactory()).toBe(prismaClient);
+      expect(prismaClientFactory).toHaveBeenCalledWith(validOptions.postgresUrl);
+    });
+
+    it('throws on invalid postgresUrl at startup', () => {
+      expect(() =>
+        DatabaseModule.forRoot({
+          ...validOptions,
+          postgresUrl: 'not-a-url',
+        }),
+      ).toThrow('[DatabaseModule] Config validation failed:');
+    });
+
+    it('throws on missing prismaClientFactory', () => {
+      expect(() =>
+        DatabaseModule.forRoot({
+          postgresUrl: validOptions.postgresUrl,
+          redisUrl: validOptions.redisUrl,
+        } as any),
+      ).toThrow('[DatabaseModule] Config validation failed:');
+    });
+
+    it('exports BasePrismaService, CacheService, LockingService', () => {
+      const mod = DatabaseModule.forRoot(validOptions) as DynamicModule;
+      expect(mod.exports).toBeDefined();
+      expect((mod.exports as unknown[]).length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('forRootAsync()', () => {
+    it('returns a DynamicModule with async factory', () => {
+      const mod = DatabaseModule.forRootAsync({
+        useFactory: () => validOptions,
+      });
+      expect(mod).toBeDefined();
+      expect(mod.module).toBe(DatabaseModule);
+      const optionsProvider = (mod.providers as any[]).find(
+        (p) => p.provide === DATABASE_OPTIONS,
+      );
+      expect(optionsProvider).toBeDefined();
+      expect(typeof optionsProvider.useFactory).toBe('function');
+    });
+
+    it('accepts inject array for factory dependencies', () => {
+      const TOKEN = Symbol('MyToken');
+      const mod = DatabaseModule.forRootAsync({
+        inject: [TOKEN],
+        useFactory: (_myToken: any) => validOptions,
+      });
+      const optionsProvider = (mod.providers as any[]).find(
+        (p) => p.provide === DATABASE_OPTIONS,
+      );
+      expect(optionsProvider.inject).toContain(TOKEN);
+    });
+
+    it('validates async factory options', async () => {
+      const mod = DatabaseModule.forRootAsync({
+        useFactory: () => ({
+          ...validOptions,
+          postgresUrl: 'not-a-url',
+        }),
+      });
+      const optionsProvider = (mod.providers as any[]).find(
+        (p) => p.provide === DATABASE_OPTIONS,
+      );
+
+      await expect(optionsProvider.useFactory()).rejects.toThrow(
+        '[DatabaseModule] Config validation failed:',
+      );
+    });
+
+    it('creates Prisma client from validated DATABASE_OPTIONS provider', () => {
+      const mod = DatabaseModule.forRootAsync({
+        useFactory: () => validOptions,
+      });
+      const prismaProvider = (mod.providers as any[]).find(
+        (p) => p.provide === PRISMA_CLIENT,
+      );
+
+      expect(prismaProvider.inject).toEqual([DATABASE_OPTIONS]);
+    });
+
+    it('async Prisma provider uses validated DATABASE_OPTIONS', async () => {
+      const prismaClient = { $connect: jest.fn(), $disconnect: jest.fn() };
+      const prismaClientFactory = jest.fn().mockReturnValue(prismaClient);
+      const mod = DatabaseModule.forRootAsync({
+        useFactory: () => ({
+          ...validOptions,
+          prismaClientFactory,
+        }),
+      });
+      const optionsProvider = (mod.providers as any[]).find(
+        (p) => p.provide === DATABASE_OPTIONS,
+      );
+      const prismaProvider = (mod.providers as any[]).find(
+        (p) => p.provide === PRISMA_CLIENT,
+      );
+      const validated = await optionsProvider.useFactory();
+
+      await expect(prismaProvider.useFactory(validated)).resolves.toBe(prismaClient);
+      expect(prismaClientFactory).toHaveBeenCalledWith(validOptions.postgresUrl);
+    });
+  });
+});

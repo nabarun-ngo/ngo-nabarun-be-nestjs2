@@ -4,33 +4,52 @@ node_modules/
 # Build output
 dist/
 
-# Generated Prisma client (re-generated from schema — never commit)
+# Turbo cache
+.turbo/
+
+# TypeScript incremental build
+*.tsbuildinfo
+
+# Accidental tsc emit in source trees (use `tsc --noEmit` for type-check)
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.js.map
+packages/*/src/**/*.d.ts.map
+
+apps/*/src/**/*.js
+apps/*/src/**/*.d.ts
+apps/*/src/**/*.js.map
+apps/*/src/**/*.d.ts.map
+!apps/*/src/**/*-stubs.d.ts
+
+# Generated / synced code
 generated/
+apps/api/src/persistence/prisma/
+**/database/generated/**
+**/prisma/models/shared/
+
+# Test coverage
+coverage/
 
 # Environment files
 .env
-.env.local
-.env.*.local
-
-# Prisma shared fragments (synced from nestjs-shared postinstall)
-prisma/models/shared/
+.env.*
+!.env.example
 
 # Logs
 *.log
 npm-debug.log*
 
-# OS
+# IDE / OS
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
-
-# IDE
-.idea/
-.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# TypeScript incremental build
-*.tsbuildinfo
+# Tool caches
+.eslintcache

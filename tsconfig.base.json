@@ -1,0 +1,97 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "node16",
+    "lib": [
+      "ES2022"
+    ],
+    "strict": false,
+    "moduleResolution": "node16",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": false,
+    "types": [
+      "jest",
+      "node"
+    ],
+    "paths": {
+      "@ce/nestjs-shared-core": [
+        "./packages/nestjs-shared-core/src/index.ts"
+      ],
+      "@ce/nestjs-shared-core/*": [
+        "./packages/nestjs-shared-core/src/*"
+      ],
+      "@ce/nestjs-shared-persistence": [
+        "./packages/nestjs-shared-persistence/src/index.ts"
+      ],
+      "@ce/nestjs-shared-persistence/*": [
+        "./packages/nestjs-shared-persistence/src/*"
+      ],
+      "@ce/nestjs-shared-auth": [
+        "./packages/nestjs-shared-auth/src/index.ts"
+      ],
+      "@ce/nestjs-shared-auth/*": [
+        "./packages/nestjs-shared-auth/src/*"
+      ],
+      "@ce/nestjs-shared-observability": [
+        "./packages/nestjs-shared-observability/src/index.ts"
+      ],
+      "@ce/nestjs-shared-observability/*": [
+        "./packages/nestjs-shared-observability/src/*"
+      ],
+      "@ce/nestjs-shared-queue": [
+        "./packages/nestjs-shared-queue/src/index.ts"
+      ],
+      "@ce/nestjs-shared-queue/*": [
+        "./packages/nestjs-shared-queue/src/*"
+      ],
+      "@ce/nestjs-shared-json-store": [
+        "./packages/nestjs-shared-json-store/src/index.ts"
+      ],
+      "@ce/nestjs-shared-json-store/*": [
+        "./packages/nestjs-shared-json-store/src/*"
+      ],
+      "@ce/nestjs-shared-token-vault": [
+        "./packages/nestjs-shared-token-vault/src/index.ts"
+      ],
+      "@ce/nestjs-shared-token-vault/*": [
+        "./packages/nestjs-shared-token-vault/src/*"
+      ],
+      "@ce/nestjs-shared-dms": [
+        "./packages/nestjs-shared-dms/src/index.ts"
+      ],
+      "@ce/nestjs-shared-dms/*": [
+        "./packages/nestjs-shared-dms/src/*"
+      ],
+      "@ce/nestjs-shared-comment": [
+        "./packages/nestjs-shared-comment/src/index.ts"
+      ],
+      "@ce/nestjs-shared-comment/*": [
+        "./packages/nestjs-shared-comment/src/*"
+      ],
+      "@ce/nestjs-shared-custom-fields": [
+        "./packages/nestjs-shared-custom-fields/src/index.ts"
+      ],
+      "@ce/nestjs-shared-custom-fields/*": [
+        "./packages/nestjs-shared-custom-fields/src/*"
+      ],
+      "@ce/nestjs-shared-cron": [
+        "./packages/nestjs-shared-cron/src/index.ts"
+      ],
+      "@ce/nestjs-shared-cron/*": [
+        "./packages/nestjs-shared-cron/src/*"
+      ],
+      "@ce/nestjs-shared-correspondence": [
+        "./packages/nestjs-shared-correspondence/src/index.ts"
+      ],
+      "@ce/nestjs-shared-correspondence/*": [
+        "./packages/nestjs-shared-correspondence/src/*"
+      ]
+    }
+  }
+}

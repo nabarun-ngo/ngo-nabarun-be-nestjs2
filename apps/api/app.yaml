@@ -1,0 +1,45 @@
+runtime: nodejs24
+service: api-staging
+
+# Standard environment with F1 instance class
+instance_class: F1
+
+# Automatic scaling configuration
+automatic_scaling:
+  min_instances: 0
+  max_instances: 1
+  min_idle_instances: 0
+  max_idle_instances: 0
+  min_pending_latency: automatic
+  max_pending_latency: automatic
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.65
+
+# Environment variables for Doppler
+env_variables:
+  PORT: "8080"
+  NODE_OPTIONS: "--max-old-space-size=128"
+
+
+# Entrypoint - runs the start script with Doppler
+# Note: Migration is handled separately in the CI/CD pipeline before deployment
+entrypoint: >
+  sh -c '
+  export PATH="$PWD/bin:$PATH";
+  if [ -f "./bin/doppler" ]; then
+    echo "🔐 Setting Doppler CLI permissions...";
+    chmod +x ./bin/doppler;
+    echo "🔐 Starting with Doppler CLI...";
+    ./bin/doppler run --token="$DOPPLER_TOKEN" --project="$DOPPLER_PROJECT" --config="$DOPPLER_CONFIG" -- node dist/main;
+  else
+    echo "⚠️ Doppler CLI not found, starting directly...";
+    node dist/main;
+  fi
+  '
+
+# Handlers for static files (if needed)
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
+    redirect_http_response_code: 301

@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Generated Prisma client (re-generated from schema — never commit)
+generated/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Prisma shared fragments (synced from nestjs-shared postinstall)
+prisma/models/shared/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript incremental build
+*.tsbuildinfo

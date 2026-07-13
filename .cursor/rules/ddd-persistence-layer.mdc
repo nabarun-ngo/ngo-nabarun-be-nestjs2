@@ -353,7 +353,7 @@ const results = await Promise.all(subs.map((sub) => this.repo.findByIdPSub(sub))
 
 ### Batch methods at every layer
 
-When a port interface (`IUserLookupPort`, etc.) needs to resolve multiple entities by ID or key, the **repository interface** must expose a dedicated batch method. The port adapter then delegates to that single batch call:
+When a port interface needs to resolve multiple entities by ID or key, the **repository interface** must expose a dedicated batch method. The port adapter then delegates to that single batch call:
 
 ```ts
 // ✅ Domain interface — batch contract

@@ -1,0 +1,31 @@
+{
+  "name": "@ce/nestjs-shared-cron",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist && rimraf .turbo",
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig.build.json",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/**/*.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@ce/nestjs-shared-core": "*",
+    "@ce/nestjs-shared-auth": "*",
+    "@ce/nestjs-shared-json-store": "*",
+    "@ce/nestjs-shared-queue": "*"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  }
+}
