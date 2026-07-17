@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "key": "NOT_STARTED",
+      "value": "Not Started"
+    },
+    {
+      "key": "IN_PROGRESS",
+      "value": "In Progress"
+    },
+    {
+      "key": "ACHIEVED",
+      "value": "Achieved"
+    },
+    {
+      "key": "PARTIALLY_ACHIEVED",
+      "value": "Partially Achieved"
+    },
+    {
+      "key": "FAILED",
+      "value": "Failed"
+    }
+  ]
+}

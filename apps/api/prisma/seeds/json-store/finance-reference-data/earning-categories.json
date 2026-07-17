@@ -1,0 +1,11 @@
+{
+  "_comment": "Earning category options (legacy Firebase EARNING_CATEGORIES).",
+  "items": [
+    { "key": "INTEREST", "value": "Interest" },
+    { "key": "SERVICE", "value": "Service" },
+    { "key": "PRODUCT", "value": "Product" },
+    { "key": "GRANT", "value": "Grant" },
+    { "key": "SPONSORSHIP", "value": "Sponsorship" },
+    { "key": "OTHER", "value": "Other" }
+  ]
+}

@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { validateApiKey as verifyKeyHash } from '@ce/nestjs-shared-core';
-import { CacheService } from '@ce/nestjs-shared-persistence';
+import { validateApiKey as verifyKeyHash, ICACHE_PORT, ICachePort } from '@ce/nestjs-shared-core';
 import { IApiKeyVerifierPort } from '../../application/ports/api-key-verifier.port';
 import { IApiKeyRepository } from '../../domain/repositories/api-key.repository';
 import { ApiKey } from '../../domain/aggregates/api-key/api-key.aggregate';
@@ -15,7 +14,7 @@ export class ApiKeyVerifierAdapter implements IApiKeyVerifierPort {
   constructor(
     @Inject(IApiKeyRepository) private readonly repo: IApiKeyRepository,
     @Inject(AUTH2_OPTIONS) private readonly options: Auth2ModuleOptions,
-    @Inject(CacheService) private readonly cache: CacheService,
+    @Inject(ICACHE_PORT) private readonly cache: ICachePort,
   ) {}
 
   private cacheKey(keyId: string): string {
@@ -44,7 +43,7 @@ export class ApiKeyVerifierAdapter implements IApiKeyVerifierPort {
     };
 
     const ttl = this.options.cache?.apiKeyTtlMs ?? 1_800_000;
-    await this.cache.set(this.cacheKey(keyId), authUser, ttl);
+    await this.cache.set(this.cacheKey(keyId), authUser, { ttlMs: ttl });
 
     return authUser;
   }

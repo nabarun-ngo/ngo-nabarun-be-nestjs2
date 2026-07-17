@@ -19,7 +19,7 @@ describe('QueueOptionsSchema', () => {
     const result = QueueOptionsSchema.safeParse({});
     expect(result.success).toBe(false);
     if (!result.success) {
-      const paths = result.error.errors.map((e) => e.path.join('.'));
+      const paths = result.error.issues.map((e) => e.path.join('.'));
       expect(paths).toContain('connection');
     }
   });
@@ -30,7 +30,7 @@ describe('QueueOptionsSchema', () => {
     });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors[0].message).toMatch(
+      expect(result.error.issues[0].message).toMatch(
         /Provide either connection\.url or connection\.host/,
       );
     }

@@ -1,0 +1,8 @@
+{
+  "name": "donation-monthly-raise",
+  "expression": "0 0 1 * *",
+  "description": "Raise monthly donations for all active members on the 1st of each month",
+  "handler": "TriggerMonthlyDonationJob",
+  "enabled": true,
+  "inputData": {}
+}

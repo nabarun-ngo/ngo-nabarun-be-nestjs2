@@ -1,0 +1,85 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsArray, IsDate, IsEnum, IsInt, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { ActivityPriority, ActivityScale, ActivityStatus, ActivityType } from '../../domain/enums/activity.enum';
+
+export class CreateActivityDto {
+  @IsString() @ApiProperty() name!: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() description?: string;
+  @IsEnum(ActivityScale) @ApiProperty({ enum: ActivityScale }) scale!: ActivityScale;
+  @IsEnum(ActivityType) @ApiProperty({ enum: ActivityType }) type!: ActivityType;
+  @IsEnum(ActivityPriority) @ApiProperty({ enum: ActivityPriority }) priority!: ActivityPriority;
+  @IsOptional() @IsDate() @Type(() => Date) @ApiPropertyOptional() startDate?: Date;
+  @IsOptional() @IsDate() @Type(() => Date) @ApiPropertyOptional() endDate?: Date;
+  @IsOptional() @IsString() @ApiPropertyOptional() location?: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() venue?: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() assignedTo?: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() organizerId?: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() parentActivityId?: string;
+  @IsOptional() @IsInt() @Min(0) @ApiPropertyOptional() expectedParticipants?: number;
+  @IsOptional() @IsNumber() @Min(0.01) @ApiPropertyOptional() estimatedCost?: number;
+  @IsOptional() @IsString() @ApiPropertyOptional() currency?: string;
+  @IsOptional() @IsArray() @IsString({ each: true }) @ApiPropertyOptional({ type: [String] }) tags?: string[];
+  @IsOptional() @ApiPropertyOptional() metadata?: Record<string, unknown>;
+}
+
+export class UpdateActivityDto {
+  @IsOptional() @IsString() @ApiPropertyOptional() name?: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() description?: string;
+  @IsOptional() @IsEnum(ActivityType) @ApiPropertyOptional({ enum: ActivityType }) type?: ActivityType;
+  @IsOptional() @IsEnum(ActivityStatus) @ApiPropertyOptional({ enum: ActivityStatus }) status?: ActivityStatus;
+  @IsOptional() @IsEnum(ActivityPriority) @ApiPropertyOptional({ enum: ActivityPriority }) priority?: ActivityPriority;
+  @IsOptional() @IsDate() @Type(() => Date) @ApiPropertyOptional() startDate?: Date;
+  @IsOptional() @IsDate() @Type(() => Date) @ApiPropertyOptional() endDate?: Date;
+  @IsOptional() @IsString() @ApiPropertyOptional() location?: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() venue?: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() assignedTo?: string;
+  @IsOptional() @IsString() @ApiPropertyOptional() organizerId?: string;
+  @IsOptional() @IsInt() @Min(0) @ApiPropertyOptional() expectedParticipants?: number;
+  @IsOptional() @IsNumber() @Min(0.01) @ApiPropertyOptional() estimatedCost?: number;
+  @IsOptional() @IsArray() @IsString({ each: true }) @ApiPropertyOptional({ type: [String] }) tags?: string[];
+  @IsOptional() @ApiPropertyOptional() metadata?: Record<string, unknown>;
+}
+
+export class LinkExpenseToActivityDto {
+  @IsString() @ApiProperty() expenseId!: string;
+}
+
+export class ActivityDetailDto {
+  @ApiProperty() id!: string;
+  @ApiProperty() projectId!: string;
+  @ApiProperty() name!: string;
+  @ApiPropertyOptional() description?: string;
+  @ApiProperty({ enum: ActivityScale }) scale!: ActivityScale;
+  @ApiProperty({ enum: ActivityType }) type!: ActivityType;
+  @ApiProperty({ enum: ActivityStatus }) status!: ActivityStatus;
+  @ApiProperty({ enum: ActivityPriority }) priority!: ActivityPriority;
+  @ApiPropertyOptional() startDate?: Date;
+  @ApiPropertyOptional() endDate?: Date;
+  @ApiPropertyOptional() actualStartDate?: Date;
+  @ApiPropertyOptional() actualEndDate?: Date;
+  @ApiPropertyOptional() location?: string;
+  @ApiPropertyOptional() venue?: string;
+  @ApiPropertyOptional() assignedTo?: string;
+  @ApiPropertyOptional() organizerId?: string;
+  @ApiPropertyOptional() parentActivityId?: string;
+  @ApiPropertyOptional() expectedParticipants?: number;
+  @ApiPropertyOptional() actualParticipants?: number;
+  @ApiPropertyOptional() estimatedCost?: number;
+  @ApiPropertyOptional() actualCost?: number;
+  @ApiPropertyOptional() currency?: string;
+  @ApiProperty({ type: [String] }) tags!: string[];
+  @ApiPropertyOptional() metadata?: Record<string, unknown>;
+  @ApiProperty() createdAt!: Date;
+  @ApiProperty() updatedAt!: Date;
+  @ApiProperty({ enum: ActivityStatus, isArray: true }) nextStatus!: ActivityStatus[];
+}
+
+export class ActivityDetailFilterDto {
+  @ApiPropertyOptional({ enum: ActivityScale }) scale?: ActivityScale;
+  @ApiPropertyOptional({ enum: ActivityStatus }) status?: ActivityStatus;
+  @ApiPropertyOptional({ enum: ActivityType }) type?: ActivityType;
+  @ApiPropertyOptional() assignedTo?: string;
+  @ApiPropertyOptional() organizerId?: string;
+  @ApiPropertyOptional() parentActivityId?: string;
+}

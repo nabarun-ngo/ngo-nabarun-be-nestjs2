@@ -1,0 +1,15 @@
+{
+  "_comment": "Allowed linkType values — controls how the client opens a link.",
+  "items": [
+    {
+      "key": "INTERNAL",
+      "value": "Internal",
+      "description": "Open inside the app (in-app PDF viewer, WebView, or relative asset path)"
+    },
+    {
+      "key": "EXTERNAL",
+      "value": "External",
+      "description": "Open in system browser or external app (Play Store, WhatsApp, etc.)"
+    }
+  ]
+}

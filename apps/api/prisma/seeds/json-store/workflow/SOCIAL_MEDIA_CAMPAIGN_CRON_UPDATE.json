@@ -1,0 +1,70 @@
+{
+  "id": "SOCIAL_MEDIA_CAMPAIGN_CRON_UPDATE",
+  "version": 1,
+  "name": "Update Year-Specific Social Media Campaigns",
+  "description": "Workflow to remind and track the update of annual social media campaign dates (e.g., Saraswati Puja, Holi, Durga Puja) for the current year in the system configuration.",
+  "elements": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "startEvent"
+    },
+    {
+      "id": "ut_cronupdate_updateyearspecificcrons",
+      "name": "Update year-specific crons for the current year",
+      "type": "userTask",
+      "formKey": "SOCIAL_MEDIA_CAMPAIGN_CRON_UPDATE_CRONUPDATE_UPDATEYEARSPECIFICCRONS",
+      "candidateRoles": [
+        "TECH_ADMIN"
+      ],
+      "slaHours": 48
+    },
+    {
+      "id": "xg_cronupdate",
+      "name": "Update Campaign Crons Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "end_completed",
+      "name": "Completed",
+      "type": "endEvent",
+      "terminateAll": true
+    },
+    {
+      "id": "end_rejected",
+      "name": "Rejected",
+      "type": "endEvent",
+      "terminateAll": true
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_start_ut_cronupdate_updateyearspecificcrons",
+      "sourceRef": "start",
+      "targetRef": "ut_cronupdate_updateyearspecificcrons"
+    },
+    {
+      "id": "f_ut_cronupdate_updateyearspecificcrons_xg_cronupdate",
+      "sourceRef": "ut_cronupdate_updateyearspecificcrons",
+      "targetRef": "xg_cronupdate"
+    },
+    {
+      "id": "f_xg_cronupdate_step_cronupdate_task_updateyearspecificcrons_updatestatus_____yes__0",
+      "sourceRef": "xg_cronupdate",
+      "targetRef": "end_completed",
+      "condition": "updateStatus == 'Yes'"
+    },
+    {
+      "id": "f_xg_cronupdate_step_cronupdate_task_updateyearspecificcrons_updatestatus_____no__1",
+      "sourceRef": "xg_cronupdate",
+      "targetRef": "ut_cronupdate_updateyearspecificcrons",
+      "condition": "updateStatus == 'No'"
+    },
+    {
+      "id": "f_xg_cronupdate_default_2",
+      "sourceRef": "xg_cronupdate",
+      "targetRef": "ut_cronupdate_updateyearspecificcrons",
+      "isDefault": true
+    }
+  ]
+}

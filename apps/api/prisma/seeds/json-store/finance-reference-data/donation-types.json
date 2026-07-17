@@ -1,0 +1,7 @@
+{
+  "_comment": "Donation type options (legacy Firebase DONATION_TYPES).",
+  "items": [
+    { "key": "REGULAR", "value": "Regular (Monthly)" },
+    { "key": "ONETIME", "value": "One-time" }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "_comment": "Payment method options (legacy Firebase PAYMENT_METHODS).",
+  "items": [
+    { "key": "CASH", "value": "Cash" },
+    { "key": "NETBANKING", "value": "Net Banking" },
+    { "key": "UPI", "value": "UPI" }
+  ]
+}

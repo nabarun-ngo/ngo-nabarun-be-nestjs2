@@ -1,0 +1,50 @@
+{
+  "_comment": "App store and external links. GET /links/app-links?platform=...",
+  "items": [
+    {
+      "key": "ANDROID_APP",
+      "value": "https://play.google.com/store/apps/details?id=org.example.app",
+      "description": "Android app on Google Play",
+      "linkType": "EXTERNAL",
+      "platform": "ANDROID_APP_LINK",
+      "tags": ["mobile", "android"],
+      "active": true
+    },
+    {
+      "key": "IOS_APP",
+      "value": "https://apps.apple.com/app/example-app/id0000000000",
+      "description": "iOS app on the App Store",
+      "linkType": "EXTERNAL",
+      "platform": "IOS_APP_LINK",
+      "tags": ["mobile", "ios"],
+      "active": true
+    },
+    {
+      "key": "SUPPORT_WHATSAPP",
+      "value": "https://wa.me/910000000000",
+      "description": "Support via WhatsApp",
+      "linkType": "EXTERNAL",
+      "platform": "SUPPORT_LINK",
+      "tags": ["support", "whatsapp"],
+      "active": true
+    },
+    {
+      "key": "COMMUNITY_FACEBOOK",
+      "value": "https://facebook.com/example",
+      "description": "Community Facebook page",
+      "linkType": "EXTERNAL",
+      "platform": "SOCIAL_LINK",
+      "tags": ["social", "facebook"],
+      "active": true
+    },
+    {
+      "key": "COMMUNITY_INSTAGRAM",
+      "value": "https://instagram.com/example",
+      "description": "Community Instagram page",
+      "linkType": "EXTERNAL",
+      "platform": "SOCIAL_LINK",
+      "tags": ["social", "instagram"],
+      "active": true
+    }
+  ]
+}

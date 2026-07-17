@@ -1,0 +1,8 @@
+{
+  "_comment": "Earning status options (legacy Firebase EARNING_STATUSES).",
+  "items": [
+    { "key": "PENDING", "value": "Pending" },
+    { "key": "RECEIVED", "value": "Received" },
+    { "key": "CANCELLED", "value": "Cancelled" }
+  ]
+}

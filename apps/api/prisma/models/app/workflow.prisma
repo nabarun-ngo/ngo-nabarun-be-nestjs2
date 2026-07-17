@@ -1,0 +1,124 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Workflow Engine 2.0 — element-based state machine runtime
+// ─────────────────────────────────────────────────────────────────────────────
+
+model WorkflowInstance {
+  id                  String    @id
+  name                String
+  definitionId        String    @db.VarChar(50)
+  definitionVersion   Int
+  description         String    @db.Text
+  status              String    @db.VarChar(30)
+  currentElementId    String?   @db.VarChar(100)
+  parentInstanceId    String?
+  context             Json      @default("{}")
+  compensationStack   Json      @default("[]")
+  initiatedById       String?
+  initiatedForId      String?
+  delegated           Boolean   @default(false)
+  isExtUser           Boolean   @default(false)
+  extUserEmail        String?
+  completedAt         DateTime?
+  remarks             String?   @db.Text
+  version             Int       @default(0)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  parentInstance WorkflowInstance?  @relation("WorkflowParentChild", fields: [parentInstanceId], references: [id])
+  childInstances WorkflowInstance[] @relation("WorkflowParentChild")
+  initiatedBy    UserProfile?       @relation("WorkflowInitiatedBy", fields: [initiatedById], references: [id])
+  initiatedFor   UserProfile?       @relation("WorkflowInitiatedFor", fields: [initiatedForId], references: [id])
+  eventLog       WorkflowEventLog[]
+  tokens         WorkflowToken[]
+  inboxItems     WorkflowTaskInbox[]
+  outbox         WorkflowOutbox[]
+
+  @@index([definitionId, status])
+  @@index([status])
+  @@index([initiatedForId])
+  @@index([parentInstanceId])
+  @@map("workflow_instances")
+}
+
+model WorkflowEventLog {
+  id            String           @id @default(cuid())
+  instanceId    String
+  instance      WorkflowInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+  sequence      Int
+  eventType     String           @db.VarChar(50)
+  elementId     String?          @db.VarChar(100)
+  actorType     String           @db.VarChar(20)
+  actorId       String?          @db.VarChar(100)
+  payload       Json             @default("{}")
+  correlationId String?          @db.VarChar(100)
+  occurredAt    DateTime         @default(now())
+
+  @@unique([instanceId, sequence])
+  @@index([instanceId])
+  @@map("workflow_event_log")
+}
+
+model WorkflowToken {
+  id               String           @id @default(cuid())
+  instanceId       String
+  instance         WorkflowInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+  branchId         String           @db.VarChar(100)
+  parentGatewayId  String           @db.VarChar(100)
+  status           String           @db.VarChar(20)
+  currentElementId String           @db.VarChar(100)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@index([instanceId, status])
+  @@map("workflow_tokens")
+}
+
+model WorkflowTaskInbox {
+  id                 String           @id @default(cuid())
+  instanceId         String
+  instance           WorkflowInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+  elementId          String           @db.VarChar(100)
+  workflowType       String           @db.VarChar(50)
+  formKey            String?          @db.VarChar(200)
+  status             String           @db.VarChar(20)
+  assignedToId       String?
+  candidateRoleNames Json             @default("[]")
+  slaDeadlineAt      DateTime?
+  claimedAt          DateTime?
+  claimedById        String?
+  completedAt        DateTime?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@unique([instanceId, elementId])
+  @@index([assignedToId, status])
+  @@index([status, slaDeadlineAt])
+  @@map("workflow_task_inbox")
+}
+
+model WorkflowIdempotencyKey {
+  key        String   @id
+  scope      String   @db.VarChar(30)
+  instanceId String?
+  result     Json?
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+
+  @@index([expiresAt])
+  @@map("workflow_idempotency_keys")
+}
+
+model WorkflowOutbox {
+  id           String           @id @default(cuid())
+  instanceId   String
+  instance     WorkflowInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+  eventType    String           @db.VarChar(100)
+  payload      Json
+  status       String           @db.VarChar(20)
+  createdAt    DateTime         @default(now())
+  dispatchedAt DateTime?
+  lastError    String?          @db.Text
+
+  @@index([status, createdAt])
+  @@map("workflow_outbox")
+}

@@ -1,0 +1,40 @@
+// Meeting bounded context — internal meetings + Google Calendar sync + Fathom notes.
+
+model Meeting {
+  id           String  @id @default(uuid())
+  extMeetingId String? @unique @db.VarChar(255) // Google Calendar event ID
+  summary      String  @db.VarChar(500)
+  description  String? @db.Text
+  type         String  @db.VarChar(20) // OFFLINE, ONLINE
+  status       String  @db.VarChar(20) // mirrors Google Calendar event status (confirmed, cancelled, ...)
+  location     String? @db.VarChar(500)
+  startTime    DateTime
+  endTime      DateTime
+  agenda       String? @db.Text // JSON-encoded AgendaItem[]
+  outcomes     String? @db.Text
+  attendees    String? @db.Text // JSON-encoded Participant[]
+  hostEmail    String? @db.VarChar(255)
+
+  meetLink     String? @db.VarChar(1000) // Google Meet video link
+  calendarLink String? @db.VarChar(1000) // Google Calendar event link
+
+  // Fathom meeting-notes webhook payload (matched post-hoc by time range + title)
+  recordingUrl       String? @db.VarChar(1000)
+  meetingNotes       String? @db.Text
+  meetingTranscript  String? @db.Text
+  meetingActionItems String? @db.Text
+
+  createdById String?      @db.VarChar(255)
+  createdBy   UserProfile? @relation("MeetingCreator", fields: [createdById], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  version   Int       @default(0)
+  deletedAt DateTime?
+
+  @@index([type, status])
+  @@index([extMeetingId])
+  @@index([startTime, endTime])
+  @@index([createdById])
+  @@map("meetings")
+}

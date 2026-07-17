@@ -12,6 +12,8 @@ import { ListJsonDocumentsHandler } from './application/queries/list-json-docume
 
 import { JsonStoreFacade } from './application/services/json-store.facade';
 
+import { IJsonDocumentPayloadValidatorPort } from './domain/ports/json-document-payload-validator.port';
+import { NoOpJsonDocumentPayloadValidator } from './domain/ports/no-op-json-document-payload-validator';
 import { JsonDocumentController } from './presentation/controllers/json-document.controller';
 
 const COMMAND_HANDLERS = [
@@ -34,6 +36,10 @@ export class JsonStoreModule {
         ...COMMAND_HANDLERS,
         ...QUERY_HANDLERS,
 
+        {
+          provide: IJsonDocumentPayloadValidatorPort,
+          useClass: options.payloadValidator ?? NoOpJsonDocumentPayloadValidator,
+        },
         JsonStoreFacade,
       ],
       exports: [JsonStoreFacade],

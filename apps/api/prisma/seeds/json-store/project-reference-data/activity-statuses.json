@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "key": "PLANNED",
+      "value": "Planned"
+    },
+    {
+      "key": "CONFIRMED",
+      "value": "Confirmed"
+    },
+    {
+      "key": "IN_PROGRESS",
+      "value": "In Progress"
+    },
+    {
+      "key": "COMPLETED",
+      "value": "Completed"
+    },
+    {
+      "key": "CANCELLED",
+      "value": "Cancelled"
+    },
+    {
+      "key": "ON_HOLD",
+      "value": "On Hold"
+    }
+  ]
+}

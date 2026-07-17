@@ -27,6 +27,11 @@ model UserProfile {
   isSameAddress     Boolean?
   isProfileComplete Boolean @default(false)
 
+  // Finance — monthly donation preferences
+  donationAmount     Decimal?  @db.Decimal(10, 2)
+  donationPauseStart DateTime?
+  donationPauseEnd   DateTime?
+
   // Optimistic lock
   version Int @default(0)
 
@@ -42,6 +47,37 @@ model UserProfile {
   phoneNumbers     UserPhoneNumber[]
   addresses        UserAddress[]
   socialMediaLinks UserSocialLink[]
+
+  initiatedWorkflows WorkflowInstance[] @relation("WorkflowInitiatedBy")
+  receivedWorkflows  WorkflowInstance[] @relation("WorkflowInitiatedFor")
+
+  accounts            Account[]     @relation("AccountHolder")
+  donations           Donation[]    @relation("Donation")
+  confirmedDonations  Donation[]    @relation("DonationConfirmedBy")
+  accountCreator      Account[]     @relation("AccountCreator")
+  transactionCreator  Transaction[] @relation("TransactionCreator")
+  expenseCreator      Expense[]     @relation("ExpenseCreator")
+  expensePaidBy       Expense[]     @relation("ExpensePaidBy")
+  expenseSubmittedBy  Expense[]     @relation("ExpenseSubmittedBy")
+  expenseFinalizedBy  Expense[]     @relation("ExpenseFinalizedBy")
+  expenseSettledBy    Expense[]     @relation("ExpenseSettledBy")
+  expenseRejectedBy   Expense[]     @relation("ExpenseRejectedBy")
+  expenseUpdatedBy    Expense[]     @relation("ExpenseUpdatedBy")
+  expenses            Expense[]
+  earningCreator      Earning[]     @relation("EarningCreator")
+  earningReceivedBy   Earning[]     @relation("EarningReceivedBy")
+
+  requestedReports Report[] @relation("ReportRequestedBy")
+  approvedReports  Report[] @relation("ReportApprovedBy")
+
+  managedProjects     Project[]           @relation("ProjectManager")
+  sponsoredProjects   Project[]           @relation("ProjectSponsor")
+  assignedActivities  Activity[]          @relation("ActivityAssignee")
+  organizedActivities Activity[]          @relation("ActivityOrganizer")
+  projectTeamMembers  ProjectTeamMember[] @relation("ProjectTeamMember")
+  riskOwners          ProjectRisk[]       @relation("RiskOwner")
+
+  createdMeetings Meeting[] @relation("MeetingCreator")
 
   @@map("user_profile")
 }

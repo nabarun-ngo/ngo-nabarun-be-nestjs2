@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "key": "IDENTIFIED",
+      "value": "Identified"
+    },
+    {
+      "key": "MONITORING",
+      "value": "Monitoring"
+    },
+    {
+      "key": "MITIGATED",
+      "value": "Mitigated"
+    },
+    {
+      "key": "CLOSED",
+      "value": "Closed"
+    },
+    {
+      "key": "OCCURRED",
+      "value": "Occurred"
+    }
+  ]
+}

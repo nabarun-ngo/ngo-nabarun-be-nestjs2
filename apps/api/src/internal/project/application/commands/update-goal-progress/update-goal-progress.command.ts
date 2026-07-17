@@ -1,0 +1,1 @@
+export class UpdateGoalProgressCommand { constructor(public readonly params: Record<string, unknown>) {} }

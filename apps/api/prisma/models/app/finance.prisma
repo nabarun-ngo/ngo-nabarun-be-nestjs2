@@ -1,0 +1,213 @@
+// Finance bounded context — table names preserved for production ETL compatibility.
+
+model Account {
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(100)
+  type        String  @db.VarChar(20)
+  currency    String  @db.VarChar(3)
+  status      String  @db.VarChar(20)
+  description String? @db.Text
+  balance     Decimal @default(0) @db.Decimal(10, 2)
+
+  accountHolderName String?   @db.VarChar(255)
+  accountHolderId   String?   @db.VarChar(255)
+  activatedOn       DateTime?
+
+  bankDetail String? @db.Text
+  upiDetail  String? @db.Text
+
+  donations Donation[] @relation("DonationAccount")
+
+  accountHolder UserProfile? @relation("AccountHolder", fields: [accountHolderId], references: [id])
+  createdBy     UserProfile? @relation("AccountCreator", fields: [createdById], references: [id])
+  createdById   String?
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  version      Int           @default(0)
+  deletedAt    DateTime?
+  expenses     Expense[]
+  earnings     Earning[]
+  transactions Transaction[]
+
+  @@index([type, status])
+  @@index([accountHolderId])
+  @@map("accounts")
+}
+
+model Donation {
+  id       String  @id @default(uuid())
+  type     String  @db.VarChar(20)
+  amount   Decimal @db.Decimal(10, 2)
+  currency String  @db.VarChar(3)
+  status   String  @db.VarChar(20)
+
+  donorId    String?      @db.VarChar(255)
+  donor      UserProfile? @relation("Donation", fields: [donorId], references: [id])
+  donorName  String?      @db.VarChar(100)
+  donorEmail String?      @db.VarChar(100)
+  donorPhone String?      @db.VarChar(20)
+
+  isGuest   Boolean?  @default(false)
+  startDate DateTime?
+  endDate   DateTime?
+  raisedOn  DateTime
+  paidOn    DateTime?
+
+  confirmedById        String?      @db.VarChar(255)
+  confirmedBy          UserProfile? @relation("DonationConfirmedBy", fields: [confirmedById], references: [id])
+  confirmedOn          DateTime?
+  paymentMethod        String?      @db.VarChar(20)
+  paidToAccountId      String?      @db.VarChar(255)
+  activity             Activity?    @relation(fields: [forEventId], references: [id])
+  forEventId           String?      @db.VarChar(255)
+  paidUsingUPI         String?      @db.VarChar(20)
+  isPaymentNotified    Boolean?     @default(false)
+  transactionRef       String?      @db.VarChar(255)
+  remarks              String?      @db.Text
+  cancelletionReason   String?      @db.Text
+  laterPaymentReason   String?      @db.Text
+  paymentFailureDetail String?      @db.Text
+  additionalFields     Json?
+
+  paidToAccount Account? @relation("DonationAccount", fields: [paidToAccountId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  version   Int       @default(0)
+  deletedAt DateTime?
+
+  @@index([donorId, status])
+  @@index([type, status])
+  @@index([raisedOn])
+  @@map("donations")
+}
+
+model Transaction {
+  id             String  @id @default(uuid())
+  transactionRef String
+  type           String  @db.VarChar(20)
+  amount         Decimal @db.Decimal(15, 2)
+  currency       String  @db.VarChar(3)
+  status         String  @db.VarChar(20)
+
+  referenceId   String? @db.VarChar(255)
+  referenceType String? @db.VarChar(50)
+
+  description     String   @db.Text
+  metadata        Json?
+  transactionDate DateTime
+  particulars     String?  @db.Text
+
+  createdBy   UserProfile? @relation("TransactionCreator", fields: [createdById], references: [id])
+  createdById String?      @db.VarChar(255)
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  version      Int       @default(0)
+  deletedAt    DateTime?
+  refAccountId String?   @db.VarChar(255)
+  accountId    String?   @db.VarChar(255)
+  account      Account?  @relation(fields: [accountId], references: [id])
+
+  @@index([accountId, createdAt, id])
+  @@index([type, status])
+  @@index([referenceId, referenceType])
+  @@map("transactions")
+}
+
+model Expense {
+  id    String  @id @default(uuid())
+  title String  @db.VarChar(255)
+  items String? @db.Text
+
+  amount      Decimal @db.Decimal(15, 2)
+  currency    String  @default("INR") @db.VarChar(3)
+  status      String  @db.VarChar(20)
+  description String? @db.Text
+
+  referenceId   String?   @db.VarChar(255)
+  referenceType String?   @db.VarChar(50)
+  activity      Activity? @relation(fields: [referenceId], references: [id])
+
+  isDelegated Boolean @default(false)
+
+  createdById String       @db.VarChar(255)
+  createdBy   UserProfile? @relation("ExpenseCreator", fields: [createdById], references: [id])
+
+  paidById    String       @db.VarChar(255)
+  paidBy      UserProfile? @relation("ExpensePaidBy", fields: [paidById], references: [id])
+  expenseDate DateTime
+
+  submittedById String?      @db.VarChar(255)
+  submittedBy   UserProfile? @relation("ExpenseSubmittedBy", fields: [submittedById], references: [id])
+  submittedOn   DateTime?
+
+  finalizedById String?      @db.VarChar(255)
+  finalizedBy   UserProfile? @relation("ExpenseFinalizedBy", fields: [finalizedById], references: [id])
+  finalizedOn   DateTime?
+
+  settledById String?      @db.VarChar(255)
+  settledBy   UserProfile? @relation("ExpenseSettledBy", fields: [settledById], references: [id])
+  settledOn   DateTime?
+
+  rejectedById String?      @db.VarChar(255)
+  rejectedBy   UserProfile? @relation("ExpenseRejectedBy", fields: [rejectedById], references: [id])
+  rejectedOn   DateTime?
+
+  updatedById String?      @db.VarChar(255)
+  updatedBy   UserProfile? @relation("ExpenseUpdatedBy", fields: [updatedById], references: [id])
+  updatedOn   DateTime?
+
+  accountId      String?  @db.VarChar(255)
+  accountName    String?  @db.VarChar(255)
+  account        Account? @relation(fields: [accountId], references: [id])
+  transactionRef String?  @db.VarChar(255)
+  remarks        String?  @db.Text
+
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  version       Int          @default(0)
+  deletedAt     DateTime?
+  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId String?
+
+  @@index([status])
+  @@index([createdById])
+  @@index([paidById])
+  @@index([referenceId, referenceType])
+  @@map("expenses")
+}
+
+model Earning {
+  id          String  @id @default(uuid())
+  category    String  @db.VarChar(30)
+  amount      Decimal @db.Decimal(10, 2)
+  currency    String  @db.VarChar(3)
+  status      String  @db.VarChar(20)
+  description String  @db.Text
+  source      String  @db.VarChar(100)
+
+  referenceId   String? @db.VarChar(255)
+  referenceType String? @db.VarChar(50)
+
+  accountId     String?  @db.VarChar(255)
+  account       Account? @relation(fields: [accountId], references: [id])
+  transactionId String?  @unique @db.VarChar(255)
+
+  earningDate DateTime?
+
+  createdById  String?      @db.VarChar(255)
+  createdBy    UserProfile? @relation("EarningCreator", fields: [createdById], references: [id])
+  receivedById String?      @db.VarChar(255)
+  receivedBy   UserProfile? @relation("EarningReceivedBy", fields: [receivedById], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  version   Int       @default(0)
+  deletedAt DateTime?
+
+  @@index([category, status])
+  @@index([source])
+  @@map("earnings")
+}

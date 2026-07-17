@@ -1,0 +1,10 @@
+{
+  "_comment": "Expense category / reference type options (legacy Firebase EXPENSE_CATEGORIES).",
+  "items": [
+    { "key": "OPERATIONAL", "value": "Operational" },
+    { "key": "ADMINISTRATIVE", "value": "Administrative" },
+    { "key": "EVENT", "value": "Event / Activity" },
+    { "key": "ADHOC", "value": "Ad-hoc" },
+    { "key": "OTHER", "value": "Other" }
+  ]
+}

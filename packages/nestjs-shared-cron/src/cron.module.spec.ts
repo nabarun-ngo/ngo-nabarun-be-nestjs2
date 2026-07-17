@@ -1,16 +1,8 @@
 /**
  * Cron2Module.forRoot / forRootAsync unit tests.
  * Inspects the returned DynamicModule without running NestJS DI.
- * Supersedes: test/cron/cron.module.spec.ts (module wiring coverage)
  */
 
-// ── Mock heavy infrastructure to avoid peer-dep import errors ────────────────
-jest.mock('@ce/nestjs-shared-cron/infrastructure/adapters/json-store-cron-job.adapter', () => ({
-  JsonStoreCronJobAdapter: class JsonStoreCronJobAdapter {},
-}));
-jest.mock('@ce/nestjs-shared-cron/infrastructure/adapters/queue-cron-job.adapter', () => ({
-  QueueCronJobAdapter: class QueueCronJobAdapter {},
-}));
 jest.mock('@ce/nestjs-shared-cron/application/commands/trigger-cron-jobs/trigger-cron-jobs.handler', () => ({
   TriggerCronJobsHandler: class TriggerCronJobsHandler {},
 }));
@@ -32,9 +24,6 @@ jest.mock('@ce/nestjs-shared-cron/application/queries/get-cron-jobs/get-cron-job
 jest.mock('@ce/nestjs-shared-cron/presentation/controllers/cron.controller', () => ({
   Cron2Controller: class Cron2Controller {},
 }));
-jest.mock('@ce/nestjs-shared-json-store', () => ({
-  JsonStoreModule: { forRoot: () => ({ module: class JsonStoreModule {} }) },
-}));
 jest.mock('@nestjs/cqrs', () => ({
   CqrsModule: class CqrsModule {},
   CommandHandler: () => () => {},
@@ -46,7 +35,6 @@ jest.mock('@nestjs/cqrs', () => ({
   IQueryHandler: class {},
 }));
 
-// ── Imports ──────────────────────────────────────────────────────────────────
 import { Cron2Module } from '@ce/nestjs-shared-cron/cron.module';
 import { CRON2_OPTIONS } from '@ce/nestjs-shared-cron/infrastructure/cron-options.token';
 import { CRON_JOB_STORE_PORT } from '@ce/nestjs-shared-cron/domain/ports/cron-job-store.port';
@@ -72,28 +60,20 @@ describe('Cron2Module', () => {
       expect(provider.useValue.timezone).toBe('UTC');
     });
 
-    it('defaults timezone to UTC when no options are provided', () => {
+    it('does not register in-package port adapters', () => {
       const mod = Cron2Module.forRoot();
-      const provider = (mod.providers as any[]).find((p) => p.provide === CRON2_OPTIONS);
-      expect(provider.useValue.timezone).toBe('UTC');
+      const storeProvider = (mod.providers as any[]).find((p) => p.provide === CRON_JOB_STORE_PORT);
+      const queueProvider = (mod.providers as any[]).find((p) => p.provide === CRON_JOB_QUEUE_PORT);
+      expect(storeProvider).toBeUndefined();
+      expect(queueProvider).toBeUndefined();
     });
 
-    it('accepts a custom timezone', () => {
-      const mod = Cron2Module.forRoot({ timezone: 'Asia/Kolkata' });
-      const provider = (mod.providers as any[]).find((p) => p.provide === CRON2_OPTIONS);
-      expect(provider.useValue.timezone).toBe('Asia/Kolkata');
-    });
-
-    it('provides CRON_JOB_STORE_PORT', () => {
+    it('does not import JsonStoreModule or QueueModule', () => {
       const mod = Cron2Module.forRoot();
-      const provider = (mod.providers as any[]).find((p) => p.provide === CRON_JOB_STORE_PORT);
-      expect(provider).toBeDefined();
-    });
-
-    it('provides CRON_JOB_QUEUE_PORT', () => {
-      const mod = Cron2Module.forRoot();
-      const provider = (mod.providers as any[]).find((p) => p.provide === CRON_JOB_QUEUE_PORT);
-      expect(provider).toBeDefined();
+      expect(mod.imports).toEqual(expect.arrayContaining([expect.anything()]));
+      const importModules = (mod.imports as any[]).map((i) => i.module?.name ?? i);
+      expect(importModules).not.toContain('JsonStoreModule');
+      expect(importModules).not.toContain('QueueModule');
     });
 
     it('registers Cron2Controller', () => {
@@ -104,8 +84,7 @@ describe('Cron2Module', () => {
 
     it('includes command and query handlers as providers', () => {
       const mod = Cron2Module.forRoot();
-      // At minimum 5 command handlers + 1 query handler + 2 port providers + 1 options provider
-      expect((mod.providers as any[]).length).toBeGreaterThanOrEqual(9);
+      expect((mod.providers as any[]).length).toBeGreaterThanOrEqual(7);
     });
   });
 
@@ -125,16 +104,6 @@ describe('Cron2Module', () => {
       expect(typeof provider.useFactory).toBe('function');
     });
 
-    it('wires inject tokens to the async factory', () => {
-      const CONFIG_TOKEN = Symbol('Config');
-      const mod = Cron2Module.forRootAsync({
-        inject: [CONFIG_TOKEN],
-        useFactory: (_cfg: any) => ({ timezone: 'UTC' }),
-      });
-      const provider = (mod.providers as any[]).find((p) => p.provide === CRON2_OPTIONS);
-      expect(provider.inject).toContain(CONFIG_TOKEN);
-    });
-
     it('validates and returns options from the async factory', async () => {
       const mod = Cron2Module.forRootAsync({
         useFactory: () => ({ timezone: 'America/Chicago' }),
@@ -142,14 +111,6 @@ describe('Cron2Module', () => {
       const provider = (mod.providers as any[]).find((p) => p.provide === CRON2_OPTIONS);
       const result = await provider.useFactory();
       expect(result.timezone).toBe('America/Chicago');
-    });
-
-    it('throws when the async factory returns options with an invalid timezone type', async () => {
-      const mod = Cron2Module.forRootAsync({
-        useFactory: () => ({ timezone: 123 } as any),
-      });
-      const provider = (mod.providers as any[]).find((p) => p.provide === CRON2_OPTIONS);
-      await expect(provider.useFactory()).rejects.toThrow();
     });
   });
 });

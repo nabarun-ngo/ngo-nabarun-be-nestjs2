@@ -1,0 +1,8 @@
+{
+  "name": "workflow-detect-stuck",
+  "expression": "0 */6 * * *",
+  "description": "Detect workflow instances stuck past SLA thresholds",
+  "handler": "DetectStuckWorkflowsJob",
+  "enabled": true,
+  "inputData": { "stuckAfterHours": 72 }
+}

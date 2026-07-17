@@ -1,0 +1,8 @@
+{
+  "name": "donation-mark-pending",
+  "expression": "0 6 5 * *",
+  "description": "Mark raised donations as pending after the payment grace period",
+  "handler": "MarkDonationPendingJob",
+  "enabled": true,
+  "inputData": {}
+}

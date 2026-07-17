@@ -4,7 +4,7 @@ import {
   CorrespondenceRequestEvent,
   NotificationCategory,
   NotificationType,
-} from '@ce/nestjs-shared-correspondence';
+} from '@ce/nestjs-shared-core';
 import { CommentAddedEvent } from '../../../domain/events/comment-added.event';
 import { COMMENT2_OPTIONS } from '../../../infrastructure/comment-options.token';
 import { Comment2ModuleOptions } from '../../../comment.schema';

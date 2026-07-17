@@ -6,23 +6,27 @@ import {
   Logger,
   Module,
   OnApplicationBootstrap,
+  OnModuleInit,
   Optional,
   Provider,
 } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import * as admin from 'firebase-admin';
-import { BaseDynamicModule, DynamicModuleAsyncOptions } from '@ce/nestjs-shared-core';
+import {
+  BaseDynamicModule,
+  DynamicModuleAsyncOptions,
+  MissingRequiredPortError,
+  OAUTH_ACCESS_TOKEN_PORT,
+} from '@ce/nestjs-shared-core';
 import { Dms2ModuleOptions, Dms2OptionsSchema } from './dms.schema';
 import { DMS2_OPTIONS } from './infrastructure/dms-options.token';
 import { FIREBASE_ADMIN } from './infrastructure/firebase-admin.token';
 import { IDocumentRepository } from './domain/repositories/document.repository';
-import {
-  IDocumentEntityAccessPort,
-} from './domain/ports/entity-access.port';
+import { IDocumentEntityAccessPort } from './domain/ports/entity-access.port';
 import { IStorageProvider } from './domain/ports/storage.port';
 import { FirebaseStorageService } from './infrastructure/storage/firebase-storage.service';
 import { FirebaseStorageAdapter } from './infrastructure/storage/firebase-storage.adapter';
-import { GoogleDriveStorageAdapter } from './infrastructure/storage/google-drive-storage.adapter';
 import { UploadDocumentHandler } from './application/commands/upload-document/upload-document.handler';
 import { DeleteDocumentHandler } from './application/commands/delete-document/delete-document.handler';
 import { RenameDocumentHandler } from './application/commands/rename-document/rename-document.handler';
@@ -63,6 +67,45 @@ class Dms2EntityAccessServiceGuard implements OnApplicationBootstrap {
   }
 }
 
+@Injectable()
+class DmsRequiredPortsGuard implements OnModuleInit {
+  constructor(
+    private readonly moduleRef: ModuleRef,
+    @Inject(DMS2_OPTIONS) private readonly options: Dms2ModuleOptions,
+  ) {}
+
+  onModuleInit(): void {
+    const repo = this.moduleRef.get(IDocumentRepository, { strict: false });
+    if (repo === undefined || repo === null) {
+      throw new MissingRequiredPortError(
+        'Dms2Module',
+        IDocumentRepository,
+        'Register IDocumentRepository in PersistenceModule and import PersistenceModule before Dms2Module.',
+      );
+    }
+
+    if (this.options.provider !== 'google-drive') return;
+
+    const oauth = this.moduleRef.get(OAUTH_ACCESS_TOKEN_PORT, { strict: false });
+    if (oauth === undefined || oauth === null) {
+      throw new MissingRequiredPortError(
+        'Dms2Module',
+        OAUTH_ACCESS_TOKEN_PORT,
+        'Register { provide: OAUTH_ACCESS_TOKEN_PORT, useClass: TokenVaultOAuthAccessTokenAdapter } in IntegrationsModule. Requires TokenVaultModule with Google OAuth configured.',
+      );
+    }
+
+    const storage = this.moduleRef.get(IStorageProvider, { strict: false });
+    if (storage === undefined || storage === null) {
+      throw new MissingRequiredPortError(
+        'Dms2Module',
+        IStorageProvider,
+        'Pass storageProvider override with GoogleDriveStorageAdapter from apps/api/src/integrations/dms when provider is google-drive.',
+      );
+    }
+  }
+}
+
 const COMMAND_HANDLERS = [
   UploadDocumentHandler,
   DeleteDocumentHandler,
@@ -77,43 +120,6 @@ const QUERY_HANDLERS = [
 
 const EVENT_HANDLERS = [OnDocumentUploadedHandler, OnDocumentDeletedHandler];
 
-/**
- * Dms2Module — DDD-compliant document upload/storage module with a pluggable
- * storage backend (Firebase Storage or Google Drive) and entity-agnostic
- * mappings. Replaces the legacy `DmsModule`.
- *
- * ## Registration
- *   Dms2Module.forRoot({ ...options })
- *   Dms2Module.forRootAsync({ imports, useFactory, inject })
- *
- * ## Storage backend
- *
- * Set `provider: "firebase"` (default) or `provider: "google-drive"` to pick
- * the built-in backend. For custom backends (e.g. S3), pass a manual override:
- *
- *   Dms2Module.forRoot(options, { storageProvider: { provide: IStorageProvider, useClass: MyS3Adapter } })
- *
- * ### Firebase (default)
- *
- * Pass a `firebase` config block with your service-account credentials:
- *
- *   Dms2Module.forRoot({
- *     provider: 'firebase',
- *     firebase: { serviceAccount: process.env.FIREBASE_SA_JSON, storageBucket: '...' },
- *   })
- *
- * The firebase-admin SDK is initialised internally — no separate FirebaseModule
- * import is required.
- *
- * ## Optional — IDocumentEntityAccessPort
- *
- * For record-level access control (beyond permission-based checks), implement
- * `IDocumentEntityAccessPort` in your app and register the binding:
- *   { provide: IDocumentEntityAccessPort, useClass: MyAdapter }
- *
- * Export the token from a module and pass that module in the `imports` array.
- * If not provided, record-level checks are skipped (fail-open) and a boot warning is logged.
- */
 @Module({})
 export class Dms2Module extends BaseDynamicModule {
   static forRoot(
@@ -152,10 +158,6 @@ export class Dms2Module extends BaseDynamicModule {
           typeof opts.firebase.serviceAccount === 'string'
             ? JSON.parse(opts.firebase.serviceAccount)
             : opts.firebase.serviceAccount;
-        // MEDIUM-4: Guard against re-initialization when the module is imported
-        // more than once (e.g. in testing or in a multi-module setup). A named app
-        // scoped to this module prevents collisions with any default Firebase app
-        // that the host application may have initialised independently.
         const appName = `dms-${opts.firebase.projectId ?? 'default'}`;
         const existingApp = admin.apps.find((a) => a?.name === appName) ?? null;
         if (existingApp) return existingApp;
@@ -173,13 +175,15 @@ export class Dms2Module extends BaseDynamicModule {
 
     const storageProviderBinding: Provider = storageProviderOverride ?? {
       provide: IStorageProvider,
-      useFactory: (
-        opts: Dms2ModuleOptions,
-        firebaseAdapter: FirebaseStorageAdapter,
-        driveAdapter: GoogleDriveStorageAdapter,
-      ): IStorageProvider =>
-        opts.provider === 'google-drive' ? driveAdapter : firebaseAdapter,
-      inject: [DMS2_OPTIONS, FirebaseStorageAdapter, GoogleDriveStorageAdapter],
+      useFactory: (opts: Dms2ModuleOptions, firebaseAdapter: FirebaseStorageAdapter) => {
+        if (opts.provider === 'google-drive') {
+          throw new Error(
+            '[Dms2Module] provider=google-drive requires a storageProvider override from the host (GoogleDriveStorageAdapter).',
+          );
+        }
+        return firebaseAdapter;
+      },
+      inject: [DMS2_OPTIONS, FirebaseStorageAdapter],
     };
 
     return {
@@ -189,10 +193,10 @@ export class Dms2Module extends BaseDynamicModule {
       providers: [
         ...optionsProviders,
         Dms2EntityAccessServiceGuard,
+        DmsRequiredPortsGuard,
         firebaseAdminProvider,
         FirebaseStorageService,
         FirebaseStorageAdapter,
-        GoogleDriveStorageAdapter,
         storageProviderBinding,
         ...COMMAND_HANDLERS,
         ...QUERY_HANDLERS,

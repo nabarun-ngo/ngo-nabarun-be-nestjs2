@@ -1,0 +1,106 @@
+{
+  "id": "REPORT_REVIEW",
+  "version": 1,
+  "name": "Report Review and Approval",
+  "description": "Workflow for generating, reviewing and approving reports.",
+  "elements": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "startEvent"
+    },
+    {
+      "id": "svc_generate_report",
+      "name": "Generate Report",
+      "type": "serviceTask",
+      "handler": "GenerateReportHandler"
+    },
+    {
+      "id": "ut_review_approve_report",
+      "name": "Review & Approve {{reportName}}",
+      "type": "userTask",
+      "formKey": "REPORT_REVIEW_REVIEW_APPROVE_REPORT",
+      "candidateRoles": [
+        "PRESIDENT",
+        "VICE_PRESIDENT",
+        "SECRETARY",
+        "TREASURER"
+      ],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_review",
+      "name": "Report Approval Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "svc_finalize_report_approval",
+      "name": "Finalize Report Approval",
+      "type": "serviceTask",
+      "handler": "FinalizeReportApprovalHandler"
+    },
+    {
+      "id": "svc_regenerate_report",
+      "name": "Regenerate Report",
+      "type": "serviceTask",
+      "handler": "RegenerateReportHandler"
+    },
+    {
+      "id": "end_completed",
+      "name": "Completed",
+      "type": "endEvent",
+      "terminateAll": true
+    },
+    {
+      "id": "end_rejected",
+      "name": "Rejected",
+      "type": "endEvent",
+      "terminateAll": true
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_start_svc_generate_report",
+      "sourceRef": "start",
+      "targetRef": "svc_generate_report"
+    },
+    {
+      "id": "f_svc_generate_report_ut_review_approve_report",
+      "sourceRef": "svc_generate_report",
+      "targetRef": "ut_review_approve_report"
+    },
+    {
+      "id": "f_ut_review_approve_report_xg_review",
+      "sourceRef": "ut_review_approve_report",
+      "targetRef": "xg_review"
+    },
+    {
+      "id": "f_xg_review_step_review_task_approve_report_reportready_____yes__0",
+      "sourceRef": "xg_review",
+      "targetRef": "svc_finalize_report_approval",
+      "condition": "reportReady == 'Yes'"
+    },
+    {
+      "id": "f_svc_finalize_report_approval_end_completed",
+      "sourceRef": "svc_finalize_report_approval",
+      "targetRef": "end_completed"
+    },
+    {
+      "id": "f_xg_review_step_review_task_approve_report_reportready_____no__1",
+      "sourceRef": "xg_review",
+      "targetRef": "svc_regenerate_report",
+      "condition": "reportReady == 'No'"
+    },
+    {
+      "id": "f_svc_regenerate_report_ut_review_approve_report",
+      "sourceRef": "svc_regenerate_report",
+      "targetRef": "ut_review_approve_report"
+    },
+    {
+      "id": "f_xg_review_default_2",
+      "sourceRef": "xg_review",
+      "targetRef": "svc_regenerate_report",
+      "isDefault": true
+    }
+  ]
+}

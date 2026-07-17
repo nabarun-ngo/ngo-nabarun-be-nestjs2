@@ -18,7 +18,8 @@ export { RequireRoleGroups, REQUIRE_ROLE_GROUPS_KEY } from './presentation/decor
 export { Public, IS_PUBLIC_KEY } from './presentation/decorators/public.decorator';
 export { UseApiKey, USE_API_KEY } from './presentation/decorators/use-api-key.decorator';
 export { IgnoreCaptcha, IGNORE_CAPTCHA } from './presentation/decorators/ignore-captcha.decorator';
-export { StrictThrottle, DefaultThrottle } from './presentation/decorators/throttle-presets';
+export { ExpectedRecaptchaAction, EXPECTED_RECAPTCHA_ACTION_KEY } from './presentation/decorators/expected-recaptcha-action.decorator';
+export { StrictThrottle, DefaultThrottle, PublicGetThrottle, PublicFormPostThrottle, NewsletterThrottle } from './presentation/decorators/throttle-presets';
 export {
   RequirePermissionsInScope,
   REQUIRE_PERMISSIONS_IN_SCOPE_KEY,

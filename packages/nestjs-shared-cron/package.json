@@ -14,9 +14,7 @@
   },
   "dependencies": {
     "@ce/nestjs-shared-core": "*",
-    "@ce/nestjs-shared-auth": "*",
-    "@ce/nestjs-shared-json-store": "*",
-    "@ce/nestjs-shared-queue": "*"
+    "@ce/nestjs-shared-auth": "*"
   },
   "exports": {
     ".": {

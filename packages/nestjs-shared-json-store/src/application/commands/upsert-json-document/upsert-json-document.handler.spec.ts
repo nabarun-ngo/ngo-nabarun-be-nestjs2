@@ -20,6 +20,8 @@ const makeRepo = () => ({
 
 const makeEventBus = () => ({ publishAll: jest.fn() });
 
+const makeValidator = () => ({ validate: jest.fn() });
+
 function makeDoc(
   id: string,
   payload: Record<string, unknown> = { subject: 'Value' },
@@ -46,12 +48,14 @@ const defaultCommand = (payload: Record<string, unknown> = { subject: 'New' }) =
 describe('UpsertJsonDocumentHandler', () => {
   let repo: ReturnType<typeof makeRepo>;
   let eventBus: ReturnType<typeof makeEventBus>;
+  let validator: ReturnType<typeof makeValidator>;
   let handler: UpsertJsonDocumentHandler;
 
   beforeEach(() => {
     repo = makeRepo();
     eventBus = makeEventBus();
-    handler = new UpsertJsonDocumentHandler(repo as any, eventBus as any);
+    validator = makeValidator();
+    handler = new UpsertJsonDocumentHandler(repo as any, validator as any, eventBus as any);
   });
 
   describe('when the document does not yet exist (create path)', () => {

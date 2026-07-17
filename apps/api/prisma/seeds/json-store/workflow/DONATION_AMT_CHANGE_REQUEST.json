@@ -1,0 +1,97 @@
+{
+  "id": "DONATION_AMT_CHANGE_REQUEST",
+  "version": 1,
+  "name": "Donation Amount Change Request",
+  "description": "Donation amount change request to {{newAmount}}",
+  "elements": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "startEvent"
+    },
+    {
+      "id": "svc_validateinputs",
+      "name": "Validate",
+      "type": "serviceTask",
+      "handler": "ValidateInputs"
+    },
+    {
+      "id": "ut_treasurerapproval_reviewdonationamountchangerequest",
+      "name": "Review Donation Amount Change Request",
+      "type": "userTask",
+      "formKey": "DONATION_AMT_CHANGE_REQUEST_TREASURERAPPROVAL_REVIEWDONATIONAMOUNTCHANGEREQUEST",
+      "candidateRoles": [
+        "TREASURER"
+      ],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_treasurerapproval",
+      "name": "Treasurer Approval Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "svc_systemupdate_updateamountinfo",
+      "name": "Update Amount Info",
+      "type": "serviceTask",
+      "handler": "DonationAmountUpdateHandler"
+    },
+    {
+      "id": "xg_systemupdate",
+      "name": "System Update Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "end_completed",
+      "name": "Completed",
+      "type": "endEvent",
+      "terminateAll": true
+    },
+    {
+      "id": "end_rejected",
+      "name": "Rejected",
+      "type": "endEvent",
+      "terminateAll": true
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_start_svc_validateinputs",
+      "sourceRef": "start",
+      "targetRef": "svc_validateinputs"
+    },
+    {
+      "id": "f_svc_validateinputs_ut_treasurerapproval_reviewdonationamountchangerequest",
+      "sourceRef": "svc_validateinputs",
+      "targetRef": "ut_treasurerapproval_reviewdonationamountchangerequest"
+    },
+    {
+      "id": "f_ut_treasurerapproval_reviewdonationamountchangerequest_xg_treasurerapproval",
+      "sourceRef": "ut_treasurerapproval_reviewdonationamountchangerequest",
+      "targetRef": "xg_treasurerapproval"
+    },
+    {
+      "id": "f_svc_systemupdate_updateamountinfo_xg_systemupdate",
+      "sourceRef": "svc_systemupdate_updateamountinfo",
+      "targetRef": "xg_systemupdate"
+    },
+    {
+      "id": "f_xg_treasurerapproval_step_treasurerapproval_task_reviewdonationamountchangerequest_decision_____approve__0",
+      "sourceRef": "xg_treasurerapproval",
+      "targetRef": "svc_systemupdate_updateamountinfo",
+      "condition": "decision == 'Approve'"
+    },
+    {
+      "id": "f_xg_treasurerapproval_default_1",
+      "sourceRef": "xg_treasurerapproval",
+      "targetRef": "end_completed",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_systemupdate_default_0",
+      "sourceRef": "xg_systemupdate",
+      "targetRef": "end_completed",
+      "isDefault": true
+    }
+  ]
+}

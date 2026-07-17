@@ -1,0 +1,1 @@
+export class CreateBeneficiaryCommand { constructor(public readonly params: Record<string, unknown> & { projectId: string }) {} }

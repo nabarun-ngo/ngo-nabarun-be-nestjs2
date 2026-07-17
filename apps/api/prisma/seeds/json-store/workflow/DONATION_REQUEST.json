@@ -1,0 +1,129 @@
+{
+  "id": "DONATION_REQUEST",
+  "version": 1,
+  "name": "Donation Request",
+  "description": "Donation request from {{fullName}} for an amount of {{amount}}",
+  "elements": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "startEvent"
+    },
+    {
+      "id": "svc_validateinputs",
+      "name": "ValidateInputs",
+      "type": "serviceTask",
+      "handler": "ValidateInputs"
+    },
+    {
+      "id": "ut_collection_collectdonation",
+      "name": "Connect and Collect Donation from {{fullName}}",
+      "type": "userTask",
+      "formKey": "DONATION_REQUEST_COLLECTION_COLLECTDONATION",
+      "candidateRoles": [
+        "TREASURER"
+      ],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_collection",
+      "name": "Donation Collection Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "svc_paymentcreate_createguestdonation",
+      "name": "Create Guest Donation",
+      "type": "serviceTask",
+      "handler": "GuestDonationCreationHandler"
+    },
+    {
+      "id": "xg_paymentcreate",
+      "name": "Payment Create Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "ut_paymentupdate_markaspaid",
+      "name": "Update Guest Donation as Paid",
+      "type": "userTask",
+      "formKey": "DONATION_REQUEST_PAYMENTUPDATE_MARKASPAID",
+      "candidateRoles": [
+        "TREASURER"
+      ],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_paymentupdate",
+      "name": "Payment Update Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "end_completed",
+      "name": "Completed",
+      "type": "endEvent",
+      "terminateAll": true
+    },
+    {
+      "id": "end_rejected",
+      "name": "Rejected",
+      "type": "endEvent",
+      "terminateAll": true
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_start_svc_validateinputs",
+      "sourceRef": "start",
+      "targetRef": "svc_validateinputs"
+    },
+    {
+      "id": "f_svc_validateinputs_ut_collection_collectdonation",
+      "sourceRef": "svc_validateinputs",
+      "targetRef": "ut_collection_collectdonation"
+    },
+    {
+      "id": "f_ut_collection_collectdonation_xg_collection",
+      "sourceRef": "ut_collection_collectdonation",
+      "targetRef": "xg_collection"
+    },
+    {
+      "id": "f_svc_paymentcreate_createguestdonation_xg_paymentcreate",
+      "sourceRef": "svc_paymentcreate_createguestdonation",
+      "targetRef": "xg_paymentcreate"
+    },
+    {
+      "id": "f_ut_paymentupdate_markaspaid_xg_paymentupdate",
+      "sourceRef": "ut_paymentupdate_markaspaid",
+      "targetRef": "xg_paymentupdate"
+    },
+    {
+      "id": "f_xg_collection_step_collection_task_collectdonation_iscollected_____yes__0",
+      "sourceRef": "xg_collection",
+      "targetRef": "svc_paymentcreate_createguestdonation",
+      "condition": "isCollected == 'Yes'"
+    },
+    {
+      "id": "f_xg_collection_default_1",
+      "sourceRef": "xg_collection",
+      "targetRef": "ut_collection_collectdonation",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_paymentcreate_default_0",
+      "sourceRef": "xg_paymentcreate",
+      "targetRef": "ut_paymentupdate_markaspaid",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_paymentupdate_step_paymentupdate_task_markaspaid_isupdated_____yes__0",
+      "sourceRef": "xg_paymentupdate",
+      "targetRef": "end_completed",
+      "condition": "isUpdated == 'Yes'"
+    },
+    {
+      "id": "f_xg_paymentupdate_default_1",
+      "sourceRef": "xg_paymentupdate",
+      "targetRef": "ut_paymentupdate_markaspaid",
+      "isDefault": true
+    }
+  ]
+}

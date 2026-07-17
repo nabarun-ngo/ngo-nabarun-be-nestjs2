@@ -1,0 +1,10 @@
+{
+  "_comment": "Account type options (legacy Firebase ACCOUNT_TYPES).",
+  "items": [
+    { "key": "PRINCIPAL", "value": "Principal" },
+    { "key": "GENERAL", "value": "General" },
+    { "key": "DONATION", "value": "Donation (Cashier)" },
+    { "key": "PUBLIC_DONATION", "value": "Public Donation" },
+    { "key": "WALLET", "value": "Wallet" }
+  ]
+}

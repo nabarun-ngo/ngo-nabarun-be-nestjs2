@@ -1,6 +1,8 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BYPASS_SUCCESS_ENVELOPE_KEY } from '../decorators/bypass-success-envelope.decorator';
 import { SuccessResponse } from '../models/response-model';
 import { getTraceId } from '../../infrastructure/utilities/trace-context.util';
 
@@ -18,9 +20,20 @@ import { getTraceId } from '../../infrastructure/utilities/trace-context.util';
  */
 @Injectable()
 export class SuccessResponseInterceptor<T>
-  implements NestInterceptor<T, SuccessResponse<T>>
+  implements NestInterceptor<T, SuccessResponse<T> | T>
 {
-  intercept(_context: ExecutionContext, next: CallHandler): Observable<SuccessResponse<T>> {
+  constructor(private readonly reflector: Reflector) {}
+
+  intercept(context: ExecutionContext, next: CallHandler): Observable<SuccessResponse<T> | T> {
+    const bypass = this.reflector.getAllAndOverride<boolean>(BYPASS_SUCCESS_ENVELOPE_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (bypass) {
+      return next.handle();
+    }
+
     return next.handle().pipe(
       map((data) => {
         const response = new SuccessResponse<T>(data);

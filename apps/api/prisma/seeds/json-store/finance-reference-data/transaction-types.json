@@ -1,0 +1,7 @@
+{
+  "_comment": "Transaction type options (legacy Firebase TRANSACTION_TYPES).",
+  "items": [
+    { "key": "IN", "value": "Credit (IN)" },
+    { "key": "OUT", "value": "Debit (OUT)" }
+  ]
+}

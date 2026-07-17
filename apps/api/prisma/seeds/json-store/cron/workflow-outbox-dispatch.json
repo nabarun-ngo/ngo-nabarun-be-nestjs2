@@ -1,0 +1,8 @@
+{
+  "name": "workflow-outbox-dispatch",
+  "expression": "*/1 * * * *",
+  "description": "Poll workflow outbox and dispatch pending side effects",
+  "handler": "OutboxDispatchJob",
+  "enabled": true,
+  "inputData": { "batchSize": 50 }
+}

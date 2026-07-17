@@ -102,7 +102,6 @@ export class TokenVault2Module extends BaseDynamicModule {
   private static _build(optionsProviders: any[], extraImports: any[] = []): DynamicModule {
     return {
       module: TokenVault2Module,
-      global: true,
       imports: [
         ...extraImports,
         CqrsModule,

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import cronstrue from 'cronstrue';
 import { CRON_JOB_STORE_PORT, ICronJobStorePort } from '../../../domain/ports/cron-job-store.port';
@@ -15,7 +15,7 @@ export class GetCronJobsHandler
   implements IQueryHandler<GetCronJobsQuery, CronJobDto[]>
 {
   constructor(
-    @Inject(CRON_JOB_STORE_PORT) private readonly jobStore: ICronJobStorePort,
+    @Optional() @Inject(CRON_JOB_STORE_PORT) private readonly jobStore: ICronJobStorePort,
     @Inject(CRON2_OPTIONS) private readonly options: Cron2ModuleOptions,
   ) {}
 

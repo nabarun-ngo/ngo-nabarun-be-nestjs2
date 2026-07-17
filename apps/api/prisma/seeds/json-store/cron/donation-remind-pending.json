@@ -1,0 +1,8 @@
+{
+  "name": "donation-remind-pending",
+  "expression": "0 9 10,20 * *",
+  "description": "Send reminder emails for pending member donations on the 10th and 20th",
+  "handler": "RemindPendingDonationsJob",
+  "enabled": true,
+  "inputData": {}
+}

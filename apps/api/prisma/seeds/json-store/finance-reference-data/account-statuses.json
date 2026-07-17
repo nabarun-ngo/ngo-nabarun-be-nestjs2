@@ -1,0 +1,7 @@
+{
+  "_comment": "Account status options (legacy Firebase ACCOUNT_STATUSES).",
+  "items": [
+    { "key": "ACTIVE", "value": "Active" },
+    { "key": "CLOSED", "value": "Closed" }
+  ]
+}

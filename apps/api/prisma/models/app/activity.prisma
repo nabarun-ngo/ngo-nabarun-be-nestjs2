@@ -1,0 +1,51 @@
+// Project activities — linked to finance donations/expenses.
+
+model Activity {
+  id                   String    @id @default(uuid())
+  projectId            String    @db.VarChar(255)
+  name                 String    @db.VarChar(255)
+  description          String?   @db.Text
+  scale                String    @db.VarChar(20)
+  type                 String    @db.VarChar(50)
+  status               String    @db.VarChar(20)
+  priority             String    @db.VarChar(20)
+  startDate            DateTime?
+  endDate              DateTime?
+  actualStartDate      DateTime?
+  actualEndDate        DateTime?
+  location             String?   @db.VarChar(255)
+  venue                String?   @db.VarChar(255)
+  assignedTo           String?   @db.VarChar(255)
+  organizerId          String?   @db.VarChar(255)
+  parentActivityId     String?   @db.VarChar(255)
+  expectedParticipants Int?
+  actualParticipants   Int?
+  estimatedCost        Decimal?  @db.Decimal(15, 2)
+  actualCost           Decimal?  @db.Decimal(15, 2)
+  currency             String?   @db.VarChar(3)
+  tags                 String[]  @db.VarChar(50)
+  metadata             Json?
+
+  project         Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignee        UserProfile? @relation("ActivityAssignee", fields: [assignedTo], references: [id])
+  organizer       UserProfile? @relation("ActivityOrganizer", fields: [organizerId], references: [id])
+  parentActivity  Activity?    @relation("ActivityHierarchy", fields: [parentActivityId], references: [id])
+  childActivities Activity[]   @relation("ActivityHierarchy")
+
+  donations Donation[]
+  expenses  Expense[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  version   Int       @default(0)
+  deletedAt DateTime?
+
+  @@index([projectId])
+  @@index([status])
+  @@index([scale])
+  @@index([type])
+  @@index([assignedTo])
+  @@index([organizerId])
+  @@index([parentActivityId])
+  @@map("activities")
+}

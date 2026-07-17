@@ -1,0 +1,1 @@
+export const WORKFLOW_OPTIONS = Symbol('WORKFLOW_OPTIONS');

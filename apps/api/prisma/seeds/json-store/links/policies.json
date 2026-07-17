@@ -1,0 +1,41 @@
+{
+  "_comment": "Policy links. linkType: INTERNAL | EXTERNAL. Served via GET /links/policies.",
+  "items": [
+    {
+      "key": "PRIVACY_POLICY",
+      "value": "https://docs.example.org/policies/privacy-policy.pdf",
+      "description": "Privacy policy",
+      "category": "Legal",
+      "linkType": "EXTERNAL",
+      "tags": ["legal", "privacy"],
+      "active": true
+    },
+    {
+      "key": "TERMS_OF_SERVICE",
+      "value": "https://docs.example.org/policies/terms-of-service.pdf",
+      "description": "Terms of service",
+      "category": "Legal",
+      "linkType": "EXTERNAL",
+      "tags": ["legal"],
+      "active": true
+    },
+    {
+      "key": "CODE_OF_CONDUCT",
+      "value": "/assets/docs/policies/code-of-conduct.pdf",
+      "description": "Code of conduct for members and volunteers",
+      "category": "Conduct",
+      "linkType": "INTERNAL",
+      "tags": ["conduct", "volunteers"],
+      "active": true
+    },
+    {
+      "key": "REFUND_POLICY",
+      "value": "https://docs.example.org/policies/refund-policy.pdf",
+      "description": "Donation refund policy",
+      "category": "Finance",
+      "linkType": "EXTERNAL",
+      "tags": ["finance", "donations"],
+      "active": true
+    }
+  ]
+}

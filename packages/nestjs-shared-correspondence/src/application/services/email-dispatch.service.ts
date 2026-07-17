@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import Handlebars from 'handlebars';
 import { ITemplatePort, TEMPLATE_PORT } from '../../domain/ports/template.port';
 import { IEmailSenderPort, EMAIL_SENDER_PORT, EmailMessage } from '../../domain/ports/email-sender.port';
@@ -10,7 +10,7 @@ export type { EmailDispatchInput };
 @Injectable()
 export class EmailDispatchService implements IEmailDispatchPort {
   constructor(
-    @Inject(TEMPLATE_PORT)
+    @Optional() @Inject(TEMPLATE_PORT)
     private readonly templatePort: ITemplatePort,
     @Inject(EMAIL_SENDER_PORT)
     private readonly emailSender: IEmailSenderPort,

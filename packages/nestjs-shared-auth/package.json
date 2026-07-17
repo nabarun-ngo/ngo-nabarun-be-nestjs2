@@ -13,8 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ce/nestjs-shared-core": "*",
-    "@ce/nestjs-shared-persistence": "*"
+    "@ce/nestjs-shared-core": "*"
   },
   "exports": {
     ".": {

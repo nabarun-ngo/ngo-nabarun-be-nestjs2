@@ -13,6 +13,9 @@
       "dependsOn": [
         "^type-check"
       ]
+    },
+    "clean": {
+      "cache": false
     }
   }
 }

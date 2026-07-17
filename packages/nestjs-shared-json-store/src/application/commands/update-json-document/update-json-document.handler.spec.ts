@@ -20,6 +20,8 @@ const makeRepo = () => ({
 
 const makeEventBus = () => ({ publishAll: jest.fn() });
 
+const makeValidator = () => ({ validate: jest.fn() });
+
 function makeExistingDoc(): JsonDocument {
   return new JsonDocument(
     'doc-uuid-1',
@@ -36,12 +38,14 @@ function makeExistingDoc(): JsonDocument {
 describe('UpdateJsonDocumentHandler', () => {
   let repo: ReturnType<typeof makeRepo>;
   let eventBus: ReturnType<typeof makeEventBus>;
+  let validator: ReturnType<typeof makeValidator>;
   let handler: UpdateJsonDocumentHandler;
 
   beforeEach(() => {
     repo = makeRepo();
     eventBus = makeEventBus();
-    handler = new UpdateJsonDocumentHandler(repo as any, eventBus as any);
+    validator = makeValidator();
+    handler = new UpdateJsonDocumentHandler(repo as any, validator as any, eventBus as any);
   });
 
   describe('success path', () => {

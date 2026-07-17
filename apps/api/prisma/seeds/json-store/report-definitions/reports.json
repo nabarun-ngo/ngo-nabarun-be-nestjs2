@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "key": "ANNUAL_AUDIT_REPORT",
+      "value": "Annual Audit Report",
+      "description": "Comprehensive annual financial audit workbook.",
+      "active": true,
+      "requiresApproval": true,
+      "approverRoles": ["TREASURER", "PRESIDENT", "VICE_PRESIDENT", "SECRETARY"],
+      "visibleToRoles": ["TREASURER", "SECRETARY", "PRESIDENT", "VICE_PRESIDENT"]
+    },
+    {
+      "key": "DONATION_SUMMARY_REPORT",
+      "value": "Donation Summary Report",
+      "description": "Paid and pending donation summary for a date range.",
+      "active": true,
+      "requiresApproval": true,
+      "approverRoles": ["TREASURER", "SECRETARY"],
+      "visibleToRoles": ["TREASURER", "SECRETARY", "PRESIDENT", "VICE_PRESIDENT"]
+    },
+    {
+      "key": "ACTIVITY_REPORT",
+      "value": "Activity Report",
+      "description": "Activity closure report (requires project module).",
+      "active": false,
+      "requiresApproval": true,
+      "approverRoles": ["SECRETARY", "PRESIDENT"],
+      "visibleToRoles": ["SECRETARY", "PRESIDENT", "VICE_PRESIDENT"]
+    },
+    {
+      "key": "PROJECT_REPORT",
+      "value": "Project Report",
+      "description": "Project closure report (requires project module).",
+      "active": false,
+      "requiresApproval": true,
+      "approverRoles": ["PRESIDENT", "VICE_PRESIDENT"],
+      "visibleToRoles": ["PRESIDENT", "VICE_PRESIDENT", "SECRETARY"]
+    }
+  ]
+}

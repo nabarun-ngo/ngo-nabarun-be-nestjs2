@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "key": "PLANNING",
+      "value": "Planning"
+    },
+    {
+      "key": "ACTIVE",
+      "value": "Active"
+    },
+    {
+      "key": "ON_HOLD",
+      "value": "On Hold"
+    },
+    {
+      "key": "COMPLETED",
+      "value": "Completed"
+    },
+    {
+      "key": "CANCELLED",
+      "value": "Cancelled"
+    }
+  ]
+}

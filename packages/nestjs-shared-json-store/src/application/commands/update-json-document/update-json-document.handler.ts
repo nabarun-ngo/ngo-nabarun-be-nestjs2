@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { JsonDocumentNotFoundError } from '../../../domain/errors/json-store.errors';
+import { IJsonDocumentPayloadValidatorPort } from '../../../domain/ports/json-document-payload-validator.port';
 import { IJsonDocumentRepository } from '../../../domain/repositories/json-document.repository';
 import { JsonDocumentResponseDto } from '../../dtos/json-document.dtos';
 import { JsonDocumentResponseMapper } from '../../mappers/json-document-response.mapper';
@@ -14,6 +15,8 @@ export class UpdateJsonDocumentHandler
   constructor(
     @Inject(IJsonDocumentRepository)
     private readonly repo: IJsonDocumentRepository,
+    @Inject(IJsonDocumentPayloadValidatorPort)
+    private readonly payloadValidator: IJsonDocumentPayloadValidatorPort,
     private readonly eventBus: EventBus,
   ) {}
 
@@ -22,6 +25,8 @@ export class UpdateJsonDocumentHandler
     if (!document) {
       throw new JsonDocumentNotFoundError(params.id);
     }
+
+    this.payloadValidator.validate(document.namespace, document.key, params.payload);
 
     document.update(params.payload);
     await this.repo.update(document.id, document);

@@ -1,0 +1,5 @@
+{
+  "subject": "Reminder: pending donation payment",
+  "htmlTemplate": "<p>Dear {{donorName}},</p><p>You have pending donation(s) awaiting payment. Please log in to review and complete payment.</p>",
+  "textTemplate": "Dear {{donorName}}, you have pending donation(s) awaiting payment. Please log in to review and complete payment."
+}

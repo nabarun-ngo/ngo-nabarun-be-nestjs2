@@ -1,27 +1,31 @@
 import { gmail as googleMail } from '@googleapis/gmail';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { TOKEN_VAULT_FACADE, TokenVaultFacade } from '@ce/nestjs-shared-token-vault';
-import { GOOGLE_SCOPES } from '@ce/nestjs-shared-token-vault';
+import {
+  IOAuthAccessTokenPort,
+  OAUTH_ACCESS_TOKEN_PORT,
+} from '@ce/nestjs-shared-core';
 import { OAuth2Client } from 'googleapis-common';
 import { IEmailSenderPort, EmailMessage } from '../../domain/ports/email-sender.port';
 import { CORRESPONDENCE2_OPTIONS } from '../../correspondence-options.token';
 import type { Correspondence2ModuleOptions } from '../../correspondence.module';
+
+const GMAIL_SEND_SCOPE = 'https://www.googleapis.com/auth/gmail.send';
 
 @Injectable()
 export class GmailEmailAdapter implements IEmailSenderPort {
   private readonly logger = new Logger(GmailEmailAdapter.name);
 
   constructor(
-    @Inject(TOKEN_VAULT_FACADE)
-    private readonly tokenVault: TokenVaultFacade,
+    @Inject(OAUTH_ACCESS_TOKEN_PORT)
+    private readonly oauthTokens: IOAuthAccessTokenPort,
     @Inject(CORRESPONDENCE2_OPTIONS)
     private readonly options: Correspondence2ModuleOptions,
   ) {}
 
   async send(message: EmailMessage): Promise<void> {
-    const accessToken = await this.tokenVault.getAccessToken({
+    const accessToken = await this.oauthTokens.getAccessToken({
       provider: 'google',
-      scope: GOOGLE_SCOPES.gmailSend,
+      scope: GMAIL_SEND_SCOPE,
     });
 
     const authClient = new OAuth2Client();

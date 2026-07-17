@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CRON_JOB_STORE_PORT, ICronJobStorePort } from '../../../domain/ports/cron-job-store.port';
 import { CronExpression } from '../../../domain/value-objects/cron-expression.vo';
@@ -12,7 +12,7 @@ export class CreateCronJobHandler
   implements ICommandHandler<CreateCronJobCommand, CronJob>
 {
   constructor(
-    @Inject(CRON_JOB_STORE_PORT) private readonly jobStore: ICronJobStorePort,
+    @Optional() @Inject(CRON_JOB_STORE_PORT) private readonly jobStore: ICronJobStorePort,
   ) {}
 
   async execute(command: CreateCronJobCommand): Promise<CronJob> {

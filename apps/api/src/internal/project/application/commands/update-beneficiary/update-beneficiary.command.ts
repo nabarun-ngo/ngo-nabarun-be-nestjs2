@@ -1,0 +1,1 @@
+export class UpdateBeneficiaryCommand { constructor(public readonly params: { id: string; exit?: boolean } & Record<string, unknown>) {} }

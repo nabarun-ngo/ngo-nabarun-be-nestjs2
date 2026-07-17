@@ -13,6 +13,6 @@ datasource db {
 
 generator client {
   provider     = "prisma-client"
-  output       = "../src/persistence/prisma"
+  output       = "../src/shared/persistence/prisma"
   moduleFormat = "cjs"
 }

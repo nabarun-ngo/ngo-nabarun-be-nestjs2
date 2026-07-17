@@ -1,0 +1,183 @@
+// Project bounded context — NGO project management.
+
+model Project {
+  id                     String    @id @default(uuid())
+  name                   String    @db.VarChar(255)
+  description            String    @db.Text
+  code                   String    @unique @db.VarChar(50)
+  category               String    @db.VarChar(50)
+  status                 String    @db.VarChar(20)
+  phase                  String    @db.VarChar(20)
+  startDate              DateTime
+  endDate                DateTime?
+  actualEndDate          DateTime?
+  budget                 Decimal   @db.Decimal(15, 2)
+  spentAmount            Decimal   @default(0) @db.Decimal(15, 2)
+  currency               String    @db.VarChar(3)
+  location               String?   @db.VarChar(255)
+  targetBeneficiaryCount Int?
+  actualBeneficiaryCount Int?
+  managerId              String    @db.VarChar(255)
+  sponsorId              String?   @db.VarChar(255)
+  tags                   String[]  @db.VarChar(50)
+  metadata               Json?
+
+  manager       UserProfile         @relation("ProjectManager", fields: [managerId], references: [id])
+  sponsor       UserProfile?        @relation("ProjectSponsor", fields: [sponsorId], references: [id])
+  activities    Activity[]
+  beneficiaries Beneficiary[]
+  goals         Goal[]
+  milestones    Milestone[]
+  teamMembers   ProjectTeamMember[]
+  risks         ProjectRisk[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  version   Int       @default(0)
+  deletedAt DateTime?
+
+  @@index([status])
+  @@index([category])
+  @@index([phase])
+  @@index([managerId])
+  @@index([code])
+  @@map("projects")
+}
+
+model Beneficiary {
+  id               String    @id @default(uuid())
+  projectId        String    @db.VarChar(255)
+  name             String    @db.VarChar(255)
+  type             String    @db.VarChar(30)
+  gender           String?   @db.VarChar(20)
+  age              Int?
+  dateOfBirth      DateTime?
+  contactNumber    String?   @db.VarChar(20)
+  email            String?   @db.VarChar(255)
+  address          String?   @db.Text
+  location         String?   @db.VarChar(255)
+  category         String?   @db.VarChar(100)
+  enrollmentDate   DateTime
+  exitDate         DateTime?
+  status           String    @db.VarChar(20)
+  benefitsReceived String[]  @db.VarChar(100)
+  notes            String?   @db.Text
+  metadata         Json?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([projectId])
+  @@index([status])
+  @@index([type])
+  @@index([enrollmentDate])
+  @@map("beneficiaries")
+}
+
+model Goal {
+  id           String    @id @default(uuid())
+  projectId    String    @db.VarChar(255)
+  title        String    @db.VarChar(255)
+  description  String?   @db.Text
+  targetValue  Decimal?  @db.Decimal(15, 2)
+  targetUnit   String?   @db.VarChar(50)
+  currentValue Decimal   @default(0) @db.Decimal(15, 2)
+  deadline     DateTime?
+  priority     String    @db.VarChar(20)
+  status       String    @db.VarChar(30)
+  weight       Decimal?  @db.Decimal(5, 4)
+  dependencies String[]
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  version   Int       @default(0)
+  deletedAt DateTime?
+
+  @@index([projectId])
+  @@index([status])
+  @@index([priority])
+  @@map("goals")
+}
+
+model Milestone {
+  id           String    @id @default(uuid())
+  projectId    String    @db.VarChar(255)
+  name         String    @db.VarChar(255)
+  description  String?   @db.Text
+  targetDate   DateTime
+  actualDate   DateTime?
+  status       String    @db.VarChar(20)
+  importance   String    @db.VarChar(20)
+  dependencies String[]
+  notes        String?   @db.Text
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([projectId])
+  @@index([status])
+  @@index([targetDate])
+  @@map("milestones")
+}
+
+model ProjectTeamMember {
+  id               String    @id @default(uuid())
+  projectId        String    @db.VarChar(255)
+  userId           String    @db.VarChar(255)
+  role             String    @db.VarChar(30)
+  responsibilities String? @db.Text
+  startDate        DateTime
+  endDate          DateTime?
+  hoursAllocated   Decimal?  @db.Decimal(10, 2)
+  isActive         Boolean   @default(true)
+
+  project Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    UserProfile @relation("ProjectTeamMember", fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([projectId])
+  @@index([userId])
+  @@index([isActive])
+  @@map("project_team_members")
+}
+
+model ProjectRisk {
+  id             String    @id @default(uuid())
+  projectId      String    @db.VarChar(255)
+  title          String    @db.VarChar(255)
+  description    String?   @db.Text
+  category       String    @db.VarChar(30)
+  severity       String    @db.VarChar(20)
+  probability    String    @db.VarChar(20)
+  status         String    @db.VarChar(20)
+  impact         String?   @db.Text
+  mitigationPlan String?   @db.Text
+  ownerId        String?   @db.VarChar(255)
+  identifiedDate DateTime
+  resolvedDate   DateTime?
+  notes          String?   @db.Text
+
+  project Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  owner   UserProfile? @relation("RiskOwner", fields: [ownerId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([projectId])
+  @@index([status])
+  @@index([severity])
+  @@index([category])
+  @@map("project_risks")
+}

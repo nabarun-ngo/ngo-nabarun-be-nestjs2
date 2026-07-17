@@ -13,6 +13,23 @@ const validOptions = {
   }),
 };
 
+function findProvider(mod: DynamicModule, token: symbol | string) {
+  const direct = (mod.providers as any[] | undefined)?.find(
+    (p) => p.provide === token,
+  );
+  if (direct) return direct;
+
+  for (const imported of mod.imports ?? []) {
+    if (typeof imported === 'function') continue;
+    const nested = (imported as DynamicModule).providers?.find(
+      (p) => p === token,
+    );
+    if (nested) return nested;
+  }
+
+  return undefined;
+}
+
 describe('DatabaseModule', () => {
   describe('forRoot()', () => {
     it('returns a DynamicModule', () => {
@@ -28,9 +45,7 @@ describe('DatabaseModule', () => {
 
     it('provides DATABASE_OPTIONS token with validated options', () => {
       const mod = DatabaseModule.forRoot(validOptions) as DynamicModule;
-      const optionsProvider = (mod.providers as any[]).find(
-        (p) => p.provide === DATABASE_OPTIONS,
-      );
+      const optionsProvider = findProvider(mod, DATABASE_OPTIONS);
       expect(optionsProvider).toBeDefined();
       expect(optionsProvider.useValue.postgresUrl).toBe(validOptions.postgresUrl);
     });
@@ -91,9 +106,7 @@ describe('DatabaseModule', () => {
       });
       expect(mod).toBeDefined();
       expect(mod.module).toBe(DatabaseModule);
-      const optionsProvider = (mod.providers as any[]).find(
-        (p) => p.provide === DATABASE_OPTIONS,
-      );
+      const optionsProvider = findProvider(mod, DATABASE_OPTIONS);
       expect(optionsProvider).toBeDefined();
       expect(typeof optionsProvider.useFactory).toBe('function');
     });
@@ -104,9 +117,7 @@ describe('DatabaseModule', () => {
         inject: [TOKEN],
         useFactory: (_myToken: any) => validOptions,
       });
-      const optionsProvider = (mod.providers as any[]).find(
-        (p) => p.provide === DATABASE_OPTIONS,
-      );
+      const optionsProvider = findProvider(mod, DATABASE_OPTIONS);
       expect(optionsProvider.inject).toContain(TOKEN);
     });
 
@@ -117,9 +128,7 @@ describe('DatabaseModule', () => {
           postgresUrl: 'not-a-url',
         }),
       });
-      const optionsProvider = (mod.providers as any[]).find(
-        (p) => p.provide === DATABASE_OPTIONS,
-      );
+      const optionsProvider = findProvider(mod, DATABASE_OPTIONS);
 
       await expect(optionsProvider.useFactory()).rejects.toThrow(
         '[DatabaseModule] Config validation failed:',
@@ -146,9 +155,7 @@ describe('DatabaseModule', () => {
           prismaClientFactory,
         }),
       });
-      const optionsProvider = (mod.providers as any[]).find(
-        (p) => p.provide === DATABASE_OPTIONS,
-      );
+      const optionsProvider = findProvider(mod, DATABASE_OPTIONS);
       const prismaProvider = (mod.providers as any[]).find(
         (p) => p.provide === PRISMA_CLIENT,
       );

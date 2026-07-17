@@ -8,7 +8,9 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "type-check": "turbo run type-check"
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rimraf .turbo",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
   },
   "dependencies": {
     "@googleapis/calendar": "^15.0.0",
@@ -54,6 +56,7 @@
     "luxon": "^3.7.2",
     "nodemailer": "^9.0.3",
     "pdfkit": "^0.17.2",
+    "puppeteer": "^24.36.0",
     "pg": "^8.13.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.0",

@@ -7,18 +7,19 @@ export type {
 } from './correspondence.module';
 export { CORRESPONDENCE2_OPTIONS as CORRESPONDENCE_OPTIONS } from './correspondence-options.token';
 
-// ── Public integration event (publish from consumer modules) ───────────────
-export { CorrespondenceRequestEvent as CorrespondenceRequestEvent } from './application/events/correspondence-request.event';
-export type {
-  Correspondence2Recipients as CorrespondenceRecipients,
-  TargetUsersRecipients,
-  TargetRolesRecipients,
-  TargetResourceRecipients,
-  InAppChannelOptions,
-  EmailChannelOptions,
-  PushChannelOptions,
-  CorrespondenceChannels,
-} from './application/events/correspondence-request.event';
+// ── Public integration event (re-exported from core for backward compatibility) ──
+export {
+  CorrespondenceRequestEvent,
+  type CorrespondenceRecipients as CorrespondenceRecipients,
+  type TargetUsersRecipients,
+  type TargetRolesRecipients,
+  type TargetResourceRecipients,
+  type InAppChannelOptions,
+  type EmailChannelOptions,
+  type PushChannelOptions,
+  type CorrespondenceChannels,
+} from '@ce/nestjs-shared-core';
+export type { CorrespondenceRecipients as Correspondence2Recipients } from '@ce/nestjs-shared-core';
 
 // ── Domain enums (needed by consumers when building events) ───────────────
 export { ChannelType } from './domain/enums/channel-type.enum';
@@ -29,7 +30,7 @@ export {
   NotificationType,
   NotificationCategory,
   NotificationPriority,
-} from './domain/enums/notification-type.enum';
+} from '@ce/nestjs-shared-core';
 
 // ── Domain errors (consumers may catch these) ─────────────────────────────
 export {
@@ -84,3 +85,9 @@ export type { IEmailSenderPort, EmailMessage } from './domain/ports/email-sender
 export type { IPushNotificationPort, PushNotificationPayload } from './domain/ports/push-notification.port';
 export type { IDispatchQueuePort, CorrespondenceDispatchPayload } from './domain/ports/dispatch-queue.port';
 export type { ITemplatePort, EmailTemplateData } from './domain/ports/template.port';
+
+// ── JSON-store payload schemas ───────────────────────────────────────────────
+export {
+  EmailTemplatePayloadSchema,
+  type EmailTemplatePayload,
+} from './email-template.schema';

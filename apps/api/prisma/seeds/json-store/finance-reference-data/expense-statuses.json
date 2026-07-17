@@ -1,0 +1,10 @@
+{
+  "_comment": "Expense status options (legacy Firebase EXPENSE_STATUSES).",
+  "items": [
+    { "key": "DRAFT", "value": "Draft" },
+    { "key": "SUBMITTED", "value": "Submitted" },
+    { "key": "FINALIZED", "value": "Finalized" },
+    { "key": "SETTLED", "value": "Settled" },
+    { "key": "REJECTED", "value": "Rejected" }
+  ]
+}

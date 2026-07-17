@@ -1,0 +1,5 @@
+{
+  "subject": "Donation payment confirmed",
+  "htmlTemplate": "<p>Dear donor,</p><p>Your donation payment has been confirmed.</p><p>Amount: <strong>₹ {{donation.amount}}</strong></p><p>Period: <strong>{{donationPeriod}}</strong></p><p>Paid on: <strong>{{paidOn}}</strong></p><p>Confirmed by: <strong>{{confirmedByName}}</strong></p><p>Donation ID: {{donation.id}}</p>",
+  "textTemplate": "Your donation of ₹ {{donation.amount}} for {{donationPeriod}} was confirmed on {{paidOn}} by {{confirmedByName}}. Donation ID: {{donation.id}}."
+}

@@ -1,0 +1,5 @@
+{
+  "subject": "Workflow update: {{workflowName}}",
+  "htmlTemplate": "<p>Hi {{recipientName}}, workflow <strong>{{workflowName}}</strong> ({{instanceId}}) status: {{status}}.</p>",
+  "textTemplate": "Workflow {{workflowName}} ({{instanceId}}) update: {{status}}."
+}

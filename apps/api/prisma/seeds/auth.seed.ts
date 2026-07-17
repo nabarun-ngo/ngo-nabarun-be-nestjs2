@@ -43,14 +43,15 @@ const DOCS_ALL = [
   'delete:documents',
 ] as const;
 
-const CUSTOM_FIELDS_ALL = [
-  'read:custom_field_definitions',
-  'create:custom_field_definitions',
-  'update:custom_field_definitions',
-  'delete:custom_field_definitions',
-  'read:custom_field_values',
-  'write:custom_field_values',
-  'delete:custom_field_values',
+const CUSTOM_FORMS_ALL = [
+  'read:custom_forms',
+  'create:custom_forms',
+  'update:custom_forms',
+  'disable:custom_forms',
+  'read:form_submissions',
+  'write:form_submissions',
+  'submit:form_submissions',
+  'clear:form_submissions',
 ] as const;
 
 const DONATIONS_ALL = [
@@ -59,6 +60,111 @@ const DONATIONS_ALL = [
   'admin:donations',
   'donations:read',
   'donations:comment',
+  'create:donation',
+  'create:donation_guest',
+  'update:donation',
+  'read:user_donations',
+  'read:donation_guest',
+] as const;
+
+const ACCOUNTS_ALL = [
+  'create:account',
+  'update:account',
+  'read:accounts',
+  'read:transactions',
+  'update:accounts',
+  'update:transactions',
+] as const;
+
+const EXPENSES_ALL = [
+  'create:expense',
+  'update:expense',
+  'create:expense_final',
+  'create:expense_settle',
+  'read:expenses',
+] as const;
+
+const EARNINGS_ALL = [
+  'create:earning',
+  'update:earning',
+  'read:earning',
+] as const;
+
+const PROJECT_ALL = [
+  'read:project',
+  'create:project',
+  'update:project',
+  'read:activity',
+  'create:activity',
+  'update:activity',
+  'read:beneficiary',
+  'create:beneficiary',
+  'update:beneficiary',
+  'read:goal',
+  'create:goal',
+  'update:goal',
+  'read:milestone',
+  'create:milestone',
+  'update:milestone',
+  'read:project_team',
+  'create:project_team',
+  'update:project_team',
+  'read:risk',
+  'create:risk',
+  'update:risk',
+] as const;
+
+const FINANCE_ALL = [
+  ...DONATIONS_ALL,
+  ...ACCOUNTS_ALL,
+  ...EXPENSES_ALL,
+  ...EARNINGS_ALL,
+] as const;
+
+const FINANCE_GRANULAR = [
+  'create:donation',
+  'create:donation_guest',
+  'update:donation',
+  'read:user_donations',
+  'read:donation_guest',
+  'create:account',
+  'update:account',
+  'read:accounts',
+  'read:transactions',
+  'update:accounts',
+  'update:transactions',
+  'create:expense',
+  'update:expense',
+  'create:expense_final',
+  'create:expense_settle',
+  'read:expenses',
+  'create:earning',
+  'update:earning',
+  'read:earning',
+] as const;
+
+const WORKFLOW_ALL = [
+  'create:workflow',
+  'read:workflow',
+  'update:workflow',
+  'read:task',
+  'update:task',
+  'admin:workflows',
+  'manage:workflow-definitions',
+] as const;
+
+const REPORTS_ALL = [
+  'read:reports',
+  'create:reports',
+  'delete:reports',
+  'approve:reports',
+] as const;
+
+const MEETING_ALL = [
+  'read:meeting',
+  'create:meeting',
+  'update:meeting',
+  'delete:meeting',
 ] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -90,20 +196,30 @@ export const AUTH2_SEED: Auth2SeedData = {
     { key: 'read:cron', description: 'View cron job definitions and status' },
     { key: 'update:cron', description: 'Trigger or update cron job definitions' },
 
+    // ── links (consumer-defined) ──────────────────────────────────────────────
+    { key: 'read:links', description: 'View user guide, policy, and app links' },
+
     // ── dms ────────────────────────────────────────────────────────────────
     { key: 'read:documents', description: 'View document references' },
     { key: 'create:documents', description: 'Upload or attach documents' },
     { key: 'update:documents', description: 'Update document metadata' },
     { key: 'delete:documents', description: 'Delete document references' },
 
-    // ── custom-fields ───────────────────────────────────────────────────────
-    { key: 'read:custom_field_definitions', description: 'View custom field definitions' },
-    { key: 'create:custom_field_definitions', description: 'Create custom field definitions' },
-    { key: 'update:custom_field_definitions', description: 'Update custom field definitions' },
-    { key: 'delete:custom_field_definitions', description: 'Delete custom field definitions' },
-    { key: 'read:custom_field_values', description: 'Read custom field values on entities' },
-    { key: 'write:custom_field_values', description: 'Set custom field values on entities' },
-    { key: 'delete:custom_field_values', description: 'Remove custom field values from entities' },
+    // ── reports ─────────────────────────────────────────────────────────────
+    { key: 'read:reports', description: 'View report definitions and executions' },
+    { key: 'create:reports', description: 'Generate reports' },
+    { key: 'delete:reports', description: 'Delete report executions' },
+    { key: 'approve:reports', description: 'Approve reports via workflow tasks' },
+
+    // ── custom-forms ─────────────────────────────────────────────────────────
+    { key: 'read:custom_forms', description: 'View custom form definitions' },
+    { key: 'create:custom_forms', description: 'Create custom forms' },
+    { key: 'update:custom_forms', description: 'Update custom forms and fields' },
+    { key: 'disable:custom_forms', description: 'Disable custom forms and fields' },
+    { key: 'read:form_submissions', description: 'Read form submission values' },
+    { key: 'write:form_submissions', description: 'Save draft form submission values' },
+    { key: 'submit:form_submissions', description: 'Submit form submissions' },
+    { key: 'clear:form_submissions', description: 'Clear form submission values' },
 
     // ── token-vault ─────────────────────────────────────────────────────────
     { key: 'read:oauth_token', description: 'View OAuth token records' },
@@ -128,6 +244,94 @@ export const AUTH2_SEED: Auth2SeedData = {
     { key: 'read:donations', description: 'View donation records' },
     { key: 'write:donations', description: 'Create or edit donation records' },
     { key: 'admin:donations', description: 'Administrative access to donation records' },
+    { key: 'create:donation', description: 'Create member donation' },
+    { key: 'create:donation_guest', description: 'Create guest donation' },
+    { key: 'update:donation', description: 'Update donation details' },
+    { key: 'read:user_donations', description: 'View donations for a specific member' },
+    { key: 'read:donation_guest', description: 'View guest donations' },
+
+    // ── accounts / transactions (consumer-defined) ───────────────────────────
+    { key: 'create:account', description: 'Create financial account' },
+    { key: 'update:account', description: 'Update financial account' },
+    { key: 'read:accounts', description: 'View financial accounts' },
+    { key: 'read:transactions', description: 'View account transactions' },
+    { key: 'update:accounts', description: 'Update accounts (admin)' },
+    { key: 'update:transactions', description: 'Create or reverse transactions' },
+
+    // ── expenses (consumer-defined) ──────────────────────────────────────────
+    { key: 'create:expense', description: 'Create expense record' },
+    { key: 'update:expense', description: 'Update expense record' },
+    { key: 'create:expense_final', description: 'Finalize (approve) expense' },
+    { key: 'create:expense_settle', description: 'Settle (pay) expense' },
+    { key: 'read:expenses', description: 'View expense records' },
+
+    // ── earnings (consumer-defined) ──────────────────────────────────────────
+    { key: 'create:earning', description: 'Create earning record' },
+    { key: 'update:earning', description: 'Update earning record' },
+    { key: 'read:earning', description: 'View earning records' },
+
+    // ── project (consumer-defined) ───────────────────────────────────────────
+    { key: 'read:project', description: 'View project records' },
+    { key: 'create:project', description: 'Create projects' },
+    { key: 'update:project', description: 'Update projects' },
+    { key: 'read:activity', description: 'View project activities' },
+    { key: 'create:activity', description: 'Create project activities' },
+    { key: 'update:activity', description: 'Update project activities' },
+    { key: 'read:beneficiary', description: 'View project beneficiaries' },
+    { key: 'create:beneficiary', description: 'Create project beneficiaries' },
+    { key: 'update:beneficiary', description: 'Update project beneficiaries' },
+    { key: 'read:goal', description: 'View project goals' },
+    { key: 'create:goal', description: 'Create project goals' },
+    { key: 'update:goal', description: 'Update project goals' },
+    { key: 'read:milestone', description: 'View project milestones' },
+    { key: 'create:milestone', description: 'Create project milestones' },
+    { key: 'update:milestone', description: 'Update project milestones' },
+    { key: 'read:project_team', description: 'View project team members' },
+    { key: 'create:project_team', description: 'Add project team members' },
+    { key: 'update:project_team', description: 'Update project team members' },
+    { key: 'read:risk', description: 'View project risks' },
+    { key: 'create:risk', description: 'Create project risks' },
+    { key: 'update:risk', description: 'Update project risks' },
+    { key: 'create:donation', description: 'Create member donations' },
+    { key: 'create:donation_guest', description: 'Create guest donations' },
+    { key: 'update:donation', description: 'Update donation details or payment status' },
+    { key: 'read:user_donations', description: 'View donations for a specific member' },
+    { key: 'read:donation_guest', description: 'List guest donations' },
+
+    // ── accounts & transactions (consumer-defined) ───────────────────────────
+    { key: 'create:account', description: 'Create financial accounts' },
+    { key: 'update:account', description: 'Update financial account details' },
+    { key: 'read:accounts', description: 'View financial accounts' },
+    { key: 'read:transactions', description: 'View account transactions' },
+    { key: 'update:accounts', description: 'Adjust account balances' },
+    { key: 'update:transactions', description: 'Reverse or fix transactions' },
+
+    // ── expenses (consumer-defined) ──────────────────────────────────────────
+    { key: 'create:expense', description: 'Create expense records' },
+    { key: 'update:expense', description: 'Update expense records' },
+    { key: 'create:expense_final', description: 'Finalize (approve) expenses' },
+    { key: 'create:expense_settle', description: 'Settle approved expenses' },
+    { key: 'read:expenses', description: 'View expense records' },
+
+    // ── earnings (consumer-defined) ──────────────────────────────────────────
+    { key: 'create:earning', description: 'Create earning records' },
+    { key: 'update:earning', description: 'Update earning records' },
+    { key: 'read:earning', description: 'View earning records' },
+
+    // ── workflow (consumer-defined) ──────────────────────────────────────────
+    { key: 'create:workflow', description: 'Start new workflow instances' },
+    { key: 'read:workflow', description: 'View workflow instances and timelines' },
+    { key: 'update:workflow', description: 'Cancel or update workflow instances' },
+    { key: 'read:task', description: 'View assigned workflow tasks (inbox)' },
+    { key: 'update:task', description: 'Claim, complete, or delegate workflow tasks' },
+    { key: 'admin:workflows', description: 'Administrative workflow operations (force-skip, stuck detector)' },
+    { key: 'manage:workflow-definitions', description: 'Publish and manage workflow definitions' },
+
+    // ── meeting (consumer-defined) ───────────────────────────────────────────
+    { key: 'read:meeting', description: 'View meeting records' },
+    { key: 'create:meeting', description: 'Schedule meetings and sync with Google Calendar' },
+    { key: 'update:meeting', description: 'Update or cancel meeting details' },
+    { key: 'delete:meeting', description: 'Delete meeting records' },
   ],
 
   roles: [
@@ -135,7 +339,15 @@ export const AUTH2_SEED: Auth2SeedData = {
     {
       key: 'MEMBER',
       description: 'Base role — auto-assigned to every new user on registration. No elevated permissions.',
-      permissionKeys: [],
+      permissionKeys: [
+        'create:workflow',
+        'read:workflow',
+        'read:task',
+        'read:user_donations',
+        'update:donation',
+        'read:links',
+        'read:meeting',
+      ],
     },
 
     // ── Governance roles ──────────────────────────────────────────────────────
@@ -147,8 +359,13 @@ export const AUTH2_SEED: Auth2SeedData = {
         ...RBAC_MANAGE,
         ...API_KEYS_ALL,
         ...DOCS_ALL,
-        ...CUSTOM_FIELDS_ALL,
+        ...CUSTOM_FORMS_ALL,
         ...DONATIONS_ALL,
+        ...FINANCE_GRANULAR,
+        ...PROJECT_ALL,
+        ...WORKFLOW_ALL,
+        ...REPORTS_ALL,
+        ...MEETING_ALL,
         'read:notifications',
         'tasks:read',
         'tasks:write',
@@ -164,10 +381,15 @@ export const AUTH2_SEED: Auth2SeedData = {
         'read:documents',
         'create:documents',
         'update:documents',
-        'read:custom_field_definitions',
-        'read:custom_field_values',
-        'write:custom_field_values',
+        'read:custom_forms',
+        'read:form_submissions',
+        'write:form_submissions',
+        'submit:form_submissions',
         ...DONATIONS_ALL,
+        ...FINANCE_GRANULAR,
+        ...WORKFLOW_ALL,
+        ...REPORTS_ALL,
+        ...MEETING_ALL,
         'read:notifications',
         'tasks:read',
         'tasks:write',
@@ -182,15 +404,27 @@ export const AUTH2_SEED: Auth2SeedData = {
         'read:documents',
         'create:documents',
         'update:documents',
-        'read:custom_field_definitions',
-        'read:custom_field_values',
-        'write:custom_field_values',
+        'read:custom_forms',
+        'read:form_submissions',
+        'write:form_submissions',
+        'submit:form_submissions',
         'read:donations',
         'write:donations',
         'donations:read',
         'donations:comment',
+        'read:user_donations',
+        'update:donation',
+        'read:expenses',
+        'create:expense',
+        'update:expense',
+        'create:workflow',
+        'read:workflow',
+        'read:task',
+        'update:task',
         'tasks:read',
         'tasks:write',
+        ...REPORTS_ALL,
+        ...MEETING_ALL,
         'read:notifications',
       ],
     },
@@ -201,28 +435,31 @@ export const AUTH2_SEED: Auth2SeedData = {
         ...RBAC_READ,
         'read:documents',
         'create:documents',
-        'read:custom_field_definitions',
-        'read:custom_field_values',
+        'read:custom_forms',
+        'read:form_submissions',
         'read:donations',
         'donations:read',
+        'read:workflow',
+        'read:task',
+        'update:task',
         'tasks:read',
         'read:notifications',
+        'read:meeting',
       ],
     },
     {
       key: 'TREASURER',
       description: 'Financial officer. Manages and reports on donation and financial records.',
       permissionKeys: [
-        'read:donations',
-        'write:donations',
-        'admin:donations',
-        'donations:read',
-        'donations:comment',
+        ...FINANCE_ALL,
         'read:documents',
         'create:documents',
-        'read:custom_field_definitions',
-        'read:custom_field_values',
-        'write:custom_field_values',
+        'read:custom_forms',
+        'read:form_submissions',
+        'write:form_submissions',
+        'submit:form_submissions',
+        ...REPORTS_ALL,
+        'read:meeting',
         'read:notifications',
       ],
     },
@@ -245,10 +482,15 @@ export const AUTH2_SEED: Auth2SeedData = {
         'read:oauth_token',
         'create:oauth_token',
         'delete:oauth_token',
-        'read:custom_field_definitions',
-        'create:custom_field_definitions',
-        'update:custom_field_definitions',
-        'delete:custom_field_definitions',
+        'read:custom_forms',
+        'create:custom_forms',
+        'update:custom_forms',
+        'disable:custom_forms',
+        'admin:workflows',
+        'manage:workflow-definitions',
+        'read:workflow',
+        'read:task',
+        'update:task',
       ],
     },
     {
@@ -262,6 +504,11 @@ export const AUTH2_SEED: Auth2SeedData = {
         'read:notifications',
         'read:cron',
         'update:cron',
+        'admin:workflows',
+        'manage:workflow-definitions',
+        'read:workflow',
+        'read:task',
+        'update:task',
       ],
     },
   ],

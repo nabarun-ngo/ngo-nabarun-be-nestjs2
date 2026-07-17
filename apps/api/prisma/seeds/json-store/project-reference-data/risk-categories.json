@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "key": "BUDGET",
+      "value": "Budget"
+    },
+    {
+      "key": "TIMELINE",
+      "value": "Timeline"
+    },
+    {
+      "key": "RESOURCE",
+      "value": "Resource"
+    },
+    {
+      "key": "QUALITY",
+      "value": "Quality"
+    },
+    {
+      "key": "STAKEHOLDER",
+      "value": "Stakeholder"
+    },
+    {
+      "key": "EXTERNAL",
+      "value": "External"
+    },
+    {
+      "key": "OTHER",
+      "value": "Other"
+    }
+  ]
+}

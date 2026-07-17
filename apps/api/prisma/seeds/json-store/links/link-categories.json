@@ -1,0 +1,10 @@
+{
+  "_comment": "Suggested category values for user-guides.json and policies.json.",
+  "items": [
+    { "key": "GETTING_STARTED", "value": "Getting Started" },
+    { "key": "FINANCE", "value": "Finance" },
+    { "key": "WORKFLOWS", "value": "Workflows" },
+    { "key": "LEGAL", "value": "Legal" },
+    { "key": "CONDUCT", "value": "Conduct" }
+  ]
+}

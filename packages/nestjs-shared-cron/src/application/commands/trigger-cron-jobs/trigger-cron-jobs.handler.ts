@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CRON_JOB_STORE_PORT, ICronJobStorePort } from '../../../domain/ports/cron-job-store.port';
 import { CRON_JOB_QUEUE_PORT, ICronJobQueuePort } from '../../../domain/ports/cron-job-queue.port';
@@ -17,8 +17,8 @@ export class TriggerCronJobsHandler
   private readonly logger = new Logger(TriggerCronJobsHandler.name);
 
   constructor(
-    @Inject(CRON_JOB_STORE_PORT) private readonly jobStore: ICronJobStorePort,
-    @Inject(CRON_JOB_QUEUE_PORT) private readonly jobQueue: ICronJobQueuePort,
+    @Optional() @Inject(CRON_JOB_STORE_PORT) private readonly jobStore: ICronJobStorePort,
+    @Optional() @Inject(CRON_JOB_QUEUE_PORT) private readonly jobQueue: ICronJobQueuePort,
     @Inject(CRON2_OPTIONS) private readonly options: Cron2ModuleOptions,
   ) {}
 

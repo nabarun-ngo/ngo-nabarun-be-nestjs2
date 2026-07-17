@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { QueueOptionsSchema } from '@ce/nestjs-shared-queue';
 
 export const Correspondence2OptionsSchema = z.object({
   appName: z.string().optional(),
@@ -40,6 +39,4 @@ export const Correspondence2OptionsSchema = z.object({
       inactiveSubscriptionRetentionDays: z.coerce.number().default(180),
     })
     .optional(),
-  /** BullMQ connection used for async dispatch and retention jobs. */
-  queue: QueueOptionsSchema,
 });

@@ -1,7 +1,7 @@
 import type { DefaultJobOptions } from "bullmq";
 import { Redis } from "ioredis";
 import { BullModule } from "@nestjs/bullmq";
-import { DynamicModule, Global, Logger, Module } from "@nestjs/common";
+import { DynamicModule, Logger, Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { BaseDynamicModule, DynamicModuleAsyncOptions } from "@ce/nestjs-shared-core";
 import { QueueController } from "./presentation/controllers/queue.controller";
@@ -107,7 +107,6 @@ const DEFAULT_FLOW_PRODUCER_NAME = `${DEFAULT_QUEUE_NAME}-flow-producer`;
 export interface QueueModuleAsyncOptions
   extends DynamicModuleAsyncOptions<QueueModuleOptions> {}
 
-@Global()
 @Module({})
 export class QueueModule extends BaseDynamicModule {
   static forRoot(options: QueueModuleOptions): DynamicModule {

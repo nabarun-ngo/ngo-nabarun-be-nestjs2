@@ -1,0 +1,25 @@
+model Report {
+  id            String       @id @db.VarChar(20)
+  reportCode    String       @db.VarChar(50)
+  reportName    String       @default("") @db.VarChar(100)
+  requestedById String?      @db.VarChar(255)
+  requestedBy   UserProfile? @relation("ReportRequestedBy", fields: [requestedById], references: [id])
+  status        String       @db.VarChar(20)
+  parameters    Json?
+  needApproval  Boolean      @default(false)
+  approvedById  String?      @db.VarChar(255)
+  approvedBy    UserProfile? @relation("ReportApprovedBy", fields: [approvedById], references: [id])
+  approvedAt    DateTime?
+  approverRoles String[]     @default([])
+  viewerRoles   String[]     @default([])
+  docId         String?      @db.VarChar(255)
+  docVersion    Int          @default(1)
+  workflowId    String?      @db.VarChar(255)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([reportCode])
+  @@index([requestedById])
+  @@index([status])
+  @@map("reports")
+}

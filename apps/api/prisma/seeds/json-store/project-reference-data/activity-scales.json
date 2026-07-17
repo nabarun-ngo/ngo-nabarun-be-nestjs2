@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "key": "TASK",
+      "value": "Task"
+    },
+    {
+      "key": "ACTIVITY",
+      "value": "Activity"
+    },
+    {
+      "key": "EVENT",
+      "value": "Event"
+    }
+  ]
+}

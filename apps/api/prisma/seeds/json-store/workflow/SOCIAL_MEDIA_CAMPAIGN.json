@@ -1,0 +1,159 @@
+{
+  "id": "SOCIAL_MEDIA_CAMPAIGN",
+  "version": 1,
+  "name": "Social Media Campaign",
+  "description": "Create and publish social media posters for {{eventName}} on {{eventDate}}.",
+  "elements": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "startEvent"
+    },
+    {
+      "id": "svc_validateinputs",
+      "name": "Validate",
+      "type": "serviceTask",
+      "handler": "ValidateInputs"
+    },
+    {
+      "id": "ut_postercreation_createposter",
+      "name": "Create poster for {{eventName}}",
+      "type": "userTask",
+      "formKey": "SOCIAL_MEDIA_CAMPAIGN_POSTERCREATION_CREATEPOSTER",
+      "candidateRoles": [
+        "SECRETARY",
+        "ASSISTANT_SECRETARY"
+      ],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_postercreation",
+      "name": "Poster Creation Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "ut_publishing_publishpost",
+      "name": "Publish on {{targetPlatforms}}",
+      "type": "userTask",
+      "formKey": "SOCIAL_MEDIA_CAMPAIGN_PUBLISHING_PUBLISHPOST",
+      "candidateRoles": [
+        "SECRETARY",
+        "ASSISTANT_SECRETARY"
+      ],
+      "slaHours": 12
+    },
+    {
+      "id": "xg_publishing",
+      "name": "Publishing Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "ut_emailcampaign_startemailcampaign",
+      "name": "Start Email Campaign for {{eventName}}",
+      "type": "userTask",
+      "formKey": "SOCIAL_MEDIA_CAMPAIGN_EMAILCAMPAIGN_STARTEMAILCAMPAIGN",
+      "candidateRoles": [
+        "TECH_ADMIN"
+      ],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_emailcampaign",
+      "name": "Email Campaign Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "end_completed",
+      "name": "Completed",
+      "type": "endEvent",
+      "terminateAll": true
+    },
+    {
+      "id": "end_rejected",
+      "name": "Rejected",
+      "type": "endEvent",
+      "terminateAll": true
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_start_svc_validateinputs",
+      "sourceRef": "start",
+      "targetRef": "svc_validateinputs"
+    },
+    {
+      "id": "f_svc_validateinputs_ut_postercreation_createposter",
+      "sourceRef": "svc_validateinputs",
+      "targetRef": "ut_postercreation_createposter"
+    },
+    {
+      "id": "f_ut_postercreation_createposter_xg_postercreation",
+      "sourceRef": "ut_postercreation_createposter",
+      "targetRef": "xg_postercreation"
+    },
+    {
+      "id": "f_ut_publishing_publishpost_xg_publishing",
+      "sourceRef": "ut_publishing_publishpost",
+      "targetRef": "xg_publishing"
+    },
+    {
+      "id": "f_ut_emailcampaign_startemailcampaign_xg_emailcampaign",
+      "sourceRef": "ut_emailcampaign_startemailcampaign",
+      "targetRef": "xg_emailcampaign"
+    },
+    {
+      "id": "f_xg_postercreation_step_postercreation_task_createposter_postercreated_____yes__0",
+      "sourceRef": "xg_postercreation",
+      "targetRef": "ut_publishing_publishpost",
+      "condition": "posterCreated == 'Yes'"
+    },
+    {
+      "id": "f_xg_postercreation_step_postercreation_task_createposter_postercreated_____no__1",
+      "sourceRef": "xg_postercreation",
+      "targetRef": "ut_postercreation_createposter",
+      "condition": "posterCreated == 'No'"
+    },
+    {
+      "id": "f_xg_postercreation_default_2",
+      "sourceRef": "xg_postercreation",
+      "targetRef": "ut_postercreation_createposter",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_publishing_step_publishing_task_publishpost_postdone_____yes__0",
+      "sourceRef": "xg_publishing",
+      "targetRef": "ut_emailcampaign_startemailcampaign",
+      "condition": "postDone == 'Yes'"
+    },
+    {
+      "id": "f_xg_publishing_step_publishing_task_publishpost_postdone_____no__1",
+      "sourceRef": "xg_publishing",
+      "targetRef": "ut_publishing_publishpost",
+      "condition": "postDone == 'No'"
+    },
+    {
+      "id": "f_xg_publishing_default_2",
+      "sourceRef": "xg_publishing",
+      "targetRef": "ut_publishing_publishpost",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_emailcampaign_step_emailcampaign_task_startemailcampaign_emailcampaignstarted_____yes__0",
+      "sourceRef": "xg_emailcampaign",
+      "targetRef": "end_completed",
+      "condition": "emailCampaignStarted == 'Yes'"
+    },
+    {
+      "id": "f_xg_emailcampaign_step_emailcampaign_task_startemailcampaign_emailcampaignstarted_____no__1",
+      "sourceRef": "xg_emailcampaign",
+      "targetRef": "ut_emailcampaign_startemailcampaign",
+      "condition": "emailCampaignStarted == 'No'"
+    },
+    {
+      "id": "f_xg_emailcampaign_default_2",
+      "sourceRef": "xg_emailcampaign",
+      "targetRef": "ut_emailcampaign_startemailcampaign",
+      "isDefault": true
+    }
+  ]
+}

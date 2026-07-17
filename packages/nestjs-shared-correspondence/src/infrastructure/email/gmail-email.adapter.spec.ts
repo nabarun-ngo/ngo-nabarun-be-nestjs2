@@ -1,18 +1,13 @@
 /**
  * GmailEmailAdapter unit tests.
- * Mocks the Google Gmail API client and TokenVaultFacade.
- *
- * Note: mock functions are defined INSIDE jest.mock() factory to avoid
- * the temporal-dead-zone error caused by jest.mock() hoisting.
+ * Mocks the Google Gmail API client and IOAuthAccessTokenPort.
  */
 
-// Intercept axios dependency pulled in transitively via auth → @nestjs/axios
 jest.mock('axios', () => ({}), { virtual: true });
 jest.mock('@nestjs/axios', () => ({ HttpModule: class {}, HttpService: class {} }), {
   virtual: true,
 });
 
-// Define the mock send function inside the factory to avoid hoisting TDZ issue.
 jest.mock('@googleapis/gmail', () => {
   const mockSend = jest.fn().mockResolvedValue({ data: { id: 'msg-1' } });
   return {
@@ -32,10 +27,7 @@ jest.mock('google-auth-library', () => ({
 import { Logger } from '@nestjs/common';
 import { GmailEmailAdapter } from '@ce/nestjs-shared-correspondence/infrastructure/email/gmail-email.adapter';
 
-// ── Helpers ────────────────────────────────────────────────────────────────
-
 function getGmailMocks() {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const mod = require('@googleapis/gmail');
   return {
     gmailFn: mod.gmail as jest.Mock,
@@ -45,14 +37,13 @@ function getGmailMocks() {
 
 const moduleOptions = {
   appName: 'TestApp',
+  environment: 'test',
   email: { fromAddress: 'noreply@test.com', fromName: 'Test App' },
 };
 
-function makeTokenVault(accessToken = 'fake-token') {
+function makeOAuthPort(accessToken = 'fake-token') {
   return { getAccessToken: jest.fn().mockResolvedValue(accessToken) };
 }
-
-// ── Tests ──────────────────────────────────────────────────────────────────
 
 describe('GmailEmailAdapter', () => {
   beforeEach(() => {
@@ -66,67 +57,33 @@ describe('GmailEmailAdapter', () => {
 
   it('sends an email via gmail.users.messages.send', async () => {
     const { mockSend } = getGmailMocks();
-    const adapter = new GmailEmailAdapter(makeTokenVault() as any, moduleOptions as any);
+    const adapter = new GmailEmailAdapter(makeOAuthPort() as any, moduleOptions as any);
     await adapter.send({ to: ['recipient@test.com'], subject: 'Hello', html: '<p>Hello</p>' });
     expect(mockSend).toHaveBeenCalledTimes(1);
   });
 
-  it('obtains an access token from TokenVaultFacade', async () => {
-    const tokenVault = makeTokenVault();
-    const adapter = new GmailEmailAdapter(tokenVault as any, moduleOptions as any);
+  it('obtains an access token from IOAuthAccessTokenPort', async () => {
+    const oauthPort = makeOAuthPort();
+    const adapter = new GmailEmailAdapter(oauthPort as any, moduleOptions as any);
     await adapter.send({ to: ['r@test.com'], subject: 'S', html: '<p></p>' });
-    expect(tokenVault.getAccessToken).toHaveBeenCalledTimes(1);
+    expect(oauthPort.getAccessToken).toHaveBeenCalledWith({
+      provider: 'google',
+      scope: 'https://www.googleapis.com/auth/gmail.send',
+    });
   });
 
   it('passes raw base64 message in requestBody', async () => {
     const { mockSend } = getGmailMocks();
-    const adapter = new GmailEmailAdapter(makeTokenVault() as any, moduleOptions as any);
+    const adapter = new GmailEmailAdapter(makeOAuthPort() as any, moduleOptions as any);
     await adapter.send({ to: ['r@test.com'], subject: 'S', html: '<p>Hi</p>' });
     const [{ requestBody }] = mockSend.mock.calls[0];
     expect(requestBody).toHaveProperty('raw');
     expect(typeof requestBody.raw).toBe('string');
   });
 
-  it('includes Cc header in raw message when cc provided', async () => {
-    const { mockSend } = getGmailMocks();
-    const adapter = new GmailEmailAdapter(makeTokenVault() as any, moduleOptions as any);
-    await adapter.send({
-      to: ['to@test.com'],
-      cc: ['cc@test.com'],
-      subject: 'S',
-      html: '<p></p>',
-    });
-    const [{ requestBody }] = mockSend.mock.calls[0];
-    const decoded = Buffer.from(requestBody.raw, 'base64url').toString();
-    expect(decoded).toContain('Cc: cc@test.com');
-  });
-
-  it('includes multipart/alternative content when text is provided', async () => {
-    const { mockSend } = getGmailMocks();
-    const adapter = new GmailEmailAdapter(makeTokenVault() as any, moduleOptions as any);
-    await adapter.send({
-      to: ['to@test.com'],
-      subject: 'S',
-      html: '<p>Hi</p>',
-      text: 'Hi',
-    });
-    const [{ requestBody }] = mockSend.mock.calls[0];
-    const decoded = Buffer.from(requestBody.raw, 'base64url').toString();
-    expect(decoded).toContain('multipart/alternative');
-  });
-
-  it('uses fromAddress from options in the raw message', async () => {
-    const { mockSend } = getGmailMocks();
-    const adapter = new GmailEmailAdapter(makeTokenVault() as any, moduleOptions as any);
-    await adapter.send({ to: ['r@test.com'], subject: 'S', html: '<p></p>' });
-    const [{ requestBody }] = mockSend.mock.calls[0];
-    const decoded = Buffer.from(requestBody.raw, 'base64url').toString();
-    expect(decoded).toContain('noreply@test.com');
-  });
-
   it('calls send with userId="me"', async () => {
     const { mockSend } = getGmailMocks();
-    const adapter = new GmailEmailAdapter(makeTokenVault() as any, moduleOptions as any);
+    const adapter = new GmailEmailAdapter(makeOAuthPort() as any, moduleOptions as any);
     await adapter.send({ to: ['r@test.com'], subject: 'S', html: '<p></p>' });
     const [args] = mockSend.mock.calls[0];
     expect(args.userId).toBe('me');

@@ -1,0 +1,5 @@
+{
+  "subject": "Reminder: {{taskName}} is due soon",
+  "htmlTemplate": "<p>Hi {{recipientName}}, workflow task <strong>{{taskName}}</strong> ({{instanceId}}) is approaching its SLA deadline.</p>",
+  "textTemplate": "Reminder: task {{taskName}} on workflow {{instanceId}} is due soon."
+}

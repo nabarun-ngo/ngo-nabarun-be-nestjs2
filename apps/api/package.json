@@ -9,7 +9,7 @@
     "migrate:deploy": "npx prisma migrate deploy",
     "start:redis": "powershell -Command \"./scripts/Start-Redis.ps1\"",
     "prebuild": "npm run clean && npm run generate:db",
-    "clean": "rimraf dist && rimraf .turbo && rimraf src/persistence/prisma",
+    "clean": "rimraf dist && rimraf .turbo && rimraf src/shared/persistence/prisma",
     "build": "nest build",
     "build:watch": "nest build --watch",
     "prestart:debug": "npm run start:redis",
@@ -21,7 +21,9 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "etl:finance:preflight": "ts-node scripts/migration/finance/preflight.ts",
+    "etl:finance": "ts-node scripts/migration/finance/run-all.ts"
   },
   "dependencies": {
     "@googleapis/calendar": "^14.2.0",
@@ -79,10 +81,12 @@
     "@ce/nestjs-shared-json-store": "*",
     "@ce/nestjs-shared-token-vault": "*",
     "@ce/nestjs-shared-dms": "*",
+    "@ce/nestjs-shared-document-generator": "*",
     "@ce/nestjs-shared-comment": "*",
-    "@ce/nestjs-shared-custom-fields": "*",
+    "@ce/nestjs-shared-custom-forms": "*",
     "@ce/nestjs-shared-cron": "*",
-    "@ce/nestjs-shared-correspondence": "*"
+    "@ce/nestjs-shared-correspondence": "*",
+    "@ce/nestjs-shared-workflow": "*"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

@@ -1,13 +1,17 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { TokenVaultFacade, TOKEN_VAULT_FACADE } from '@ce/nestjs-shared-token-vault';
-import { GOOGLE_SCOPES } from '@ce/nestjs-shared-token-vault';
+import {
+  IOAuthAccessTokenPort,
+  OAUTH_ACCESS_TOKEN_PORT,
+} from '@ce/nestjs-shared-core';
 import { IEmailSenderPort, EmailMessage } from '../../domain/ports/email-sender.port';
 import { GmailEmailAdapter } from './gmail-email.adapter';
 import { SmtpEmailAdapter } from './smtp-email.adapter';
 
+const GMAIL_SEND_SCOPE = 'https://www.googleapis.com/auth/gmail.send';
+
 /**
  * Primary port implementation.
- * Tries Gmail first (via token-vault). If the token is unavailable or
+ * Tries Gmail first (via OAuth access token port). If the token is unavailable or
  * Gmail send fails, falls back to SMTP (Nodemailer).
  */
 @Injectable()
@@ -15,8 +19,8 @@ export class FallbackEmailAdapter implements IEmailSenderPort {
   private readonly logger = new Logger(FallbackEmailAdapter.name);
 
   constructor(
-    @Inject(TOKEN_VAULT_FACADE)
-    private readonly tokenVault: TokenVaultFacade,
+    @Inject(OAUTH_ACCESS_TOKEN_PORT)
+    private readonly oauthTokens: IOAuthAccessTokenPort,
     private readonly gmailAdapter: GmailEmailAdapter,
     private readonly smtpAdapter: SmtpEmailAdapter,
   ) {}
@@ -24,9 +28,9 @@ export class FallbackEmailAdapter implements IEmailSenderPort {
   async send(message: EmailMessage): Promise<void> {
     let tokenAvailable = false;
     try {
-      await this.tokenVault.getAccessToken({
+      await this.oauthTokens.getAccessToken({
         provider: 'google',
-        scope: GOOGLE_SCOPES.gmailSend,
+        scope: GMAIL_SEND_SCOPE,
       });
       tokenAvailable = true;
     } catch {

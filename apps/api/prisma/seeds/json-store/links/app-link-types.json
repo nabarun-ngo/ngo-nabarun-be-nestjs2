@@ -1,0 +1,9 @@
+{
+  "_comment": "Allowed platform values for app-links.json and GET /links/app-links?platform= query.",
+  "items": [
+    { "key": "ANDROID_APP_LINK", "value": "Android App" },
+    { "key": "IOS_APP_LINK", "value": "iOS App" },
+    { "key": "SUPPORT_LINK", "value": "Support" },
+    { "key": "SOCIAL_LINK", "value": "Social Media" }
+  ]
+}

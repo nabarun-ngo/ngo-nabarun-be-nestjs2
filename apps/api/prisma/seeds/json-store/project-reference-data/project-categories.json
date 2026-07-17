@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "key": "EDUCATION",
+      "value": "Education"
+    },
+    {
+      "key": "HEALTH",
+      "value": "Health"
+    },
+    {
+      "key": "ENVIRONMENT",
+      "value": "Environment"
+    },
+    {
+      "key": "RURAL_DEVELOPMENT",
+      "value": "Rural Development"
+    },
+    {
+      "key": "WOMEN_EMPOWERMENT",
+      "value": "Women Empowerment"
+    },
+    {
+      "key": "CHILD_WELFARE",
+      "value": "Child Welfare"
+    },
+    {
+      "key": "DISASTER_RELIEF",
+      "value": "Disaster Relief"
+    },
+    {
+      "key": "OTHER",
+      "value": "Other"
+    }
+  ]
+}

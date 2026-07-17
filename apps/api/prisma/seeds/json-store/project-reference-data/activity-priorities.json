@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "key": "LOW",
+      "value": "Low"
+    },
+    {
+      "key": "MEDIUM",
+      "value": "Medium"
+    },
+    {
+      "key": "HIGH",
+      "value": "High"
+    },
+    {
+      "key": "URGENT",
+      "value": "Urgent"
+    }
+  ]
+}

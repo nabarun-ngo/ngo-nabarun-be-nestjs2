@@ -1,0 +1,175 @@
+{
+  "id": "TERMINATION_REQUEST",
+  "version": 1,
+  "name": "Member Exit Request",
+  "description": "Exit request for member {{firstName}} {{lastName}} ({{email}})",
+  "elements": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "startEvent"
+    },
+    {
+      "id": "svc_validateinputs",
+      "name": "Validate",
+      "type": "serviceTask",
+      "handler": "ValidateInputs"
+    },
+    {
+      "id": "ut_initial_coordination_exit_discussion",
+      "name": "Conduct Exit Discussion with {{firstName}}",
+      "type": "userTask",
+      "formKey": "TERMINATION_REQUEST_INITIAL_COORDINATION_EXIT_DISCUSSION",
+      "candidateRoles": [
+        "SECRETARY",
+        "ASSISTANT_SECRETARY"
+      ],
+      "slaHours": 48
+    },
+    {
+      "id": "xg_initial_coordination",
+      "name": "Exit Coordination Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "ut_financial_clearance_verify_and_cancel_donations",
+      "name": "Clear Financial Dues for {{firstName}}",
+      "type": "userTask",
+      "formKey": "TERMINATION_REQUEST_FINANCIAL_CLEARANCE_VERIFY_AND_CANCEL_DONATIONS",
+      "candidateRoles": [
+        "TREASURER"
+      ],
+      "slaHours": 48
+    },
+    {
+      "id": "xg_financial_clearance",
+      "name": "Financial Clearance Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "ut_final_approval_leadership_approval",
+      "name": "Leadership Approval - Exit Request: {{firstName}}",
+      "type": "userTask",
+      "formKey": "TERMINATION_REQUEST_FINAL_APPROVAL_LEADERSHIP_APPROVAL",
+      "candidateRoles": [
+        "PRESIDENT",
+        "SECRETARY"
+      ],
+      "slaHours": 72
+    },
+    {
+      "id": "xg_final_approval",
+      "name": "Final Approval Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "svc_user_cleanup_and_delete_usercleanupanddelete",
+      "name": "User Delete and Data cleanup",
+      "type": "serviceTask",
+      "handler": "UserDeleteAndDataCleanupHandler"
+    },
+    {
+      "id": "xg_user_cleanup_and_delete",
+      "name": "User Delete and Data cleanup Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "end_completed",
+      "name": "Completed",
+      "type": "endEvent",
+      "terminateAll": true
+    },
+    {
+      "id": "end_rejected",
+      "name": "Rejected",
+      "type": "endEvent",
+      "terminateAll": true
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_start_svc_validateinputs",
+      "sourceRef": "start",
+      "targetRef": "svc_validateinputs"
+    },
+    {
+      "id": "f_svc_validateinputs_ut_initial_coordination_exit_discussion",
+      "sourceRef": "svc_validateinputs",
+      "targetRef": "ut_initial_coordination_exit_discussion"
+    },
+    {
+      "id": "f_ut_initial_coordination_exit_discussion_xg_initial_coordination",
+      "sourceRef": "ut_initial_coordination_exit_discussion",
+      "targetRef": "xg_initial_coordination"
+    },
+    {
+      "id": "f_ut_financial_clearance_verify_and_cancel_donations_xg_financial_clearance",
+      "sourceRef": "ut_financial_clearance_verify_and_cancel_donations",
+      "targetRef": "xg_financial_clearance"
+    },
+    {
+      "id": "f_ut_final_approval_leadership_approval_xg_final_approval",
+      "sourceRef": "ut_final_approval_leadership_approval",
+      "targetRef": "xg_final_approval"
+    },
+    {
+      "id": "f_svc_user_cleanup_and_delete_usercleanupanddelete_xg_user_cleanup_and_delete",
+      "sourceRef": "svc_user_cleanup_and_delete_usercleanupanddelete",
+      "targetRef": "xg_user_cleanup_and_delete"
+    },
+    {
+      "id": "f_xg_initial_coordination_step_initial_coordination_task_exit_discussion_proceedtoclearance_____yes__0",
+      "sourceRef": "xg_initial_coordination",
+      "targetRef": "ut_financial_clearance_verify_and_cancel_donations",
+      "condition": "proceedToClearance == 'Yes'"
+    },
+    {
+      "id": "f_xg_initial_coordination_step_initial_coordination_task_exit_discussion_proceedtoclearance_____no__1",
+      "sourceRef": "xg_initial_coordination",
+      "targetRef": "end_rejected",
+      "condition": "proceedToClearance == 'No'"
+    },
+    {
+      "id": "f_xg_initial_coordination_default_2",
+      "sourceRef": "xg_initial_coordination",
+      "targetRef": "ut_initial_coordination_exit_discussion",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_financial_clearance_step_financial_clearance_task_verify_and_cancel_donations_isfinancialcleared_____yes__0",
+      "sourceRef": "xg_financial_clearance",
+      "targetRef": "ut_final_approval_leadership_approval",
+      "condition": "isFinancialCleared == 'Yes'"
+    },
+    {
+      "id": "f_xg_financial_clearance_default_1",
+      "sourceRef": "xg_financial_clearance",
+      "targetRef": "ut_financial_clearance_verify_and_cancel_donations",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_final_approval_step_final_approval_task_leadership_approval_decision_____approve__0",
+      "sourceRef": "xg_final_approval",
+      "targetRef": "svc_user_cleanup_and_delete_usercleanupanddelete",
+      "condition": "decision == 'Approve'"
+    },
+    {
+      "id": "f_xg_final_approval_step_final_approval_task_leadership_approval_decision_____decline__1",
+      "sourceRef": "xg_final_approval",
+      "targetRef": "ut_initial_coordination_exit_discussion",
+      "condition": "decision == 'Decline'"
+    },
+    {
+      "id": "f_xg_final_approval_default_2",
+      "sourceRef": "xg_final_approval",
+      "targetRef": "ut_final_approval_leadership_approval",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_user_cleanup_and_delete_default_0",
+      "sourceRef": "xg_user_cleanup_and_delete",
+      "targetRef": "end_completed",
+      "isDefault": true
+    }
+  ]
+}

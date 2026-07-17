@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "key": "INITIATION",
+      "value": "Initiation"
+    },
+    {
+      "key": "PLANNING",
+      "value": "Planning"
+    },
+    {
+      "key": "EXECUTION",
+      "value": "Execution"
+    },
+    {
+      "key": "MONITORING",
+      "value": "Monitoring"
+    },
+    {
+      "key": "CLOSURE",
+      "value": "Closure"
+    }
+  ]
+}

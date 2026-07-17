@@ -1,0 +1,13 @@
+export enum GoalPriority {
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+  CRITICAL = 'CRITICAL',
+}
+export enum GoalStatus {
+  NOT_STARTED = 'NOT_STARTED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  ACHIEVED = 'ACHIEVED',
+  PARTIALLY_ACHIEVED = 'PARTIALLY_ACHIEVED',
+  FAILED = 'FAILED',
+}

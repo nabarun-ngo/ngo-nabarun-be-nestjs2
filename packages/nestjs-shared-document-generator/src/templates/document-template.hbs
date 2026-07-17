@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: {
+                    {
+                    accentColor
+                }
+            }
+
+            ;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --border-color: #e5e7eb;
+            --bg-accent: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, oxygen, ubuntu, cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
+        }
+
+        .page-wrapper {
+            position: relative;
+            padding: 0;
+        }
+
+            {
+                {
+                #if showBorder
+            }
+        }
+
+        .document-border {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 0.5pt solid var(--primary-color);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+            {
+                {
+                /if
+            }
+        }
+
+        .accent-bar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background-color: var(--primary-color);
+            z-index: 1001;
+        }
+
+        .container {
+            padding: 20px 60px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28pt;
+            margin: 0 0 5px 0;
+            color: var(--text-dark);
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 12pt;
+            margin-bottom: 15px;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: var(--bg-accent);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 9pt;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 16pt;
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 12px;
+        }
+
+        .toc {
+            background: var(--bg-accent);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .toc-title {
+            background: var(--bg-accent);
+            padding-right: 10px;
+            z-index: 1;
+        }
+
+        .toc-dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted #ccc;
+            margin: 0 5px;
+            position: relative;
+            top: -4px;
+        }
+
+        .toc-page {
+            background: var(--bg-accent);
+            padding-left: 10px;
+            font-weight: bold;
+        }
+
+        .section-content {
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .list-item {
+            display: flex;
+            margin-bottom: 8px;
+        }
+
+        .list-bullet {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .signature-section {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sig-box {
+            width: 220px;
+            text-align: center;
+        }
+
+        .sig-line {
+            border-top: 1px solid #333;
+            margin-bottom: 8px;
+        }
+
+        .sig-label {
+            font-size: 9pt;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80pt;
+            color: rgba(0, 0, 0, 0.03);
+            white-space: nowrap;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="accent-bar"></div>
+    {{#if showBorder}}<div class="document-border"></div>{{/if}}
+    <div class="watermark">{{watermark}}</div>
+
+    <div class="container">
+        <div class="header">
+            {{#if logo}}
+            <img src="{{logo}}" class="logo">
+            {{/if}}
+            <h1>{{title}}</h1>
+            <div class="subtitle">{{{subtitle}}}</div>
+            <div class="date-badge">{{date}}</div>
+        </div>
+
+        {{#if toc}}
+        <div class="toc">
+            <h3 style="margin-top: 0; color: var(--text-dark)">Table of Contents</h3>
+            {{#each toc}}
+            <div class="toc-item">
+                <span class="toc-title">{{this.title}}</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">{{this.page}}</span>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+
+        {{#each sections}}
+        <div class="section {{#if this.pageBreak}}page-break{{/if}}">
+            {{#if this.title}}
+            <h2>{{this.title}}</h2>
+            {{/if}}
+
+            <div class="section-elements">
+                {{#each elements}}
+                {{#if (eq type 'heading')}}
+                <h{{level}} style="{{style}}">{{data}}</h{{level}}>
+                {{/if}}
+
+                {{#if (eq type 'paragraph')}}
+                <p style="{{style}}">{{data}}</p>
+                {{/if}}
+
+                {{#if (eq type 'text')}}
+                {{#if isTOC}}
+                <div class="toc-item-inline"
+                    style="display: flex; justify-content: space-between; margin: 5px 0; font-style: italic;">
+                    <span>{{data.title}}</span>
+                    <span
+                        style="flex-grow: 1; border-bottom: 1px dotted #ccc; margin: 0 5px; position: relative; top: -4px;"></span>
+                    <span>{{data.page}}</span>
+                </div>
+                {{else}}
+                <div style="{{style}}">{{data}}</div>
+                {{/if}}
+                {{/if}}
+
+                {{#if (eq type 'image')}}
+                <div style="margin: 15px 0; {{alignStyle}}">
+                    <img src="{{data}}"
+                        style="{{imgStyle}} height: auto; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                </div>
+                {{/if}}
+
+                {{#if (eq type 'table')}}
+                <table style="{{tableStyle}}">
+                    {{#if columns}}
+                    <thead style="{{headerStyle}}">
+                        <tr>
+                            {{#each columns}}
+                            <th
+                                style="padding: {{../cellPadding}}px; border: {{../borderWidth}}px solid {{../borderColor}}; text-align: {{this.align}}; width: {{this.width}};">
+                                {{this.header}}
+                            </th>
+                            {{/each}}
+                        </tr>
+                    </thead>
+                    {{/if}}
+                    <tbody>
+                        {{#each rows}}
+                        <tr style="{{this.rowStyle}}">
+                            {{#each this.cells}}
+                            <td
+                                style="padding: {{../../cellPadding}}px; border: {{../../borderWidth}}px solid {{../../borderColor}}; text-align: {{this.align}};">
+                                {{{this.value}}}
+                            </td>
+                            {{/each}}
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{/if}}
+
+                {{#if (eq type 'list')}}
+                <{{listTag}} style="margin-bottom: 15px; padding-left: 20px;">
+                    {{#each data}}
+                    <li style="margin-bottom: 5px;">{{this}}</li>
+                    {{/each}}
+                </{{listTag}}>
+                {{/if}}
+
+                {{#if (eq type 'divider')}}
+                <hr style="border: 0; border-top: {{thickness}}px solid {{color}}; margin: 25px 0;">
+                {{/if}}
+
+                {{#if (eq type 'space')}}
+                <div style="height: {{data}}px;"></div>
+                {{/if}}
+
+                {{#if (eq type 'signature')}}
+                <div style="margin-top: {{space}}px; display: flex; justify-content: space-between;">
+                    <div style="width: 220px; text-align: center;">
+                        <div style="border-top: 1px solid #333; margin-bottom: 8px;"></div>
+                        <div style="font-size: 9pt; color: #666; text-transform: uppercase;">{{label}}</div>
+                    </div>
+                    <div style="width: 220px; text-align: center;">
+                        <div style="border-top: 1px solid #333; margin-bottom: 8px;"></div>
+                        <div style="font-size: 9pt; color: #666; text-transform: uppercase;">{{dateLabel}}</div>
+                    </div>
+                </div>
+                {{/if}}
+                {{/each}}
+            </div>
+        </div>
+        {{/each}}
+
+        {{#if signature}}
+        <div class="signature-section">
+            <div class="sig-box">
+                <div class="sig-line"></div>
+                <div class="sig-label">{{signature.label}}</div>
+            </div>
+            <div class="sig-box">
+                <div class="sig-line"></div>
+                <div class="sig-label">{{signature.dateLabel}}</div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</body>
+
+</html>

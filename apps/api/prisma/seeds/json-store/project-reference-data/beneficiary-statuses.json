@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "key": "ACTIVE",
+      "value": "Active"
+    },
+    {
+      "key": "COMPLETED",
+      "value": "Completed"
+    },
+    {
+      "key": "DROPPED_OUT",
+      "value": "Dropped Out"
+    },
+    {
+      "key": "TRANSFERRED",
+      "value": "Transferred"
+    }
+  ]
+}

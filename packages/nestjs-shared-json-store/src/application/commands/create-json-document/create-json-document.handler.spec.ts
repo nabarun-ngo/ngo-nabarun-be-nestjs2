@@ -20,6 +20,8 @@ const makeRepo = () => ({
 
 const makeEventBus = () => ({ publishAll: jest.fn() });
 
+const makeValidator = () => ({ validate: jest.fn() });
+
 const defaultCommand = () =>
   new CreateJsonDocumentCommand({
     key: 'welcome-email',
@@ -32,12 +34,14 @@ const defaultCommand = () =>
 describe('CreateJsonDocumentHandler', () => {
   let repo: ReturnType<typeof makeRepo>;
   let eventBus: ReturnType<typeof makeEventBus>;
+  let validator: ReturnType<typeof makeValidator>;
   let handler: CreateJsonDocumentHandler;
 
   beforeEach(() => {
     repo = makeRepo();
     eventBus = makeEventBus();
-    handler = new CreateJsonDocumentHandler(repo as any, eventBus as any);
+    validator = makeValidator();
+    handler = new CreateJsonDocumentHandler(repo as any, validator as any, eventBus as any);
   });
 
   describe('success path', () => {

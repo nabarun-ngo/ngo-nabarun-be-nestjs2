@@ -1,0 +1,46 @@
+{
+  "id": "CONTACT_REQUEST",
+  "version": 1,
+  "name": "Contact & Support Request",
+  "description": "Handle contact and support requests",
+  "elements": [
+    { "id": "start", "type": "startEvent", "name": "Start" },
+    {
+      "id": "svc_validate",
+      "type": "serviceTask",
+      "name": "Validate Inputs",
+      "handler": "ValidateInputs"
+    },
+    {
+      "id": "ut_support",
+      "type": "userTask",
+      "name": "Provide Support",
+      "formKey": "CONTACT_REQUEST_SUPPORT",
+      "candidateRoles": ["SECRETARY", "ASSISTANT_SECRETARY"],
+      "slaHours": 48
+    },
+    {
+      "id": "xg_support_route",
+      "type": "exclusiveGateway",
+      "name": "Support Routing"
+    },
+    { "id": "end_completed", "type": "endEvent", "name": "Completed", "terminateAll": true }
+  ],
+  "flows": [
+    { "id": "f_start_validate", "sourceRef": "start", "targetRef": "svc_validate" },
+    { "id": "f_validate_support", "sourceRef": "svc_validate", "targetRef": "ut_support" },
+    { "id": "f_support_route", "sourceRef": "ut_support", "targetRef": "xg_support_route" },
+    {
+      "id": "f_support_done",
+      "sourceRef": "xg_support_route",
+      "targetRef": "end_completed",
+      "condition": "isResolved == 'Yes'"
+    },
+    {
+      "id": "f_support_loop",
+      "sourceRef": "xg_support_route",
+      "targetRef": "ut_support",
+      "isDefault": true
+    }
+  ]
+}

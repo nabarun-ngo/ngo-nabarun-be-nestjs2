@@ -16,12 +16,19 @@ export {
   JsonDocumentFilter,
 } from './domain/repositories/json-document.repository';
 
+// Domain — optional write-time payload validator port
+export {
+  IJsonDocumentPayloadValidatorPort,
+} from './domain/ports/json-document-payload-validator.port';
+export { NoOpJsonDocumentPayloadValidator } from './domain/ports/no-op-json-document-payload-validator';
+
 // Application — facade (primary programmatic entry point)
 export { JsonStoreFacade } from './application/services/json-store.facade';
 
 // Seeder — Prisma-level idempotent seed helper (for use in migration / seed scripts)
 export { seedJsonStore } from './infrastructure/seeds/json-store.seeder';
 export { loadJsonStoreSeedFromDir } from './infrastructure/seeds/json-store-seed.loader';
+export { validateJsonStoreSeedData } from './infrastructure/seeds/validate-json-store-seed-data';
 export type { LoadJsonStoreSeedOptions } from './infrastructure/seeds/json-store-seed.loader';
 export type {
   JsonStoreSeedData,

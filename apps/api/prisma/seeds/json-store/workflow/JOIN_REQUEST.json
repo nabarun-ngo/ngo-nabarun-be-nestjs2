@@ -1,0 +1,183 @@
+{
+  "id": "JOIN_REQUEST",
+  "version": 1,
+  "name": "User Onboarding",
+  "description": "Onboard new members to NABARUN",
+  "elements": [
+    { "id": "start", "type": "startEvent", "name": "Start" },
+    {
+      "id": "svc_validate",
+      "type": "serviceTask",
+      "name": "Validate Inputs",
+      "handler": "ValidateInputs"
+    },
+    {
+      "id": "svc_check_dup",
+      "type": "serviceTask",
+      "name": "Check Duplicate User",
+      "handler": "UserNotRegisteredTaskHandler"
+    },
+    {
+      "id": "pg_fork",
+      "type": "parallelGateway",
+      "name": "Verification Fork",
+      "gatewayDirection": "fork"
+    },
+    {
+      "id": "ut_verify",
+      "type": "userTask",
+      "name": "Verify Member Data",
+      "formKey": "JOIN_REQUEST_VERIFY_INFO",
+      "candidateRoles": ["SECRETARY", "ASSISTANT_SECRETARY"],
+      "slaHours": 24
+    },
+    {
+      "id": "ut_policy",
+      "type": "userTask",
+      "name": "Policy Acceptance",
+      "formKey": "JOIN_REQUEST_POLICY_ACCEPTANCE",
+      "candidateRoles": ["SECRETARY", "ASSISTANT_SECRETARY"],
+      "slaHours": 24
+    },
+    {
+      "id": "pg_join",
+      "type": "parallelGateway",
+      "name": "Verification Join",
+      "gatewayDirection": "join"
+    },
+    {
+      "id": "xg_verify_route",
+      "type": "exclusiveGateway",
+      "name": "Verification Routing"
+    },
+    {
+      "id": "ut_correction",
+      "type": "userTask",
+      "name": "Data Correction",
+      "formKey": "JOIN_REQUEST_CORRECTION",
+      "candidateRoles": ["TECH_ADMIN"],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_correction_route",
+      "type": "exclusiveGateway",
+      "name": "Correction Routing"
+    },
+    {
+      "id": "ut_approval",
+      "type": "userTask",
+      "name": "Onboarding Approval",
+      "formKey": "JOIN_REQUEST_APPROVAL",
+      "candidateRoles": ["PRESIDENT", "VICE_PRESIDENT", "SECRETARY", "ASSISTANT_SECRETARY"],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_approval_route",
+      "type": "exclusiveGateway",
+      "name": "Approval Routing"
+    },
+    {
+      "id": "svc_auth0",
+      "type": "serviceTask",
+      "name": "Create Auth0 User",
+      "handler": "Auth0UserCreationHandler"
+    },
+    {
+      "id": "ut_whatsapp",
+      "type": "userTask",
+      "name": "Add to WhatsApp Group",
+      "formKey": "JOIN_REQUEST_WHATSAPP",
+      "candidateRoles": ["SECRETARY", "ASSISTANT_SECRETARY", "PRESIDENT", "VICE_PRESIDENT"],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_whatsapp_route",
+      "type": "exclusiveGateway",
+      "name": "WhatsApp Routing"
+    },
+    { "id": "end_completed", "type": "endEvent", "name": "Completed", "terminateAll": true },
+    { "id": "end_rejected", "type": "endEvent", "name": "Rejected", "terminateAll": true }
+  ],
+  "flows": [
+    { "id": "f_start_validate", "sourceRef": "start", "targetRef": "svc_validate" },
+    { "id": "f_validate_dup", "sourceRef": "svc_validate", "targetRef": "svc_check_dup" },
+    { "id": "f_dup_fork", "sourceRef": "svc_check_dup", "targetRef": "pg_fork" },
+    { "id": "f_fork_verify", "sourceRef": "pg_fork", "targetRef": "ut_verify" },
+    { "id": "f_fork_policy", "sourceRef": "pg_fork", "targetRef": "ut_policy" },
+    { "id": "f_verify_join", "sourceRef": "ut_verify", "targetRef": "pg_join" },
+    { "id": "f_policy_join", "sourceRef": "ut_policy", "targetRef": "pg_join" },
+    { "id": "f_join_route", "sourceRef": "pg_join", "targetRef": "xg_verify_route" },
+    {
+      "id": "f_route_correction",
+      "sourceRef": "xg_verify_route",
+      "targetRef": "ut_correction",
+      "condition": "correctionNeeded == 'Yes' and rulesAccepted == 'Yes'"
+    },
+    {
+      "id": "f_route_reject1",
+      "sourceRef": "xg_verify_route",
+      "targetRef": "end_rejected",
+      "condition": "correctionNeeded == 'Yes' and rulesAccepted == 'No'"
+    },
+    {
+      "id": "f_route_approval",
+      "sourceRef": "xg_verify_route",
+      "targetRef": "ut_approval",
+      "condition": "correctionNeeded == 'No' and rulesAccepted == 'Yes'"
+    },
+    {
+      "id": "f_route_reject2",
+      "sourceRef": "xg_verify_route",
+      "targetRef": "end_rejected",
+      "condition": "correctionNeeded == 'No' and rulesAccepted == 'No'"
+    },
+    {
+      "id": "f_route_default_verify",
+      "sourceRef": "xg_verify_route",
+      "targetRef": "pg_fork",
+      "isDefault": true
+    },
+    { "id": "f_correction_route", "sourceRef": "ut_correction", "targetRef": "xg_correction_route" },
+    {
+      "id": "f_correction_approval",
+      "sourceRef": "xg_correction_route",
+      "targetRef": "ut_approval",
+      "condition": "isCorrected == 'Yes'"
+    },
+    {
+      "id": "f_correction_loop",
+      "sourceRef": "xg_correction_route",
+      "targetRef": "ut_correction",
+      "condition": "isCorrected == 'No'",
+      "isDefault": true
+    },
+    { "id": "f_approval_route", "sourceRef": "ut_approval", "targetRef": "xg_approval_route" },
+    {
+      "id": "f_approval_auth0",
+      "sourceRef": "xg_approval_route",
+      "targetRef": "svc_auth0",
+      "condition": "decision == 'Approve'"
+    },
+    {
+      "id": "f_approval_reject",
+      "sourceRef": "xg_approval_route",
+      "targetRef": "end_rejected",
+      "condition": "decision == 'Decline'",
+      "isDefault": true
+    },
+    { "id": "f_auth0_whatsapp", "sourceRef": "svc_auth0", "targetRef": "ut_whatsapp" },
+    { "id": "f_whatsapp_route", "sourceRef": "ut_whatsapp", "targetRef": "xg_whatsapp_route" },
+    {
+      "id": "f_whatsapp_done",
+      "sourceRef": "xg_whatsapp_route",
+      "targetRef": "end_completed",
+      "condition": "userAdded == 'Yes'"
+    },
+    {
+      "id": "f_whatsapp_loop",
+      "sourceRef": "xg_whatsapp_route",
+      "targetRef": "ut_whatsapp",
+      "isDefault": true
+    }
+  ]
+}

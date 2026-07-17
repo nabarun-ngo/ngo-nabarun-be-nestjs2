@@ -2,7 +2,7 @@ import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { HttpModule } from '@nestjs/axios';
 import { APP_GUARD } from '@nestjs/core';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { DiscoveryModule } from '@nestjs/core';
 import { BaseDynamicModule, DynamicModuleAsyncOptions } from '@ce/nestjs-shared-core';
 
@@ -61,6 +61,7 @@ import { OnUserRoleGroupGrantedHandler } from './application/event-handlers/on-u
 import { OnUserRoleGroupRevokedHandler } from './application/event-handlers/on-user-role-group-revoked/on-user-role-group-revoked.handler';
 
 import { UnifiedAuthGuard } from './presentation/guards/unified-auth.guard';
+import { AppThrottlerGuard } from './presentation/guards/app-throttler.guard';
 import { PermissionsGuard } from './presentation/guards/permissions.guard';
 import { RolesGuard } from './presentation/guards/roles.guard';
 import { RoleGroupsGuard } from './presentation/guards/role-groups.guard';
@@ -142,7 +143,13 @@ export class Auth2Module extends BaseDynamicModule {
       imports: [
         ...extraImports,
         ThrottlerModule.forRoot({
-          throttlers: [{ name: 'default', ttl: 60_000, limit: 30 }],
+          throttlers: [
+            { name: 'default', ttl: 60_000, limit: 30 },
+            { name: 'publicGet', ttl: 60_000, limit: 60 },
+            { name: 'publicFormPost', ttl: 60_000, limit: 10 },
+            { name: 'newsletter', ttl: 3_600_000, limit: 3 },
+            { name: 'publicPostGlobal', ttl: 3_600_000, limit: 100 },
+          ],
         }),
         CqrsModule,
         HttpModule,
@@ -159,7 +166,7 @@ export class Auth2Module extends BaseDynamicModule {
       providers: [
         ...optionsProviders,
 
-        { provide: APP_GUARD, useClass: ThrottlerGuard },
+        { provide: APP_GUARD, useClass: AppThrottlerGuard },
         { provide: APP_GUARD, useClass: UnifiedAuthGuard },
         { provide: APP_GUARD, useClass: PermissionsGuard },
         { provide: APP_GUARD, useClass: RolesGuard },

@@ -17,6 +17,7 @@ import { ApiKey } from '../../domain/aggregates/api-key/api-key.aggregate';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { IGNORE_CAPTCHA } from '../decorators/ignore-captcha.decorator';
 import { USE_API_KEY } from '../decorators/use-api-key.decorator';
+import { EXPECTED_RECAPTCHA_ACTION_KEY } from '../decorators/expected-recaptcha-action.decorator';
 import { AUTH2_OPTIONS } from '../../infrastructure/auth-options.token';
 import { Auth2ModuleOptions } from '../../auth-options';
 import { setUserContext } from '@ce/nestjs-shared-core';
@@ -48,7 +49,7 @@ export class UnifiedAuthGuard implements CanActivate {
         context.getHandler(),
         context.getClass(),
       ]);
-      return ignoreCaptcha ? true : this.validateCaptcha(context.switchToHttp().getRequest());
+      return ignoreCaptcha ? true : this.validateCaptcha(context);
     }
 
     const useApiKey = this.reflector.getAllAndOverride<boolean>(USE_API_KEY, [
@@ -119,13 +120,25 @@ export class UnifiedAuthGuard implements CanActivate {
     }
   }
 
-  private async validateCaptcha(request: any): Promise<boolean> {
+  private async validateCaptcha(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
     const { token, action } = this.extractCaptchaToken(request);
     if (!token || !action) {
       this.logger.warn(
         `Captcha auth failed — missing token or action: path=${request.url} ip=${request.ip ?? 'unknown'}`,
       );
       throw new UnauthorizedException('Captcha token and action is required');
+    }
+
+    const expectedAction = this.reflector.getAllAndOverride<string | undefined>(
+      EXPECTED_RECAPTCHA_ACTION_KEY,
+      [context.getHandler(), context.getClass()],
+    );
+    if (expectedAction && expectedAction !== action) {
+      this.logger.warn(
+        `Captcha auth failed — action mismatch (expected ${expectedAction}, got ${action}): path=${request.url}`,
+      );
+      throw new UnauthorizedException('Captcha action mismatch');
     }
 
     const rawThreshold = process.env.GOOGLE_RECAPTCHA_THRESHOLD;
@@ -161,9 +174,13 @@ export class UnifiedAuthGuard implements CanActivate {
     return headerVal ?? null;
   }
 
-  private extractCaptchaToken(request: any): { token: string; action: string } {
+  private extractCaptchaToken(request: any): { token: string | undefined; action: string | undefined } {
+    const token =
+      request.headers['x-recaptcha-token'] ??
+      request.headers['g-recaptcha-response'] ??
+      request.body?.recaptchaToken;
     return {
-      token: request.headers['x-recaptcha-token'],
+      token: typeof token === 'string' ? token : undefined,
       action: request.headers['x-recaptcha-action'],
     };
   }

@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { IJsonDocumentPayloadValidatorPort } from '../../../domain/ports/json-document-payload-validator.port';
 import { IJsonDocumentRepository } from '../../../domain/repositories/json-document.repository';
 import { JsonDocumentCreatedEvent } from '../../../domain/events/json-document-created.event';
 import { JsonDocumentUpdatedEvent } from '../../../domain/events/json-document-updated.event';
@@ -15,10 +16,14 @@ export class UpsertJsonDocumentHandler
   constructor(
     @Inject(IJsonDocumentRepository)
     private readonly repo: IJsonDocumentRepository,
+    @Inject(IJsonDocumentPayloadValidatorPort)
+    private readonly payloadValidator: IJsonDocumentPayloadValidatorPort,
     private readonly eventBus: EventBus,
   ) {}
 
   async execute({ params }: UpsertJsonDocumentCommand): Promise<JsonDocumentResponseDto> {
+    this.payloadValidator.validate(params.namespace, params.key, params.payload);
+
     const { document, wasCreated, payloadChanged } = await this.repo.upsertByKey(
       params.key,
       params.namespace,

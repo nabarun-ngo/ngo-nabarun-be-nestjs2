@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "key": "INDIVIDUAL",
+      "value": "Individual"
+    },
+    {
+      "key": "FAMILY",
+      "value": "Family"
+    },
+    {
+      "key": "COMMUNITY",
+      "value": "Community"
+    },
+    {
+      "key": "INSTITUTION",
+      "value": "Institution"
+    },
+    {
+      "key": "OTHER",
+      "value": "Other"
+    }
+  ]
+}

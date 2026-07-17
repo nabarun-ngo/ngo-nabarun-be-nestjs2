@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "site": {
+      "title": "Nabarun NGO",
+      "description": "Nabarun NGO public website",
+      "keywords": "ngo,nabarun",
+      "brand": "Nabarun",
+      "shortBrand": "Nabarun",
+      "name": "Nabarun NGO",
+      "location": "India",
+      "areaServed": "India",
+      "openGraph": { "type": "website" },
+      "locale": "en_IN",
+      "twitter": { "card": "summary_large_image" }
+    },
+    "pages": {
+      "home": {
+        "pageName": "Home",
+        "title": "Home",
+        "description": "Welcome",
+        "keywords": "home",
+        "path": "/",
+        "enabled": true,
+        "sitemap": { "priority": 1, "changefreq": "weekly" }
+      },
+      "forms": {
+        "contact": {
+          "pageName": "Contact",
+          "title": "Contact Us",
+          "description": "Get in touch",
+          "path": "/contact",
+          "enabled": true
+        },
+        "volunteer": {
+          "pageName": "Volunteer",
+          "title": "Join Us",
+          "description": "Become a member",
+          "path": "/volunteer",
+          "enabled": true
+        }
+      }
+    }
+  },
+  "layout": {
+    "common": {
+      "navbar": { "links": [] },
+      "footer": { "copyright": "Nabarun NGO" },
+      "org": { "name": "Nabarun NGO" }
+    },
+    "pages": {
+      "home": { "hero": { "title": "Welcome to Nabarun NGO" } },
+      "forms": {
+        "contact": {
+          "formId": "contact",
+          "recaptchaAction": "submit_contact",
+          "submitLabel": "Send Message"
+        },
+        "volunteer": {
+          "formId": "volunteer",
+          "recaptchaAction": "submit_join",
+          "submitLabel": "Submit Application"
+        },
+        "drawing-competition": {
+          "formId": "drawing-competition-registration",
+          "recaptchaAction": "submit_drawing_competition",
+          "submitLabel": "Register"
+        }
+      }
+    }
+  }
+}

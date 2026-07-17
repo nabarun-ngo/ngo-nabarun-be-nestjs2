@@ -1,0 +1,5 @@
+{
+  "subject": "Workflow task assigned: {{taskName}}",
+  "htmlTemplate": "<p>Hi {{recipientName}}, you have been assigned workflow task <strong>{{taskName}}</strong> on instance <strong>{{instanceId}}</strong>.</p>",
+  "textTemplate": "Hi {{recipientName}}, task {{taskName}} assigned on workflow {{instanceId}}."
+}

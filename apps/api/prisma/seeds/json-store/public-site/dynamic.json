@@ -1,0 +1,24 @@
+{
+  "team": [
+    {
+      "id": "team-1",
+      "fullName": "Sample Member",
+      "picture": "/images/team/sample.jpg",
+      "roleString": "Secretary",
+      "email": "secretary@example.com",
+      "bio": "Team member bio placeholder.",
+      "enabled": true
+    }
+  ],
+  "events": [
+    {
+      "id": "event-1",
+      "slug": "annual-meet",
+      "title": "Annual Meet",
+      "description": "Annual gathering event.",
+      "date": "2026-08-15",
+      "location": "Kolkata",
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "_comment": "Donation status options (legacy Firebase DONATION_STATUSES).",
+  "items": [
+    { "key": "RAISED", "value": "Raised" },
+    { "key": "PAID", "value": "Paid" },
+    { "key": "PENDING", "value": "Pending" },
+    { "key": "PAYMENT_FAILED", "value": "Payment Failed" },
+    { "key": "PAY_LATER", "value": "Pay Later" },
+    { "key": "CANCELLED", "value": "Cancelled" },
+    { "key": "UPDATE_MISTAKE", "value": "Update Mistake" }
+  ]
+}

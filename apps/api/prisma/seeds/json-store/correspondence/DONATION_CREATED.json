@@ -1,0 +1,5 @@
+{
+  "subject": "Monthly donation raised — {{donationPeriod}}",
+  "htmlTemplate": "<p>Dear donor,</p><p>A donation of <strong>₹ {{donation.amount}}</strong> has been raised for the period <strong>{{donationPeriod}}</strong>.</p><p>Donation ID: {{donation.id}}</p><p>Please complete payment at your earliest convenience.</p>",
+  "textTemplate": "A donation of ₹ {{donation.amount}} has been raised for {{donationPeriod}}. Donation ID: {{donation.id}}. Please complete payment at your earliest convenience."
+}

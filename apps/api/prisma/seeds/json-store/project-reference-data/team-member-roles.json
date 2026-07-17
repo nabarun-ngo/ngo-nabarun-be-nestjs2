@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "key": "PROJECT_MANAGER",
+      "value": "Project Manager"
+    },
+    {
+      "key": "TEAM_LEAD",
+      "value": "Team Lead"
+    },
+    {
+      "key": "COORDINATOR",
+      "value": "Coordinator"
+    },
+    {
+      "key": "VOLUNTEER",
+      "value": "Volunteer"
+    },
+    {
+      "key": "CONSULTANT",
+      "value": "Consultant"
+    },
+    {
+      "key": "OTHER",
+      "value": "Other"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "_comment": "UPI provider options (legacy Firebase UPI_OPTIONS).",
+  "items": [
+    { "key": "GPAY", "value": "Google Pay" },
+    { "key": "PAYTM", "value": "Paytm" },
+    { "key": "PHONEPE", "value": "PhonePe" },
+    { "key": "BHARATPAY", "value": "BharatPe" },
+    { "key": "UPI_OTH", "value": "Other UPI" }
+  ]
+}

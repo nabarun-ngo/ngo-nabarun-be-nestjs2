@@ -1,0 +1,69 @@
+{
+  "id": "ACCOUNT_ADJUSTMENT",
+  "version": 1,
+  "name": "Account Adjustment",
+  "description": "Account adjustment due to role change",
+  "elements": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "startEvent"
+    },
+    {
+      "id": "svc_validateinputs",
+      "name": "Validate",
+      "type": "serviceTask",
+      "handler": "ValidateInputs"
+    },
+    {
+      "id": "ut_accountadjustment_createorremoveaccount",
+      "name": "{{#if (eq needCreateAccount 'Yes')}}Review and create Account for {{name}}.{{/if}}{{#if (eq needDeleteAccount 'Yes')}}Review and close Account for {{name}}.{{/if}}",
+      "type": "userTask",
+      "formKey": "ACCOUNT_ADJUSTMENT_ACCOUNTADJUSTMENT_CREATEORREMOVEACCOUNT",
+      "candidateRoles": [
+        "TREASURER"
+      ],
+      "slaHours": 48
+    },
+    {
+      "id": "xg_accountadjustment",
+      "name": "Account Adjustment Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "end_completed",
+      "name": "Completed",
+      "type": "endEvent",
+      "terminateAll": true
+    },
+    {
+      "id": "end_rejected",
+      "name": "Rejected",
+      "type": "endEvent",
+      "terminateAll": true
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_start_svc_validateinputs",
+      "sourceRef": "start",
+      "targetRef": "svc_validateinputs"
+    },
+    {
+      "id": "f_svc_validateinputs_ut_accountadjustment_createorremoveaccount",
+      "sourceRef": "svc_validateinputs",
+      "targetRef": "ut_accountadjustment_createorremoveaccount"
+    },
+    {
+      "id": "f_ut_accountadjustment_createorremoveaccount_xg_accountadjustment",
+      "sourceRef": "ut_accountadjustment_createorremoveaccount",
+      "targetRef": "xg_accountadjustment"
+    },
+    {
+      "id": "f_xg_accountadjustment_default_0",
+      "sourceRef": "xg_accountadjustment",
+      "targetRef": "end_completed",
+      "isDefault": true
+    }
+  ]
+}

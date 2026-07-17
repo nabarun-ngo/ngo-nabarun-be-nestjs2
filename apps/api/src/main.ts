@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { RequestMethod } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { applyConfig } from '@ce/nestjs-shared-core';
@@ -11,6 +12,8 @@ async function main() {
 
   applyConfig(app as never, {
     globalPrefix: 'api',
+    globalPrefixExclusions: [{ path: 'newsletter', method: RequestMethod.POST }],
+    fileSize: '64kb',
     environment:
       config.get<string>(Configkey.ENVIRONMENT) ??
       config.get<string>(Configkey.NODE_ENV),

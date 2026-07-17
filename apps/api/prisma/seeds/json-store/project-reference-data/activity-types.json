@@ -1,0 +1,60 @@
+{
+  "items": [
+    {
+      "key": "TRAINING",
+      "value": "Training"
+    },
+    {
+      "key": "AWARENESS",
+      "value": "Awareness"
+    },
+    {
+      "key": "DISTRIBUTION",
+      "value": "Distribution"
+    },
+    {
+      "key": "SURVEY",
+      "value": "Survey"
+    },
+    {
+      "key": "MEETING",
+      "value": "Meeting"
+    },
+    {
+      "key": "FIELD_VISIT",
+      "value": "Field Visit"
+    },
+    {
+      "key": "DOCUMENTATION",
+      "value": "Documentation"
+    },
+    {
+      "key": "WORKSHOP",
+      "value": "Workshop"
+    },
+    {
+      "key": "SEMINAR",
+      "value": "Seminar"
+    },
+    {
+      "key": "FUNDRAISING",
+      "value": "Fundraising"
+    },
+    {
+      "key": "VOLUNTEER_ACTIVITY",
+      "value": "Volunteer Activity"
+    },
+    {
+      "key": "CONFERENCE",
+      "value": "Conference"
+    },
+    {
+      "key": "EXHIBITION",
+      "value": "Exhibition"
+    },
+    {
+      "key": "OTHER",
+      "value": "Other"
+    }
+  ]
+}

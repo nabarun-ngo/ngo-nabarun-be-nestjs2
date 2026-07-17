@@ -74,11 +74,11 @@
       "@ce/nestjs-shared-comment/*": [
         "./packages/nestjs-shared-comment/src/*"
       ],
-      "@ce/nestjs-shared-custom-fields": [
-        "./packages/nestjs-shared-custom-fields/src/index.ts"
+      "@ce/nestjs-shared-custom-forms": [
+        "./packages/nestjs-shared-custom-forms/src/index.ts"
       ],
-      "@ce/nestjs-shared-custom-fields/*": [
-        "./packages/nestjs-shared-custom-fields/src/*"
+      "@ce/nestjs-shared-custom-forms/*": [
+        "./packages/nestjs-shared-custom-forms/src/*"
       ],
       "@ce/nestjs-shared-cron": [
         "./packages/nestjs-shared-cron/src/index.ts"
@@ -91,6 +91,18 @@
       ],
       "@ce/nestjs-shared-correspondence/*": [
         "./packages/nestjs-shared-correspondence/src/*"
+      ],
+      "@ce/nestjs-shared-workflow": [
+        "./packages/nestjs-shared-workflow/src/index.ts"
+      ],
+      "@ce/nestjs-shared-workflow/*": [
+        "./packages/nestjs-shared-workflow/src/*"
+      ],
+      "@ce/nestjs-shared-document-generator": [
+        "./packages/nestjs-shared-document-generator/src/index.ts"
+      ],
+      "@ce/nestjs-shared-document-generator/*": [
+        "./packages/nestjs-shared-document-generator/src/*"
       ]
     }
   }

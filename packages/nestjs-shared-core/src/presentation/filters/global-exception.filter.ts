@@ -7,6 +7,7 @@ import {
   Logger,
   Optional,
 } from '@nestjs/common';
+import { ThrottlerException } from '@nestjs/throttler';
 import { EventBus } from '@nestjs/cqrs';
 import { Request, Response } from 'express';
 import { AppTechnicalError, TechnicalErrorPayload } from '../../application/events/app-technical-error.event';
@@ -77,6 +78,14 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     this.emitTechnicalError(classified.status, errorResponse);
     this.logRequestContext(request, classified);
     this.sanitiseForClient(exception, classified.status, errorResponse);
+
+    if (exception instanceof ThrottlerException) {
+      response.status(HttpStatus.TOO_MANY_REQUESTS).json({
+        success: false,
+        message: 'Too many requests. Please try again later.',
+      });
+      return;
+    }
 
     response.status(classified.status).json(errorResponse);
   }

@@ -19,3 +19,6 @@ export type { ICronJobQueuePort } from './domain/ports/cron-job-queue.port';
 
 // ── Application — DTOs ────────────────────────────────────────────────────────
 export { CronJobDto, TriggerResultDto, EnqueuedJobDto, SkippedJobDto } from './application/dtos/cron.dtos';
+
+// ── JSON-store payload schemas ────────────────────────────────────────────────
+export { CronJobPayloadSchema, type CronJobPayload } from './cron-job-payload.schema';

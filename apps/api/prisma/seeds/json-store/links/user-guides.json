@@ -1,0 +1,41 @@
+{
+  "_comment": "User guide links. linkType: INTERNAL | EXTERNAL. Served via GET /links/user-guides.",
+  "items": [
+    {
+      "key": "GETTING_STARTED_GUIDE",
+      "value": "/assets/docs/guides/getting-started.pdf",
+      "description": "Getting started guide for new members",
+      "category": "Getting Started",
+      "linkType": "INTERNAL",
+      "tags": ["onboarding", "members"],
+      "active": true
+    },
+    {
+      "key": "DONATION_GUIDE",
+      "value": "https://docs.example.org/guides/donations.pdf",
+      "description": "How to make and manage donations",
+      "category": "Finance",
+      "linkType": "EXTERNAL",
+      "tags": ["donations", "finance"],
+      "active": true
+    },
+    {
+      "key": "WORKFLOW_TASKS_GUIDE",
+      "value": "/assets/docs/guides/workflow-tasks.pdf",
+      "description": "How to work with workflow requests and tasks",
+      "category": "Workflows",
+      "linkType": "INTERNAL",
+      "tags": ["workflow", "tasks"],
+      "active": true
+    },
+    {
+      "key": "MOBILE_APP_GUIDE",
+      "value": "/assets/docs/guides/mobile-app.pdf",
+      "description": "Using the mobile app",
+      "category": "Getting Started",
+      "linkType": "INTERNAL",
+      "tags": ["onboarding", "mobile"],
+      "active": true
+    }
+  ]
+}

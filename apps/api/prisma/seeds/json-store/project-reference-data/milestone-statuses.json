@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "key": "PENDING",
+      "value": "Pending"
+    },
+    {
+      "key": "IN_PROGRESS",
+      "value": "In Progress"
+    },
+    {
+      "key": "ACHIEVED",
+      "value": "Achieved"
+    },
+    {
+      "key": "DELAYED",
+      "value": "Delayed"
+    },
+    {
+      "key": "MISSED",
+      "value": "Missed"
+    }
+  ]
+}

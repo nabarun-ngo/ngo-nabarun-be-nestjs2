@@ -1,4 +1,4 @@
-import { Inject, Logger } from '@nestjs/common';
+import { Inject, Logger, Optional } from '@nestjs/common';
 import { EventBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { randomUUID } from 'crypto';
 import { CorrespondenceRequestEvent } from '../events/correspondence-request.event';
@@ -18,7 +18,7 @@ export class Correspondence2Orchestrator
     private readonly resolutionService: SubscriptionResolutionService,
     @Inject(INotificationRepository)
     private readonly notificationRepo: INotificationRepository,
-    @Inject(DISPATCH_QUEUE_PORT)
+    @Optional() @Inject(DISPATCH_QUEUE_PORT)
     private readonly dispatchQueue: IDispatchQueuePort,
     private readonly eventBus: EventBus,
   ) { }

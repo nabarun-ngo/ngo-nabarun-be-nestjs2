@@ -19,6 +19,8 @@ import { UpsertJsonDocumentHandler } from './application/commands/upsert-json-do
 import { DeleteJsonDocumentHandler } from './application/commands/delete-json-document/delete-json-document.handler';
 import { GetJsonDocumentHandler } from './application/queries/get-json-document/get-json-document.handler';
 import { ListJsonDocumentsHandler } from './application/queries/list-json-documents/list-json-documents.handler';
+import { IJsonDocumentPayloadValidatorPort } from './domain/ports/json-document-payload-validator.port';
+import { NoOpJsonDocumentPayloadValidator } from './domain/ports/no-op-json-document-payload-validator';
 
 describe('JsonStoreModule.forRoot()', () => {
   describe('without options (defaults)', () => {
@@ -65,6 +67,15 @@ describe('JsonStoreModule.forRoot()', () => {
 
     it('exports JsonStoreFacade', () => {
       expect(module.exports).toContain(JsonStoreFacade);
+    });
+
+    it('registers NoOpJsonDocumentPayloadValidator by default', () => {
+      const providers = module.providers as any[];
+      const validatorProvider = providers.find(
+        (p) => p?.provide === IJsonDocumentPayloadValidatorPort,
+      );
+
+      expect(validatorProvider?.useClass).toBe(NoOpJsonDocumentPayloadValidator);
     });
   });
 

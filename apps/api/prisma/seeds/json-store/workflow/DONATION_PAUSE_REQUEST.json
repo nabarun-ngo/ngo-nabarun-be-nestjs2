@@ -1,0 +1,97 @@
+{
+  "id": "DONATION_PAUSE_REQUEST",
+  "version": 1,
+  "name": "Donation Pause Request",
+  "description": "Donation pause request from {{formatDate startDate 'dd/MM/yyyy'}} to {{formatDate endDate 'dd/MM/yyyy'}}",
+  "elements": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "startEvent"
+    },
+    {
+      "id": "svc_validateinputs",
+      "name": "Validate",
+      "type": "serviceTask",
+      "handler": "ValidateInputs"
+    },
+    {
+      "id": "ut_treasurerapproval_reviewdonationpauserequest",
+      "name": "Review Donation Pause Request",
+      "type": "userTask",
+      "formKey": "DONATION_PAUSE_REQUEST_TREASURERAPPROVAL_REVIEWDONATIONPAUSEREQUEST",
+      "candidateRoles": [
+        "TREASURER"
+      ],
+      "slaHours": 24
+    },
+    {
+      "id": "xg_treasurerapproval",
+      "name": "Treasurer Approval Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "svc_systemupdate_updatepauseinfo",
+      "name": "Update Pause Info",
+      "type": "serviceTask",
+      "handler": "DonationPauseUpdateHandler"
+    },
+    {
+      "id": "xg_systemupdate",
+      "name": "System Update Routing",
+      "type": "exclusiveGateway"
+    },
+    {
+      "id": "end_completed",
+      "name": "Completed",
+      "type": "endEvent",
+      "terminateAll": true
+    },
+    {
+      "id": "end_rejected",
+      "name": "Rejected",
+      "type": "endEvent",
+      "terminateAll": true
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_start_svc_validateinputs",
+      "sourceRef": "start",
+      "targetRef": "svc_validateinputs"
+    },
+    {
+      "id": "f_svc_validateinputs_ut_treasurerapproval_reviewdonationpauserequest",
+      "sourceRef": "svc_validateinputs",
+      "targetRef": "ut_treasurerapproval_reviewdonationpauserequest"
+    },
+    {
+      "id": "f_ut_treasurerapproval_reviewdonationpauserequest_xg_treasurerapproval",
+      "sourceRef": "ut_treasurerapproval_reviewdonationpauserequest",
+      "targetRef": "xg_treasurerapproval"
+    },
+    {
+      "id": "f_svc_systemupdate_updatepauseinfo_xg_systemupdate",
+      "sourceRef": "svc_systemupdate_updatepauseinfo",
+      "targetRef": "xg_systemupdate"
+    },
+    {
+      "id": "f_xg_treasurerapproval_step_treasurerapproval_task_reviewdonationpauserequest_decision_____approve__0",
+      "sourceRef": "xg_treasurerapproval",
+      "targetRef": "svc_systemupdate_updatepauseinfo",
+      "condition": "decision == 'Approve'"
+    },
+    {
+      "id": "f_xg_treasurerapproval_default_1",
+      "sourceRef": "xg_treasurerapproval",
+      "targetRef": "end_completed",
+      "isDefault": true
+    },
+    {
+      "id": "f_xg_systemupdate_default_0",
+      "sourceRef": "xg_systemupdate",
+      "targetRef": "end_completed",
+      "isDefault": true
+    }
+  ]
+}
