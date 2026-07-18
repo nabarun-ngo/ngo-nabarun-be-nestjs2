@@ -55,9 +55,6 @@ export interface UserUpdateProps {
 
 export interface UserAdminUpdateProps {
   status?: UserStatus;
-  donationAmount?: number;
-  donationPauseStart?: Date;
-  donationPauseEnd?: Date;
 }
 
 // ── Rehydrate props (from DB row, includes all persisted fields) ──────────────
@@ -91,9 +88,6 @@ export interface UserRehydrateProps {
   createdById?: string;
   /** App profile UUID of the user who last modified this record (never idpSub). */
   updatedById?: string;
-  donationAmount?: number;
-  donationPauseStart?: Date;
-  donationPauseEnd?: Date;
 }
 
 // ── Aggregate ─────────────────────────────────────────────────────────────────
@@ -133,11 +127,6 @@ export class User extends AggregateRoot<string> {
   // Audit — app profile UUID of the acting user (never idpSub)
   #createdById: string | undefined;
   #updatedById: string | undefined;
-
-  // Finance preferences
-  #donationAmount: number | undefined;
-  #donationPauseStart: Date | undefined;
-  #donationPauseEnd: Date | undefined;
 
   // Transient — not persisted
   #systemGeneratedPassword: boolean;
@@ -276,9 +265,6 @@ export class User extends AggregateRoot<string> {
     );
     user.#createdById = props.createdById;
     user.#updatedById = props.updatedById;
-    user.#donationAmount = props.donationAmount;
-    user.#donationPauseStart = props.donationPauseStart;
-    user.#donationPauseEnd = props.donationPauseEnd;
     return user;
   }
 
@@ -426,15 +412,6 @@ export class User extends AggregateRoot<string> {
         new UserStatusChangedEvent(this.id, this.#idpSub, previous, detail.status),
       );
     }
-    if (detail.donationAmount !== undefined) {
-      this.#donationAmount = detail.donationAmount;
-    }
-    if (detail.donationPauseStart !== undefined) {
-      this.#donationPauseStart = detail.donationPauseStart;
-    }
-    if (detail.donationPauseEnd !== undefined) {
-      this.#donationPauseEnd = detail.donationPauseEnd;
-    }
     this.touch();
   }
 
@@ -482,9 +459,6 @@ export class User extends AggregateRoot<string> {
   get permanentAddress(): Address | undefined { return this.#permanentAddress; }
   get socialMediaLinks(): SocialLink[] { return [...this.#socialMediaLinks]; }
   get deletedAt(): Date | null { return this.#deletedAt; }
-  get donationAmount(): number | undefined { return this.#donationAmount; }
-  get donationPauseStart(): Date | undefined { return this.#donationPauseStart; }
-  get donationPauseEnd(): Date | undefined { return this.#donationPauseEnd; }
 
   /** True when the IdP adapter must generate the password and force a reset on first login. */
   get systemGeneratedPassword(): boolean { return this.#systemGeneratedPassword; }

@@ -1,0 +1,54 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Shared schema fragment — TokenVault2Module
+// Synced into <prisma-schema-dir>/shared/ by: npx nestjs-shared-sync-schema
+// DO NOT edit — overwritten on every sync. After syncing, run `prisma migrate`.
+// ─────────────────────────────────────────────────────────────────────────────
+
+model TokenVault2OAuthAccount {
+  id         String                  @id @default(cuid())
+  provider   String                  @db.VarChar(50)
+  email      String                  @db.VarChar(255)
+  // Provider-issued stable subject/object id (Google `sub`, Microsoft object `id`).
+  // Not the uniqueness key — (provider, email) is the canonical natural key.
+  externalId String?                 @db.VarChar(255)
+  name       String?                 @db.VarChar(255)
+  givenName  String?                 @db.VarChar(255)
+  familyName String?                 @db.VarChar(255)
+  pictureUrl String?                 @db.VarChar(255)
+  locale     String?                 @db.VarChar(255)
+  createdAt  DateTime                @default(now())
+  updatedAt  DateTime                @updatedAt
+  deletedAt  DateTime?
+  tokens     TokenVault2OAuthToken[]
+
+  // One profile row per external identity per provider.
+  @@unique([provider, email])
+  @@index([externalId])
+  @@index([deletedAt])
+  @@map("token_vault_o_auth_account")
+}
+
+model TokenVault2OAuthToken {
+  id           String                  @id @default(cuid())
+  accountId    String                  @db.VarChar(100)
+  account      TokenVault2OAuthAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  clientId     String                  @db.VarChar(255)
+  provider     String                  @db.VarChar(50)
+  email        String                  @db.VarChar(255)
+  ownerSub     String?                 @db.VarChar(255)
+  // Stored as AES-256-GCM ciphertext in format v2:salt:iv:authTag:ciphertext (base64)
+  accessToken  String                  @db.Text
+  refreshToken String?                 @db.Text
+  tokenType    String?                 @db.VarChar(50)
+  expiresAt    DateTime?
+  scope        String?                 @db.Text
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+
+  // One stored credential per (account, clientId) — prevents duplicate rows
+  // on re-authentication. This is the upsert key for the complete-oauth flow.
+  @@unique([accountId, clientId])
+  @@index([ownerSub])
+  @@index([provider, email])
+  @@map("token_vault_o_auth_token")
+}

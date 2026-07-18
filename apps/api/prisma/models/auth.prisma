@@ -1,0 +1,124 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Shared schema fragment — AuthModule
+// Synced into <prisma-schema-dir>/shared/ by: npx nestjs-shared-sync-schema
+// DO NOT edit — overwritten on every sync. After syncing, run `prisma migrate`.
+// ─────────────────────────────────────────────────────────────────────────────
+
+model AuthApiKey {
+  id          String    @id @default(cuid())
+  name        String    @db.VarChar(255)
+  apiKey      String    @db.VarChar(255)
+  apiKeyId    String    @unique @db.VarChar(50)
+  permissions String[]
+  createdBy   String?   @db.VarChar(255)
+  expiresAt   DateTime?
+  lastUsedAt  DateTime?
+  ownerId     String?   @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([ownerId])
+  @@map("auth_apikey")
+}
+
+model AuthPermission {
+  id              String               @id @default(cuid())
+  key             String               @unique @db.VarChar(50)
+  description     String?
+  deletedAt       DateTime?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  rolePermissions AuthRolePermission[]
+
+  @@map("auth_permission")
+}
+
+model AuthRole {
+  id             String               @id @default(cuid())
+  key            String               @unique @db.VarChar(50)
+  description    String?
+  deletedAt      DateTime?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  permissions    AuthRolePermission[]
+  userRoles      AuthUserRole[]
+  roleGroupRoles AuthRoleGroupRole[]
+
+  @@map("auth_role")
+}
+
+model AuthRolePermission {
+  roleId       String         @db.VarChar(50)
+  permissionId String         @db.VarChar(50)
+  role         AuthRole       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   AuthPermission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("auth_role_permission")
+}
+
+model AuthRoleGroup {
+  id             String              @id @default(cuid())
+  key            String              @unique @db.VarChar(50)
+  description    String?
+  deletedAt      DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  roles          AuthRoleGroupRole[]
+  userGroups     AuthUserRoleGroup[]
+  userRoleGroups AuthUserRole[]      @relation("UserRoleSourceGroup")
+
+  @@map("auth_role_group")
+}
+
+model AuthRoleGroupRole {
+  groupId String        @db.VarChar(50)
+  roleId  String        @db.VarChar(50)
+  group   AuthRoleGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  role    AuthRole      @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([groupId, roleId])
+  @@map("auth_role_group_role")
+}
+
+model AuthUserRole {
+  id            String         @id @default(cuid())
+  idpSub        String         @db.VarChar(100)
+  ownerId       String?        @db.VarChar(100)
+  entityId      String?        @db.VarChar(100)
+  entityType    String?        @db.VarChar(30)
+  roleId        String         @db.VarChar(50)
+  sourceGroupId String?        @db.VarChar(50)
+  grantedAt     DateTime       @default(now())
+  revokedAt     DateTime?
+  grantedBy     String?        @db.VarChar(100)
+  revokedBy     String?        @db.VarChar(100)
+  note          String?        @db.VarChar(512)
+  role          AuthRole       @relation(fields: [roleId], references: [id])
+  sourceGroup   AuthRoleGroup? @relation("UserRoleSourceGroup", fields: [sourceGroupId], references: [id])
+
+  @@index([idpSub])
+  @@index([idpSub, ownerId])
+  @@index([idpSub, entityType, entityId])
+  @@map("auth_user_role")
+}
+
+model AuthUserRoleGroup {
+  id         String        @id @default(cuid())
+  idpSub     String        @db.VarChar(50)
+  ownerId    String?       @db.VarChar(50)
+  entityId   String?       @db.VarChar(50)
+  entityType String?       @db.VarChar(30)
+  groupId    String        @db.VarChar(50)
+  grantedAt  DateTime      @default(now())
+  revokedAt  DateTime?
+  grantedBy  String?       @db.VarChar(50)
+  revokedBy  String?       @db.VarChar(50)
+  note       String?       @db.VarChar(512)
+  group      AuthRoleGroup @relation(fields: [groupId], references: [id])
+
+  @@index([idpSub])
+  @@index([idpSub, ownerId])
+  @@index([idpSub, entityType, entityId])
+  @@map("auth_user_role_group")
+}

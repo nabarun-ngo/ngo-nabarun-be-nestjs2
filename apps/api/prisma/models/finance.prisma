@@ -32,7 +32,7 @@ model Account {
 
   @@index([type, status])
   @@index([accountHolderId])
-  @@map("accounts")
+  @@map("finance_accounts")
 }
 
 model Donation {
@@ -80,7 +80,7 @@ model Donation {
   @@index([donorId, status])
   @@index([type, status])
   @@index([raisedOn])
-  @@map("donations")
+  @@map("finance_donations")
 }
 
 model Transaction {
@@ -113,7 +113,7 @@ model Transaction {
   @@index([accountId, createdAt, id])
   @@index([type, status])
   @@index([referenceId, referenceType])
-  @@map("transactions")
+  @@map("finance_transactions")
 }
 
 model Expense {
@@ -176,7 +176,7 @@ model Expense {
   @@index([createdById])
   @@index([paidById])
   @@index([referenceId, referenceType])
-  @@map("expenses")
+  @@map("finance_expenses")
 }
 
 model Earning {
@@ -209,5 +209,5 @@ model Earning {
 
   @@index([category, status])
   @@index([source])
-  @@map("earnings")
+  @@map("finance_earnings")
 }

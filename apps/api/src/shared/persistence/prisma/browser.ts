@@ -23,121 +23,6 @@ export * from './enums.js';
  */
 export type Activity = Prisma.ActivityModel
 /**
- * Model Account
- * 
- */
-export type Account = Prisma.AccountModel
-/**
- * Model Donation
- * 
- */
-export type Donation = Prisma.DonationModel
-/**
- * Model Transaction
- * 
- */
-export type Transaction = Prisma.TransactionModel
-/**
- * Model Expense
- * 
- */
-export type Expense = Prisma.ExpenseModel
-/**
- * Model Earning
- * 
- */
-export type Earning = Prisma.EarningModel
-/**
- * Model Meeting
- * 
- */
-export type Meeting = Prisma.MeetingModel
-/**
- * Model Project
- * 
- */
-export type Project = Prisma.ProjectModel
-/**
- * Model Beneficiary
- * 
- */
-export type Beneficiary = Prisma.BeneficiaryModel
-/**
- * Model Goal
- * 
- */
-export type Goal = Prisma.GoalModel
-/**
- * Model Milestone
- * 
- */
-export type Milestone = Prisma.MilestoneModel
-/**
- * Model ProjectTeamMember
- * 
- */
-export type ProjectTeamMember = Prisma.ProjectTeamMemberModel
-/**
- * Model ProjectRisk
- * 
- */
-export type ProjectRisk = Prisma.ProjectRiskModel
-/**
- * Model Report
- * 
- */
-export type Report = Prisma.ReportModel
-/**
- * Model UserProfile
- * 
- */
-export type UserProfile = Prisma.UserProfileModel
-/**
- * Model UserPhoneNumber
- * 
- */
-export type UserPhoneNumber = Prisma.UserPhoneNumberModel
-/**
- * Model UserAddress
- * 
- */
-export type UserAddress = Prisma.UserAddressModel
-/**
- * Model UserSocialLink
- * 
- */
-export type UserSocialLink = Prisma.UserSocialLinkModel
-/**
- * Model WorkflowInstance
- * 
- */
-export type WorkflowInstance = Prisma.WorkflowInstanceModel
-/**
- * Model WorkflowEventLog
- * 
- */
-export type WorkflowEventLog = Prisma.WorkflowEventLogModel
-/**
- * Model WorkflowToken
- * 
- */
-export type WorkflowToken = Prisma.WorkflowTokenModel
-/**
- * Model WorkflowTaskInbox
- * 
- */
-export type WorkflowTaskInbox = Prisma.WorkflowTaskInboxModel
-/**
- * Model WorkflowIdempotencyKey
- * 
- */
-export type WorkflowIdempotencyKey = Prisma.WorkflowIdempotencyKeyModel
-/**
- * Model WorkflowOutbox
- * 
- */
-export type WorkflowOutbox = Prisma.WorkflowOutboxModel
-/**
  * Model AuditEntityChangeLog
  * 
  */
@@ -193,25 +78,25 @@ export type Comment = Prisma.CommentModel
  */
 export type CommentMention = Prisma.CommentMentionModel
 /**
- * Model Corr2Notification
+ * Model CorrespondenceNotification
  * 
  */
-export type Corr2Notification = Prisma.Corr2NotificationModel
+export type CorrespondenceNotification = Prisma.CorrespondenceNotificationModel
 /**
- * Model Corr2UserNotification
+ * Model CorrespondenceUserNotification
  * 
  */
-export type Corr2UserNotification = Prisma.Corr2UserNotificationModel
+export type CorrespondenceUserNotification = Prisma.CorrespondenceUserNotificationModel
 /**
- * Model Corr2ResourceSubscription
+ * Model CorrespondenceResourceSubscription
  * 
  */
-export type Corr2ResourceSubscription = Prisma.Corr2ResourceSubscriptionModel
+export type CorrespondenceResourceSubscription = Prisma.CorrespondenceResourceSubscriptionModel
 /**
- * Model Corr2SubscriptionChannel
+ * Model CorrespondenceSubscriptionChannel
  * 
  */
-export type Corr2SubscriptionChannel = Prisma.Corr2SubscriptionChannelModel
+export type CorrespondenceSubscriptionChannel = Prisma.CorrespondenceSubscriptionChannelModel
 /**
  * Model CronJobDefinition
  * 
@@ -253,10 +138,75 @@ export type DocumentReference = Prisma.DocumentReferenceModel
  */
 export type DocumentMapping = Prisma.DocumentMappingModel
 /**
+ * Model Account
+ * 
+ */
+export type Account = Prisma.AccountModel
+/**
+ * Model Donation
+ * 
+ */
+export type Donation = Prisma.DonationModel
+/**
+ * Model Transaction
+ * 
+ */
+export type Transaction = Prisma.TransactionModel
+/**
+ * Model Expense
+ * 
+ */
+export type Expense = Prisma.ExpenseModel
+/**
+ * Model Earning
+ * 
+ */
+export type Earning = Prisma.EarningModel
+/**
  * Model JsonStoreDocument
  * 
  */
 export type JsonStoreDocument = Prisma.JsonStoreDocumentModel
+/**
+ * Model Meeting
+ * 
+ */
+export type Meeting = Prisma.MeetingModel
+/**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
+/**
+ * Model Beneficiary
+ * 
+ */
+export type Beneficiary = Prisma.BeneficiaryModel
+/**
+ * Model Goal
+ * 
+ */
+export type Goal = Prisma.GoalModel
+/**
+ * Model Milestone
+ * 
+ */
+export type Milestone = Prisma.MilestoneModel
+/**
+ * Model ProjectTeamMember
+ * 
+ */
+export type ProjectTeamMember = Prisma.ProjectTeamMemberModel
+/**
+ * Model ProjectRisk
+ * 
+ */
+export type ProjectRisk = Prisma.ProjectRiskModel
+/**
+ * Model Report
+ * 
+ */
+export type Report = Prisma.ReportModel
 /**
  * Model TokenVault2OAuthAccount
  * 
@@ -267,3 +217,53 @@ export type TokenVault2OAuthAccount = Prisma.TokenVault2OAuthAccountModel
  * 
  */
 export type TokenVault2OAuthToken = Prisma.TokenVault2OAuthTokenModel
+/**
+ * Model UserProfile
+ * 
+ */
+export type UserProfile = Prisma.UserProfileModel
+/**
+ * Model UserPhoneNumber
+ * 
+ */
+export type UserPhoneNumber = Prisma.UserPhoneNumberModel
+/**
+ * Model UserAddress
+ * 
+ */
+export type UserAddress = Prisma.UserAddressModel
+/**
+ * Model UserSocialLink
+ * 
+ */
+export type UserSocialLink = Prisma.UserSocialLinkModel
+/**
+ * Model WorkflowInstance
+ * 
+ */
+export type WorkflowInstance = Prisma.WorkflowInstanceModel
+/**
+ * Model WorkflowEventLog
+ * 
+ */
+export type WorkflowEventLog = Prisma.WorkflowEventLogModel
+/**
+ * Model WorkflowToken
+ * 
+ */
+export type WorkflowToken = Prisma.WorkflowTokenModel
+/**
+ * Model WorkflowTaskInbox
+ * 
+ */
+export type WorkflowTaskInbox = Prisma.WorkflowTaskInboxModel
+/**
+ * Model WorkflowIdempotencyKey
+ * 
+ */
+export type WorkflowIdempotencyKey = Prisma.WorkflowIdempotencyKeyModel
+/**
+ * Model WorkflowOutbox
+ * 
+ */
+export type WorkflowOutbox = Prisma.WorkflowOutboxModel

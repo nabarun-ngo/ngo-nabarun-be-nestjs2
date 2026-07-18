@@ -52,29 +52,6 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Activity: 'Activity',
-  Account: 'Account',
-  Donation: 'Donation',
-  Transaction: 'Transaction',
-  Expense: 'Expense',
-  Earning: 'Earning',
-  Meeting: 'Meeting',
-  Project: 'Project',
-  Beneficiary: 'Beneficiary',
-  Goal: 'Goal',
-  Milestone: 'Milestone',
-  ProjectTeamMember: 'ProjectTeamMember',
-  ProjectRisk: 'ProjectRisk',
-  Report: 'Report',
-  UserProfile: 'UserProfile',
-  UserPhoneNumber: 'UserPhoneNumber',
-  UserAddress: 'UserAddress',
-  UserSocialLink: 'UserSocialLink',
-  WorkflowInstance: 'WorkflowInstance',
-  WorkflowEventLog: 'WorkflowEventLog',
-  WorkflowToken: 'WorkflowToken',
-  WorkflowTaskInbox: 'WorkflowTaskInbox',
-  WorkflowIdempotencyKey: 'WorkflowIdempotencyKey',
-  WorkflowOutbox: 'WorkflowOutbox',
   AuditEntityChangeLog: 'AuditEntityChangeLog',
   AuthApiKey: 'AuthApiKey',
   AuthPermission: 'AuthPermission',
@@ -86,10 +63,10 @@ export const ModelName = {
   AuthUserRoleGroup: 'AuthUserRoleGroup',
   Comment: 'Comment',
   CommentMention: 'CommentMention',
-  Corr2Notification: 'Corr2Notification',
-  Corr2UserNotification: 'Corr2UserNotification',
-  Corr2ResourceSubscription: 'Corr2ResourceSubscription',
-  Corr2SubscriptionChannel: 'Corr2SubscriptionChannel',
+  CorrespondenceNotification: 'CorrespondenceNotification',
+  CorrespondenceUserNotification: 'CorrespondenceUserNotification',
+  CorrespondenceResourceSubscription: 'CorrespondenceResourceSubscription',
+  CorrespondenceSubscriptionChannel: 'CorrespondenceSubscriptionChannel',
   CronJobDefinition: 'CronJobDefinition',
   Form: 'Form',
   FormFieldDefinition: 'FormFieldDefinition',
@@ -98,9 +75,32 @@ export const ModelName = {
   FormFieldValueHistoryEntry: 'FormFieldValueHistoryEntry',
   DocumentReference: 'DocumentReference',
   DocumentMapping: 'DocumentMapping',
+  Account: 'Account',
+  Donation: 'Donation',
+  Transaction: 'Transaction',
+  Expense: 'Expense',
+  Earning: 'Earning',
   JsonStoreDocument: 'JsonStoreDocument',
+  Meeting: 'Meeting',
+  Project: 'Project',
+  Beneficiary: 'Beneficiary',
+  Goal: 'Goal',
+  Milestone: 'Milestone',
+  ProjectTeamMember: 'ProjectTeamMember',
+  ProjectRisk: 'ProjectRisk',
+  Report: 'Report',
   TokenVault2OAuthAccount: 'TokenVault2OAuthAccount',
-  TokenVault2OAuthToken: 'TokenVault2OAuthToken'
+  TokenVault2OAuthToken: 'TokenVault2OAuthToken',
+  UserProfile: 'UserProfile',
+  UserPhoneNumber: 'UserPhoneNumber',
+  UserAddress: 'UserAddress',
+  UserSocialLink: 'UserSocialLink',
+  WorkflowInstance: 'WorkflowInstance',
+  WorkflowEventLog: 'WorkflowEventLog',
+  WorkflowToken: 'WorkflowToken',
+  WorkflowTaskInbox: 'WorkflowTaskInbox',
+  WorkflowIdempotencyKey: 'WorkflowIdempotencyKey',
+  WorkflowOutbox: 'WorkflowOutbox'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -151,6 +151,365 @@ export const ActivityScalarFieldEnum = {
 } as const
 
 export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
+
+
+export const AuditEntityChangeLogScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  action: 'action',
+  userId: 'userId',
+  userName: 'userName',
+  oldValues: 'oldValues',
+  newValues: 'newValues',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  traceId: 'traceId',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditEntityChangeLogScalarFieldEnum = (typeof AuditEntityChangeLogScalarFieldEnum)[keyof typeof AuditEntityChangeLogScalarFieldEnum]
+
+
+export const AuthApiKeyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  apiKey: 'apiKey',
+  apiKeyId: 'apiKeyId',
+  permissions: 'permissions',
+  createdBy: 'createdBy',
+  expiresAt: 'expiresAt',
+  lastUsedAt: 'lastUsedAt',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuthApiKeyScalarFieldEnum = (typeof AuthApiKeyScalarFieldEnum)[keyof typeof AuthApiKeyScalarFieldEnum]
+
+
+export const AuthPermissionScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  description: 'description',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuthPermissionScalarFieldEnum = (typeof AuthPermissionScalarFieldEnum)[keyof typeof AuthPermissionScalarFieldEnum]
+
+
+export const AuthRoleScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  description: 'description',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuthRoleScalarFieldEnum = (typeof AuthRoleScalarFieldEnum)[keyof typeof AuthRoleScalarFieldEnum]
+
+
+export const AuthRolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId'
+} as const
+
+export type AuthRolePermissionScalarFieldEnum = (typeof AuthRolePermissionScalarFieldEnum)[keyof typeof AuthRolePermissionScalarFieldEnum]
+
+
+export const AuthRoleGroupScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  description: 'description',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuthRoleGroupScalarFieldEnum = (typeof AuthRoleGroupScalarFieldEnum)[keyof typeof AuthRoleGroupScalarFieldEnum]
+
+
+export const AuthRoleGroupRoleScalarFieldEnum = {
+  groupId: 'groupId',
+  roleId: 'roleId'
+} as const
+
+export type AuthRoleGroupRoleScalarFieldEnum = (typeof AuthRoleGroupRoleScalarFieldEnum)[keyof typeof AuthRoleGroupRoleScalarFieldEnum]
+
+
+export const AuthUserRoleScalarFieldEnum = {
+  id: 'id',
+  idpSub: 'idpSub',
+  ownerId: 'ownerId',
+  entityId: 'entityId',
+  entityType: 'entityType',
+  roleId: 'roleId',
+  sourceGroupId: 'sourceGroupId',
+  grantedAt: 'grantedAt',
+  revokedAt: 'revokedAt',
+  grantedBy: 'grantedBy',
+  revokedBy: 'revokedBy',
+  note: 'note'
+} as const
+
+export type AuthUserRoleScalarFieldEnum = (typeof AuthUserRoleScalarFieldEnum)[keyof typeof AuthUserRoleScalarFieldEnum]
+
+
+export const AuthUserRoleGroupScalarFieldEnum = {
+  id: 'id',
+  idpSub: 'idpSub',
+  ownerId: 'ownerId',
+  entityId: 'entityId',
+  entityType: 'entityType',
+  groupId: 'groupId',
+  grantedAt: 'grantedAt',
+  revokedAt: 'revokedAt',
+  grantedBy: 'grantedBy',
+  revokedBy: 'revokedBy',
+  note: 'note'
+} as const
+
+export type AuthUserRoleGroupScalarFieldEnum = (typeof AuthUserRoleGroupScalarFieldEnum)[keyof typeof AuthUserRoleGroupScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  parentId: 'parentId',
+  deletedAt: 'deletedAt',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
+export const CommentMentionScalarFieldEnum = {
+  commentId: 'commentId',
+  mentionedUserId: 'mentionedUserId',
+  displayName: 'displayName',
+  email: 'email',
+  createdAt: 'createdAt'
+} as const
+
+export type CommentMentionScalarFieldEnum = (typeof CommentMentionScalarFieldEnum)[keyof typeof CommentMentionScalarFieldEnum]
+
+
+export const CorrespondenceNotificationScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  body: 'body',
+  type: 'type',
+  category: 'category',
+  priority: 'priority',
+  actionUrl: 'actionUrl',
+  actionType: 'actionType',
+  actionData: 'actionData',
+  referenceId: 'referenceId',
+  referenceType: 'referenceType',
+  dispatchId: 'dispatchId',
+  imageUrl: 'imageUrl',
+  icon: 'icon',
+  metadata: 'metadata',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CorrespondenceNotificationScalarFieldEnum = (typeof CorrespondenceNotificationScalarFieldEnum)[keyof typeof CorrespondenceNotificationScalarFieldEnum]
+
+
+export const CorrespondenceUserNotificationScalarFieldEnum = {
+  id: 'id',
+  notificationId: 'notificationId',
+  userId: 'userId',
+  isRead: 'isRead',
+  readAt: 'readAt',
+  isArchived: 'isArchived',
+  archivedAt: 'archivedAt',
+  isPushSent: 'isPushSent',
+  pushSentAt: 'pushSentAt',
+  pushDelivered: 'pushDelivered',
+  pushError: 'pushError',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CorrespondenceUserNotificationScalarFieldEnum = (typeof CorrespondenceUserNotificationScalarFieldEnum)[keyof typeof CorrespondenceUserNotificationScalarFieldEnum]
+
+
+export const CorrespondenceResourceSubscriptionScalarFieldEnum = {
+  id: 'id',
+  subscriberType: 'subscriberType',
+  userId: 'userId',
+  userEmail: 'userEmail',
+  userName: 'userName',
+  roleName: 'roleName',
+  resourceType: 'resourceType',
+  resourceId: 'resourceId',
+  subscribedVia: 'subscribedVia',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CorrespondenceResourceSubscriptionScalarFieldEnum = (typeof CorrespondenceResourceSubscriptionScalarFieldEnum)[keyof typeof CorrespondenceResourceSubscriptionScalarFieldEnum]
+
+
+export const CorrespondenceSubscriptionChannelScalarFieldEnum = {
+  id: 'id',
+  subscriptionId: 'subscriptionId',
+  channel: 'channel',
+  enabled: 'enabled',
+  emailRole: 'emailRole',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CorrespondenceSubscriptionChannelScalarFieldEnum = (typeof CorrespondenceSubscriptionChannelScalarFieldEnum)[keyof typeof CorrespondenceSubscriptionChannelScalarFieldEnum]
+
+
+export const CronJobDefinitionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  expression: 'expression',
+  handler: 'handler',
+  enabled: 'enabled',
+  inputData: 'inputData',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CronJobDefinitionScalarFieldEnum = (typeof CronJobDefinitionScalarFieldEnum)[keyof typeof CronJobDefinitionScalarFieldEnum]
+
+
+export const FormScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  key: 'key',
+  label: 'label',
+  description: 'description',
+  status: 'status',
+  managePermissions: 'managePermissions',
+  readPermissions: 'readPermissions',
+  writePermissions: 'writePermissions',
+  createdBy: 'createdBy',
+  publishedBy: 'publishedBy',
+  disabledBy: 'disabledBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FormScalarFieldEnum = (typeof FormScalarFieldEnum)[keyof typeof FormScalarFieldEnum]
+
+
+export const FormFieldDefinitionScalarFieldEnum = {
+  id: 'id',
+  formId: 'formId',
+  key: 'key',
+  label: 'label',
+  fieldType: 'fieldType',
+  mandatory: 'mandatory',
+  fieldOptionsJson: 'fieldOptionsJson',
+  isHidden: 'isHidden',
+  isEncrypted: 'isEncrypted',
+  enabled: 'enabled',
+  sortOrder: 'sortOrder',
+  conditionJson: 'conditionJson',
+  dependentOptionsJson: 'dependentOptionsJson',
+  validationRulesJson: 'validationRulesJson',
+  viewPermissionsJson: 'viewPermissionsJson',
+  createdBy: 'createdBy',
+  disabledBy: 'disabledBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FormFieldDefinitionScalarFieldEnum = (typeof FormFieldDefinitionScalarFieldEnum)[keyof typeof FormFieldDefinitionScalarFieldEnum]
+
+
+export const FormSubmissionScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  formId: 'formId',
+  status: 'status',
+  submittedAt: 'submittedAt',
+  submittedBy: 'submittedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FormSubmissionScalarFieldEnum = (typeof FormSubmissionScalarFieldEnum)[keyof typeof FormSubmissionScalarFieldEnum]
+
+
+export const FormFieldValueScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  formId: 'formId',
+  formSubmissionId: 'formSubmissionId',
+  fieldDefId: 'fieldDefId',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FormFieldValueScalarFieldEnum = (typeof FormFieldValueScalarFieldEnum)[keyof typeof FormFieldValueScalarFieldEnum]
+
+
+export const FormFieldValueHistoryEntryScalarFieldEnum = {
+  id: 'id',
+  formFieldValueId: 'formFieldValueId',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  formId: 'formId',
+  fieldDefId: 'fieldDefId',
+  oldValue: 'oldValue',
+  newValue: 'newValue',
+  changedBy: 'changedBy',
+  createdAt: 'createdAt'
+} as const
+
+export type FormFieldValueHistoryEntryScalarFieldEnum = (typeof FormFieldValueHistoryEntryScalarFieldEnum)[keyof typeof FormFieldValueHistoryEntryScalarFieldEnum]
+
+
+export const DocumentReferenceScalarFieldEnum = {
+  id: 'id',
+  fileName: 'fileName',
+  remotePath: 'remotePath',
+  publicToken: 'publicToken',
+  contentType: 'contentType',
+  fileSize: 'fileSize',
+  isPublic: 'isPublic',
+  uploadedById: 'uploadedById',
+  storageOwnerSub: 'storageOwnerSub',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type DocumentReferenceScalarFieldEnum = (typeof DocumentReferenceScalarFieldEnum)[keyof typeof DocumentReferenceScalarFieldEnum]
+
+
+export const DocumentMappingScalarFieldEnum = {
+  id: 'id',
+  documentReferenceId: 'documentReferenceId',
+  entityId: 'entityId',
+  entityType: 'entityType',
+  createdAt: 'createdAt'
+} as const
+
+export type DocumentMappingScalarFieldEnum = (typeof DocumentMappingScalarFieldEnum)[keyof typeof DocumentMappingScalarFieldEnum]
 
 
 export const AccountScalarFieldEnum = {
@@ -298,6 +657,18 @@ export const EarningScalarFieldEnum = {
 } as const
 
 export type EarningScalarFieldEnum = (typeof EarningScalarFieldEnum)[keyof typeof EarningScalarFieldEnum]
+
+
+export const JsonStoreDocumentScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  namespace: 'namespace',
+  payload: 'payload',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JsonStoreDocumentScalarFieldEnum = (typeof JsonStoreDocumentScalarFieldEnum)[keyof typeof JsonStoreDocumentScalarFieldEnum]
 
 
 export const MeetingScalarFieldEnum = {
@@ -491,6 +862,43 @@ export const ReportScalarFieldEnum = {
 export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
 
 
+export const TokenVault2OAuthAccountScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  email: 'email',
+  externalId: 'externalId',
+  name: 'name',
+  givenName: 'givenName',
+  familyName: 'familyName',
+  pictureUrl: 'pictureUrl',
+  locale: 'locale',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type TokenVault2OAuthAccountScalarFieldEnum = (typeof TokenVault2OAuthAccountScalarFieldEnum)[keyof typeof TokenVault2OAuthAccountScalarFieldEnum]
+
+
+export const TokenVault2OAuthTokenScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  clientId: 'clientId',
+  provider: 'provider',
+  email: 'email',
+  ownerSub: 'ownerSub',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  tokenType: 'tokenType',
+  expiresAt: 'expiresAt',
+  scope: 'scope',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TokenVault2OAuthTokenScalarFieldEnum = (typeof TokenVault2OAuthTokenScalarFieldEnum)[keyof typeof TokenVault2OAuthTokenScalarFieldEnum]
+
+
 export const UserProfileScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -507,9 +915,6 @@ export const UserProfileScalarFieldEnum = {
   isPublic: 'isPublic',
   isSameAddress: 'isSameAddress',
   isProfileComplete: 'isProfileComplete',
-  donationAmount: 'donationAmount',
-  donationPauseStart: 'donationPauseStart',
-  donationPauseEnd: 'donationPauseEnd',
   version: 'version',
   createdById: 'createdById',
   updatedById: 'updatedById',
@@ -663,414 +1068,6 @@ export const WorkflowOutboxScalarFieldEnum = {
 } as const
 
 export type WorkflowOutboxScalarFieldEnum = (typeof WorkflowOutboxScalarFieldEnum)[keyof typeof WorkflowOutboxScalarFieldEnum]
-
-
-export const AuditEntityChangeLogScalarFieldEnum = {
-  id: 'id',
-  entityType: 'entityType',
-  entityId: 'entityId',
-  action: 'action',
-  userId: 'userId',
-  userName: 'userName',
-  oldValues: 'oldValues',
-  newValues: 'newValues',
-  ipAddress: 'ipAddress',
-  userAgent: 'userAgent',
-  traceId: 'traceId',
-  createdAt: 'createdAt'
-} as const
-
-export type AuditEntityChangeLogScalarFieldEnum = (typeof AuditEntityChangeLogScalarFieldEnum)[keyof typeof AuditEntityChangeLogScalarFieldEnum]
-
-
-export const AuthApiKeyScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  apiKey: 'apiKey',
-  apiKeyId: 'apiKeyId',
-  permissions: 'permissions',
-  createdBy: 'createdBy',
-  expiresAt: 'expiresAt',
-  lastUsedAt: 'lastUsedAt',
-  ownerId: 'ownerId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AuthApiKeyScalarFieldEnum = (typeof AuthApiKeyScalarFieldEnum)[keyof typeof AuthApiKeyScalarFieldEnum]
-
-
-export const AuthPermissionScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  description: 'description',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AuthPermissionScalarFieldEnum = (typeof AuthPermissionScalarFieldEnum)[keyof typeof AuthPermissionScalarFieldEnum]
-
-
-export const AuthRoleScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  description: 'description',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AuthRoleScalarFieldEnum = (typeof AuthRoleScalarFieldEnum)[keyof typeof AuthRoleScalarFieldEnum]
-
-
-export const AuthRolePermissionScalarFieldEnum = {
-  roleId: 'roleId',
-  permissionId: 'permissionId'
-} as const
-
-export type AuthRolePermissionScalarFieldEnum = (typeof AuthRolePermissionScalarFieldEnum)[keyof typeof AuthRolePermissionScalarFieldEnum]
-
-
-export const AuthRoleGroupScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  description: 'description',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AuthRoleGroupScalarFieldEnum = (typeof AuthRoleGroupScalarFieldEnum)[keyof typeof AuthRoleGroupScalarFieldEnum]
-
-
-export const AuthRoleGroupRoleScalarFieldEnum = {
-  groupId: 'groupId',
-  roleId: 'roleId'
-} as const
-
-export type AuthRoleGroupRoleScalarFieldEnum = (typeof AuthRoleGroupRoleScalarFieldEnum)[keyof typeof AuthRoleGroupRoleScalarFieldEnum]
-
-
-export const AuthUserRoleScalarFieldEnum = {
-  id: 'id',
-  idpSub: 'idpSub',
-  ownerId: 'ownerId',
-  entityId: 'entityId',
-  entityType: 'entityType',
-  roleId: 'roleId',
-  sourceGroupId: 'sourceGroupId',
-  grantedAt: 'grantedAt',
-  revokedAt: 'revokedAt',
-  grantedBy: 'grantedBy',
-  revokedBy: 'revokedBy',
-  note: 'note'
-} as const
-
-export type AuthUserRoleScalarFieldEnum = (typeof AuthUserRoleScalarFieldEnum)[keyof typeof AuthUserRoleScalarFieldEnum]
-
-
-export const AuthUserRoleGroupScalarFieldEnum = {
-  id: 'id',
-  idpSub: 'idpSub',
-  ownerId: 'ownerId',
-  entityId: 'entityId',
-  entityType: 'entityType',
-  groupId: 'groupId',
-  grantedAt: 'grantedAt',
-  revokedAt: 'revokedAt',
-  grantedBy: 'grantedBy',
-  revokedBy: 'revokedBy',
-  note: 'note'
-} as const
-
-export type AuthUserRoleGroupScalarFieldEnum = (typeof AuthUserRoleGroupScalarFieldEnum)[keyof typeof AuthUserRoleGroupScalarFieldEnum]
-
-
-export const CommentScalarFieldEnum = {
-  id: 'id',
-  content: 'content',
-  authorId: 'authorId',
-  authorName: 'authorName',
-  entityType: 'entityType',
-  entityId: 'entityId',
-  parentId: 'parentId',
-  deletedAt: 'deletedAt',
-  version: 'version',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
-
-
-export const CommentMentionScalarFieldEnum = {
-  commentId: 'commentId',
-  mentionedUserId: 'mentionedUserId',
-  displayName: 'displayName',
-  email: 'email',
-  createdAt: 'createdAt'
-} as const
-
-export type CommentMentionScalarFieldEnum = (typeof CommentMentionScalarFieldEnum)[keyof typeof CommentMentionScalarFieldEnum]
-
-
-export const Corr2NotificationScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  body: 'body',
-  type: 'type',
-  category: 'category',
-  priority: 'priority',
-  actionUrl: 'actionUrl',
-  actionType: 'actionType',
-  actionData: 'actionData',
-  referenceId: 'referenceId',
-  referenceType: 'referenceType',
-  dispatchId: 'dispatchId',
-  imageUrl: 'imageUrl',
-  icon: 'icon',
-  metadata: 'metadata',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type Corr2NotificationScalarFieldEnum = (typeof Corr2NotificationScalarFieldEnum)[keyof typeof Corr2NotificationScalarFieldEnum]
-
-
-export const Corr2UserNotificationScalarFieldEnum = {
-  id: 'id',
-  notificationId: 'notificationId',
-  userId: 'userId',
-  isRead: 'isRead',
-  readAt: 'readAt',
-  isArchived: 'isArchived',
-  archivedAt: 'archivedAt',
-  isPushSent: 'isPushSent',
-  pushSentAt: 'pushSentAt',
-  pushDelivered: 'pushDelivered',
-  pushError: 'pushError',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type Corr2UserNotificationScalarFieldEnum = (typeof Corr2UserNotificationScalarFieldEnum)[keyof typeof Corr2UserNotificationScalarFieldEnum]
-
-
-export const Corr2ResourceSubscriptionScalarFieldEnum = {
-  id: 'id',
-  subscriberType: 'subscriberType',
-  userId: 'userId',
-  userEmail: 'userEmail',
-  userName: 'userName',
-  roleName: 'roleName',
-  resourceType: 'resourceType',
-  resourceId: 'resourceId',
-  subscribedVia: 'subscribedVia',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type Corr2ResourceSubscriptionScalarFieldEnum = (typeof Corr2ResourceSubscriptionScalarFieldEnum)[keyof typeof Corr2ResourceSubscriptionScalarFieldEnum]
-
-
-export const Corr2SubscriptionChannelScalarFieldEnum = {
-  id: 'id',
-  subscriptionId: 'subscriptionId',
-  channel: 'channel',
-  enabled: 'enabled',
-  emailRole: 'emailRole',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type Corr2SubscriptionChannelScalarFieldEnum = (typeof Corr2SubscriptionChannelScalarFieldEnum)[keyof typeof Corr2SubscriptionChannelScalarFieldEnum]
-
-
-export const CronJobDefinitionScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description',
-  expression: 'expression',
-  handler: 'handler',
-  enabled: 'enabled',
-  inputData: 'inputData',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CronJobDefinitionScalarFieldEnum = (typeof CronJobDefinitionScalarFieldEnum)[keyof typeof CronJobDefinitionScalarFieldEnum]
-
-
-export const FormScalarFieldEnum = {
-  id: 'id',
-  entityType: 'entityType',
-  key: 'key',
-  label: 'label',
-  description: 'description',
-  status: 'status',
-  managePermissionsJson: 'managePermissionsJson',
-  readPermissionsJson: 'readPermissionsJson',
-  writePermissionsJson: 'writePermissionsJson',
-  createdBy: 'createdBy',
-  publishedBy: 'publishedBy',
-  disabledBy: 'disabledBy',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type FormScalarFieldEnum = (typeof FormScalarFieldEnum)[keyof typeof FormScalarFieldEnum]
-
-
-export const FormFieldDefinitionScalarFieldEnum = {
-  id: 'id',
-  formId: 'formId',
-  key: 'key',
-  label: 'label',
-  fieldType: 'fieldType',
-  mandatory: 'mandatory',
-  fieldOptionsJson: 'fieldOptionsJson',
-  isHidden: 'isHidden',
-  isEncrypted: 'isEncrypted',
-  enabled: 'enabled',
-  sortOrder: 'sortOrder',
-  conditionJson: 'conditionJson',
-  dependentOptionsJson: 'dependentOptionsJson',
-  validationRulesJson: 'validationRulesJson',
-  viewPermissionsJson: 'viewPermissionsJson',
-  createdBy: 'createdBy',
-  disabledBy: 'disabledBy',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type FormFieldDefinitionScalarFieldEnum = (typeof FormFieldDefinitionScalarFieldEnum)[keyof typeof FormFieldDefinitionScalarFieldEnum]
-
-
-export const FormSubmissionScalarFieldEnum = {
-  id: 'id',
-  entityType: 'entityType',
-  entityId: 'entityId',
-  formId: 'formId',
-  status: 'status',
-  submittedAt: 'submittedAt',
-  submittedBy: 'submittedBy',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type FormSubmissionScalarFieldEnum = (typeof FormSubmissionScalarFieldEnum)[keyof typeof FormSubmissionScalarFieldEnum]
-
-
-export const FormFieldValueScalarFieldEnum = {
-  id: 'id',
-  entityType: 'entityType',
-  entityId: 'entityId',
-  formId: 'formId',
-  formSubmissionId: 'formSubmissionId',
-  fieldDefId: 'fieldDefId',
-  value: 'value',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type FormFieldValueScalarFieldEnum = (typeof FormFieldValueScalarFieldEnum)[keyof typeof FormFieldValueScalarFieldEnum]
-
-
-export const FormFieldValueHistoryEntryScalarFieldEnum = {
-  id: 'id',
-  formFieldValueId: 'formFieldValueId',
-  entityType: 'entityType',
-  entityId: 'entityId',
-  formId: 'formId',
-  fieldDefId: 'fieldDefId',
-  oldValue: 'oldValue',
-  newValue: 'newValue',
-  changedBy: 'changedBy',
-  createdAt: 'createdAt'
-} as const
-
-export type FormFieldValueHistoryEntryScalarFieldEnum = (typeof FormFieldValueHistoryEntryScalarFieldEnum)[keyof typeof FormFieldValueHistoryEntryScalarFieldEnum]
-
-
-export const DocumentReferenceScalarFieldEnum = {
-  id: 'id',
-  fileName: 'fileName',
-  remotePath: 'remotePath',
-  publicToken: 'publicToken',
-  contentType: 'contentType',
-  fileSize: 'fileSize',
-  isPublic: 'isPublic',
-  uploadedById: 'uploadedById',
-  storageOwnerSub: 'storageOwnerSub',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
-} as const
-
-export type DocumentReferenceScalarFieldEnum = (typeof DocumentReferenceScalarFieldEnum)[keyof typeof DocumentReferenceScalarFieldEnum]
-
-
-export const DocumentMappingScalarFieldEnum = {
-  id: 'id',
-  documentReferenceId: 'documentReferenceId',
-  entityId: 'entityId',
-  entityType: 'entityType',
-  createdAt: 'createdAt'
-} as const
-
-export type DocumentMappingScalarFieldEnum = (typeof DocumentMappingScalarFieldEnum)[keyof typeof DocumentMappingScalarFieldEnum]
-
-
-export const JsonStoreDocumentScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  namespace: 'namespace',
-  payload: 'payload',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type JsonStoreDocumentScalarFieldEnum = (typeof JsonStoreDocumentScalarFieldEnum)[keyof typeof JsonStoreDocumentScalarFieldEnum]
-
-
-export const TokenVault2OAuthAccountScalarFieldEnum = {
-  id: 'id',
-  provider: 'provider',
-  email: 'email',
-  externalId: 'externalId',
-  name: 'name',
-  givenName: 'givenName',
-  familyName: 'familyName',
-  pictureUrl: 'pictureUrl',
-  locale: 'locale',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
-} as const
-
-export type TokenVault2OAuthAccountScalarFieldEnum = (typeof TokenVault2OAuthAccountScalarFieldEnum)[keyof typeof TokenVault2OAuthAccountScalarFieldEnum]
-
-
-export const TokenVault2OAuthTokenScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  clientId: 'clientId',
-  provider: 'provider',
-  email: 'email',
-  ownerSub: 'ownerSub',
-  accessToken: 'accessToken',
-  refreshToken: 'refreshToken',
-  tokenType: 'tokenType',
-  expiresAt: 'expiresAt',
-  scope: 'scope',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TokenVault2OAuthTokenScalarFieldEnum = (typeof TokenVault2OAuthTokenScalarFieldEnum)[keyof typeof TokenVault2OAuthTokenScalarFieldEnum]
 
 
 export const SortOrder = {

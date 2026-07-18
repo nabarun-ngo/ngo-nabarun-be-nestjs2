@@ -1,0 +1,18 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Shared schema fragment — JsonStoreModule
+// Synced into <prisma-schema-dir>/shared/ by: npx nestjs-shared-sync-schema
+// DO NOT edit — overwritten on every sync. After syncing, run `prisma migrate`.
+// ─────────────────────────────────────────────────────────────────────────────
+
+model JsonStoreDocument {
+  id        String   @id @default(cuid())
+  key       String
+  namespace String
+  payload   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, namespace], name: "json_store_key_namespace_unique")
+  @@index([namespace],       name: "json_store_namespace_idx")
+  @@map("json_store_document")
+}

@@ -1,9 +1,10 @@
 import { AuthModule } from "@nabarun-ngo/nestjs-shared-auth";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Configkey } from "../shared/config-keys";
+import { USER_MODULE } from "./user-module.config";
 
 export const AUTH_MODULE = AuthModule.forRootAsync({
-    imports: [ConfigModule],
+    imports: [ConfigModule, USER_MODULE],
     inject: [ConfigService],
     useFactory: (config: ConfigService) => ({
         jwt: {

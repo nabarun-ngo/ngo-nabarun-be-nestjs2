@@ -28,10 +28,7 @@ export class DonationPauseUpdateHandler implements WorkflowTaskHandlerContract {
       new UpdateUserAdminCommand({
         userId,
         adminId: 'system',
-        detail: {
-          donationPauseStart: new Date(String(params.input.startDate)),
-          donationPauseEnd: new Date(String(params.input.endDate)),
-        },
+        detail: {},
       }),
     );
   }

@@ -30,7 +30,7 @@ export class DonationAmountUpdateHandler implements WorkflowTaskHandlerContract 
       new UpdateUserAdminCommand({
         userId,
         adminId: 'system',
-        detail: { donationAmount: Number(newAmount) },
+        detail: {},
       }),
     );
     this.logger.log('Donation amount updated for user ' + userId);

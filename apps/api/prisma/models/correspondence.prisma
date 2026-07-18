@@ -1,0 +1,101 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Shared schema fragment — Correspondence2Module
+// Synced into <prisma-schema-dir>/shared/ by: npx nestjs-shared-sync-schema
+// DO NOT edit — overwritten on every sync. After syncing, run `prisma migrate`.
+//
+// Differences from CorrespondenceModule:
+//   - No UserFcmToken model (push targeting via OneSignal external IDs only)
+//   - Notification.dispatchId links a notification to the originating dispatch job
+// ─────────────────────────────────────────────────────────────────────────────
+
+model CorrespondenceNotification {
+  id                String                           @id @default(cuid())
+  title             String                           @db.VarChar(255)
+  body              String                           @db.Text
+  type              String                           @db.VarChar(255)
+  category          String                           @db.VarChar(255)
+  priority          String                           @db.VarChar(255)
+  actionUrl         String?                          @db.VarChar(255)
+  actionType        String?                          @db.VarChar(255)
+  actionData        Json?
+  referenceId       String?                          @db.VarChar(255)
+  referenceType     String?                          @db.VarChar(255)
+  dispatchId        String?                          @db.VarChar(255)
+  imageUrl          String?                          @db.VarChar(255)
+  icon              String?                          @db.VarChar(255)
+  metadata          Json?
+  expiresAt         DateTime?
+  createdAt         DateTime                         @default(now())
+  updatedAt         DateTime                         @updatedAt
+  userNotifications CorrespondenceUserNotification[]
+
+  @@index([type], name: "corr_notification_type_idx")
+  @@index([category], name: "corr_notification_category_idx")
+  @@index([createdAt], name: "corr_notification_createdAt_idx")
+  @@index([referenceId, referenceType], name: "corr_notification_ref_idx")
+  @@index([dispatchId], name: "corr_notification_dispatchId_idx")
+  @@map("correspondence_notification")
+}
+
+model CorrespondenceUserNotification {
+  id             String                     @id @default(cuid())
+  notificationId String                     @db.VarChar(100)
+  userId         String                     @db.VarChar(100)
+  isRead         Boolean                    @default(false)
+  readAt         DateTime?
+  isArchived     Boolean                    @default(false)
+  archivedAt     DateTime?
+  isPushSent     Boolean                    @default(false)
+  pushSentAt     DateTime?
+  pushDelivered  Boolean                    @default(false)
+  pushError      String?
+  createdAt      DateTime                   @default(now())
+  updatedAt      DateTime                   @updatedAt
+  notification   CorrespondenceNotification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@unique([notificationId, userId], name: "corr_userNotification_notification_user_unique")
+  @@index([userId], name: "corr_userNotification_userId_idx")
+  @@index([notificationId], name: "corr_userNotification_notificationId_idx")
+  @@index([userId, isRead], name: "corr_userNotification_userId_isRead_idx")
+  @@index([userId, isArchived], name: "corr_userNotification_userId_isArchived_idx")
+  @@index([userId, createdAt], name: "corr_userNotification_userId_createdAt_idx")
+  @@map("correspondence_user_notification")
+}
+
+model CorrespondenceResourceSubscription {
+  id             String                              @id @default(cuid())
+  subscriberType String                              @db.VarChar(30)
+  userId         String?                             @db.VarChar(100)
+  userEmail      String?                             @db.VarChar(100)
+  userName       String?                             @db.VarChar(255)
+  roleName       String?                             @db.VarChar(255)
+  resourceType   String                              @db.VarChar(255)
+  resourceId     String?                             @db.VarChar(100)
+  subscribedVia  String                              @db.VarChar(255)
+  isActive       Boolean                             @default(true)
+  channels       CorrespondenceSubscriptionChannel[]
+  createdAt      DateTime                            @default(now())
+  updatedAt      DateTime                            @updatedAt
+
+  @@unique([subscriberType, userId, roleName, resourceType, resourceId], name: "corr_subscription_unique")
+  @@index([resourceType, resourceId, isActive], name: "corr_subscription_resource_active_idx")
+  @@index([userId, isActive], name: "corr_subscription_userId_active_idx")
+  @@index([roleName, isActive], name: "corr_subscription_roleName_active_idx")
+  @@index([isActive, updatedAt], name: "corr_subscription_isActive_updatedAt_idx")
+  @@map("correspondence_resource_subscription")
+}
+
+model CorrespondenceSubscriptionChannel {
+  id             String                             @id @default(cuid())
+  subscriptionId String                             @db.VarChar(100)
+  channel        String                             @db.VarChar(50)
+  enabled        Boolean                            @default(true)
+  emailRole      String?                            @db.VarChar(255)
+  createdAt      DateTime                           @default(now())
+  updatedAt      DateTime                           @updatedAt
+  subscription   CorrespondenceResourceSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([subscriptionId, channel], name: "corr_subscriptionChannel_unique")
+  @@index([subscriptionId], name: "corr_subscriptionChannel_subscriptionId_idx")
+  @@map("correspondence_subscription_channel")
+}

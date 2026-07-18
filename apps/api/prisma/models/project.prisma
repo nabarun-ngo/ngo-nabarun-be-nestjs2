@@ -74,7 +74,7 @@ model Beneficiary {
   @@index([status])
   @@index([type])
   @@index([enrollmentDate])
-  @@map("beneficiaries")
+  @@map("project_beneficiaries")
 }
 
 model Goal {
@@ -101,7 +101,7 @@ model Goal {
   @@index([projectId])
   @@index([status])
   @@index([priority])
-  @@map("goals")
+  @@map("project_goals")
 }
 
 model Milestone {
@@ -125,7 +125,7 @@ model Milestone {
   @@index([projectId])
   @@index([status])
   @@index([targetDate])
-  @@map("milestones")
+  @@map("project_milestones")
 }
 
 model ProjectTeamMember {
@@ -133,7 +133,7 @@ model ProjectTeamMember {
   projectId        String    @db.VarChar(255)
   userId           String    @db.VarChar(255)
   role             String    @db.VarChar(30)
-  responsibilities String? @db.Text
+  responsibilities String?   @db.Text
   startDate        DateTime
   endDate          DateTime?
   hoursAllocated   Decimal?  @db.Decimal(10, 2)

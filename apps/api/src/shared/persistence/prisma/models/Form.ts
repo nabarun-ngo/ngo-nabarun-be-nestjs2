@@ -31,9 +31,6 @@ export type FormMinAggregateOutputType = {
   label: string | null
   description: string | null
   status: string | null
-  managePermissionsJson: string | null
-  readPermissionsJson: string | null
-  writePermissionsJson: string | null
   createdBy: string | null
   publishedBy: string | null
   disabledBy: string | null
@@ -48,9 +45,6 @@ export type FormMaxAggregateOutputType = {
   label: string | null
   description: string | null
   status: string | null
-  managePermissionsJson: string | null
-  readPermissionsJson: string | null
-  writePermissionsJson: string | null
   createdBy: string | null
   publishedBy: string | null
   disabledBy: string | null
@@ -65,9 +59,9 @@ export type FormCountAggregateOutputType = {
   label: number
   description: number
   status: number
-  managePermissionsJson: number
-  readPermissionsJson: number
-  writePermissionsJson: number
+  managePermissions: number
+  readPermissions: number
+  writePermissions: number
   createdBy: number
   publishedBy: number
   disabledBy: number
@@ -84,9 +78,6 @@ export type FormMinAggregateInputType = {
   label?: true
   description?: true
   status?: true
-  managePermissionsJson?: true
-  readPermissionsJson?: true
-  writePermissionsJson?: true
   createdBy?: true
   publishedBy?: true
   disabledBy?: true
@@ -101,9 +92,6 @@ export type FormMaxAggregateInputType = {
   label?: true
   description?: true
   status?: true
-  managePermissionsJson?: true
-  readPermissionsJson?: true
-  writePermissionsJson?: true
   createdBy?: true
   publishedBy?: true
   disabledBy?: true
@@ -118,9 +106,9 @@ export type FormCountAggregateInputType = {
   label?: true
   description?: true
   status?: true
-  managePermissionsJson?: true
-  readPermissionsJson?: true
-  writePermissionsJson?: true
+  managePermissions?: true
+  readPermissions?: true
+  writePermissions?: true
   createdBy?: true
   publishedBy?: true
   disabledBy?: true
@@ -208,9 +196,9 @@ export type FormGroupByOutputType = {
   label: string
   description: string | null
   status: string
-  managePermissionsJson: string
-  readPermissionsJson: string
-  writePermissionsJson: string
+  managePermissions: string[]
+  readPermissions: string[]
+  writePermissions: string[]
   createdBy: string | null
   publishedBy: string | null
   disabledBy: string | null
@@ -246,9 +234,9 @@ export type FormWhereInput = {
   label?: Prisma.StringFilter<"Form"> | string
   description?: Prisma.StringNullableFilter<"Form"> | string | null
   status?: Prisma.StringFilter<"Form"> | string
-  managePermissionsJson?: Prisma.StringFilter<"Form"> | string
-  readPermissionsJson?: Prisma.StringFilter<"Form"> | string
-  writePermissionsJson?: Prisma.StringFilter<"Form"> | string
+  managePermissions?: Prisma.StringNullableListFilter<"Form">
+  readPermissions?: Prisma.StringNullableListFilter<"Form">
+  writePermissions?: Prisma.StringNullableListFilter<"Form">
   createdBy?: Prisma.StringNullableFilter<"Form"> | string | null
   publishedBy?: Prisma.StringNullableFilter<"Form"> | string | null
   disabledBy?: Prisma.StringNullableFilter<"Form"> | string | null
@@ -265,9 +253,9 @@ export type FormOrderByWithRelationInput = {
   label?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  managePermissionsJson?: Prisma.SortOrder
-  readPermissionsJson?: Prisma.SortOrder
-  writePermissionsJson?: Prisma.SortOrder
+  managePermissions?: Prisma.SortOrder
+  readPermissions?: Prisma.SortOrder
+  writePermissions?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   publishedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   disabledBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -288,9 +276,9 @@ export type FormWhereUniqueInput = Prisma.AtLeast<{
   label?: Prisma.StringFilter<"Form"> | string
   description?: Prisma.StringNullableFilter<"Form"> | string | null
   status?: Prisma.StringFilter<"Form"> | string
-  managePermissionsJson?: Prisma.StringFilter<"Form"> | string
-  readPermissionsJson?: Prisma.StringFilter<"Form"> | string
-  writePermissionsJson?: Prisma.StringFilter<"Form"> | string
+  managePermissions?: Prisma.StringNullableListFilter<"Form">
+  readPermissions?: Prisma.StringNullableListFilter<"Form">
+  writePermissions?: Prisma.StringNullableListFilter<"Form">
   createdBy?: Prisma.StringNullableFilter<"Form"> | string | null
   publishedBy?: Prisma.StringNullableFilter<"Form"> | string | null
   disabledBy?: Prisma.StringNullableFilter<"Form"> | string | null
@@ -307,9 +295,9 @@ export type FormOrderByWithAggregationInput = {
   label?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  managePermissionsJson?: Prisma.SortOrder
-  readPermissionsJson?: Prisma.SortOrder
-  writePermissionsJson?: Prisma.SortOrder
+  managePermissions?: Prisma.SortOrder
+  readPermissions?: Prisma.SortOrder
+  writePermissions?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   publishedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   disabledBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -330,9 +318,9 @@ export type FormScalarWhereWithAggregatesInput = {
   label?: Prisma.StringWithAggregatesFilter<"Form"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Form"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"Form"> | string
-  managePermissionsJson?: Prisma.StringWithAggregatesFilter<"Form"> | string
-  readPermissionsJson?: Prisma.StringWithAggregatesFilter<"Form"> | string
-  writePermissionsJson?: Prisma.StringWithAggregatesFilter<"Form"> | string
+  managePermissions?: Prisma.StringNullableListFilter<"Form">
+  readPermissions?: Prisma.StringNullableListFilter<"Form">
+  writePermissions?: Prisma.StringNullableListFilter<"Form">
   createdBy?: Prisma.StringNullableWithAggregatesFilter<"Form"> | string | null
   publishedBy?: Prisma.StringNullableWithAggregatesFilter<"Form"> | string | null
   disabledBy?: Prisma.StringNullableWithAggregatesFilter<"Form"> | string | null
@@ -347,9 +335,9 @@ export type FormCreateInput = {
   label: string
   description?: string | null
   status?: string
-  managePermissionsJson?: string
-  readPermissionsJson?: string
-  writePermissionsJson?: string
+  managePermissions?: Prisma.FormCreatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormCreatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormCreatewritePermissionsInput | string[]
   createdBy?: string | null
   publishedBy?: string | null
   disabledBy?: string | null
@@ -366,9 +354,9 @@ export type FormUncheckedCreateInput = {
   label: string
   description?: string | null
   status?: string
-  managePermissionsJson?: string
-  readPermissionsJson?: string
-  writePermissionsJson?: string
+  managePermissions?: Prisma.FormCreatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormCreatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormCreatewritePermissionsInput | string[]
   createdBy?: string | null
   publishedBy?: string | null
   disabledBy?: string | null
@@ -385,9 +373,9 @@ export type FormUpdateInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  managePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  readPermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  writePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
+  managePermissions?: Prisma.FormUpdatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormUpdatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormUpdatewritePermissionsInput | string[]
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   publishedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   disabledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -404,9 +392,9 @@ export type FormUncheckedUpdateInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  managePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  readPermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  writePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
+  managePermissions?: Prisma.FormUpdatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormUpdatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormUpdatewritePermissionsInput | string[]
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   publishedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   disabledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -423,9 +411,9 @@ export type FormCreateManyInput = {
   label: string
   description?: string | null
   status?: string
-  managePermissionsJson?: string
-  readPermissionsJson?: string
-  writePermissionsJson?: string
+  managePermissions?: Prisma.FormCreatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormCreatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormCreatewritePermissionsInput | string[]
   createdBy?: string | null
   publishedBy?: string | null
   disabledBy?: string | null
@@ -440,9 +428,9 @@ export type FormUpdateManyMutationInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  managePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  readPermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  writePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
+  managePermissions?: Prisma.FormUpdatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormUpdatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormUpdatewritePermissionsInput | string[]
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   publishedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   disabledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -457,9 +445,9 @@ export type FormUncheckedUpdateManyInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  managePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  readPermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  writePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
+  managePermissions?: Prisma.FormUpdatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormUpdatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormUpdatewritePermissionsInput | string[]
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   publishedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   disabledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -479,9 +467,9 @@ export type FormCountOrderByAggregateInput = {
   label?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  managePermissionsJson?: Prisma.SortOrder
-  readPermissionsJson?: Prisma.SortOrder
-  writePermissionsJson?: Prisma.SortOrder
+  managePermissions?: Prisma.SortOrder
+  readPermissions?: Prisma.SortOrder
+  writePermissions?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   publishedBy?: Prisma.SortOrder
   disabledBy?: Prisma.SortOrder
@@ -496,9 +484,6 @@ export type FormMaxOrderByAggregateInput = {
   label?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  managePermissionsJson?: Prisma.SortOrder
-  readPermissionsJson?: Prisma.SortOrder
-  writePermissionsJson?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   publishedBy?: Prisma.SortOrder
   disabledBy?: Prisma.SortOrder
@@ -513,9 +498,6 @@ export type FormMinOrderByAggregateInput = {
   label?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  managePermissionsJson?: Prisma.SortOrder
-  readPermissionsJson?: Prisma.SortOrder
-  writePermissionsJson?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   publishedBy?: Prisma.SortOrder
   disabledBy?: Prisma.SortOrder
@@ -526,6 +508,33 @@ export type FormMinOrderByAggregateInput = {
 export type FormScalarRelationFilter = {
   is?: Prisma.FormWhereInput
   isNot?: Prisma.FormWhereInput
+}
+
+export type FormCreatemanagePermissionsInput = {
+  set: string[]
+}
+
+export type FormCreatereadPermissionsInput = {
+  set: string[]
+}
+
+export type FormCreatewritePermissionsInput = {
+  set: string[]
+}
+
+export type FormUpdatemanagePermissionsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type FormUpdatereadPermissionsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type FormUpdatewritePermissionsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type FormCreateNestedOneWithoutFieldsInput = {
@@ -563,9 +572,9 @@ export type FormCreateWithoutFieldsInput = {
   label: string
   description?: string | null
   status?: string
-  managePermissionsJson?: string
-  readPermissionsJson?: string
-  writePermissionsJson?: string
+  managePermissions?: Prisma.FormCreatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormCreatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormCreatewritePermissionsInput | string[]
   createdBy?: string | null
   publishedBy?: string | null
   disabledBy?: string | null
@@ -581,9 +590,9 @@ export type FormUncheckedCreateWithoutFieldsInput = {
   label: string
   description?: string | null
   status?: string
-  managePermissionsJson?: string
-  readPermissionsJson?: string
-  writePermissionsJson?: string
+  managePermissions?: Prisma.FormCreatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormCreatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormCreatewritePermissionsInput | string[]
   createdBy?: string | null
   publishedBy?: string | null
   disabledBy?: string | null
@@ -615,9 +624,9 @@ export type FormUpdateWithoutFieldsInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  managePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  readPermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  writePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
+  managePermissions?: Prisma.FormUpdatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormUpdatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormUpdatewritePermissionsInput | string[]
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   publishedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   disabledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -633,9 +642,9 @@ export type FormUncheckedUpdateWithoutFieldsInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  managePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  readPermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  writePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
+  managePermissions?: Prisma.FormUpdatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormUpdatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormUpdatewritePermissionsInput | string[]
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   publishedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   disabledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -651,9 +660,9 @@ export type FormCreateWithoutSubmissionsInput = {
   label: string
   description?: string | null
   status?: string
-  managePermissionsJson?: string
-  readPermissionsJson?: string
-  writePermissionsJson?: string
+  managePermissions?: Prisma.FormCreatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormCreatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormCreatewritePermissionsInput | string[]
   createdBy?: string | null
   publishedBy?: string | null
   disabledBy?: string | null
@@ -669,9 +678,9 @@ export type FormUncheckedCreateWithoutSubmissionsInput = {
   label: string
   description?: string | null
   status?: string
-  managePermissionsJson?: string
-  readPermissionsJson?: string
-  writePermissionsJson?: string
+  managePermissions?: Prisma.FormCreatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormCreatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormCreatewritePermissionsInput | string[]
   createdBy?: string | null
   publishedBy?: string | null
   disabledBy?: string | null
@@ -703,9 +712,9 @@ export type FormUpdateWithoutSubmissionsInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  managePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  readPermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  writePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
+  managePermissions?: Prisma.FormUpdatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormUpdatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormUpdatewritePermissionsInput | string[]
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   publishedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   disabledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -721,9 +730,9 @@ export type FormUncheckedUpdateWithoutSubmissionsInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  managePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  readPermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
-  writePermissionsJson?: Prisma.StringFieldUpdateOperationsInput | string
+  managePermissions?: Prisma.FormUpdatemanagePermissionsInput | string[]
+  readPermissions?: Prisma.FormUpdatereadPermissionsInput | string[]
+  writePermissions?: Prisma.FormUpdatewritePermissionsInput | string[]
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   publishedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   disabledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -779,9 +788,9 @@ export type FormSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   label?: boolean
   description?: boolean
   status?: boolean
-  managePermissionsJson?: boolean
-  readPermissionsJson?: boolean
-  writePermissionsJson?: boolean
+  managePermissions?: boolean
+  readPermissions?: boolean
+  writePermissions?: boolean
   createdBy?: boolean
   publishedBy?: boolean
   disabledBy?: boolean
@@ -799,9 +808,9 @@ export type FormSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   label?: boolean
   description?: boolean
   status?: boolean
-  managePermissionsJson?: boolean
-  readPermissionsJson?: boolean
-  writePermissionsJson?: boolean
+  managePermissions?: boolean
+  readPermissions?: boolean
+  writePermissions?: boolean
   createdBy?: boolean
   publishedBy?: boolean
   disabledBy?: boolean
@@ -816,9 +825,9 @@ export type FormSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   label?: boolean
   description?: boolean
   status?: boolean
-  managePermissionsJson?: boolean
-  readPermissionsJson?: boolean
-  writePermissionsJson?: boolean
+  managePermissions?: boolean
+  readPermissions?: boolean
+  writePermissions?: boolean
   createdBy?: boolean
   publishedBy?: boolean
   disabledBy?: boolean
@@ -833,9 +842,9 @@ export type FormSelectScalar = {
   label?: boolean
   description?: boolean
   status?: boolean
-  managePermissionsJson?: boolean
-  readPermissionsJson?: boolean
-  writePermissionsJson?: boolean
+  managePermissions?: boolean
+  readPermissions?: boolean
+  writePermissions?: boolean
   createdBy?: boolean
   publishedBy?: boolean
   disabledBy?: boolean
@@ -843,7 +852,7 @@ export type FormSelectScalar = {
   updatedAt?: boolean
 }
 
-export type FormOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "entityType" | "key" | "label" | "description" | "status" | "managePermissionsJson" | "readPermissionsJson" | "writePermissionsJson" | "createdBy" | "publishedBy" | "disabledBy" | "createdAt" | "updatedAt", ExtArgs["result"]["form"]>
+export type FormOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "entityType" | "key" | "label" | "description" | "status" | "managePermissions" | "readPermissions" | "writePermissions" | "createdBy" | "publishedBy" | "disabledBy" | "createdAt" | "updatedAt", ExtArgs["result"]["form"]>
 export type FormInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fields?: boolean | Prisma.Form$fieldsArgs<ExtArgs>
   submissions?: boolean | Prisma.Form$submissionsArgs<ExtArgs>
@@ -865,9 +874,9 @@ export type $FormPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     label: string
     description: string | null
     status: string
-    managePermissionsJson: string
-    readPermissionsJson: string
-    writePermissionsJson: string
+    managePermissions: string[]
+    readPermissions: string[]
+    writePermissions: string[]
     createdBy: string | null
     publishedBy: string | null
     disabledBy: string | null
@@ -1304,9 +1313,9 @@ export interface FormFieldRefs {
   readonly label: Prisma.FieldRef<"Form", 'String'>
   readonly description: Prisma.FieldRef<"Form", 'String'>
   readonly status: Prisma.FieldRef<"Form", 'String'>
-  readonly managePermissionsJson: Prisma.FieldRef<"Form", 'String'>
-  readonly readPermissionsJson: Prisma.FieldRef<"Form", 'String'>
-  readonly writePermissionsJson: Prisma.FieldRef<"Form", 'String'>
+  readonly managePermissions: Prisma.FieldRef<"Form", 'String[]'>
+  readonly readPermissions: Prisma.FieldRef<"Form", 'String[]'>
+  readonly writePermissions: Prisma.FieldRef<"Form", 'String[]'>
   readonly createdBy: Prisma.FieldRef<"Form", 'String'>
   readonly publishedBy: Prisma.FieldRef<"Form", 'String'>
   readonly disabledBy: Prisma.FieldRef<"Form", 'String'>

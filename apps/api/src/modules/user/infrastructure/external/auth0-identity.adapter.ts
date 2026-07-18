@@ -78,7 +78,7 @@ export class Auth0IdentityAdapter implements IIdentityProvider {
     try {
       await this.management.users.update(externalSub, {
         ...(patch.firstName ? { given_name: patch.firstName } : {}),
-        ...(patch.lastName  ? { family_name: patch.lastName } : {}),
+        ...(patch.lastName ? { family_name: patch.lastName } : {}),
         ...(patch.firstName && patch.lastName
           ? { name: `${patch.firstName} ${patch.lastName}` }
           : {}),
@@ -213,21 +213,21 @@ export class Auth0IdentityAdapter implements IIdentityProvider {
     return identities.map((identity) => {
       const entry = this.findConnectionEntryByName(identity.connection);
       return {
-        connectionKey:  entry?.key  ?? '__unknown__',
+        connectionKey: entry?.key ?? '__unknown__',
         connectionName: identity.connection,
-        type:           (entry?.conn.type ?? 'social') as ConnectionType,
-        provider:       identity.provider,
-        isPrimary:      identity.connection === primaryConnectionName && !identity.isSocial,
+        type: (entry?.conn.type ?? 'social') as ConnectionType,
+        provider: identity.provider,
+        isPrimary: identity.connection === primaryConnectionName && !identity.isSocial,
       };
     });
   }
 
   // ── Private helpers ───────────────────────────────────────────────────────
 
-  private async fetchUser(externalSub: string, operation: string): Promise<unknown> {
+  private async fetchUser(externalSub: string, operation: string) {
     try {
       const res = await this.management.users.get(externalSub);
-      return res.data;
+      return res;
     } catch (err) {
       throw this.wrapError(`${operation}.getUser`, err);
     }
@@ -242,11 +242,11 @@ export class Auth0IdentityAdapter implements IIdentityProvider {
     options: Pick<IdentityCreateOptions, 'resetPassword' | 'adminPassword' | 'emailVerified'>,
   ): Promise<string> {
     const base = {
-      email:          user.email,
-      given_name:     user.firstName,
-      family_name:    user.lastName,
-      name:           user.fullName,
-      connection:     conn.name,
+      email: user.email,
+      given_name: user.firstName,
+      family_name: user.lastName,
+      name: user.fullName,
+      connection: conn.name,
       email_verified: options.emailVerified ?? false,
     };
 
@@ -261,7 +261,7 @@ export class Auth0IdentityAdapter implements IIdentityProvider {
             this.options.passwordExpiresInDays ?? 180,
         },
       });
-      return res.data.user_id as string;
+      return res.user_id as string;
     }
 
     // passwordless — no password field
@@ -337,14 +337,14 @@ export class Auth0IdentityAdapter implements IIdentityProvider {
    * 8+ chars, uppercase, lowercase, digit, and special character.
    */
   private generateCompliantPassword(): string {
-    const upper   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const lower   = 'abcdefghijklmnopqrstuvwxyz';
-    const digits  = '0123456789';
+    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lower = 'abcdefghijklmnopqrstuvwxyz';
+    const digits = '0123456789';
     const special = '!@#$%^&*';
-    const all     = upper + lower + digits + special;
+    const all = upper + lower + digits + special;
     const rand = (set: string) => set[Math.floor(Math.random() * set.length)];
     const required = [rand(upper), rand(lower), rand(digits), rand(special)];
-    const extra    = Array.from({ length: 12 }, () => rand(all));
+    const extra = Array.from({ length: 12 }, () => rand(all));
     return [...required, ...extra].sort(() => Math.random() - 0.5).join('');
   }
 

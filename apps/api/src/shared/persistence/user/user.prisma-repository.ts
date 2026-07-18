@@ -39,9 +39,6 @@ export type UserProfileRow = {
   dateOfBirth: Date | null; gender: string | null; about: string | null; picture: string | null;
   status: string; isPublic: boolean; isSameAddress: boolean | null;
   isProfileComplete: boolean;
-  donationAmount: Prisma.Decimal | null;
-  donationPauseStart: Date | null;
-  donationPauseEnd: Date | null;
   version: number;
   createdById: string | null; updatedById: string | null;
   createdAt: Date; updatedAt: Date; deletedAt: Date | null;
@@ -158,9 +155,6 @@ export class UserPrismaRepository
       isSameAddress: row.isSameAddress ?? undefined,
       createdById: row.createdById ?? undefined,
       updatedById: row.updatedById ?? undefined,
-      donationAmount: row.donationAmount != null ? Number(row.donationAmount) : undefined,
-      donationPauseStart: row.donationPauseStart ?? undefined,
-      donationPauseEnd: row.donationPauseEnd ?? undefined,
       primaryPhone: primaryRow
         ? PhoneNumber.of(primaryRow.phoneCode, primaryRow.phoneNumber, primaryRow.hidden)
         : undefined,
@@ -199,9 +193,6 @@ export class UserPrismaRepository
       isPublic: entity.isPublic,
       isSameAddress: entity.isSameAddress ?? null,
       isProfileComplete: entity.isProfileComplete,
-      donationAmount: entity.donationAmount ?? null,
-      donationPauseStart: entity.donationPauseStart ?? null,
-      donationPauseEnd: entity.donationPauseEnd ?? null,
       createdById: entity.createdById ?? null,
       updatedById: entity.updatedById ?? null,
       version: entity.version,
@@ -232,9 +223,6 @@ export class UserPrismaRepository
       isPublic: entity.isPublic,
       isSameAddress: entity.isSameAddress ?? null,
       isProfileComplete: entity.isProfileComplete,
-      donationAmount: entity.donationAmount ?? null,
-      donationPauseStart: entity.donationPauseStart ?? null,
-      donationPauseEnd: entity.donationPauseEnd ?? null,
       updatedById: entity.updatedById ?? null,
       deletedAt: entity.deletedAt ?? null,
       version: { increment: 1 },

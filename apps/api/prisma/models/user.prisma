@@ -5,39 +5,34 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 model UserProfile {
-  id          String    @id @default(cuid())
-  email       String    @unique
-  idpSub      String?   @unique
+  id     String  @id @default(cuid())
+  email  String  @unique
+  idpSub String? @unique
 
   // Name
-  title      String?
-  firstName  String
-  middleName String?
-  lastName   String
+  title      String? @db.VarChar(50)
+  firstName  String  @db.VarChar(50)
+  middleName String? @db.VarChar(50)
+  lastName   String  @db.VarChar(50)
 
   // Profile
   dateOfBirth DateTime?
-  gender      String?
-  about       String?
-  picture     String?
+  gender      String?   @db.VarChar(10)
+  about       String?   @db.Text
+  picture     String?   @db.Text
 
   // Status / flags
-  status            String
-  isPublic          Boolean @default(true)
+  status            String   @db.VarChar(20)
+  isPublic          Boolean  @default(true)
   isSameAddress     Boolean?
-  isProfileComplete Boolean @default(false)
-
-  // Finance — monthly donation preferences
-  donationAmount     Decimal?  @db.Decimal(10, 2)
-  donationPauseStart DateTime?
-  donationPauseEnd   DateTime?
+  isProfileComplete Boolean  @default(false)
 
   // Optimistic lock
   version Int @default(0)
 
   // Audit — app profile UUID of the acting user (NEVER idpSub)// 
-  createdById String?
-  updatedById String?
+  createdById String? @db.VarChar(255)
+  updatedById String? @db.VarChar(255)
 
   // Timestamps
   createdAt DateTime  @default(now())
@@ -51,21 +46,21 @@ model UserProfile {
   initiatedWorkflows WorkflowInstance[] @relation("WorkflowInitiatedBy")
   receivedWorkflows  WorkflowInstance[] @relation("WorkflowInitiatedFor")
 
-  accounts            Account[]     @relation("AccountHolder")
-  donations           Donation[]    @relation("Donation")
-  confirmedDonations  Donation[]    @relation("DonationConfirmedBy")
-  accountCreator      Account[]     @relation("AccountCreator")
-  transactionCreator  Transaction[] @relation("TransactionCreator")
-  expenseCreator      Expense[]     @relation("ExpenseCreator")
-  expensePaidBy       Expense[]     @relation("ExpensePaidBy")
-  expenseSubmittedBy  Expense[]     @relation("ExpenseSubmittedBy")
-  expenseFinalizedBy  Expense[]     @relation("ExpenseFinalizedBy")
-  expenseSettledBy    Expense[]     @relation("ExpenseSettledBy")
-  expenseRejectedBy   Expense[]     @relation("ExpenseRejectedBy")
-  expenseUpdatedBy    Expense[]     @relation("ExpenseUpdatedBy")
-  expenses            Expense[]
-  earningCreator      Earning[]     @relation("EarningCreator")
-  earningReceivedBy   Earning[]     @relation("EarningReceivedBy")
+  accounts           Account[]     @relation("AccountHolder")
+  donations          Donation[]    @relation("Donation")
+  confirmedDonations Donation[]    @relation("DonationConfirmedBy")
+  accountCreator     Account[]     @relation("AccountCreator")
+  transactionCreator Transaction[] @relation("TransactionCreator")
+  expenseCreator     Expense[]     @relation("ExpenseCreator")
+  expensePaidBy      Expense[]     @relation("ExpensePaidBy")
+  expenseSubmittedBy Expense[]     @relation("ExpenseSubmittedBy")
+  expenseFinalizedBy Expense[]     @relation("ExpenseFinalizedBy")
+  expenseSettledBy   Expense[]     @relation("ExpenseSettledBy")
+  expenseRejectedBy  Expense[]     @relation("ExpenseRejectedBy")
+  expenseUpdatedBy   Expense[]     @relation("ExpenseUpdatedBy")
+  expenses           Expense[]
+  earningCreator     Earning[]     @relation("EarningCreator")
+  earningReceivedBy  Earning[]     @relation("EarningReceivedBy")
 
   requestedReports Report[] @relation("ReportRequestedBy")
   approvedReports  Report[] @relation("ReportApprovedBy")
@@ -85,11 +80,11 @@ model UserProfile {
 // ── Phone (VO stored as row) ──────────────────────────────────────────────────
 model UserPhoneNumber {
   id     String      @id @default(cuid())
-  userId String
+  userId String      @db.VarChar(100)
   user   UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  phoneCode   String
-  phoneNumber String
+  phoneCode   String  @db.VarChar(10)
+  phoneNumber String  @db.VarChar(50)
   hidden      Boolean @default(false)
   isPrimary   Boolean // true = primary slot, false = secondary slot
 
@@ -100,18 +95,18 @@ model UserPhoneNumber {
 // ── Address (VO stored as row) ────────────────────────────────────────────────
 model UserAddress {
   id     String      @id @default(cuid())
-  userId String
+  userId String      @db.VarChar(100)
   user   UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  addressType  String // PRESENT | PERMANENT
-  addressLine1 String
-  addressLine2 String?
-  addressLine3 String?
-  hometown     String
-  zipCode      String
-  state        String
-  district     String
-  country      String
+  addressType  String  @db.VarChar(20) // PRESENT | PERMANENT
+  addressLine1 String  @db.VarChar(255)
+  addressLine2 String? @db.VarChar(255)
+  addressLine3 String? @db.VarChar(255)
+  hometown     String  @db.VarChar(100)
+  zipCode      String  @db.VarChar(10)
+  state        String  @db.VarChar(50)
+  district     String  @db.VarChar(50)
+  country      String  @db.VarChar(50)
 
   @@unique([userId, addressType])
   @@map("user_address")
@@ -120,12 +115,12 @@ model UserAddress {
 // ── Social link (child entity — mutable, keyed by linkType) ──────────────────
 model UserSocialLink {
   id     String      @id @default(cuid())
-  userId String
+  userId String      @db.VarChar(100)
   user   UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  linkName  String
-  linkType  String // facebook | linkedin | twitter | instagram | youtube | website
-  linkValue String
+  linkName  String @db.VarChar(50)
+  linkType  String @db.VarChar(50) // facebook | linkedin | twitter | instagram | youtube | website
+  linkValue String @db.VarChar(255)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

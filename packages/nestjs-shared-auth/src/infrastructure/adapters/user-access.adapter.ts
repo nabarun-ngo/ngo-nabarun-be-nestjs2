@@ -1,5 +1,5 @@
-import { Inject, Injectable, Optional } from '@nestjs/common';
-import { ICACHE_PORT, ICachePort, IUserLookupPort } from '@nabarun-ngo/nestjs-shared-core';
+import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
+import { ICACHE_PORT, ICachePort, IUserLookupPort, UserInfo } from '@nabarun-ngo/nestjs-shared-core';
 import { IUserAccessPort } from '../../application/ports/user-access.port';
 import { AuthUser, ScopedRoleContext } from '../../application/models/auth-user';
 import { AUTH2_OPTIONS } from '../auth-options.token';
@@ -9,6 +9,7 @@ import { IUserRoleGroupRepository } from '../../domain/repositories/user-role-gr
 
 @Injectable()
 export class UserAccessAdapter implements IUserAccessPort {
+  private readonly logger = new Logger(UserAccessAdapter.name);
   constructor(
     @Inject(IUserRoleRepository) private readonly userRoleRepo: IUserRoleRepository,
     @Inject(IUserRoleGroupRepository) private readonly userRoleGroupRepo: IUserRoleGroupRepository,
@@ -31,11 +32,19 @@ export class UserAccessAdapter implements IUserAccessPort {
   }
 
   private async resolveFromDb(idpSub: string): Promise<AuthUser> {
-    const [directRoles, groupMemberships, userInfo] = await Promise.all([
+    const [directRoles, groupMemberships] = await Promise.all([
       this.userRoleRepo.resolveDirectPermissions(idpSub),
       this.userRoleGroupRepo.resolveGroupPermissions(idpSub),
-      this.userLookup?.findByIdPSub(idpSub) ?? Promise.resolve(null),
     ]);
+
+    if (!this.userLookup) {
+      this.logger.warn('UserLookupPort not found, user details may not be available');
+    }
+
+    let userInfo: UserInfo | null = null;
+    if (this.userLookup) {
+      userInfo = await this.userLookup.findByIdPSub(idpSub);
+    }
 
     const permissionSet = new Set<string>();
     const roleSet = new Set<string>();

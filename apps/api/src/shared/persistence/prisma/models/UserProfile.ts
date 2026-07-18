@@ -27,12 +27,10 @@ export type AggregateUserProfile = {
 }
 
 export type UserProfileAvgAggregateOutputType = {
-  donationAmount: runtime.Decimal | null
   version: number | null
 }
 
 export type UserProfileSumAggregateOutputType = {
-  donationAmount: runtime.Decimal | null
   version: number | null
 }
 
@@ -52,9 +50,6 @@ export type UserProfileMinAggregateOutputType = {
   isPublic: boolean | null
   isSameAddress: boolean | null
   isProfileComplete: boolean | null
-  donationAmount: runtime.Decimal | null
-  donationPauseStart: Date | null
-  donationPauseEnd: Date | null
   version: number | null
   createdById: string | null
   updatedById: string | null
@@ -79,9 +74,6 @@ export type UserProfileMaxAggregateOutputType = {
   isPublic: boolean | null
   isSameAddress: boolean | null
   isProfileComplete: boolean | null
-  donationAmount: runtime.Decimal | null
-  donationPauseStart: Date | null
-  donationPauseEnd: Date | null
   version: number | null
   createdById: string | null
   updatedById: string | null
@@ -106,9 +98,6 @@ export type UserProfileCountAggregateOutputType = {
   isPublic: number
   isSameAddress: number
   isProfileComplete: number
-  donationAmount: number
-  donationPauseStart: number
-  donationPauseEnd: number
   version: number
   createdById: number
   updatedById: number
@@ -120,12 +109,10 @@ export type UserProfileCountAggregateOutputType = {
 
 
 export type UserProfileAvgAggregateInputType = {
-  donationAmount?: true
   version?: true
 }
 
 export type UserProfileSumAggregateInputType = {
-  donationAmount?: true
   version?: true
 }
 
@@ -145,9 +132,6 @@ export type UserProfileMinAggregateInputType = {
   isPublic?: true
   isSameAddress?: true
   isProfileComplete?: true
-  donationAmount?: true
-  donationPauseStart?: true
-  donationPauseEnd?: true
   version?: true
   createdById?: true
   updatedById?: true
@@ -172,9 +156,6 @@ export type UserProfileMaxAggregateInputType = {
   isPublic?: true
   isSameAddress?: true
   isProfileComplete?: true
-  donationAmount?: true
-  donationPauseStart?: true
-  donationPauseEnd?: true
   version?: true
   createdById?: true
   updatedById?: true
@@ -199,9 +180,6 @@ export type UserProfileCountAggregateInputType = {
   isPublic?: true
   isSameAddress?: true
   isProfileComplete?: true
-  donationAmount?: true
-  donationPauseStart?: true
-  donationPauseEnd?: true
   version?: true
   createdById?: true
   updatedById?: true
@@ -313,9 +291,6 @@ export type UserProfileGroupByOutputType = {
   isPublic: boolean
   isSameAddress: boolean | null
   isProfileComplete: boolean
-  donationAmount: runtime.Decimal | null
-  donationPauseStart: Date | null
-  donationPauseEnd: Date | null
   version: number
   createdById: string | null
   updatedById: string | null
@@ -363,9 +338,6 @@ export type UserProfileWhereInput = {
   isPublic?: Prisma.BoolFilter<"UserProfile"> | boolean
   isSameAddress?: Prisma.BoolNullableFilter<"UserProfile"> | boolean | null
   isProfileComplete?: Prisma.BoolFilter<"UserProfile"> | boolean
-  donationAmount?: Prisma.DecimalNullableFilter<"UserProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.DateTimeNullableFilter<"UserProfile"> | Date | string | null
-  donationPauseEnd?: Prisma.DateTimeNullableFilter<"UserProfile"> | Date | string | null
   version?: Prisma.IntFilter<"UserProfile"> | number
   createdById?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   updatedById?: Prisma.StringNullableFilter<"UserProfile"> | string | null
@@ -419,9 +391,6 @@ export type UserProfileOrderByWithRelationInput = {
   isPublic?: Prisma.SortOrder
   isSameAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   isProfileComplete?: Prisma.SortOrder
-  donationAmount?: Prisma.SortOrderInput | Prisma.SortOrder
-  donationPauseStart?: Prisma.SortOrderInput | Prisma.SortOrder
-  donationPauseEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -478,9 +447,6 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   isPublic?: Prisma.BoolFilter<"UserProfile"> | boolean
   isSameAddress?: Prisma.BoolNullableFilter<"UserProfile"> | boolean | null
   isProfileComplete?: Prisma.BoolFilter<"UserProfile"> | boolean
-  donationAmount?: Prisma.DecimalNullableFilter<"UserProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.DateTimeNullableFilter<"UserProfile"> | Date | string | null
-  donationPauseEnd?: Prisma.DateTimeNullableFilter<"UserProfile"> | Date | string | null
   version?: Prisma.IntFilter<"UserProfile"> | number
   createdById?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   updatedById?: Prisma.StringNullableFilter<"UserProfile"> | string | null
@@ -534,9 +500,6 @@ export type UserProfileOrderByWithAggregationInput = {
   isPublic?: Prisma.SortOrder
   isSameAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   isProfileComplete?: Prisma.SortOrder
-  donationAmount?: Prisma.SortOrderInput | Prisma.SortOrder
-  donationPauseStart?: Prisma.SortOrderInput | Prisma.SortOrder
-  donationPauseEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -569,9 +532,6 @@ export type UserProfileScalarWhereWithAggregatesInput = {
   isPublic?: Prisma.BoolWithAggregatesFilter<"UserProfile"> | boolean
   isSameAddress?: Prisma.BoolNullableWithAggregatesFilter<"UserProfile"> | boolean | null
   isProfileComplete?: Prisma.BoolWithAggregatesFilter<"UserProfile"> | boolean
-  donationAmount?: Prisma.DecimalNullableWithAggregatesFilter<"UserProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.DateTimeNullableWithAggregatesFilter<"UserProfile"> | Date | string | null
-  donationPauseEnd?: Prisma.DateTimeNullableWithAggregatesFilter<"UserProfile"> | Date | string | null
   version?: Prisma.IntWithAggregatesFilter<"UserProfile"> | number
   createdById?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
@@ -596,9 +556,6 @@ export type UserProfileCreateInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -652,9 +609,6 @@ export type UserProfileUncheckedCreateInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -708,9 +662,6 @@ export type UserProfileUpdateInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -764,9 +715,6 @@ export type UserProfileUncheckedUpdateInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -820,9 +768,6 @@ export type UserProfileCreateManyInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -847,9 +792,6 @@ export type UserProfileUpdateManyMutationInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -874,9 +816,6 @@ export type UserProfileUncheckedUpdateManyInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -911,9 +850,6 @@ export type UserProfileCountOrderByAggregateInput = {
   isPublic?: Prisma.SortOrder
   isSameAddress?: Prisma.SortOrder
   isProfileComplete?: Prisma.SortOrder
-  donationAmount?: Prisma.SortOrder
-  donationPauseStart?: Prisma.SortOrder
-  donationPauseEnd?: Prisma.SortOrder
   version?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -923,7 +859,6 @@ export type UserProfileCountOrderByAggregateInput = {
 }
 
 export type UserProfileAvgOrderByAggregateInput = {
-  donationAmount?: Prisma.SortOrder
   version?: Prisma.SortOrder
 }
 
@@ -943,9 +878,6 @@ export type UserProfileMaxOrderByAggregateInput = {
   isPublic?: Prisma.SortOrder
   isSameAddress?: Prisma.SortOrder
   isProfileComplete?: Prisma.SortOrder
-  donationAmount?: Prisma.SortOrder
-  donationPauseStart?: Prisma.SortOrder
-  donationPauseEnd?: Prisma.SortOrder
   version?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -970,9 +902,6 @@ export type UserProfileMinOrderByAggregateInput = {
   isPublic?: Prisma.SortOrder
   isSameAddress?: Prisma.SortOrder
   isProfileComplete?: Prisma.SortOrder
-  donationAmount?: Prisma.SortOrder
-  donationPauseStart?: Prisma.SortOrder
-  donationPauseEnd?: Prisma.SortOrder
   version?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -982,7 +911,6 @@ export type UserProfileMinOrderByAggregateInput = {
 }
 
 export type UserProfileSumOrderByAggregateInput = {
-  donationAmount?: Prisma.SortOrder
   version?: Prisma.SortOrder
 }
 
@@ -1456,9 +1384,6 @@ export type UserProfileCreateWithoutAssignedActivitiesInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -1511,9 +1436,6 @@ export type UserProfileUncheckedCreateWithoutAssignedActivitiesInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -1571,9 +1493,6 @@ export type UserProfileCreateWithoutOrganizedActivitiesInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -1626,9 +1545,6 @@ export type UserProfileUncheckedCreateWithoutOrganizedActivitiesInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -1697,9 +1613,6 @@ export type UserProfileUpdateWithoutAssignedActivitiesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1752,9 +1665,6 @@ export type UserProfileUncheckedUpdateWithoutAssignedActivitiesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1818,9 +1728,6 @@ export type UserProfileUpdateWithoutOrganizedActivitiesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1873,9 +1780,6 @@ export type UserProfileUncheckedUpdateWithoutOrganizedActivitiesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1928,9 +1832,6 @@ export type UserProfileCreateWithoutAccountsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -1983,9 +1884,6 @@ export type UserProfileUncheckedCreateWithoutAccountsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2043,9 +1941,6 @@ export type UserProfileCreateWithoutAccountCreatorInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2098,9 +1993,6 @@ export type UserProfileUncheckedCreateWithoutAccountCreatorInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2169,9 +2061,6 @@ export type UserProfileUpdateWithoutAccountsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2224,9 +2113,6 @@ export type UserProfileUncheckedUpdateWithoutAccountsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2290,9 +2176,6 @@ export type UserProfileUpdateWithoutAccountCreatorInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2345,9 +2228,6 @@ export type UserProfileUncheckedUpdateWithoutAccountCreatorInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2400,9 +2280,6 @@ export type UserProfileCreateWithoutDonationsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2455,9 +2332,6 @@ export type UserProfileUncheckedCreateWithoutDonationsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2515,9 +2389,6 @@ export type UserProfileCreateWithoutConfirmedDonationsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2570,9 +2441,6 @@ export type UserProfileUncheckedCreateWithoutConfirmedDonationsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2641,9 +2509,6 @@ export type UserProfileUpdateWithoutDonationsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2696,9 +2561,6 @@ export type UserProfileUncheckedUpdateWithoutDonationsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2762,9 +2624,6 @@ export type UserProfileUpdateWithoutConfirmedDonationsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2817,9 +2676,6 @@ export type UserProfileUncheckedUpdateWithoutConfirmedDonationsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2872,9 +2728,6 @@ export type UserProfileCreateWithoutTransactionCreatorInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2927,9 +2780,6 @@ export type UserProfileUncheckedCreateWithoutTransactionCreatorInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -2998,9 +2848,6 @@ export type UserProfileUpdateWithoutTransactionCreatorInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3053,9 +2900,6 @@ export type UserProfileUncheckedUpdateWithoutTransactionCreatorInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3108,9 +2952,6 @@ export type UserProfileCreateWithoutExpenseCreatorInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3163,9 +3004,6 @@ export type UserProfileUncheckedCreateWithoutExpenseCreatorInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3223,9 +3061,6 @@ export type UserProfileCreateWithoutExpensePaidByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3278,9 +3113,6 @@ export type UserProfileUncheckedCreateWithoutExpensePaidByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3338,9 +3170,6 @@ export type UserProfileCreateWithoutExpenseSubmittedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3393,9 +3222,6 @@ export type UserProfileUncheckedCreateWithoutExpenseSubmittedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3453,9 +3279,6 @@ export type UserProfileCreateWithoutExpenseFinalizedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3508,9 +3331,6 @@ export type UserProfileUncheckedCreateWithoutExpenseFinalizedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3568,9 +3388,6 @@ export type UserProfileCreateWithoutExpenseSettledByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3623,9 +3440,6 @@ export type UserProfileUncheckedCreateWithoutExpenseSettledByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3683,9 +3497,6 @@ export type UserProfileCreateWithoutExpenseRejectedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3738,9 +3549,6 @@ export type UserProfileUncheckedCreateWithoutExpenseRejectedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3798,9 +3606,6 @@ export type UserProfileCreateWithoutExpenseUpdatedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3853,9 +3658,6 @@ export type UserProfileUncheckedCreateWithoutExpenseUpdatedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3913,9 +3715,6 @@ export type UserProfileCreateWithoutExpensesInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -3968,9 +3767,6 @@ export type UserProfileUncheckedCreateWithoutExpensesInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -4039,9 +3835,6 @@ export type UserProfileUpdateWithoutExpenseCreatorInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4094,9 +3887,6 @@ export type UserProfileUncheckedUpdateWithoutExpenseCreatorInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4160,9 +3950,6 @@ export type UserProfileUpdateWithoutExpensePaidByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4215,9 +4002,6 @@ export type UserProfileUncheckedUpdateWithoutExpensePaidByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4281,9 +4065,6 @@ export type UserProfileUpdateWithoutExpenseSubmittedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4336,9 +4117,6 @@ export type UserProfileUncheckedUpdateWithoutExpenseSubmittedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4402,9 +4180,6 @@ export type UserProfileUpdateWithoutExpenseFinalizedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4457,9 +4232,6 @@ export type UserProfileUncheckedUpdateWithoutExpenseFinalizedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4523,9 +4295,6 @@ export type UserProfileUpdateWithoutExpenseSettledByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4578,9 +4347,6 @@ export type UserProfileUncheckedUpdateWithoutExpenseSettledByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4644,9 +4410,6 @@ export type UserProfileUpdateWithoutExpenseRejectedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4699,9 +4462,6 @@ export type UserProfileUncheckedUpdateWithoutExpenseRejectedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4765,9 +4525,6 @@ export type UserProfileUpdateWithoutExpenseUpdatedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4820,9 +4577,6 @@ export type UserProfileUncheckedUpdateWithoutExpenseUpdatedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4886,9 +4640,6 @@ export type UserProfileUpdateWithoutExpensesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4941,9 +4692,6 @@ export type UserProfileUncheckedUpdateWithoutExpensesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4996,9 +4744,6 @@ export type UserProfileCreateWithoutEarningCreatorInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5051,9 +4796,6 @@ export type UserProfileUncheckedCreateWithoutEarningCreatorInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5111,9 +4853,6 @@ export type UserProfileCreateWithoutEarningReceivedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5166,9 +4905,6 @@ export type UserProfileUncheckedCreateWithoutEarningReceivedByInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5237,9 +4973,6 @@ export type UserProfileUpdateWithoutEarningCreatorInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5292,9 +5025,6 @@ export type UserProfileUncheckedUpdateWithoutEarningCreatorInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5358,9 +5088,6 @@ export type UserProfileUpdateWithoutEarningReceivedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5413,9 +5140,6 @@ export type UserProfileUncheckedUpdateWithoutEarningReceivedByInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5468,9 +5192,6 @@ export type UserProfileCreateWithoutCreatedMeetingsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5523,9 +5244,6 @@ export type UserProfileUncheckedCreateWithoutCreatedMeetingsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5594,9 +5312,6 @@ export type UserProfileUpdateWithoutCreatedMeetingsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5649,9 +5364,6 @@ export type UserProfileUncheckedUpdateWithoutCreatedMeetingsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5704,9 +5416,6 @@ export type UserProfileCreateWithoutManagedProjectsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5759,9 +5468,6 @@ export type UserProfileUncheckedCreateWithoutManagedProjectsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5819,9 +5525,6 @@ export type UserProfileCreateWithoutSponsoredProjectsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5874,9 +5577,6 @@ export type UserProfileUncheckedCreateWithoutSponsoredProjectsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -5945,9 +5645,6 @@ export type UserProfileUpdateWithoutManagedProjectsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6000,9 +5697,6 @@ export type UserProfileUncheckedUpdateWithoutManagedProjectsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6066,9 +5760,6 @@ export type UserProfileUpdateWithoutSponsoredProjectsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6121,9 +5812,6 @@ export type UserProfileUncheckedUpdateWithoutSponsoredProjectsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6176,9 +5864,6 @@ export type UserProfileCreateWithoutProjectTeamMembersInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -6231,9 +5916,6 @@ export type UserProfileUncheckedCreateWithoutProjectTeamMembersInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -6302,9 +5984,6 @@ export type UserProfileUpdateWithoutProjectTeamMembersInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6357,9 +6036,6 @@ export type UserProfileUncheckedUpdateWithoutProjectTeamMembersInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6412,9 +6088,6 @@ export type UserProfileCreateWithoutRiskOwnersInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -6467,9 +6140,6 @@ export type UserProfileUncheckedCreateWithoutRiskOwnersInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -6538,9 +6208,6 @@ export type UserProfileUpdateWithoutRiskOwnersInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6593,9 +6260,6 @@ export type UserProfileUncheckedUpdateWithoutRiskOwnersInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6648,9 +6312,6 @@ export type UserProfileCreateWithoutRequestedReportsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -6703,9 +6364,6 @@ export type UserProfileUncheckedCreateWithoutRequestedReportsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -6763,9 +6421,6 @@ export type UserProfileCreateWithoutApprovedReportsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -6818,9 +6473,6 @@ export type UserProfileUncheckedCreateWithoutApprovedReportsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -6889,9 +6541,6 @@ export type UserProfileUpdateWithoutRequestedReportsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6944,9 +6593,6 @@ export type UserProfileUncheckedUpdateWithoutRequestedReportsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7010,9 +6656,6 @@ export type UserProfileUpdateWithoutApprovedReportsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7065,9 +6708,6 @@ export type UserProfileUncheckedUpdateWithoutApprovedReportsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7120,9 +6760,6 @@ export type UserProfileCreateWithoutPhoneNumbersInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7175,9 +6812,6 @@ export type UserProfileUncheckedCreateWithoutPhoneNumbersInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7246,9 +6880,6 @@ export type UserProfileUpdateWithoutPhoneNumbersInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7301,9 +6932,6 @@ export type UserProfileUncheckedUpdateWithoutPhoneNumbersInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7356,9 +6984,6 @@ export type UserProfileCreateWithoutAddressesInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7411,9 +7036,6 @@ export type UserProfileUncheckedCreateWithoutAddressesInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7482,9 +7104,6 @@ export type UserProfileUpdateWithoutAddressesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7537,9 +7156,6 @@ export type UserProfileUncheckedUpdateWithoutAddressesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7592,9 +7208,6 @@ export type UserProfileCreateWithoutSocialMediaLinksInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7647,9 +7260,6 @@ export type UserProfileUncheckedCreateWithoutSocialMediaLinksInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7718,9 +7328,6 @@ export type UserProfileUpdateWithoutSocialMediaLinksInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7773,9 +7380,6 @@ export type UserProfileUncheckedUpdateWithoutSocialMediaLinksInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7828,9 +7432,6 @@ export type UserProfileCreateWithoutInitiatedWorkflowsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7883,9 +7484,6 @@ export type UserProfileUncheckedCreateWithoutInitiatedWorkflowsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7943,9 +7541,6 @@ export type UserProfileCreateWithoutReceivedWorkflowsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -7998,9 +7593,6 @@ export type UserProfileUncheckedCreateWithoutReceivedWorkflowsInput = {
   isPublic?: boolean
   isSameAddress?: boolean | null
   isProfileComplete?: boolean
-  donationAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Date | string | null
-  donationPauseEnd?: Date | string | null
   version?: number
   createdById?: string | null
   updatedById?: string | null
@@ -8069,9 +7661,6 @@ export type UserProfileUpdateWithoutInitiatedWorkflowsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8124,9 +7713,6 @@ export type UserProfileUncheckedUpdateWithoutInitiatedWorkflowsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8190,9 +7776,6 @@ export type UserProfileUpdateWithoutReceivedWorkflowsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8245,9 +7828,6 @@ export type UserProfileUncheckedUpdateWithoutReceivedWorkflowsInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSameAddress?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   isProfileComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  donationAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  donationPauseStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  donationPauseEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8583,9 +8163,6 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   isPublic?: boolean
   isSameAddress?: boolean
   isProfileComplete?: boolean
-  donationAmount?: boolean
-  donationPauseStart?: boolean
-  donationPauseEnd?: boolean
   version?: boolean
   createdById?: boolean
   updatedById?: boolean
@@ -8640,9 +8217,6 @@ export type UserProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   isPublic?: boolean
   isSameAddress?: boolean
   isProfileComplete?: boolean
-  donationAmount?: boolean
-  donationPauseStart?: boolean
-  donationPauseEnd?: boolean
   version?: boolean
   createdById?: boolean
   updatedById?: boolean
@@ -8667,9 +8241,6 @@ export type UserProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   isPublic?: boolean
   isSameAddress?: boolean
   isProfileComplete?: boolean
-  donationAmount?: boolean
-  donationPauseStart?: boolean
-  donationPauseEnd?: boolean
   version?: boolean
   createdById?: boolean
   updatedById?: boolean
@@ -8694,9 +8265,6 @@ export type UserProfileSelectScalar = {
   isPublic?: boolean
   isSameAddress?: boolean
   isProfileComplete?: boolean
-  donationAmount?: boolean
-  donationPauseStart?: boolean
-  donationPauseEnd?: boolean
   version?: boolean
   createdById?: boolean
   updatedById?: boolean
@@ -8705,7 +8273,7 @@ export type UserProfileSelectScalar = {
   deletedAt?: boolean
 }
 
-export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "idpSub" | "title" | "firstName" | "middleName" | "lastName" | "dateOfBirth" | "gender" | "about" | "picture" | "status" | "isPublic" | "isSameAddress" | "isProfileComplete" | "donationAmount" | "donationPauseStart" | "donationPauseEnd" | "version" | "createdById" | "updatedById" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["userProfile"]>
+export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "idpSub" | "title" | "firstName" | "middleName" | "lastName" | "dateOfBirth" | "gender" | "about" | "picture" | "status" | "isPublic" | "isSameAddress" | "isProfileComplete" | "version" | "createdById" | "updatedById" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["userProfile"]>
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   phoneNumbers?: boolean | Prisma.UserProfile$phoneNumbersArgs<ExtArgs>
   addresses?: boolean | Prisma.UserProfile$addressesArgs<ExtArgs>
@@ -8790,9 +8358,6 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     isPublic: boolean
     isSameAddress: boolean | null
     isProfileComplete: boolean
-    donationAmount: runtime.Decimal | null
-    donationPauseStart: Date | null
-    donationPauseEnd: Date | null
     version: number
     createdById: string | null
     updatedById: string | null
@@ -9266,9 +8831,6 @@ export interface UserProfileFieldRefs {
   readonly isPublic: Prisma.FieldRef<"UserProfile", 'Boolean'>
   readonly isSameAddress: Prisma.FieldRef<"UserProfile", 'Boolean'>
   readonly isProfileComplete: Prisma.FieldRef<"UserProfile", 'Boolean'>
-  readonly donationAmount: Prisma.FieldRef<"UserProfile", 'Decimal'>
-  readonly donationPauseStart: Prisma.FieldRef<"UserProfile", 'DateTime'>
-  readonly donationPauseEnd: Prisma.FieldRef<"UserProfile", 'DateTime'>
   readonly version: Prisma.FieldRef<"UserProfile", 'Int'>
   readonly createdById: Prisma.FieldRef<"UserProfile", 'String'>
   readonly updatedById: Prisma.FieldRef<"UserProfile", 'String'>

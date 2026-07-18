@@ -8,6 +8,8 @@ import {
   FormWhereInput,
   FormWhereUniqueInput,
   FormOrderByWithRelationInput,
+  FormCreateInput,
+  FormUpdateInput,
 } from '../prisma/models';
 import { IFormRepository } from '@nabarun-ngo/nestjs-shared-custom-forms';
 import { Form } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/aggregates/form/form.aggregate';
@@ -35,7 +37,7 @@ type FormFieldDefinitionRow = {
   conditionJson: string | null;
   dependentOptionsJson: string | null;
   validationRulesJson: string | null;
-  viewPermissionsJson: string | null;
+  viewPermissions: string[];
   createdBy: string | null;
   disabledBy: string | null;
   createdAt: Date;
@@ -49,9 +51,9 @@ type FormRow = {
   label: string;
   description: string | null;
   status: string;
-  managePermissionsJson: string;
-  readPermissionsJson: string;
-  writePermissionsJson: string;
+  managePermissions: string[];
+  readPermissions: string[];
+  writePermissions: string[];
   createdBy: string | null;
   publishedBy: string | null;
   disabledBy: string | null;
@@ -73,8 +75,8 @@ export class FormPrismaRepository
     FormRow,
     FormWhereInput,
     FormWhereUniqueInput,
-    any,
-    any,
+    FormCreateInput,
+    FormUpdateInput,
     FormOrderByWithRelationInput
   >
   implements IFormRepository {
@@ -115,7 +117,7 @@ export class FormPrismaRepository
       where: { id: formId },
       include: INCLUDE_FIELDS,
     });
-    return row ? this.toDomain(row as FormRow) : null;
+    return row ? this.toDomain(row as unknown as FormRow) : null;
   }
 
   async findById(id: string): Promise<Form | null> {
@@ -160,10 +162,6 @@ export class FormPrismaRepository
   // ── PrismaCrudRepositoryBase mapping hooks ───────────────────────────────
 
   protected toDomain(row: FormRow): Form {
-    const managePermissions = JSON.parse(row.managePermissionsJson) as string[];
-    const readPermissions = JSON.parse(row.readPermissionsJson) as string[];
-    const writePermissions = JSON.parse(row.writePermissionsJson) as string[];
-
     const fields = (row.fields ?? []).map((fieldRow) => this.toFieldDomain(fieldRow));
 
     return new Form(
@@ -173,9 +171,9 @@ export class FormPrismaRepository
       row.label,
       row.description,
       row.status as FormStatus,
-      managePermissions,
-      readPermissions,
-      writePermissions,
+      row.managePermissions,
+      row.readPermissions,
+      row.writePermissions,
       fields,
       row.createdAt,
       row.updatedAt ?? undefined,
@@ -229,9 +227,7 @@ export class FormPrismaRepository
       })()
       : null;
 
-    const viewPermissions: string[] = row.viewPermissionsJson
-      ? (JSON.parse(row.viewPermissionsJson) as string[])
-      : [];
+    const viewPermissions: string[] = row.viewPermissions;
 
     return new FormFieldDefinition(
       row.id,
@@ -256,7 +252,7 @@ export class FormPrismaRepository
     );
   }
 
-  protected toCreateInput(entity: Form): any {
+  protected toCreateInput(entity: Form): FormCreateInput {
     return {
       id: entity.id,
       entityType: entity.entityType,
@@ -264,35 +260,23 @@ export class FormPrismaRepository
       label: entity.label,
       description: entity.description,
       status: entity.status,
-      managePermissionsJson: entity.managePermissions.length
-        ? JSON.stringify([...entity.managePermissions])
-        : '[]',
-      readPermissionsJson: entity.readPermissions.length
-        ? JSON.stringify([...entity.readPermissions])
-        : '[]',
-      writePermissionsJson: entity.writePermissions.length
-        ? JSON.stringify([...entity.writePermissions])
-        : '[]',
+      managePermissions: [...entity.managePermissions],
+      readPermissions: [...entity.readPermissions],
+      writePermissions: [...entity.writePermissions],
       createdBy: entity.createdBy ?? null,
       createdAt: entity.createdAt ?? new Date(),
       updatedAt: entity.updatedAt ?? new Date(),
     };
   }
 
-  protected toUpdateInput(_id: string, entity: Form): any {
+  protected toUpdateInput(_id: string, entity: Form): FormUpdateInput {
     return {
       label: entity.label,
       description: entity.description,
       status: entity.status,
-      managePermissionsJson: entity.managePermissions.length
-        ? JSON.stringify([...entity.managePermissions])
-        : '[]',
-      readPermissionsJson: entity.readPermissions.length
-        ? JSON.stringify([...entity.readPermissions])
-        : '[]',
-      writePermissionsJson: entity.writePermissions.length
-        ? JSON.stringify([...entity.writePermissions])
-        : '[]',
+      managePermissions: [...entity.managePermissions],
+      readPermissions: [...entity.readPermissions],
+      writePermissions: [...entity.writePermissions],
       publishedBy: entity.publishedBy ?? null,
       disabledBy: entity.disabledBy ?? null,
       updatedAt: entity.updatedAt ?? new Date(),

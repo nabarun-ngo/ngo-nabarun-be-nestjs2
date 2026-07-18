@@ -1063,10 +1063,6 @@ export type ExpenseUncheckedUpdateManyWithoutAccountNestedInput = {
   deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type ExpenseCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.ExpenseCreateWithoutCreatedByInput, Prisma.ExpenseUncheckedCreateWithoutCreatedByInput> | Prisma.ExpenseCreateWithoutCreatedByInput[] | Prisma.ExpenseUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutCreatedByInput | Prisma.ExpenseCreateOrConnectWithoutCreatedByInput[]

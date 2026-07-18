@@ -465,7 +465,7 @@ export type WorkflowInstanceCreateInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -493,7 +493,7 @@ export type WorkflowInstanceUncheckedCreateInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -577,7 +577,7 @@ export type WorkflowInstanceCreateManyInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -936,7 +936,7 @@ export type WorkflowInstanceCreateWithoutInitiatedByInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -963,7 +963,7 @@ export type WorkflowInstanceUncheckedCreateWithoutInitiatedByInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1000,7 +1000,7 @@ export type WorkflowInstanceCreateWithoutInitiatedForInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1027,7 +1027,7 @@ export type WorkflowInstanceUncheckedCreateWithoutInitiatedForInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1122,7 +1122,7 @@ export type WorkflowInstanceCreateWithoutChildInstancesInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1149,7 +1149,7 @@ export type WorkflowInstanceUncheckedCreateWithoutChildInstancesInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1181,7 +1181,7 @@ export type WorkflowInstanceCreateWithoutParentInstanceInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1208,7 +1208,7 @@ export type WorkflowInstanceUncheckedCreateWithoutParentInstanceInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1326,7 +1326,7 @@ export type WorkflowInstanceCreateWithoutEventLogInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1353,7 +1353,7 @@ export type WorkflowInstanceUncheckedCreateWithoutEventLogInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1450,7 +1450,7 @@ export type WorkflowInstanceCreateWithoutTokensInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1477,7 +1477,7 @@ export type WorkflowInstanceUncheckedCreateWithoutTokensInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1574,7 +1574,7 @@ export type WorkflowInstanceCreateWithoutInboxItemsInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1601,7 +1601,7 @@ export type WorkflowInstanceUncheckedCreateWithoutInboxItemsInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1698,7 +1698,7 @@ export type WorkflowInstanceCreateWithoutOutboxInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1725,7 +1725,7 @@ export type WorkflowInstanceUncheckedCreateWithoutOutboxInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1822,7 +1822,7 @@ export type WorkflowInstanceCreateManyInitiatedByInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -1844,7 +1844,7 @@ export type WorkflowInstanceCreateManyInitiatedForInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null
@@ -2018,7 +2018,7 @@ export type WorkflowInstanceCreateManyParentInstanceInput = {
   id: string
   name: string
   definitionId: string
-  definitionVersion: number
+  definitionVersion?: number
   description: string
   status: string
   currentElementId?: string | null

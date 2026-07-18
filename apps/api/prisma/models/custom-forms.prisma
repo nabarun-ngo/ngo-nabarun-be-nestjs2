@@ -1,0 +1,109 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Shared schema fragment — CustomFormsModule
+// Form-centric EAV: Form → FormFieldDefinition → FormSubmission → FormFieldValue
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Form {
+  id                String                @id @default(cuid())
+  entityType        String                @db.VarChar(100)
+  key               String                @db.VarChar(100)
+  label             String                @db.VarChar(255)
+  description       String?               @db.VarChar(255)
+  status            String                @default("draft") @db.VarChar(255)
+  managePermissions String[]              @default([])
+  readPermissions   String[]              @default([])
+  writePermissions  String[]              @default([])
+  createdBy         String?               @db.VarChar(255)
+  publishedBy       String?               @db.VarChar(255)
+  disabledBy        String?               @db.VarChar(255)
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  fields            FormFieldDefinition[]
+  submissions       FormSubmission[]
+
+  @@unique([entityType, key])
+  @@index([entityType, status])
+  @@map("custom_form")
+}
+
+model FormFieldDefinition {
+  id                   String           @id @default(cuid())
+  formId               String           @db.VarChar(100)
+  key                  String           @db.VarChar(100)
+  label                String           @db.VarChar(255)
+  fieldType            String           @db.VarChar(50)
+  mandatory            Boolean          @default(false)
+  fieldOptionsJson     String?          @map("field_options_json")
+  isHidden             Boolean          @default(false)
+  isEncrypted          Boolean          @default(false)
+  enabled              Boolean          @default(true)
+  sortOrder            Int              @default(0)
+  conditionJson        String?          @db.VarChar(255)
+  dependentOptionsJson String?          @db.VarChar(255)
+  validationRulesJson  String?          @db.VarChar(255)
+  viewPermissionsJson  String?          @map("view_permissions_json")
+  createdBy            String?          @db.VarChar(255)
+  disabledBy           String?          @db.VarChar(255)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  form                 Form             @relation(fields: [formId], references: [id])
+  values               FormFieldValue[]
+
+  @@unique([formId, key])
+  @@index([formId, enabled])
+  @@map("custom_form_field_definition")
+}
+
+model FormSubmission {
+  id          String           @id @default(cuid())
+  entityType  String           @db.VarChar(30)
+  entityId    String           @db.VarChar(255)
+  formId      String           @db.VarChar(100)
+  status      String           @default("draft") @db.VarChar(255)
+  submittedAt DateTime?
+  submittedBy String?          @db.VarChar(255)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  form        Form             @relation(fields: [formId], references: [id])
+  fieldValues FormFieldValue[]
+
+  @@unique([entityType, entityId, formId])
+  @@index([entityType, entityId])
+  @@map("custom_form_submission")
+}
+
+model FormFieldValue {
+  id               String                       @id @default(cuid())
+  entityType       String                       @db.VarChar(30)
+  entityId         String                       @db.VarChar(255)
+  formId           String                       @db.VarChar(100)
+  formSubmissionId String                       @db.VarChar(100)
+  fieldDefId       String                       @db.VarChar(100)
+  value            String?                      @db.VarChar(255)
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
+  definition       FormFieldDefinition          @relation(fields: [fieldDefId], references: [id])
+  submission       FormSubmission               @relation(fields: [formSubmissionId], references: [id])
+  historyEntries   FormFieldValueHistoryEntry[]
+
+  @@unique([entityType, entityId, formId, fieldDefId])
+  @@index([entityType, entityId, formId])
+  @@map("custom_form_field_value")
+}
+
+model FormFieldValueHistoryEntry {
+  id               String         @id @default(cuid())
+  formFieldValueId String         @db.VarChar(100)
+  entityType       String         @db.VarChar(30)
+  entityId         String         @db.VarChar(255)
+  formId           String         @db.VarChar(100)
+  fieldDefId       String         @db.VarChar(100)
+  oldValue         String?        @db.VarChar(255)
+  newValue         String?        @db.VarChar(255)
+  changedBy        String?        @db.VarChar(255)
+  createdAt        DateTime       @default(now())
+  formFieldValue   FormFieldValue @relation(fields: [formFieldValueId], references: [id], onDelete: Cascade)
+
+  @@index([entityType, entityId, formId])
+  @@map("custom_form_field_value_history_entry")
+}

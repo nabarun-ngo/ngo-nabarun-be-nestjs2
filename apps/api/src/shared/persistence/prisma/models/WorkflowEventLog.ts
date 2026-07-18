@@ -323,7 +323,7 @@ export type WorkflowEventLogScalarWhereWithAggregatesInput = {
 
 export type WorkflowEventLogCreateInput = {
   id?: string
-  sequence: number
+  sequence?: number
   eventType: string
   elementId?: string | null
   actorType: string
@@ -337,7 +337,7 @@ export type WorkflowEventLogCreateInput = {
 export type WorkflowEventLogUncheckedCreateInput = {
   id?: string
   instanceId: string
-  sequence: number
+  sequence?: number
   eventType: string
   elementId?: string | null
   actorType: string
@@ -376,7 +376,7 @@ export type WorkflowEventLogUncheckedUpdateInput = {
 export type WorkflowEventLogCreateManyInput = {
   id?: string
   instanceId: string
-  sequence: number
+  sequence?: number
   eventType: string
   elementId?: string | null
   actorType: string
@@ -515,7 +515,7 @@ export type WorkflowEventLogUncheckedUpdateManyWithoutInstanceNestedInput = {
 
 export type WorkflowEventLogCreateWithoutInstanceInput = {
   id?: string
-  sequence: number
+  sequence?: number
   eventType: string
   elementId?: string | null
   actorType: string
@@ -527,7 +527,7 @@ export type WorkflowEventLogCreateWithoutInstanceInput = {
 
 export type WorkflowEventLogUncheckedCreateWithoutInstanceInput = {
   id?: string
-  sequence: number
+  sequence?: number
   eventType: string
   elementId?: string | null
   actorType: string
@@ -581,7 +581,7 @@ export type WorkflowEventLogScalarWhereInput = {
 
 export type WorkflowEventLogCreateManyInstanceInput = {
   id?: string
-  sequence: number
+  sequence?: number
   eventType: string
   elementId?: string | null
   actorType: string

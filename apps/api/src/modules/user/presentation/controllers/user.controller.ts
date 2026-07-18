@@ -231,9 +231,6 @@ export class UserController {
         userId: id,
         detail: {
           status: dto.status,
-          donationAmount: dto.donationAmount,
-          donationPauseStart: dto.donationPauseStart,
-          donationPauseEnd: dto.donationPauseEnd,
         },
         adminId: this.requireUserId(user),
       }),
