@@ -11,7 +11,7 @@ import { AuthUser } from '../../application/models/auth-user';
 
 @ApiBearerAuth('jwt')
 @ApiSecurity('api-key')
-@ApiTags('Auth2 — Me')
+@ApiTags('Auth — Me')
 @Controller('auth/me')
 export class MeController {
   @Get()

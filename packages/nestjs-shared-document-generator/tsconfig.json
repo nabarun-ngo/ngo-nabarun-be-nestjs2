@@ -6,5 +6,8 @@
     "noEmit": true,
     "paths": {}
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.hbs"
+  ]
 }

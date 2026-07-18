@@ -30,11 +30,11 @@ import {
   UpdateCronJobRequestDto,
 } from '../../application/dtos/cron-request.dtos';
 
-@ApiTags(Cron2Controller.name)
+@ApiTags(CronController.name)
 @Controller('cron')
 @ApiSecurity('api-key')
 @ApiBearerAuth('jwt')
-export class Cron2Controller {
+export class CronController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,

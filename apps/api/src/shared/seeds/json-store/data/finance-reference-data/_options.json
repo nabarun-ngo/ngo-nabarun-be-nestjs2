@@ -1,0 +1,3 @@
+{
+    "onConflict": "skip-if-exists"
+}

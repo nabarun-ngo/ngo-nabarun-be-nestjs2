@@ -128,7 +128,7 @@ export class QueueController {
     return this.queryBus.execute(new GetQueueStatisticsQuery());
   }
 
-  @Post("clean-old-jobs")
+  @Delete("clean-old-jobs")
   @ApiOperation({ summary: "Clean old jobs" })
   @RequirePermissions("delete:jobs")
   @ApiAutoResponse(String, {

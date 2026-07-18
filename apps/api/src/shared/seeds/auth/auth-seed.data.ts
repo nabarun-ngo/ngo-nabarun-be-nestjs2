@@ -1,6 +1,8 @@
-import { AuthSeedData } from '@nabarun-ngo/nestjs-shared-auth';
 
 // Comma-separated IdP subs to auto-assign to the SUPER_ADMINS group.
+
+import { Auth2SeedData } from "./auth-seed.types";
+
 // Example .env entry:  SEED_SUPER_ADMIN_IDP_SUBS=auth0|abc123,auth0|def456
 const superAdminSubs = (process.env.SEED_SUPER_ADMIN_IDP_SUBS ?? '')
   .split(',')
@@ -22,12 +24,19 @@ const RBAC_MANAGE = [
   'delete:user_roles',
 ] as const;
 
+
 const API_KEYS_ALL = [
   'read:api_keys',
   'create:api_keys',
   'update:api_keys',
   'delete:api_keys',
 ] as const;
+
+const QUEUE_PERMISSIONS_ALL = [
+  'read:jobs',
+  'update:jobs',
+  'delete:jobs',
+];
 
 const JSON_STORE_ALL = [
   'read:json_documents',
@@ -36,18 +45,29 @@ const JSON_STORE_ALL = [
   'delete:json_documents',
 ] as const;
 
-const DOCS_ALL = [
+const DOCS_READ_ALL = [
   'read:documents',
+] as const;
+
+const DOCS_CREATE = [
   'create:documents',
+] as const;
+
+const DOCS_ALL = [
+  ...DOCS_READ_ALL,
+  ...DOCS_CREATE,
   'update:documents',
   'delete:documents',
 ] as const;
 
-const CUSTOM_FORMS_ALL = [
+const CUSTOM_FORMS_DEFINITIONS_ALL = [
   'read:custom_forms',
   'create:custom_forms',
   'update:custom_forms',
   'disable:custom_forms',
+] as const;
+
+const CUSTOM_FORMS_SUBMISSIONS_ALL = [
   'read:form_submissions',
   'write:form_submissions',
   'submit:form_submissions',
@@ -167,9 +187,20 @@ const MEETING_ALL = [
   'delete:meeting',
 ] as const;
 
+const CRON_ALL = [
+  'read:cron',
+  'update:cron',
+] as const;
+
+const OAUTH_TOKEN_ALL = [
+  'read:oauth_token',
+  'create:oauth_token',
+  'delete:oauth_token',
+] as const;
+
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const AUTH2_SEED: AuthSeedData = {
+export const AUTH2_SEED: Auth2SeedData = {
   permissions: [
     // ── auth (self) ────────────────────────────────────────────────────────
     { key: 'read:roles', description: 'View all RBAC roles' },
@@ -178,6 +209,7 @@ export const AUTH2_SEED: AuthSeedData = {
     { key: 'read:user_roles', description: 'View roles and role-group memberships of any user' },
     { key: 'create:user_roles', description: 'Grant a role or add a user to a role group' },
     { key: 'delete:user_roles', description: 'Revoke a role or remove a user from a role group' },
+    // --- API Keys Management
     { key: 'read:api_keys', description: 'List API keys and their scopes' },
     { key: 'create:api_keys', description: 'Generate a new API key' },
     { key: 'update:api_keys', description: 'Update permissions on an existing API key' },
@@ -232,7 +264,13 @@ export const AUTH2_SEED: AuthSeedData = {
     { key: 'delete:jobs', description: 'Remove background jobs from the queue' },
 
     // ── user (consumer-defined) ──────────────────────────────────────────────
-    { key: 'admin:users', description: 'Full administrative access to user profiles' },
+    { key: 'create:users', description: 'Create user profiles' },
+    { key: 'read:users', description: 'Read user profiles' },
+    { key: 'update:users', description: 'Update user profiles' },
+    { key: 'delete:users', description: 'Delete user profiles' },
+    { key: 'create:user_connections', description: 'Create user connections' },
+    { key: 'read:user_connections', description: 'Read user connections' },
+    { key: 'delete:user_connections', description: 'Delete user connections' },
 
     // ── comment entity-type permissions (consumer-defined) ──────────────────
     { key: 'donations:read', description: 'Read comments on donation entities' },
@@ -340,6 +378,10 @@ export const AUTH2_SEED: AuthSeedData = {
       key: 'MEMBER',
       description: 'Base role — auto-assigned to every new user on registration. No elevated permissions.',
       permissionKeys: [
+        ...RBAC_READ,
+        //DMS Create and Read
+        ...DOCS_CREATE,
+        ...DOCS_READ_ALL,
         'create:workflow',
         'read:workflow',
         'read:task',
@@ -347,6 +389,10 @@ export const AUTH2_SEED: AuthSeedData = {
         'update:donation',
         'read:links',
         'read:meeting',
+        ...CUSTOM_FORMS_SUBMISSIONS_ALL,
+        'read:users',
+        'read:user_connections',
+
       ],
     },
 
@@ -355,208 +401,106 @@ export const AUTH2_SEED: AuthSeedData = {
       key: 'PRESIDENT',
       description: 'Highest authority. Full governance and administrative access.',
       permissionKeys: [
-        'admin:users',
         ...RBAC_MANAGE,
-        ...API_KEYS_ALL,
         ...DOCS_ALL,
-        ...CUSTOM_FORMS_ALL,
-        ...DONATIONS_ALL,
-        ...FINANCE_GRANULAR,
-        ...PROJECT_ALL,
-        ...WORKFLOW_ALL,
-        ...REPORTS_ALL,
-        ...MEETING_ALL,
-        'read:notifications',
-        'tasks:read',
-        'tasks:write',
+        'update:users',
+        'read:user_connections',
+
       ],
     },
     {
       key: 'VICE_PRESIDENT',
       description: 'Second in command. Broad governance access; cannot manage RBAC or revoke API keys.',
       permissionKeys: [
-        'admin:users',
-        ...RBAC_READ,
-        'read:api_keys',
-        'read:documents',
-        'create:documents',
-        'update:documents',
-        'read:custom_forms',
-        'read:form_submissions',
-        'write:form_submissions',
-        'submit:form_submissions',
-        ...DONATIONS_ALL,
-        ...FINANCE_GRANULAR,
-        ...WORKFLOW_ALL,
-        ...REPORTS_ALL,
-        ...MEETING_ALL,
-        'read:notifications',
-        'tasks:read',
-        'tasks:write',
+        ...RBAC_MANAGE,
+        ...DOCS_ALL,
+        'update:users',
+        'read:user_connections',
+
       ],
     },
     {
       key: 'SECRETARY',
       description: 'Administrative officer. Manages records, communications, and member data.',
       permissionKeys: [
-        'admin:users',
-        ...RBAC_READ,
-        'read:documents',
-        'create:documents',
-        'update:documents',
-        'read:custom_forms',
-        'read:form_submissions',
-        'write:form_submissions',
-        'submit:form_submissions',
-        'read:donations',
-        'write:donations',
-        'donations:read',
-        'donations:comment',
-        'read:user_donations',
-        'update:donation',
-        'read:expenses',
-        'create:expense',
-        'update:expense',
-        'create:workflow',
-        'read:workflow',
-        'read:task',
-        'update:task',
-        'tasks:read',
-        'tasks:write',
-        ...REPORTS_ALL,
-        ...MEETING_ALL,
-        'read:notifications',
+        ...RBAC_MANAGE,
+        ...DOCS_ALL,
+        'update:users',
+        'read:user_connections',
+
       ],
     },
     {
       key: 'ASST_SECRETARY',
       description: 'Junior administrative officer. Read-heavy access with limited write capabilities.',
       permissionKeys: [
-        ...RBAC_READ,
-        'read:documents',
-        'create:documents',
-        'read:custom_forms',
-        'read:form_submissions',
-        'read:donations',
-        'donations:read',
-        'read:workflow',
-        'read:task',
-        'update:task',
-        'tasks:read',
-        'read:notifications',
-        'read:meeting',
+        ...RBAC_MANAGE,
+        ...DOCS_ALL,
+        'update:users',
+        'read:user_connections',
+
       ],
     },
     {
       key: 'TREASURER',
       description: 'Financial officer. Manages and reports on donation and financial records.',
       permissionKeys: [
-        ...FINANCE_ALL,
-        'read:documents',
-        'create:documents',
-        'read:custom_forms',
-        'read:form_submissions',
-        'write:form_submissions',
-        'submit:form_submissions',
-        ...REPORTS_ALL,
-        'read:meeting',
-        'read:notifications',
+        ...DOCS_ALL,
+        'update:users',
+        'read:user_connections',
+
       ],
     },
     {
       key: 'CASHIER',
       description: 'Cashier officer. Manages and reports on donation and financial records.',
       permissionKeys: [
-        ...FINANCE_ALL,
-        'read:documents',
-        'create:documents',
-        'read:custom_forms',
-        'read:form_submissions',
-        'write:form_submissions',
-        'submit:form_submissions',
-        ...REPORTS_ALL,
-        'read:meeting',
-        'read:notifications',
+        ...DOCS_ALL,
+        'update:users',
+        'read:user_connections',
+
       ],
     },
     {
       key: 'GROUP_COORDINATOR',
       description: 'Financial officer. Manages and reports on donation and financial records.',
       permissionKeys: [
-        ...FINANCE_ALL,
-        'read:documents',
-        'create:documents',
-        'read:custom_forms',
-        'read:form_submissions',
-        'write:form_submissions',
-        'submit:form_submissions',
-        ...REPORTS_ALL,
-        'read:meeting',
-        'read:notifications',
+        'update:users',
+        'read:user_connections',
+
       ],
     },
     {
       key: 'COMMUNITY_MANAGER',
       description: 'Community Manager. Manages and reports on community and financial records.',
       permissionKeys: [
-        ...FINANCE_ALL,
-        'read:documents',
-        'create:documents',
-        'read:custom_forms',
-        'read:form_submissions',
-        'write:form_submissions',
-        'submit:form_submissions',
-        ...REPORTS_ALL,
-        'read:meeting',
-        'read:notifications',
+
       ],
     },
 
     // ── Technical roles ───────────────────────────────────────────────────────
     {
-      key: 'TECH_ADMIN',
+      key: 'TECHNICAL_SPECIALIST',
       description: 'Technical administrator. Manages platform infrastructure, integrations, and system configuration.',
       permissionKeys: [
-        'admin:users',
-        ...RBAC_MANAGE,
         ...API_KEYS_ALL,
         ...JSON_STORE_ALL,
-        'read:notifications',
-        'read:cron',
-        'update:cron',
-        'read:jobs',
-        'update:jobs',
-        'delete:jobs',
-        'read:oauth_token',
-        'create:oauth_token',
-        'delete:oauth_token',
-        'read:custom_forms',
-        'create:custom_forms',
-        'update:custom_forms',
-        'disable:custom_forms',
-        'admin:workflows',
-        'manage:workflow-definitions',
-        'read:workflow',
-        'read:task',
-        'update:task',
+        ...QUEUE_PERMISSIONS_ALL,
+        ...DOCS_ALL,
+        ...CUSTOM_FORMS_DEFINITIONS_ALL,
+        ...CRON_ALL,
+        ...OAUTH_TOKEN_ALL,
+        'create:user_connections',
+        'delete:user_connections',
       ],
     },
     {
       key: 'ADMIN',
-      description: 'Platform administrator. Manages users, RBAC assignments, API keys, json-store documents, and notifications.',
+      description: 'System Administrator. Full access to user management.',
       permissionKeys: [
-        'admin:users',
-        ...RBAC_MANAGE,
-        ...API_KEYS_ALL,
-        ...JSON_STORE_ALL,
-        'read:notifications',
-        'read:cron',
-        'update:cron',
-        'admin:workflows',
-        'manage:workflow-definitions',
-        'read:workflow',
-        'read:task',
-        'update:task',
+        'create:users',
+        'update:users',
+        'delete:users',
       ],
     },
   ],

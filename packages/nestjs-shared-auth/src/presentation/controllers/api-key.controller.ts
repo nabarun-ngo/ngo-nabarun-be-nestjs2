@@ -40,7 +40,7 @@ import { AuthUser } from '../../application/models/auth-user';
 
 @ApiBearerAuth('jwt')
 @ApiSecurity('api-key')
-@ApiTags('Auth2 — API Keys')
+@ApiTags('Auth — API Keys')
 @Controller('auth/apikey')
 export class ApiKeyController {
   constructor(

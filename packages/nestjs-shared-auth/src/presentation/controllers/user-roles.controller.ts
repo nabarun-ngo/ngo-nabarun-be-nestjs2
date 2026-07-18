@@ -35,7 +35,7 @@ import { AuthUser } from '../../application/models/auth-user';
 
 @ApiBearerAuth('jwt')
 @ApiSecurity('api-key')
-@ApiTags('Auth2 — User Roles')
+@ApiTags('Auth — User Roles')
 @Controller('auth/rbac/users/:idpSub')
 export class UserRolesController {
   constructor(

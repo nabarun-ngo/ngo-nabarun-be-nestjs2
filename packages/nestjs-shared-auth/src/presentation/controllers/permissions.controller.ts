@@ -15,7 +15,7 @@ import { RequirePermissions } from '../decorators/require-permissions.decorator'
 
 @ApiBearerAuth('jwt')
 @ApiSecurity('api-key')
-@ApiTags('Auth2 — Permissions')
+@ApiTags('Auth — Permissions')
 @Controller('auth/permissions')
 export class PermissionsController {
   constructor(private readonly queryBus: QueryBus) { }

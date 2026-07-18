@@ -15,7 +15,7 @@ import { RequirePermissions } from '../decorators/require-permissions.decorator'
 
 @ApiBearerAuth('jwt')
 @ApiSecurity('api-key')
-@ApiTags('Auth2 — Role Groups')
+@ApiTags('Auth — Role Groups')
 @Controller('auth/role-groups')
 export class RoleGroupsController {
   constructor(private readonly queryBus: QueryBus) { }

@@ -16,7 +16,7 @@ import { RunCronJobHandler } from './application/commands/run-cron-job/run-cron-
 
 import { GetCronJobsHandler } from './application/queries/get-cron-jobs/get-cron-jobs.handler';
 
-import { Cron2Controller } from './presentation/controllers/cron.controller';
+import { CronController } from './presentation/controllers/cron.controller';
 
 export type { Cron2ModuleOptions } from './cron.schema';
 
@@ -72,7 +72,7 @@ export class Cron2Module extends BaseDynamicModule {
     return {
       module: Cron2Module,
       imports: [...extraImports, CqrsModule],
-      controllers: [Cron2Controller],
+      controllers: [CronController],
       providers: [
         ...optionsProviders,
         CronRequiredPortsGuard,

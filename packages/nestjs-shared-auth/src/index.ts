@@ -1,15 +1,7 @@
 export { Auth2Module as AuthModule } from './auth.module';
 export type { Auth2ModuleAsyncOptions as AuthModuleAsyncOptions } from './auth.module';
 export type { Auth2ModuleOptions as AuthModuleOptions } from './auth-options';
-export { Auth2OptionsSchema as AuthOptionsSchema} from './auth.schema';
-
-export { seedAuth2 as seedAuth } from './infrastructure/seeds/auth.seeder';
-export type {
-  Auth2SeedData as AuthSeedData,
-  Auth2PermissionSeed as AuthPermissionSeed,
-  Auth2RoleSeed as AuthRoleSeed,
-  Auth2RoleGroupSeed as AuthRoleGroupSeed,
-} from './infrastructure/seeds/auth-seed.types';
+export { Auth2OptionsSchema as AuthOptionsSchema } from './auth.schema';
 
 export { CurrentUser, UserPermissions } from './presentation/decorators/current-user.decorator';
 export { RequirePermissions, RequireAllPermissions, REQUIRE_PERMISSIONS_KEY } from './presentation/decorators/require-permissions.decorator';

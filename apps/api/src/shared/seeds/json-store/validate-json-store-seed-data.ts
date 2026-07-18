@@ -1,5 +1,5 @@
+import { IJsonDocumentPayloadValidatorPort } from '@nabarun-ngo/nestjs-shared-json-store';
 import { JsonStoreSeedData } from './json-store-seed.types';
-import { IJsonDocumentPayloadValidatorPort } from '../../domain/ports/json-document-payload-validator.port';
 
 /**
  * Validates every document in a seed dataset before persisting.

@@ -117,7 +117,7 @@ export class UserController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @RequirePermissions('admin:users')
+  @RequirePermissions('create:users')
   @ApiOperation({ summary: 'Admin: create a new user (provisions Auth0 account)' })
   createUser(
     @Body() dto: CreateUserDto,
@@ -142,8 +142,8 @@ export class UserController {
   }
 
   @Get()
-  @RequirePermissions('admin:users')
-  @ApiOperation({ summary: 'Admin: list users with filters and pagination' })
+  @RequirePermissions('read:users')
+  @ApiOperation({ summary: 'list users with filters and pagination' })
   listUsers(@Query() query: ListUsersQueryDto): Promise<UserListResponseDto> {
     return this.queryBus.execute(
       new ListUsersQuery(
@@ -166,7 +166,7 @@ export class UserController {
   // ── Connection management (/:id/connections — before plain /:id) ──────────
 
   @Get(':id/connections')
-  @RequirePermissions('admin:users')
+  @RequirePermissions('read:user_connections')
   @ApiOperation({ summary: 'Admin: list all IdP identities linked to a user' })
   getUserConnections(@Param('id') id: string): Promise<LinkedConnectionDto[]> {
     return this.queryBus.execute(new GetUserConnectionsQuery(id));
@@ -174,7 +174,7 @@ export class UserController {
 
   @Post(':id/connections')
   @HttpCode(HttpStatus.OK)
-  @RequirePermissions('admin:users')
+  @RequirePermissions('create:user_connections')
   @ApiOperation({
     summary: 'Admin: grant a new connection to a user',
     description:
@@ -194,7 +194,7 @@ export class UserController {
 
   @Delete(':id/connections/:connectionKey')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @RequirePermissions('admin:users')
+  @RequirePermissions('delete:user_connections')
   @ApiOperation({
     summary: 'Admin: revoke (unlink) a secondary connection from a user',
     description: 'The primary (`default`) connection cannot be revoked.',
@@ -212,14 +212,14 @@ export class UserController {
   // ── Param routes (/:id — must be AFTER all static routes) ─────────────────
 
   @Get(':id')
-  @RequirePermissions('admin:users')
+  @RequirePermissions('read:users')
   @ApiOperation({ summary: 'Admin: get user by id' })
   getUserById(@Param('id') id: string): Promise<UserResponseDto> {
     return this.queryBus.execute(new GetUserByIdQuery(id));
   }
 
   @Put(':id')
-  @RequirePermissions('admin:users')
+  @RequirePermissions('update:users')
   @ApiOperation({ summary: 'Admin: update user attributes (status, PAN, login methods)' })
   updateUserAdmin(
     @Param('id') id: string,
@@ -242,7 +242,7 @@ export class UserController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @RequirePermissions('admin:users')
+  @RequirePermissions('delete:users')
   @ApiOperation({ summary: 'Admin: soft-delete user and remove from Auth0' })
   deleteUser(
     @Param('id') id: string,

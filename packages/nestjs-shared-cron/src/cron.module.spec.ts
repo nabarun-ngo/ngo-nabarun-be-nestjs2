@@ -22,7 +22,7 @@ jest.mock('@nabarun-ngo/nestjs-shared-cron/application/queries/get-cron-jobs/get
   GetCronJobsHandler: class GetCronJobsHandler { },
 }));
 jest.mock('@nabarun-ngo/nestjs-shared-cron/presentation/controllers/cron.controller', () => ({
-  Cron2Controller: class Cron2Controller { },
+  CronController: class CronController { },
 }));
 jest.mock('@nestjs/cqrs', () => ({
   CqrsModule: class CqrsModule { },
@@ -76,7 +76,7 @@ describe('Cron2Module', () => {
       expect(importModules).not.toContain('QueueModule');
     });
 
-    it('registers Cron2Controller', () => {
+    it('registers CronController', () => {
       const mod = Cron2Module.forRoot();
       expect(mod.controllers).toBeDefined();
       expect((mod.controllers as any[]).length).toBeGreaterThan(0);
