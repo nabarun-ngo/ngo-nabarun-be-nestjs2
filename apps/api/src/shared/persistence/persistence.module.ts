@@ -1,4 +1,4 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
+import { DynamicModule, Global, Module, ModuleMetadata } from '@nestjs/common';
 import {
   IApiKeyRepository,
   IPermissionRepository,
@@ -54,6 +54,11 @@ import { WorkflowInstancePrismaRepository } from './workflow/workflow-instance.p
 import { WorkflowOutboxPrismaRepository } from './workflow/workflow-outbox.prisma-repository';
 import { WorkflowTokenPrismaRepository } from './workflow/workflow-token.prisma-repository';
 
+export interface PersistenceModuleOptions {
+  /** Pass the same QueueModule.forRoot/forRootAsync dynamic module used by the app. */
+  imports?: ModuleMetadata['imports'];
+}
+
 const REPOSITORY_PROVIDERS = [
   { provide: IOAuthAccountRepository, useClass: OAuthAccountPrismaRepository },
   { provide: IOAuthTokenRepository, useClass: OAuthTokenPrismaRepository },
@@ -79,12 +84,14 @@ const REPOSITORY_PROVIDERS = [
   { provide: IWorkflowIdempotencyRepository, useClass: WorkflowIdempotencyPrismaRepository },
 ] as const;
 
+
 @Global()
 @Module({})
 export class PersistenceModule {
-  static forRoot(): DynamicModule {
+  static forRoot(options: PersistenceModuleOptions = {}): DynamicModule {
     return {
       module: PersistenceModule,
+      imports: [...(options.imports ?? [])],
       providers: [...REPOSITORY_PROVIDERS],
       exports: REPOSITORY_PROVIDERS.map(({ provide }) => provide),
     };
