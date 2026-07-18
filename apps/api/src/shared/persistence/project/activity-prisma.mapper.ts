@@ -1,6 +1,6 @@
 import { Prisma } from '../prisma/client';
-import { Activity } from '../../../internal/project/domain/aggregates/activity/activity.aggregate';
-import { ActivityPriority, ActivityScale, ActivityStatus, ActivityType } from '../../../internal/project/domain/enums/activity.enum';
+import { Activity } from '../../../modules/project/domain/aggregates/activity/activity.aggregate';
+import { ActivityPriority, ActivityScale, ActivityStatus, ActivityType } from '../../../modules/project/domain/enums/activity.enum';
 import { MapperUtils } from '../finance/mapper-utils';
 
 export type ActivityPersistence = Prisma.ActivityGetPayload<{

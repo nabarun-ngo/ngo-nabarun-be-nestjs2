@@ -1,6 +1,6 @@
 import { Prisma } from '../prisma/client';
-import { Beneficiary } from '../../../internal/project/domain/aggregates/beneficiary/beneficiary.aggregate';
-import { BeneficiaryGender, BeneficiaryStatus, BeneficiaryType } from '../../../internal/project/domain/enums/beneficiary.enum';
+import { Beneficiary } from '../../../modules/project/domain/aggregates/beneficiary/beneficiary.aggregate';
+import { BeneficiaryGender, BeneficiaryStatus, BeneficiaryType } from '../../../modules/project/domain/enums/beneficiary.enum';
 import { MapperUtils } from '../finance/mapper-utils';
 
 export class BeneficiaryPrismaMapper {

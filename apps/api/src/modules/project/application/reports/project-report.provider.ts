@@ -15,7 +15,7 @@ export class ProjectReportProvider implements IReportProvider<{ projectId: strin
   constructor(
     @Inject(IProjectRepository) private readonly projectRepository: IProjectRepository,
     @Inject(IActivityRepository) private readonly activityRepository: IActivityRepository,
-  ) {}
+  ) { }
   async generate(params: { projectId: string }): Promise<ReportGeneratedData> {
     const project = await this.projectRepository.findById(params.projectId);
     if (!project) throw new Error('Project not found');

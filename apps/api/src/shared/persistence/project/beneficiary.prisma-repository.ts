@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { IBeneficiaryRepository } from '../../../internal/project/domain/repositories/beneficiary.repository';
-import { Beneficiary, BeneficiaryFilter } from '../../../internal/project/domain/aggregates/beneficiary/beneficiary.aggregate';
+import { IBeneficiaryRepository } from '../../../modules/project/domain/repositories/beneficiary.repository';
+import { Beneficiary, BeneficiaryFilter } from '../../../modules/project/domain/aggregates/beneficiary/beneficiary.aggregate';
 import { BeneficiaryPrismaMapper } from './beneficiary-prisma.mapper';
 
 @Injectable()
 export class BeneficiaryPrismaRepository implements IBeneficiaryRepository {
-  constructor(private readonly db: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly db: BasePrismaService<PrismaClient>) { }
   private where(props?: BeneficiaryFilter): Prisma.BeneficiaryWhereInput {
     return {
       deletedAt: null,

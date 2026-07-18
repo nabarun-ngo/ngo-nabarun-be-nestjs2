@@ -15,7 +15,7 @@ export class ActivityReportProvider implements IReportProvider<{ activityId: str
   constructor(
     @Inject(IActivityRepository) private readonly activityRepository: IActivityRepository,
     @Inject(IProjectRepository) private readonly projectRepository: IProjectRepository,
-  ) {}
+  ) { }
   async generate(params: { activityId: string }): Promise<ReportGeneratedData> {
     const activity = await this.activityRepository.findById(params.activityId);
     if (!activity) throw new Error('Activity not found');

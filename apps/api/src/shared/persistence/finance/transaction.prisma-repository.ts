@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { ITransactionRepository, TransactionFilter } from '../../../internal/finance/domain/repositories/transaction.repository';
-import { Transaction } from '../../../internal/finance/domain/entities/transaction.entity';
+import { ITransactionRepository, TransactionFilter } from '../../../modules/finance/domain/repositories/transaction.repository';
+import { Transaction } from '../../../modules/finance/domain/entities/transaction.entity';
 import { TransactionPrismaMapper } from './transaction-prisma.mapper';
 
 export type TransactionPersistence = Prisma.TransactionGetPayload<{

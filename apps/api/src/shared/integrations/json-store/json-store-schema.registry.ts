@@ -2,20 +2,20 @@ import { z } from 'zod';
 import { EmailTemplatePayloadSchema } from '@ce/nestjs-shared-correspondence';
 import { CronJobPayloadSchema } from '@ce/nestjs-shared-cron';
 import { WorkflowDefinitionSchema } from '@ce/nestjs-shared-workflow';
-import { UserReferenceDataPayloadSchema } from '../../../internal/user/user-reference-data.schema';
-import { FinanceReferenceDataPayloadSchema } from '../../../internal/finance/finance-reference-data.schema';
-import { ProjectReferenceDataPayloadSchema } from '../../../internal/project/project-reference-data.schema';
+import { UserReferenceDataPayloadSchema } from '../../../modules/user/user-reference-data.schema';
+import { FinanceReferenceDataPayloadSchema } from '../../../modules/finance/finance-reference-data.schema';
+import { ProjectReferenceDataPayloadSchema } from '../../../modules/project/project-reference-data.schema';
 import {
   PublicSiteDynamicContentSchema,
   PublicSiteStaticContentSchema,
-} from '../../../public/public-site/public-site.schema';
-import { ReportDefinitionsPayloadSchema } from '../../../internal/reporting/reporting.schema';
+} from '../../../modules/public-site/public-site.schema';
+import { ReportDefinitionsPayloadSchema } from '../../../modules/reporting/reporting.schema';
 import {
   AppLinksPayloadSchema,
   ContentLinksPayloadSchema,
   LinksPayloadSchema,
   LinksReferenceDataPayloadSchema,
-} from '../../../internal/links/links.schema';
+} from '../../../modules/links/links.schema';
 
 export type JsonStoreSchemaRegistry = Record<string, z.ZodType>;
 

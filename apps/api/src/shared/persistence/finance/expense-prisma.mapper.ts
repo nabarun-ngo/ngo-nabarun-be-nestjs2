@@ -1,7 +1,7 @@
 import { Prisma } from '../prisma/client';
-import { Expense } from '../../../internal/finance/domain/aggregates/expense/expense.aggregate';
-import { ExpenseStatus, ExpenseRefType } from '../../../internal/finance/domain/enums/expense.enum';
-import { ExpenseItem } from '../../../internal/finance/domain/value-objects/expense-item.vo';
+import { Expense } from '../../../modules/finance/domain/aggregates/expense/expense.aggregate';
+import { ExpenseStatus, ExpenseRefType } from '../../../modules/finance/domain/enums/expense.enum';
+import { ExpenseItem } from '../../../modules/finance/domain/value-objects/expense-item.vo';
 import { MapperUtils } from './mapper-utils';
 import { toFinanceUserRef } from './finance-user-mapper';
 import { ExpensePersistence } from './expense.prisma-repository';

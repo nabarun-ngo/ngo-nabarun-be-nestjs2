@@ -1,6 +1,6 @@
 import { Prisma } from '../prisma/client';
-import { Earning } from '../../../internal/finance/domain/aggregates/earning/earning.aggregate';
-import { EarningCategory, EarningStatus } from '../../../internal/finance/domain/enums/earning.enum';
+import { Earning } from '../../../modules/finance/domain/aggregates/earning/earning.aggregate';
+import { EarningCategory, EarningStatus } from '../../../modules/finance/domain/enums/earning.enum';
 import { MapperUtils } from './mapper-utils';
 import { toFinanceUserRef } from './finance-user-mapper';
 import { EarningPersistence } from './earning.prisma-repository';

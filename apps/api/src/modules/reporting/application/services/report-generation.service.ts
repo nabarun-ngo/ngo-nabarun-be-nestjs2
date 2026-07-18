@@ -5,7 +5,7 @@ import { Report } from '../../domain/aggregates/report/report.aggregate';
 import { ReportStatus } from '../../domain/enums/report-status.enum';
 import { IReportRepository } from '../../domain/repositories/report.repository';
 import { IReportDefinitionsPort } from '../../domain/ports/report-definitions.port';
-import { ReportRegistryService } from '../services/report-registry.service';
+import { ReportRegistryService } from './report-registry.service';
 import { ReportingDmsFacade } from '../../infrastructure/adapters/reporting-dms.facade';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class ReportGenerationService {
     @Inject(IReportDefinitionsPort) private readonly definitionsPort: IReportDefinitionsPort,
     private readonly dmsFacade: ReportingDmsFacade,
     private readonly workflowFacade: WorkflowFacade,
-  ) {}
+  ) { }
 
   async startReportWorkflow(params: {
     reportCode: string;

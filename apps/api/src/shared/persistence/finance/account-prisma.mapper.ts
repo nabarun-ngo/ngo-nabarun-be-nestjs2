@@ -1,7 +1,7 @@
 import { Prisma } from '../prisma/client';
-import { Account } from '../../../internal/finance/domain/aggregates/account/account.aggregate';
-import { AccountStatus } from '../../../internal/finance/domain/enums/account-status.enum';
-import { AccountType } from '../../../internal/finance/domain/enums/account-type.enum';
+import { Account } from '../../../modules/finance/domain/aggregates/account/account.aggregate';
+import { AccountStatus } from '../../../modules/finance/domain/enums/account-status.enum';
+import { AccountType } from '../../../modules/finance/domain/enums/account-type.enum';
 import { MapperUtils } from './mapper-utils';
 import { TransactionPrismaMapper } from './transaction-prisma.mapper';
 import { AccountWithTransactions } from './account.prisma-repository';

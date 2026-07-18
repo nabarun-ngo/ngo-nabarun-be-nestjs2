@@ -1,1 +1,1 @@
-export { ProjectReferenceDataAdapter } from '../../../internal/project/infrastructure/adapters/project-reference-data.adapter';
+export { ProjectReferenceDataAdapter } from '../../../modules/project/infrastructure/adapters/project-reference-data.adapter';

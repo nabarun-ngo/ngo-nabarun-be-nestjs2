@@ -1,6 +1,6 @@
 import { Prisma } from '../prisma/client';
-import { Report } from '../../../internal/reporting/domain/aggregates/report/report.aggregate';
-import { ReportStatus } from '../../../internal/reporting/domain/enums/report-status.enum';
+import { Report } from '../../../modules/reporting/domain/aggregates/report/report.aggregate';
+import { ReportStatus } from '../../../modules/reporting/domain/enums/report-status.enum';
 
 type ReportRow = Prisma.ReportGetPayload<{
   include: {

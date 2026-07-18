@@ -10,35 +10,24 @@ async function main() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
 
-  applyConfig(app as never, {
+  applyConfig(app, {
     globalPrefix: 'api',
     globalPrefixExclusions: [{ path: 'newsletter', method: RequestMethod.POST }],
-    fileSize: '64kb',
-    environment:
-      config.get<string>(Configkey.ENVIRONMENT) ??
-      config.get<string>(Configkey.NODE_ENV),
-    appName: config.get<string>(Configkey.APP_NAME) ?? 'nestjs-consumer-app',
+    environment: config.getOrThrow<string>(Configkey.NODE_ENV),
+    appName: `${config.get<string>(Configkey.APP_NAME) ?? 'NestJS'} API`,
     corsOrigins: config.get<string>(Configkey.CORS_ALLOWED_ORIGIN)?.split(','),
-    logLevel:
-      (config.get<string>(Configkey.LOG_LEVEL) as
-        | 'log'
-        | 'verbose'
-        | 'debug'
-        | 'warn'
-        | 'error'
-        | 'fatal'
-        | undefined) ?? 'log',
+    logLevel: config.get<'log' | 'verbose' | 'debug' | 'warn' | 'error' | 'fatal'>(Configkey.LOG_LEVEL) ?? 'error',
     helmet: true,
     enableSwagger: 'auto',
     swaggerOptions: {
-      title: 'Consumer App API',
-      description: 'NestJS consumer application built on nestjs-shared',
+      title: `${config.get<string>(Configkey.APP_NAME) ?? 'NestJS'} API`,
+      description: `${config.get<string>(Configkey.APP_NAME) ?? 'NestJS'} application backend`,
       version: '1.0',
     },
     trustProxy: true,
   });
 
-  const port = Number.parseInt(config.get<string>('PORT') ?? '3000', 10);
+  const port = Number.parseInt(config.get<string>('PORT') ?? '8080', 10);
   await app.listen(port);
 }
 

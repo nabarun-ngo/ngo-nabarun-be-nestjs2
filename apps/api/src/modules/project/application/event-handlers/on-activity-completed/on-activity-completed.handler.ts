@@ -8,7 +8,7 @@ import { TriggerReportGenerationJob } from '../../../../reporting/application/jo
 @EventsHandler(ActivityCompletedEvent)
 export class OnActivityCompletedHandler implements IEventHandler<ActivityCompletedEvent> {
   private readonly logger = new Logger(OnActivityCompletedHandler.name);
-  constructor(private readonly queueProcessing: QueueProcessingService) {}
+  constructor(private readonly queueProcessing: QueueProcessingService) { }
   async handle(event: ActivityCompletedEvent): Promise<void> {
     try {
       await this.queueProcessing.addJob(

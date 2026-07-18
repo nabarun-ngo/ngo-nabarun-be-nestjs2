@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { Project, ProjectFilter } from '../../../internal/project/domain/aggregates/project/project.aggregate';
-import { IProjectRepository } from '../../../internal/project/domain/repositories/project.repository';
+import { Project, ProjectFilter } from '../../../modules/project/domain/aggregates/project/project.aggregate';
+import { IProjectRepository } from '../../../modules/project/domain/repositories/project.repository';
 import { ProjectPrismaMapper } from './project-prisma.mapper';
 
 @Injectable()
 export class ProjectPrismaRepository implements IProjectRepository {
-  constructor(private readonly database: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly database: BasePrismaService<PrismaClient>) { }
 
   async count(filter: ProjectFilter): Promise<number> {
     return this.database.client.project.count({ where: this.where(filter) });

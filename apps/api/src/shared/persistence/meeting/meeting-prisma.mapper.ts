@@ -3,8 +3,8 @@ import {
   Meeting,
   MeetingAgendaItem,
   MeetingParticipant,
-} from '../../../internal/meeting/domain/aggregates/meeting/meeting.aggregate';
-import { MeetingType } from '../../../internal/meeting/domain/enums/meeting-type.enum';
+} from '../../../modules/meeting/domain/aggregates/meeting/meeting.aggregate';
+import { MeetingType } from '../../../modules/meeting/domain/enums/meeting-type.enum';
 import { MapperUtils } from '../finance/mapper-utils';
 
 export type MeetingPersistence = Prisma.MeetingGetPayload<Record<string, never>>;

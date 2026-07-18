@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { IExpenseRepository, ExpenseFilter } from '../../../internal/finance/domain/repositories/expense.repository';
-import { Expense } from '../../../internal/finance/domain/aggregates/expense/expense.aggregate';
-import { ExpenseStatus } from '../../../internal/finance/domain/enums/expense.enum';
+import { IExpenseRepository, ExpenseFilter } from '../../../modules/finance/domain/repositories/expense.repository';
+import { Expense } from '../../../modules/finance/domain/aggregates/expense/expense.aggregate';
+import { ExpenseStatus } from '../../../modules/finance/domain/enums/expense.enum';
 import { ExpensePrismaMapper } from './expense-prisma.mapper';
 
 

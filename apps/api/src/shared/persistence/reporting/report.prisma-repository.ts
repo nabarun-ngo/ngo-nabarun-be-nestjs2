@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { Report, ReportFilter } from '../../../internal/reporting/domain/aggregates/report/report.aggregate';
-import { IReportRepository } from '../../../internal/reporting/domain/repositories/report.repository';
+import { Report, ReportFilter } from '../../../modules/reporting/domain/aggregates/report/report.aggregate';
+import { IReportRepository } from '../../../modules/reporting/domain/repositories/report.repository';
 import { ReportPrismaMapper } from './report-prisma.mapper';
 
 const includeUsers = {
@@ -13,7 +13,7 @@ const includeUsers = {
 
 @Injectable()
 export class ReportPrismaRepository implements IReportRepository {
-  constructor(private readonly database: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly database: BasePrismaService<PrismaClient>) { }
 
   async count(filter?: ReportFilter): Promise<number> {
     return this.database.client.report.count({ where: this.whereQuery(filter) });

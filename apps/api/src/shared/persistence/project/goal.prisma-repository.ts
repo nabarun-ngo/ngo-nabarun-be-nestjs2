@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { IGoalRepository } from '../../../internal/project/domain/repositories/goal.repository';
-import { Goal, GoalFilter } from '../../../internal/project/domain/aggregates/goal/goal.aggregate';
+import { IGoalRepository } from '../../../modules/project/domain/repositories/goal.repository';
+import { Goal, GoalFilter } from '../../../modules/project/domain/aggregates/goal/goal.aggregate';
 import { GoalPrismaMapper } from './goal-prisma.mapper';
 @Injectable()
 export class GoalPrismaRepository implements IGoalRepository {
-  constructor(private readonly db: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly db: BasePrismaService<PrismaClient>) { }
   private where(props?: GoalFilter): Prisma.GoalWhereInput {
     return { deletedAt: null, ...(props?.projectId ? { projectId: props.projectId } : {}), ...(props?.status ? { status: props.status } : {}), ...(props?.priority ? { priority: props.priority } : {}) };
   }

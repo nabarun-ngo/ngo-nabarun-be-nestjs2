@@ -1,6 +1,6 @@
 import { Prisma } from '../prisma/client';
-import { Transaction } from '../../../internal/finance/domain/entities/transaction.entity';
-import { TransactionRefType, TransactionStatus, TransactionType } from '../../../internal/finance/domain/enums/transaction.enum';
+import { Transaction } from '../../../modules/finance/domain/entities/transaction.entity';
+import { TransactionRefType, TransactionStatus, TransactionType } from '../../../modules/finance/domain/enums/transaction.enum';
 import { MapperUtils } from './mapper-utils';
 
 export type TransactionRow = {

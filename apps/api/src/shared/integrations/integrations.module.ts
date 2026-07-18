@@ -16,13 +16,13 @@ import { WORKFLOW_QUEUE_PROVIDER } from './workflow/queue-workflow-job.adapter';
 import { WORKFLOW_FORM_DATA_PROVIDER } from './workflow/workflow-form-data.adapter';
 import { WORKFLOW_USER_RESOLUTION_PROVIDER } from './workflow/workflow-user-resolution.adapter';
 import { WORKFLOW_FORM_ACCESS_PROVIDER } from './workflow/workflow-form-access.adapter';
-import { IUserReferenceDataPort } from '../../internal/user/application/ports/user-reference-data.port';
-import { UserReferenceDataAdapter } from '../../internal/user/infrastructure/adapters/user-reference-data.adapter';
-import { IFinanceReferenceDataPort } from '../../internal/finance/application/ports/finance-reference-data.port';
+import { IUserReferenceDataPort } from '../../modules/user/application/ports/user-reference-data.port';
+import { UserReferenceDataAdapter } from '../../modules/user/infrastructure/adapters/user-reference-data.adapter';
+import { IFinanceReferenceDataPort } from '../../modules/finance/application/ports/finance-reference-data.port';
 import { FinanceReferenceDataAdapter } from './finance/finance-reference-data.adapter';
-import { IProjectReferenceDataPort } from '../../internal/project/application/ports/project-reference-data.port';
+import { IProjectReferenceDataPort } from '../../modules/project/application/ports/project-reference-data.port';
 import { ProjectReferenceDataAdapter } from './project/project-reference-data.adapter';
-import { IMeetingCalendarPort } from '../../internal/meeting/application/ports/meeting-calendar.port';
+import { IMeetingCalendarPort } from '../../modules/meeting/application/ports/meeting-calendar.port';
 import { GoogleCalendarMeetingAdapter } from './meeting/google-calendar-meeting.adapter';
 
 const PORT_PROVIDERS = [

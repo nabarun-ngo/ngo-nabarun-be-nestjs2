@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { Meeting, MeetingFilter } from '../../../internal/meeting/domain/aggregates/meeting/meeting.aggregate';
-import { IMeetingRepository } from '../../../internal/meeting/domain/repositories/meeting.repository';
+import { Meeting, MeetingFilter } from '../../../modules/meeting/domain/aggregates/meeting/meeting.aggregate';
+import { IMeetingRepository } from '../../../modules/meeting/domain/repositories/meeting.repository';
 import { MeetingPrismaMapper } from './meeting-prisma.mapper';
 
 @Injectable()
 export class MeetingPrismaRepository implements IMeetingRepository {
-  constructor(private readonly database: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly database: BasePrismaService<PrismaClient>) { }
 
   async count(filter: MeetingFilter): Promise<number> {
     return this.database.client.meeting.count({ where: this.where(filter) });

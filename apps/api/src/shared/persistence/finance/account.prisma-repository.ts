@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { Account } from '../../../internal/finance/domain/aggregates/account/account.aggregate';
-import { AccountFilter, IAccountRepository } from '../../../internal/finance/domain/repositories/account.repository';
+import { Account } from '../../../modules/finance/domain/aggregates/account/account.aggregate';
+import { AccountFilter, IAccountRepository } from '../../../modules/finance/domain/repositories/account.repository';
 import { AccountPrismaMapper } from './account-prisma.mapper';
 import { TransactionPrismaMapper } from './transaction-prisma.mapper';
 

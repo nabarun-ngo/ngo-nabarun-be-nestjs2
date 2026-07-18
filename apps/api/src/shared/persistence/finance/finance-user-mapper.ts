@@ -1,4 +1,4 @@
-import { FinanceUserRef } from '../../../internal/finance/domain/types/finance-user-ref';
+import { FinanceUserRef } from '../../../modules/finance/domain/types/finance-user-ref';
 
 export function toFinanceUserRef(
   u?: { id: string; email?: string | null; firstName?: string; lastName?: string } | null,

@@ -16,18 +16,35 @@ import { Configkey } from './shared/config-keys';
 import { AuthModule } from '@ce/nestjs-shared-auth';
 import { CommentModule } from '@ce/nestjs-shared-comment';
 import { CorrespondenceModule } from '@ce/nestjs-shared-correspondence';
-import { UserModule } from './internal/user/user.module';
-import { FinanceModule } from './internal/finance/finance.module';
-import { ReportingModule } from './internal/reporting/reporting.module';
-import { ProjectModule } from './internal/project/project.module';
-import { MeetingModule } from './internal/meeting/meeting.module';
-import { LinksModule } from './internal/links/links.module';
-import { WorkflowHostModule } from './internal/workflow/workflow-host.module';
+import { UserModule } from './modules/user/user.module';
+import { FinanceModule } from './modules/finance/finance.module';
+import { ReportingModule } from './modules/reporting/reporting.module';
+import { ProjectModule } from './modules/project/project.module';
+import { MeetingModule } from './modules/meeting/meeting.module';
+import { LinksModule } from './modules/links/links.module';
+import { WorkflowHostModule } from './modules/workflow/workflow-host.module';
 import { IntegrationsModule } from './shared/integrations/integrations.module';
-import { PublicSiteModule } from './public/public-site/public-site.module';
+import { PublicSiteModule } from './modules/public-site/public-site.module';
 import { DocumentGeneratorModule } from '@ce/nestjs-shared-document-generator';
 import { join } from 'path';
 
+const userModule = UserModule.forRootAsync({
+  imports: [ConfigModule],
+  inject: [ConfigService],
+  useFactory: (config: ConfigService) => ({
+    idp: {
+      domain: config.getOrThrow(Configkey.AUTH0_DOMAIN),
+      clientId: config.getOrThrow(Configkey.AUTH0_MANAGEMENT_CLIENT_ID),
+      clientSecret: config.getOrThrow(Configkey.AUTH0_MANAGEMENT_CLIENT_SECRET),
+      connections: {
+        default: { name: 'Username-Password-Authentication', type: 'password' },
+        passwordless: { name: 'email', type: 'passwordless' },
+      },
+    },
+    defaultRoleKeys: ['MEMBER'],
+    passwordExpiresInDays: 90,
+  }),
+});
 const queueModule = QueueModule.forRootAsync({
   imports: [ConfigModule],
   inject: [ConfigService],
@@ -44,7 +61,7 @@ const queueModule = QueueModule.forRootAsync({
 });
 
 const financeModule = FinanceModule.forRootAsync({
-  imports: [ConfigModule, UserModule],
+  imports: [ConfigModule, userModule],
   inject: [ConfigService],
   useFactory: (config: ConfigService) => ({
     defaultDonationAmount: config.get<number>(Configkey.PROP_DONATION_AMOUNT) ?? 500,
@@ -137,7 +154,7 @@ const meetingModule = MeetingModule.forRootAsync({
           'image/png',
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         ],
-        provider: 'google-drive',
+        provider: 'firebase',
         maxFileSizeMb: config.get<number>(Configkey.MAX_FILE_SIZE_MB) ?? 10,
         firebase: {
           serviceAccount: config.getOrThrow<string>(Configkey.FIREBASE_CREDENTIAL),
@@ -198,26 +215,10 @@ const meetingModule = MeetingModule.forRootAsync({
     CronModule.forRoot({
       timezone: 'Asia/Kolkata',
     }),
-    UserModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        idp: {
-          domain: config.getOrThrow(Configkey.AUTH0_DOMAIN),
-          clientId: config.getOrThrow(Configkey.AUTH0_MANAGEMENT_CLIENT_ID),
-          clientSecret: config.getOrThrow(Configkey.AUTH0_MANAGEMENT_CLIENT_SECRET),
-          connections: {
-            default: { name: 'Username-Password-Authentication', type: 'password' },
-            passwordless: { name: 'email', type: 'passwordless' },
-          },
-        },
-        defaultRoleKeys: ['MEMBER'],
-        passwordExpiresInDays: 90,
-      }),
-    }),
+    userModule,
     financeModule,
-    ReportingModule.forRoot(),
-    ProjectModule.forRoot({ imports: [financeModule] }),
+    ReportingModule.forRoot({ imports: [workflowModule] }),
+    ProjectModule.forRoot({ imports: [financeModule, queueModule] }),
     meetingModule,
     LinksModule.forRoot(),
     CorrespondenceModule.forRootAsync(
@@ -250,4 +251,4 @@ const meetingModule = MeetingModule.forRootAsync({
     PublicSiteModule.forRoot({ imports: [workflowModule] }),
   ],
 })
-export class AppModule {}
+export class AppModule { }

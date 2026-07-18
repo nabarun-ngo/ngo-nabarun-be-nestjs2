@@ -17,7 +17,7 @@ export class UserDeleteAndDataCleanupHandler implements WorkflowTaskHandlerContr
     private readonly commandBus: CommandBus,
     private readonly workflowFacade: WorkflowFacade,
     private readonly prisma: BasePrismaService<PrismaClient>,
-  ) {}
+  ) { }
 
   async execute(params: {
     instanceId: string;

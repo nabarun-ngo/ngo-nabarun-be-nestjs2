@@ -29,7 +29,7 @@ JsonStore (workflow definitions)     Custom Forms (entityType: workflow)
 | Engine | `packages/nestjs-shared-workflow` | DSL, state machine, CQRS, HTTP controllers |
 | Persistence | `apps/api/src/persistence/workflow/` | Prisma repositories |
 | Integrations | `apps/api/src/integrations/workflow/` | JsonStore, forms, queue, user resolution |
-| Host handlers | `apps/api/src/internal/workflow/` | `@WorkflowTaskHandler`, cron starts |
+| Host handlers | `apps/api/src/modules/workflow/` | `@WorkflowTaskHandler`, cron starts |
 | Definitions | `apps/api/prisma/seeds/json-store/workflow/` | Published BPMN-lite JSON |
 | Forms | `apps/api/prisma/seeds/workflow-forms.*` | Custom form definitions per `formKey` |
 
@@ -270,7 +270,7 @@ Field types: `text`, `number`, `date`, `select` (with `Yes`/`No` or `Approve`/`D
 
 ## Service task handlers (host)
 
-Register handlers in `apps/api/src/internal/workflow/` using `@WorkflowTaskHandler`:
+Register handlers in `apps/api/src/modules/workflow/` using `@WorkflowTaskHandler`:
 
 ```typescript
 import { Injectable } from '@nestjs/common';
@@ -317,7 +317,7 @@ Service tasks always enqueue asynchronously (`ProcessServiceTaskJob`). Idempoten
 Cron jobs enqueue `StartWorkflowCronJob` (class name = BullMQ job name). The host handler calls `WorkflowFacade` directly:
 
 ```typescript
-// apps/api/src/internal/workflow/handlers/start-workflow-cron.handler.ts
+// apps/api/src/modules/workflow/handlers/start-workflow-cron.handler.ts
 @QueueHandler(StartWorkflowCronJob)
 export class StartWorkflowCronHandler { /* ... */ }
 ```
@@ -540,7 +540,7 @@ packages/nestjs-shared-workflow/
 apps/api/
   src/integrations/workflow/               # Port adapters
   src/persistence/workflow/              # Repositories
-  src/internal/workflow/                   # Host handlers
+  src/modules/workflow/                   # Host handlers
   prisma/seeds/json-store/workflow/        # Definition seeds
   prisma/seeds/workflow-forms.seed.ts      # Form seeds
   scripts/workflow/migrate-stage-templates.ts

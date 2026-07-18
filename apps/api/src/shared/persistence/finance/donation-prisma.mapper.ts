@@ -1,9 +1,9 @@
-import { FinanceUserRef } from '../../../internal/finance/domain/types/finance-user-ref';
-import { Donation } from '../../../internal/finance/domain/aggregates/donation/donation.aggregate';
-import { DonationType } from '../../../internal/finance/domain/enums/donation-type.enum';
-import { DonationStatus } from '../../../internal/finance/domain/enums/donation-status.enum';
-import { PaymentMethod } from '../../../internal/finance/domain/enums/payment-method.enum';
-import { UPIPaymentType } from '../../../internal/finance/domain/enums/upi-payment-type.enum';
+import { FinanceUserRef } from '../../../modules/finance/domain/types/finance-user-ref';
+import { Donation } from '../../../modules/finance/domain/aggregates/donation/donation.aggregate';
+import { DonationType } from '../../../modules/finance/domain/enums/donation-type.enum';
+import { DonationStatus } from '../../../modules/finance/domain/enums/donation-status.enum';
+import { PaymentMethod } from '../../../modules/finance/domain/enums/payment-method.enum';
+import { UPIPaymentType } from '../../../modules/finance/domain/enums/upi-payment-type.enum';
 import { Prisma } from '../prisma/client';
 import { MapperUtils } from './mapper-utils';
 import { FullDonation } from './donation.prisma-repository';
@@ -15,11 +15,11 @@ export class DonationPrismaMapper {
 
     const confirmedBy: FinanceUserRef | undefined = p.confirmedBy
       ? {
-          id: p.confirmedBy.id,
-          email: p.confirmedBy.email ?? undefined,
-          firstName: p.confirmedBy.firstName,
-          lastName: p.confirmedBy.lastName,
-        }
+        id: p.confirmedBy.id,
+        email: p.confirmedBy.email ?? undefined,
+        firstName: p.confirmedBy.firstName,
+        lastName: p.confirmedBy.lastName,
+      }
       : undefined;
 
     return new Donation(

@@ -9,7 +9,7 @@ import { PrismaClient } from '../../../shared/persistence/prisma/client';
 export class OnUserDeletedWorkflowHandler implements IEventHandler<UserDeletedEvent> {
   private readonly logger = new Logger(OnUserDeletedWorkflowHandler.name);
 
-  constructor(private readonly prisma: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly prisma: BasePrismaService<PrismaClient>) { }
 
   async handle(event: UserDeletedEvent): Promise<void> {
     const result = await this.prisma.workflowTaskInbox.updateMany({

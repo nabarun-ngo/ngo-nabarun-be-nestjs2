@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, ModuleMetadata } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { DiscoveryModule } from '@nestjs/core';
 import { IReportRepository } from './domain/repositories/report.repository';
@@ -14,10 +14,10 @@ import { TriggerReportGenerationHandler } from './application/jobs/trigger-repor
 
 @Module({})
 export class ReportingModule {
-  static forRoot(): DynamicModule {
+  static forRoot(options: { imports?: ModuleMetadata['imports'] } = {}): DynamicModule {
     return {
       module: ReportingModule,
-      imports: [CqrsModule, DiscoveryModule],
+      imports: [CqrsModule, DiscoveryModule, ...(options.imports ?? [])],
       controllers: [ReportingController],
       providers: [
         { provide: IReportRepository, useClass: ReportPrismaRepository },

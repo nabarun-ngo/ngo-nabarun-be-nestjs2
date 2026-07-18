@@ -7,7 +7,7 @@ import {
   IMeetingCalendarPort,
   MeetingCalendarEvent,
   MeetingCalendarEventInput,
-} from '../../../internal/meeting/application/ports/meeting-calendar.port';
+} from '../../../modules/meeting/application/ports/meeting-calendar.port';
 
 const DEFAULT_CALENDAR_ID = 'primary';
 
@@ -19,7 +19,7 @@ export class GoogleCalendarMeetingAdapter implements IMeetingCalendarPort {
   constructor(
     @Inject(OAUTH_ACCESS_TOKEN_PORT)
     private readonly oauthTokens: IOAuthAccessTokenPort,
-  ) {}
+  ) { }
 
   private async getClient(): Promise<calendar_v3.Calendar> {
     let accessToken: string;

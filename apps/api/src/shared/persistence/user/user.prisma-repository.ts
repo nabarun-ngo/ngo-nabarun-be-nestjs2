@@ -8,12 +8,12 @@ import type {
   UserProfileCreateInput,
   UserProfileUpdateInput,
 } from '../prisma/models/UserProfile';
-import { User, UserRehydrateProps } from '../../../internal/user/domain/aggregates/user/user.aggregate';
-import { IUserRepository, UserFilter } from '../../../internal/user/domain/repositories/user.repository';
-import { PhoneNumber } from '../../../internal/user/domain/value-objects/phone-number.vo';
-import { Address } from '../../../internal/user/domain/value-objects/address.vo';
-import { SocialLink } from '../../../internal/user/domain/entities/social-link.entity';
-import { UserStatus } from '../../../internal/user/domain/enums/user-status.enum';
+import { User, UserRehydrateProps } from '../../../modules/user/domain/aggregates/user/user.aggregate';
+import { IUserRepository, UserFilter } from '../../../modules/user/domain/repositories/user.repository';
+import { PhoneNumber } from '../../../modules/user/domain/value-objects/phone-number.vo';
+import { Address } from '../../../modules/user/domain/value-objects/address.vo';
+import { SocialLink } from '../../../modules/user/domain/entities/social-link.entity';
+import { UserStatus } from '../../../modules/user/domain/enums/user-status.enum';
 
 // ── Row types (shape returned by Prisma when children are included) ────────────
 
@@ -75,8 +75,7 @@ export class UserPrismaRepository
     UserProfileOrderByWithRelationInput,// TOrderBy
     UserInclude                         // TInclude
   >
-  implements IUserRepository
-{
+  implements IUserRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'userProfile');
   }
@@ -170,13 +169,13 @@ export class UserPrismaRepository
         : undefined,
       presentAddress: presentRow
         ? Address.of(presentRow.addressLine1, presentRow.hometown, presentRow.zipCode,
-            presentRow.state, presentRow.district, presentRow.country,
-            presentRow.addressLine2 ?? undefined, presentRow.addressLine3 ?? undefined)
+          presentRow.state, presentRow.district, presentRow.country,
+          presentRow.addressLine2 ?? undefined, presentRow.addressLine3 ?? undefined)
         : undefined,
       permanentAddress: permanentRow
         ? Address.of(permanentRow.addressLine1, permanentRow.hometown, permanentRow.zipCode,
-            permanentRow.state, permanentRow.district, permanentRow.country,
-            permanentRow.addressLine2 ?? undefined, permanentRow.addressLine3 ?? undefined)
+          permanentRow.state, permanentRow.district, permanentRow.country,
+          permanentRow.addressLine2 ?? undefined, permanentRow.addressLine3 ?? undefined)
         : undefined,
     };
 

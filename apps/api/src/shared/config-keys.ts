@@ -1,5 +1,4 @@
 export enum Configkey {
-  ENVIRONMENT = 'ENVIRONMENT',
   APP_NAME = 'APP_NAME',
   APP_SECRET = 'APP_SECRET',
 

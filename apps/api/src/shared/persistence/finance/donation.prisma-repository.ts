@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { BasePrismaService } from '@ce/nestjs-shared-persistence';
 import { BaseFilter, Page } from '@ce/nestjs-shared-core';
 import { Prisma, PrismaClient } from '../prisma/client';
-import { IDonationRepository, DonationFilter } from '../../../internal/finance/domain/repositories/donation.repository';
-import { Donation } from '../../../internal/finance/domain/aggregates/donation/donation.aggregate';
-import { DonationStatus } from '../../../internal/finance/domain/enums/donation-status.enum';
-import { DonationType } from '../../../internal/finance/domain/enums/donation-type.enum';
+import { IDonationRepository, DonationFilter } from '../../../modules/finance/domain/repositories/donation.repository';
+import { Donation } from '../../../modules/finance/domain/aggregates/donation/donation.aggregate';
+import { DonationStatus } from '../../../modules/finance/domain/enums/donation-status.enum';
+import { DonationType } from '../../../modules/finance/domain/enums/donation-type.enum';
 import { DonationPrismaMapper } from './donation-prisma.mapper';
 
 export type FullDonation = Prisma.DonationGetPayload<{

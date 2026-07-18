@@ -1,6 +1,6 @@
 import { Prisma } from '../prisma/client';
-import { Project } from '../../../internal/project/domain/aggregates/project/project.aggregate';
-import { ProjectCategory, ProjectPhase, ProjectStatus } from '../../../internal/project/domain/enums/project.enum';
+import { Project } from '../../../modules/project/domain/aggregates/project/project.aggregate';
+import { ProjectCategory, ProjectPhase, ProjectStatus } from '../../../modules/project/domain/enums/project.enum';
 import { MapperUtils } from '../finance/mapper-utils';
 
 export type ProjectPersistence = Prisma.ProjectGetPayload<{ include: { manager: true; sponsor: true } }>;

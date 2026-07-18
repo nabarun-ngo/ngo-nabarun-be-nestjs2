@@ -14,7 +14,7 @@ export class Auth0UserCreationHandler implements WorkflowTaskHandlerContract {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly workflowFacade: WorkflowFacade,
-  ) {}
+  ) { }
 
   async execute(params: {
     instanceId: string;

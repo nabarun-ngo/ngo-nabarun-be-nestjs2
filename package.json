@@ -10,6 +10,8 @@
     "build": "turbo run build",
     "type-check": "turbo run type-check",
     "clean": "turbo run clean && rimraf .turbo",
+    "start:api": "npm run start --workspace=apps/api",
+    "start:api:watch": "npm run start:watch --workspace=apps/api",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
   },
   "dependencies": {
