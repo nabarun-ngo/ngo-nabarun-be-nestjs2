@@ -1,7 +1,7 @@
-import { Form } from '@ce/nestjs-shared-custom-forms/domain/aggregates/form/form.aggregate';
-import { FormFieldDefinition } from '@ce/nestjs-shared-custom-forms/domain/entities/form-field-definition/form-field-definition.entity';
-import { CustomFieldType } from '@ce/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
-import { FormStatus } from '@ce/nestjs-shared-custom-forms/domain/enums/form-status.enum';
+import { Form } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/aggregates/form/form.aggregate';
+import { FormFieldDefinition } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/entities/form-field-definition/form-field-definition.entity';
+import { CustomFieldType } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
+import { FormStatus } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/enums/form-status.enum';
 import { GetFormDefinitionHandler } from './get-form-definition.handler';
 import { GetFormDefinitionQuery } from './get-form-definition.query';
 import { PublicFormValidatorService } from '../../services/public-form-validator.service';

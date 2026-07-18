@@ -1,4 +1,4 @@
-import { IUserAccessPort } from '@ce/nestjs-shared-auth';
+import { IUserAccessPort } from '@nabarun-ngo/nestjs-shared-auth';
 import { OnUserProfileUpdatedHandler } from './on-user-profile-updated.handler';
 import { UserProfileUpdatedEvent } from '../../../domain/events/user-profile-updated.event';
 import { IIdentityProvider } from '../../../domain/ports/identity-provider.port';

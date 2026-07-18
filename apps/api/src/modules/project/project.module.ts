@@ -1,6 +1,6 @@
 import { DynamicModule, Module, ModuleMetadata } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { createRequiredPortsGuard } from '@ce/nestjs-shared-core';
+import { createRequiredPortsGuard } from '@nabarun-ngo/nestjs-shared-core';
 import { ProjectModuleOptionsSchema } from './project.schema';
 import { IProjectReferenceDataPort } from './application/ports/project-reference-data.port';
 import { IProjectRepository } from './domain/repositories/project.repository';

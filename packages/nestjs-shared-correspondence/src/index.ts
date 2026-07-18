@@ -18,8 +18,8 @@ export {
   type EmailChannelOptions,
   type PushChannelOptions,
   type CorrespondenceChannels,
-} from '@ce/nestjs-shared-core';
-export type { CorrespondenceRecipients as Correspondence2Recipients } from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
+export type { CorrespondenceRecipients as Correspondence2Recipients } from '@nabarun-ngo/nestjs-shared-core';
 
 // ── Domain enums (needed by consumers when building events) ───────────────
 export { ChannelType } from './domain/enums/channel-type.enum';
@@ -30,7 +30,7 @@ export {
   NotificationType,
   NotificationCategory,
   NotificationPriority,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 
 // ── Domain errors (consumers may catch these) ─────────────────────────────
 export {

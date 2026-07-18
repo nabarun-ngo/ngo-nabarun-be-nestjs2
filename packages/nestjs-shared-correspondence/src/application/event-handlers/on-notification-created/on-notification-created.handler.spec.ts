@@ -3,16 +3,16 @@
  * This handler logs the event — verify it handles without throwing.
  */
 import { Logger } from '@nestjs/common';
-import { OnNotificationCreatedHandler } from '@ce/nestjs-shared-correspondence/application/event-handlers/on-notification-created/on-notification-created.handler';
-import { NotificationCreatedEvent, type NotificationCreatedSnapshot } from '@ce/nestjs-shared-correspondence/domain/events/notification-created.event';
-import { Notification } from '@ce/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
-import { NotificationType, NotificationCategory } from '@ce/nestjs-shared-correspondence/domain/enums/notification-type.enum';
+import { OnNotificationCreatedHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/event-handlers/on-notification-created/on-notification-created.handler';
+import { NotificationCreatedEvent, type NotificationCreatedSnapshot } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/notification-created.event';
+import { Notification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
+import { NotificationType, NotificationCategory } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/notification-type.enum';
 
 describe('OnNotificationCreatedHandler', () => {
   let handler: OnNotificationCreatedHandler;
 
   beforeEach(() => {
-    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => { });
     handler = new OnNotificationCreatedHandler();
   });
 

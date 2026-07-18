@@ -9,7 +9,7 @@ import {
   Provider,
 } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { BaseDynamicModule, DynamicModuleAsyncOptions } from '@ce/nestjs-shared-core';
+import { BaseDynamicModule, DynamicModuleAsyncOptions } from '@nabarun-ngo/nestjs-shared-core';
 import {
   CustomFormsModuleOptions,
   CustomFormsOptionsSchema,
@@ -48,7 +48,7 @@ import { FormFieldController } from './presentation/http/form-field.controller';
 import { FormSubmissionController } from './presentation/http/form-submission.controller';
 
 export interface CustomFormsModuleAsyncOptions
-  extends DynamicModuleAsyncOptions<CustomFormsModuleOptions> {}
+  extends DynamicModuleAsyncOptions<CustomFormsModuleOptions> { }
 
 const ENTITY_ACCESS_PORT_MISSING_MSG =
   '[CustomFormsModule] IFormEntityAccessPort is not provided. ' +
@@ -65,7 +65,7 @@ class CustomFormsEntityAccessServiceGuard implements OnApplicationBootstrap {
     @Optional()
     @Inject(IFormEntityAccessPort)
     private readonly accessPort: IFormEntityAccessPort | null,
-  ) {}
+  ) { }
 
   onApplicationBootstrap(): void {
     if (this.accessPort) return;

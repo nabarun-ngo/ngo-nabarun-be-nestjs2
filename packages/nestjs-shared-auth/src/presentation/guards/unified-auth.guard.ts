@@ -20,7 +20,7 @@ import { USE_API_KEY } from '../decorators/use-api-key.decorator';
 import { EXPECTED_RECAPTCHA_ACTION_KEY } from '../decorators/expected-recaptcha-action.decorator';
 import { AUTH2_OPTIONS } from '../../infrastructure/auth-options.token';
 import { Auth2ModuleOptions } from '../../auth-options';
-import { setUserContext } from '@ce/nestjs-shared-core';
+import { setUserContext } from '@nabarun-ngo/nestjs-shared-core';
 
 @Injectable()
 export class UnifiedAuthGuard implements CanActivate {

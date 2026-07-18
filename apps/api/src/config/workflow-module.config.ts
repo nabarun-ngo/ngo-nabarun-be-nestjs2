@@ -1,4 +1,4 @@
-import { WorkflowModule } from "@ce/nestjs-shared-workflow";
+import { WorkflowModule } from "@nabarun-ngo/nestjs-shared-workflow";
 import { WorkflowHostModule } from "../modules/workflow/workflow-host.module";
 import { QUEUE_MODULE } from "./queue-module.config";
 

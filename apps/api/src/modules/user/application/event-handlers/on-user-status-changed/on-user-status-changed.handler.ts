@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { IUserAccessPort } from '@ce/nestjs-shared-auth';
+import { IUserAccessPort } from '@nabarun-ngo/nestjs-shared-auth';
 import { UserStatusChangedEvent } from '../../../domain/events/user-status-changed.event';
 import { UserStatus } from '../../../domain/enums/user-status.enum';
 
@@ -24,14 +24,14 @@ export class OnUserStatusChangedHandler implements IEventHandler<UserStatusChang
 
   constructor(
     @Inject(IUserAccessPort) private readonly userAccess: IUserAccessPort,
-  ) {}
+  ) { }
 
   async handle(event: UserStatusChangedEvent): Promise<void> {
     this.logger.log(
       `User status changed: ${event.userId} ${event.previousStatus} → ${event.newStatus}`,
     );
 
-    if(event.newStatus == UserStatus.DELETED){
+    if (event.newStatus == UserStatus.DELETED) {
       //TODO delete All References like custom fields etc in the database
     }
 

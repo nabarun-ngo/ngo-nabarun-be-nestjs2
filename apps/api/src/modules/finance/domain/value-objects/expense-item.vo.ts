@@ -1,4 +1,4 @@
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 
 export class ExpenseItem {
   constructor(

@@ -13,8 +13,8 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { UnifiedAuthGuard, RequirePermissions, PermissionsGuard } from '@ce/nestjs-shared-auth';
-import { ApiAutoResponse, ApiAutoVoidResponse } from '@ce/nestjs-shared-core';
+import { UnifiedAuthGuard, RequirePermissions, PermissionsGuard } from '@nabarun-ngo/nestjs-shared-auth';
+import { ApiAutoResponse, ApiAutoVoidResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { CreateJsonDocumentCommand } from '../../application/commands/create-json-document/create-json-document.command';
 import { UpdateJsonDocumentCommand } from '../../application/commands/update-json-document/update-json-document.command';
 import { UpsertJsonDocumentCommand } from '../../application/commands/upsert-json-document/upsert-json-document.command';
@@ -36,7 +36,7 @@ export class JsonDocumentController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Get()
   @RequirePermissions('read:json_documents')

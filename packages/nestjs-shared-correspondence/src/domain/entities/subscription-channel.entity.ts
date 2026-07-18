@@ -1,4 +1,4 @@
-import { BaseDomain } from '@ce/nestjs-shared-core';
+import { BaseDomain } from '@nabarun-ngo/nestjs-shared-core';
 import { ChannelType } from '../enums/channel-type.enum';
 import { EmailRole } from '../enums/email-role.enum';
 

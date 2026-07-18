@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
-import { LockingService } from '@ce/nestjs-shared-persistence';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
+import { LockingService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { TransactionRefType, TransactionStatus, TransactionType } from '../../../domain/enums/transaction.enum';
 import { IAccountRepository } from '../../../domain/repositories/account.repository';
 import { ITransactionRepository } from '../../../domain/repositories/transaction.repository';
@@ -17,7 +17,7 @@ export class ReverseTransactionHandler implements ICommandHandler<ReverseTransac
     private readonly eventBus: EventBus,
     private readonly lockingService: LockingService,
     private readonly dmsFacade: DmsFacade,
-  ) {}
+  ) { }
 
   async execute({ params: request }: ReverseTransactionCommand): Promise<void> {
     if (!request.transactionRef || !request.reason) {

@@ -1,10 +1,10 @@
-import { OAuthAccount } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { AccountConnectedEvent } from '@ce/nestjs-shared-token-vault/domain/events/account-connected.event';
-import { AccountDisconnectedEvent } from '@ce/nestjs-shared-token-vault/domain/events/account-disconnected.event';
-import { TokenRefreshedEvent } from '@ce/nestjs-shared-token-vault/domain/events/token-refreshed.event';
-import { TokenRevokedEvent } from '@ce/nestjs-shared-token-vault/domain/events/token-revoked.event';
+import { OAuthAccount } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { AccountConnectedEvent } from '@nabarun-ngo/nestjs-shared-token-vault/domain/events/account-connected.event';
+import { AccountDisconnectedEvent } from '@nabarun-ngo/nestjs-shared-token-vault/domain/events/account-disconnected.event';
+import { TokenRefreshedEvent } from '@nabarun-ngo/nestjs-shared-token-vault/domain/events/token-refreshed.event';
+import { TokenRevokedEvent } from '@nabarun-ngo/nestjs-shared-token-vault/domain/events/token-revoked.event';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 

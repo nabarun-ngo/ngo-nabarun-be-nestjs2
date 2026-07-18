@@ -6,8 +6,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiAutoResponse, SuccessResponse } from '@ce/nestjs-shared-core';
-import { CurrentUser, RequirePermissions, type AuthUser } from '@ce/nestjs-shared-auth';
+import { ApiAutoResponse, SuccessResponse } from '@nabarun-ngo/nestjs-shared-core';
+import { CurrentUser, RequirePermissions, type AuthUser } from '@nabarun-ngo/nestjs-shared-auth';
 import { PublishDefinitionCommand } from '../../application/commands/publish-definition/publish-definition.command';
 import { ForceSkipElementCommand } from '../../application/commands/force-skip-element/force-skip-element.command';
 import { GetStuckWorkflowsQuery } from '../../application/queries/get-stuck-workflows/get-stuck-workflows.query';
@@ -26,7 +26,7 @@ export class WorkflowAdminController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Post('definitions/publish')
   @RequirePermissions('manage:workflow-definitions')

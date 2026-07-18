@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
-import { BaseFilter, Page } from '@ce/nestjs-shared-core';
-import { ResourceSubscription, SubscriptionFilter, SubscriberType, SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { SubscriptionChannel } from '@ce/nestjs-shared-correspondence/domain/entities/subscription-channel.entity';
-import { ChannelType } from '@ce/nestjs-shared-correspondence/domain/enums/channel-type.enum';
-import { EmailRole } from '@ce/nestjs-shared-correspondence/domain/enums/email-role.enum';
-import { IResourceSubscriptionRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
+import { BaseFilter, Page } from '@nabarun-ngo/nestjs-shared-core';
+import { ResourceSubscription, SubscriptionFilter, SubscriberType, SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { SubscriptionChannel } from '@nabarun-ngo/nestjs-shared-correspondence/domain/entities/subscription-channel.entity';
+import { ChannelType } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/channel-type.enum';
+import { EmailRole } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/email-role.enum';
+import { IResourceSubscriptionRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
 
 @Injectable()
 export class ResourceSubscriptionPrismaRepository implements IResourceSubscriptionRepository {
-  constructor(private readonly prisma: BasePrismaService) {}
+  constructor(private readonly prisma: BasePrismaService) { }
 
   async create(subscription: ResourceSubscription): Promise<ResourceSubscription> {
     const row = await (this.prisma).corr2ResourceSubscription.create({

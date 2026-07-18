@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
-import { AuthUser, CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
-import { ApiAutoResponse } from '@ce/nestjs-shared-core';
+import { AuthUser, CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
+import { ApiAutoResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { FieldOption } from '../../domain/value-objects/field-option/field-option.vo';
 import { FieldCondition } from '../../domain/value-objects/field-condition/field-condition.vo';
 import { DependentOptions } from '../../domain/value-objects/dependent-options/dependent-options.vo';
@@ -33,7 +33,7 @@ import {
 @UseGuards(UnifiedAuthGuard)
 @Controller('custom-forms/forms/:formId/fields')
 export class FormFieldController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus) { }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -50,14 +50,14 @@ export class FormFieldController {
       : null;
     const dependentOptions = dto.dependentOptions
       ? DependentOptions.of(
-          dto.dependentOptions.dependsOnKey,
-          Object.fromEntries(
-            Object.entries(dto.dependentOptions.optionMap).map(([k, opts]) => [
-              k,
-              opts.map((o) => FieldOption.of(o.key, o.label)),
-            ]),
-          ),
-        )
+        dto.dependentOptions.dependsOnKey,
+        Object.fromEntries(
+          Object.entries(dto.dependentOptions.optionMap).map(([k, opts]) => [
+            k,
+            opts.map((o) => FieldOption.of(o.key, o.label)),
+          ]),
+        ),
+      )
       : null;
     const validationRules = dto.validationRules
       ? FieldValidationRules.of(dto.validationRules.pattern, dto.validationRules.regexErrMsg, dto.fieldType)
@@ -118,34 +118,34 @@ export class FormFieldController {
       'condition' in dto
         ? dto.condition
           ? FieldCondition.of(
-              dto.condition.dependsOnKey,
-              dto.condition.operator,
-              dto.condition.value,
-            )
+            dto.condition.dependsOnKey,
+            dto.condition.operator,
+            dto.condition.value,
+          )
           : null
         : undefined;
     const dependentOptions =
       'dependentOptions' in dto
         ? dto.dependentOptions
           ? DependentOptions.of(
-              dto.dependentOptions.dependsOnKey,
-              Object.fromEntries(
-                Object.entries(dto.dependentOptions.optionMap).map(([k, opts]) => [
-                  k,
-                  opts.map((o) => FieldOption.of(o.key, o.label)),
-                ]),
-              ),
-            )
+            dto.dependentOptions.dependsOnKey,
+            Object.fromEntries(
+              Object.entries(dto.dependentOptions.optionMap).map(([k, opts]) => [
+                k,
+                opts.map((o) => FieldOption.of(o.key, o.label)),
+              ]),
+            ),
+          )
           : null
         : undefined;
     const validationRules =
       'validationRules' in dto
         ? dto.validationRules
           ? FieldValidationRules.of(
-              dto.validationRules.pattern,
-              dto.validationRules.regexErrMsg,
-              dto.fieldType!,
-            )
+            dto.validationRules.pattern,
+            dto.validationRules.regexErrMsg,
+            dto.fieldType!,
+          )
           : null
         : undefined;
 

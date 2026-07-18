@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { EntityTypePolicyUtil, EntityTypeForbiddenError, EntityAccessDeniedError, checkEntityRecordAccess } from '@ce/nestjs-shared-core';
+import { EntityTypePolicyUtil, EntityTypeForbiddenError, EntityAccessDeniedError, checkEntityRecordAccess } from '@nabarun-ngo/nestjs-shared-core';
 import { Comment2ModuleOptions } from '../../../comment.schema';
 import { COMMENT2_OPTIONS } from '../../../infrastructure/comment-options.token';
 import {
@@ -15,8 +15,7 @@ import { GetCommentsQuery } from './get-comments.query';
 @QueryHandler(GetCommentsQuery)
 @Injectable()
 export class GetCommentsHandler
-  implements IQueryHandler<GetCommentsQuery, GetCommentsResponseDto>
-{
+  implements IQueryHandler<GetCommentsQuery, GetCommentsResponseDto> {
   constructor(
     @Inject(ICommentRepository)
     private readonly repo: ICommentRepository,
@@ -25,7 +24,7 @@ export class GetCommentsHandler
     @Optional()
     @Inject(COMMENT_ENTITY_ACCESS_PORT)
     private readonly accessPort: ICommentEntityAccessPort | null,
-  ) {}
+  ) { }
 
   async execute({ params: q }: GetCommentsQuery): Promise<GetCommentsResponseDto> {
     try {

@@ -9,8 +9,8 @@ import {
   DuplicateAuthorizationCodeError,
   AmbiguousTokenSelectionError,
   OAuthCallbackError,
-} from '@ce/nestjs-shared-token-vault/domain/errors/token-vault.errors';
-import { BusinessError } from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-token-vault/domain/errors/token-vault.errors';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 
 describe('Token-vault2 domain errors', () => {
   describe('ProviderNotConfiguredError', () => {

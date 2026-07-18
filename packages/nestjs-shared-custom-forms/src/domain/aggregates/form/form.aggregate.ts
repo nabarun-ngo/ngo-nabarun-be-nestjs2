@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot } from '@ce/nestjs-shared-core';
+import { AggregateRoot } from '@nabarun-ngo/nestjs-shared-core';
 import { FormStatus } from '../../enums/form-status.enum';
 import { FormFieldDefinition } from '../../entities/form-field-definition/form-field-definition.entity';
 import { CustomFieldType } from '../../enums/custom-field-type.enum';
@@ -54,18 +54,18 @@ export class Form extends AggregateRoot<string> {
     disabledBy?: string,
   ) {
     super(id, createdAt, updatedAt);
-    this.#entityType         = entityType;
-    this.#key                = key;
-    this.#label              = label;
-    this.#description        = description;
-    this.#status             = status;
-    this.#managePermissions  = managePermissions;
-    this.#readPermissions    = readPermissions;
-    this.#writePermissions   = writePermissions;
-    this.#fields             = fields;
-    this.#createdBy           = createdBy;
-    this.#publishedBy         = publishedBy;
-    this.#disabledBy          = disabledBy;
+    this.#entityType = entityType;
+    this.#key = key;
+    this.#label = label;
+    this.#description = description;
+    this.#status = status;
+    this.#managePermissions = managePermissions;
+    this.#readPermissions = readPermissions;
+    this.#writePermissions = writePermissions;
+    this.#fields = fields;
+    this.#createdBy = createdBy;
+    this.#publishedBy = publishedBy;
+    this.#disabledBy = disabledBy;
   }
 
   static create(params: {
@@ -106,11 +106,11 @@ export class Form extends AggregateRoot<string> {
     readPermissions?: string[];
     writePermissions?: string[];
   }): void {
-    if (patch.label !== undefined)              this.#label              = patch.label;
-    if ('description' in patch)                 this.#description        = patch.description ?? null;
-    if (patch.managePermissions !== undefined)  this.#managePermissions  = patch.managePermissions;
-    if (patch.readPermissions !== undefined)    this.#readPermissions    = patch.readPermissions;
-    if (patch.writePermissions !== undefined)   this.#writePermissions   = patch.writePermissions;
+    if (patch.label !== undefined) this.#label = patch.label;
+    if ('description' in patch) this.#description = patch.description ?? null;
+    if (patch.managePermissions !== undefined) this.#managePermissions = patch.managePermissions;
+    if (patch.readPermissions !== undefined) this.#readPermissions = patch.readPermissions;
+    if (patch.writePermissions !== undefined) this.#writePermissions = patch.writePermissions;
     this.touch();
     this.addDomainEvent(new FormUpdatedEvent(this.toSnapshot<FormUpdatedSnapshot>()));
   }
@@ -239,16 +239,16 @@ export class Form extends AggregateRoot<string> {
     return field;
   }
 
-  get entityType(): string                            { return this.#entityType; }
-  get key(): string                                   { return this.#key; }
-  get label(): string                                 { return this.#label; }
-  get description(): string | null                    { return this.#description; }
-  get status(): FormStatus                            { return this.#status; }
-  get managePermissions(): ReadonlyArray<string>      { return this.#managePermissions; }
-  get readPermissions(): ReadonlyArray<string>        { return this.#readPermissions; }
-  get writePermissions(): ReadonlyArray<string>       { return this.#writePermissions; }
-  get fields(): ReadonlyArray<FormFieldDefinition>     { return this.#fields; }
-  get createdBy(): string | undefined                 { return this.#createdBy; }
-  get publishedBy(): string | undefined               { return this.#publishedBy; }
-  get disabledBy(): string | undefined                { return this.#disabledBy; }
+  get entityType(): string { return this.#entityType; }
+  get key(): string { return this.#key; }
+  get label(): string { return this.#label; }
+  get description(): string | null { return this.#description; }
+  get status(): FormStatus { return this.#status; }
+  get managePermissions(): ReadonlyArray<string> { return this.#managePermissions; }
+  get readPermissions(): ReadonlyArray<string> { return this.#readPermissions; }
+  get writePermissions(): ReadonlyArray<string> { return this.#writePermissions; }
+  get fields(): ReadonlyArray<FormFieldDefinition> { return this.#fields; }
+  get createdBy(): string | undefined { return this.#createdBy; }
+  get publishedBy(): string | undefined { return this.#publishedBy; }
+  get disabledBy(): string | undefined { return this.#disabledBy; }
 }

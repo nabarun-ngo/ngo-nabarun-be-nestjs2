@@ -1,8 +1,8 @@
 import { calendar_v3 } from '@googleapis/calendar';
 import { OAuth2Client } from 'googleapis-common';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { BusinessError, IOAuthAccessTokenPort, OAUTH_ACCESS_TOKEN_PORT } from '@ce/nestjs-shared-core';
-import { GOOGLE_SCOPES } from '@ce/nestjs-shared-token-vault';
+import { BusinessError, IOAuthAccessTokenPort, OAUTH_ACCESS_TOKEN_PORT } from '@nabarun-ngo/nestjs-shared-core';
+import { GOOGLE_SCOPES } from '@nabarun-ngo/nestjs-shared-token-vault';
 import {
   IMeetingCalendarPort,
   MeetingCalendarEvent,

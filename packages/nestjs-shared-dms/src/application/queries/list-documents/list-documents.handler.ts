@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { EntityTypePolicyUtil, EntityTypeForbiddenError, EntityAccessDeniedError, checkEntityRecordAccess } from '@ce/nestjs-shared-core';
+import { EntityTypePolicyUtil, EntityTypeForbiddenError, EntityAccessDeniedError, checkEntityRecordAccess } from '@nabarun-ngo/nestjs-shared-core';
 import { IDocumentEntityAccessPort } from '../../../domain/ports/entity-access.port';
 import { IDocumentRepository } from '../../../domain/repositories/document.repository';
 import { DMS2_OPTIONS } from '../../../infrastructure/dms-options.application-token';
@@ -20,7 +20,7 @@ export class ListDocumentsHandler implements IQueryHandler<ListDocumentsQuery, L
     @Optional()
     @Inject(IDocumentEntityAccessPort)
     private readonly accessPort: IDocumentEntityAccessPort | null,
-  ) {}
+  ) { }
 
   async execute(query: ListDocumentsQuery): Promise<ListDocumentsResponseDto> {
     const { entityType, entityId, userId, userPermissions } = query;

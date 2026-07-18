@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import {
   IWorkflowInboxRepository,
   InboxTaskStatus,
@@ -10,7 +10,7 @@ import {
   WorkflowInboxTaskRecord,
   WorkflowTaskNotClaimableError,
   WorkflowTaskNotCompletableError,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { Prisma, PrismaClient } from '../prisma/client';
 import {
   WorkflowTaskInboxWhereInput,
@@ -55,8 +55,7 @@ export class WorkflowInboxPrismaRepository
     any,
     WorkflowTaskInboxOrderByWithRelationInput
   >
-  implements IWorkflowInboxRepository
-{
+  implements IWorkflowInboxRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'workflowTaskInbox');
   }

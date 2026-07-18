@@ -2,7 +2,7 @@ import { Logger } from "@nestjs/common";
 import {
   getTraceId,
   getUserContext,
-} from "@ce/nestjs-shared-core";
+} from "@nabarun-ngo/nestjs-shared-core";
 
 const logger = new Logger("PrismaAudit");
 
@@ -61,13 +61,13 @@ export function createAuditExtension(
             if (isAuditModel(model)) return query(args);
             const oldValues =
               auditedModelSet.has(model) &&
-              auditCaptureOldValuesModelSet.has(model)
+                auditCaptureOldValuesModelSet.has(model)
                 ? await findExistingRecord(
-                    client,
-                    model,
-                    args.where,
-                    args.data,
-                  )
+                  client,
+                  model,
+                  args.where,
+                  args.data,
+                )
                 : null;
             const result = await query(args);
             if (auditedModelSet.has(model)) {
@@ -89,11 +89,11 @@ export function createAuditExtension(
             if (isAuditModel(model)) return query(args);
             const oldValues = auditedModelSet.has(model)
               ? await findExistingRecord(
-                  client,
-                  model,
-                  args.where,
-                  args.update,
-                )
+                client,
+                model,
+                args.where,
+                args.update,
+              )
               : null;
             const result = await query(args);
             if (auditedModelSet.has(model)) {

@@ -20,8 +20,8 @@ import {
   ApiAutoVoidResponse,
   Page,
   PaginatedQueryDto,
-} from '@ce/nestjs-shared-core';
-import { AuthUser, CurrentUser, IgnoreCaptcha, Public, RequirePermissions, StrictThrottle } from '@ce/nestjs-shared-auth';
+} from '@nabarun-ngo/nestjs-shared-core';
+import { AuthUser, CurrentUser, IgnoreCaptcha, Public, RequirePermissions, StrictThrottle } from '@nabarun-ngo/nestjs-shared-auth';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { OAUTH_PROVIDER_REGISTRY } from '../../application/ports/oauth-provider.port';
 import type { IOAuthProvider } from '../../application/ports/oauth-provider.port';
@@ -44,7 +44,7 @@ export class OAuthController {
     @Inject(OAUTH_PROVIDER_REGISTRY) private readonly registry: Map<string, IOAuthProvider>,
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   private resolveProvider(provider: string): IOAuthProvider {
     const p = this.registry.get(provider.toLowerCase());

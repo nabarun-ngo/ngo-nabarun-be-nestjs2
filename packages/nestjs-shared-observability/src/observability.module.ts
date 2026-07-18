@@ -1,7 +1,7 @@
 import { HttpModule } from "@nestjs/axios";
 import { DynamicModule, Global, Module, Type } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
-import { BaseDynamicModule, DynamicModuleAsyncOptions } from "@ce/nestjs-shared-core";
+import { BaseDynamicModule, DynamicModuleAsyncOptions } from "@nabarun-ngo/nestjs-shared-core";
 import { IAlertPort } from "./domain/ports/alert.port";
 import { AppTechnicalErrorHandler } from "./application/handlers/app-technical-error.handler";
 import { SlackAlertAdapter } from "./infrastructure/adapters/slack-alert.adapter";

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BaseFilter, Page } from '@ce/nestjs-shared-core';
+import { BaseFilter, Page } from '@nabarun-ngo/nestjs-shared-core';
 import { QueueJob } from '../../domain/aggregates/queue-job.aggregate';
 import { IQueueJobRepository, QueueJobFilter } from '../../domain/repositories/queue-job.repository';
 
@@ -10,11 +10,11 @@ import { IQueueJobRepository, QueueJobFilter } from '../../domain/repositories/q
  */
 @Injectable()
 export class NullQueueJobRepository implements IQueueJobRepository {
-  async create(entity: QueueJob): Promise<QueueJob>                                       { return entity; }
-  async update(_id: string, entity: QueueJob): Promise<QueueJob>                          { return entity; }
-  async findById(_id: string): Promise<QueueJob | null>                                   { return null; }
-  async findAll(_filter?: QueueJobFilter): Promise<QueueJob[]>                            { return []; }
-  async findPaged(_filter?: BaseFilter<QueueJobFilter>): Promise<Page<QueueJob>>          { return new Page<QueueJob>([], 0, 0, 0); }
-  async delete(_id: string): Promise<void>                                                {}
-  async count(_filter: QueueJobFilter): Promise<number>                                   { return 0; }
+  async create(entity: QueueJob): Promise<QueueJob> { return entity; }
+  async update(_id: string, entity: QueueJob): Promise<QueueJob> { return entity; }
+  async findById(_id: string): Promise<QueueJob | null> { return null; }
+  async findAll(_filter?: QueueJobFilter): Promise<QueueJob[]> { return []; }
+  async findPaged(_filter?: BaseFilter<QueueJobFilter>): Promise<Page<QueueJob>> { return new Page<QueueJob>([], 0, 0, 0); }
+  async delete(_id: string): Promise<void> { }
+  async count(_filter: QueueJobFilter): Promise<number> { return 0; }
 }

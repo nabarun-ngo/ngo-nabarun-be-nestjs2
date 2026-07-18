@@ -1,12 +1,12 @@
 /**
  * ResourceSubscription aggregate — pure domain unit tests.
  */
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { SubscriberType } from '@ce/nestjs-shared-correspondence/domain/enums/subscriber-type.enum';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
-import { ChannelType } from '@ce/nestjs-shared-correspondence/domain/enums/channel-type.enum';
-import { EmailRole } from '@ce/nestjs-shared-correspondence/domain/enums/email-role.enum';
-import { SubscriptionDeactivatedEvent } from '@ce/nestjs-shared-correspondence/domain/events/subscription-deactivated.event';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { SubscriberType } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscriber-type.enum';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { ChannelType } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/channel-type.enum';
+import { EmailRole } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/email-role.enum';
+import { SubscriptionDeactivatedEvent } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/subscription-deactivated.event';
 
 const makeUser = () =>
   ResourceSubscription.createUserSubscription({

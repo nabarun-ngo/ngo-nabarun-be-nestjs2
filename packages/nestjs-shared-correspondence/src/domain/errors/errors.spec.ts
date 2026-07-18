@@ -11,7 +11,7 @@ import {
   NotificationAlreadyArchivedError,
   TokenNotAvailableError,
   EmailDeliveryFailedError,
-} from '@ce/nestjs-shared-correspondence/domain/errors/correspondence.errors';
+} from '@nabarun-ngo/nestjs-shared-correspondence/domain/errors/correspondence.errors';
 
 describe('Domain errors', () => {
   describe('NotificationNotFoundError', () => {

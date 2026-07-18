@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { QueueHandler, IQueueHandler, Job } from '@ce/nestjs-shared-queue';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { QueueHandler, IQueueHandler, Job } from '@nabarun-ngo/nestjs-shared-queue';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { DonationType } from '../../domain/enums/donation-type.enum';
 import { CreateDonationCommand } from '../commands/create-donation/create-donation.command';
 import { CreateDonationJob } from './create-donation.job';
@@ -11,7 +11,7 @@ import { CreateDonationJob } from './create-donation.job';
 export class CreateDonationJobHandler implements IQueueHandler<CreateDonationJob> {
   private readonly logger = new Logger(CreateDonationJobHandler.name);
 
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus) { }
 
   async execute(job: Job<CreateDonationJob>): Promise<void> {
     const { userId, fullName, amount, firstDate, lastDate } = job.data.payload;

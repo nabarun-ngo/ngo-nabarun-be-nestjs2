@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient } from '../../../../shared/persistence/prisma/client';
 import { randomUUID } from 'crypto';
 
 @Injectable()
 export class NewsletterSubscriptionRepository {
-  constructor(private readonly database: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly database: BasePrismaService<PrismaClient>) { }
 
   private get client(): PrismaClient {
     return this.database.client;

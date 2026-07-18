@@ -1,9 +1,9 @@
 /**
  * GetUnreadCountHandler unit tests.
  */
-import { GetUnreadCountHandler } from '@ce/nestjs-shared-correspondence/application/queries/get-unread-count/get-unread-count.handler';
-import { GetUnreadCountQuery } from '@ce/nestjs-shared-correspondence/application/queries/get-unread-count/get-unread-count.query';
-import { IUserNotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
+import { GetUnreadCountHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/queries/get-unread-count/get-unread-count.handler';
+import { GetUnreadCountQuery } from '@nabarun-ngo/nestjs-shared-correspondence/application/queries/get-unread-count/get-unread-count.query';
+import { IUserNotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
 
 function buildHandler(count = 0) {
   const repo: jest.Mocked<IUserNotificationRepository> = {

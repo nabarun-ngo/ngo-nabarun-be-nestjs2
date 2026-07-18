@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { Redis } from "ioredis";
-import { Page } from "@ce/nestjs-shared-core";
+import { Page } from "@nabarun-ngo/nestjs-shared-core";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -39,7 +39,7 @@ export interface TimelineOptions {
 export class RedisStoreService {
   private readonly logger = new Logger(RedisStoreService.name);
 
-  constructor(private readonly redis: Redis) {}
+  constructor(private readonly redis: Redis) { }
 
   // =========================================================================
   // Key Helpers

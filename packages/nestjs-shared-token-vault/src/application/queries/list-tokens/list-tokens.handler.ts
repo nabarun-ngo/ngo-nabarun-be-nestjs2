@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject, Injectable } from '@nestjs/common';
-import { Page } from '@ce/nestjs-shared-core';
+import { Page } from '@nabarun-ngo/nestjs-shared-core';
 import { ListTokensQuery } from './list-tokens.query';
 import { IOAuthTokenRepository } from '../../../domain/repositories/oauth-token.repository';
 import type { IOAuthTokenRepository as ITokenRepo } from '../../../domain/repositories/oauth-token.repository';
@@ -13,7 +13,7 @@ import { OAuthTokenFilter } from '../../../domain/aggregates/oauth-token/oauth-t
 export class ListTokensHandler implements IQueryHandler<ListTokensQuery, Page<OAuthTokenDto>> {
   constructor(
     @Inject(IOAuthTokenRepository) private readonly tokenRepo: ITokenRepo,
-  ) {}
+  ) { }
 
   async execute(query: ListTokensQuery): Promise<Page<OAuthTokenDto>> {
     const { provider, ownerSub, isAdmin, pageIndex = 0, pageSize = 20 } = query.params;

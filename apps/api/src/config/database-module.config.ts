@@ -1,5 +1,5 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DatabaseModule } from '@ce/nestjs-shared-persistence';
+import { DatabaseModule } from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../shared/persistence/prisma/client';
 import { Configkey } from '../shared/config-keys';

@@ -6,23 +6,23 @@ import {
   IRoleRepository,
   IUserRoleGroupRepository,
   IUserRoleRepository,
-} from '@ce/nestjs-shared-auth';
-import { ICommentRepository } from '@ce/nestjs-shared-comment';
+} from '@nabarun-ngo/nestjs-shared-auth';
+import { ICommentRepository } from '@nabarun-ngo/nestjs-shared-comment';
 import {
   IFormRepository,
   IFormSubmissionRepository,
-} from '@ce/nestjs-shared-custom-forms';
+} from '@nabarun-ngo/nestjs-shared-custom-forms';
 import {
   INotificationRepository,
   IResourceSubscriptionRepository,
   IUserNotificationRepository,
-} from '@ce/nestjs-shared-correspondence';
-import { IDocumentRepository } from '@ce/nestjs-shared-dms';
-import { IJsonDocumentRepository } from '@ce/nestjs-shared-json-store';
+} from '@nabarun-ngo/nestjs-shared-correspondence';
+import { IDocumentRepository } from '@nabarun-ngo/nestjs-shared-dms';
+import { IJsonDocumentRepository } from '@nabarun-ngo/nestjs-shared-json-store';
 import {
   IOAuthAccountRepository,
   IOAuthTokenRepository,
-} from '@ce/nestjs-shared-token-vault';
+} from '@nabarun-ngo/nestjs-shared-token-vault';
 import {
   IWorkflowEventLogRepository,
   IWorkflowIdempotencyRepository,
@@ -30,7 +30,7 @@ import {
   IWorkflowInstanceRepository,
   IWorkflowOutboxRepository,
   IWorkflowTokenRepository,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { ApiKeyPrismaRepository } from './auth/api-key.prisma-repository';
 import { PermissionPrismaRepository } from './auth/permission.prisma-repository';
 import { RoleGroupPrismaRepository } from './auth/role-group.prisma-repository';

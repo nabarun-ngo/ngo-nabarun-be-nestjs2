@@ -1,13 +1,13 @@
 /**
  * DocumentPrismaRepository unit tests.
- * Ported and updated from test/dms/document.repository.spec.ts (stale @ce/nestjs-shared-dms/* imports).
+ * Ported and updated from test/dms/document.repository.spec.ts (stale @nabarun-ngo/nestjs-shared-dms/* imports).
  * All five mapping hooks + supportsSoftDelete() are covered.
  */
 import 'reflect-metadata';
 import { DocumentPrismaRepository } from './document.prisma-repository';
-import { Document } from '@ce/nestjs-shared-dms/domain/aggregates/document.aggregate';
-import { DocumentMapping } from '@ce/nestjs-shared-dms/domain/entities/document-mapping.entity';
-import { DocumentVisibility } from '@ce/nestjs-shared-dms/domain/enums/document-visibility.enum';
+import { Document } from '@nabarun-ngo/nestjs-shared-dms/domain/aggregates/document.aggregate';
+import { DocumentMapping } from '@nabarun-ngo/nestjs-shared-dms/domain/entities/document-mapping.entity';
+import { DocumentVisibility } from '@nabarun-ngo/nestjs-shared-dms/domain/enums/document-visibility.enum';
 
 type DocumentReferenceRow = {
   id: string;

@@ -1,7 +1,7 @@
-import { ListTokensHandler } from '@ce/nestjs-shared-token-vault/application/queries/list-tokens/list-tokens.handler';
-import { ListTokensQuery } from '@ce/nestjs-shared-token-vault/application/queries/list-tokens/list-tokens.query';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+import { ListTokensHandler } from '@nabarun-ngo/nestjs-shared-token-vault/application/queries/list-tokens/list-tokens.handler';
+import { ListTokensQuery } from '@nabarun-ngo/nestjs-shared-token-vault/application/queries/list-tokens/list-tokens.query';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 const FUTURE = new Date(Date.now() + 3_600_000);

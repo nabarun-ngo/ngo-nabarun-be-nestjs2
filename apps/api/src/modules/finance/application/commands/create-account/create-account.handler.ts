@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { AuthFacade } from '@ce/nestjs-shared-auth';
-import { BusinessException, IUserLookupPort } from '@ce/nestjs-shared-core';
+import { AuthFacade } from '@nabarun-ngo/nestjs-shared-auth';
+import { BusinessException, IUserLookupPort } from '@nabarun-ngo/nestjs-shared-core';
 import { Account } from '../../../domain/aggregates/account/account.aggregate';
 import { AccountStatus } from '../../../domain/enums/account-status.enum';
 import { AccountType } from '../../../domain/enums/account-type.enum';
@@ -16,7 +16,7 @@ export class CreateAccountHandler implements ICommandHandler<CreateAccountComman
     @Inject(IUserLookupPort) private readonly userLookup: IUserLookupPort,
     private readonly authFacade: AuthFacade,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute({ params: request }: CreateAccountCommand): Promise<Account> {
     const user = await this.userLookup.findById(request.accountHolderId);

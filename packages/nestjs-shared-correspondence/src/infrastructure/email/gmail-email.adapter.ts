@@ -3,7 +3,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import {
   IOAuthAccessTokenPort,
   OAUTH_ACCESS_TOKEN_PORT,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 import { OAuth2Client } from 'googleapis-common';
 import { IEmailSenderPort, EmailMessage } from '../../domain/ports/email-sender.port';
 import { CORRESPONDENCE2_OPTIONS } from '../../correspondence-options.token';
@@ -20,7 +20,7 @@ export class GmailEmailAdapter implements IEmailSenderPort {
     private readonly oauthTokens: IOAuthAccessTokenPort,
     @Inject(CORRESPONDENCE2_OPTIONS)
     private readonly options: Correspondence2ModuleOptions,
-  ) {}
+  ) { }
 
   async send(message: EmailMessage): Promise<void> {
     const accessToken = await this.oauthTokens.getAccessToken({

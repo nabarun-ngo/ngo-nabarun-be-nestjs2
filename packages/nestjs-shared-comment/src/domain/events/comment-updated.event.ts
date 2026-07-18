@@ -1,4 +1,4 @@
-import { DomainEvent } from '@ce/nestjs-shared-core';
+import { DomainEvent } from '@nabarun-ngo/nestjs-shared-core';
 import type { Comment } from '../aggregates/comment.aggregate';
 import { MentionInput } from '../repositories/mention-input';
 

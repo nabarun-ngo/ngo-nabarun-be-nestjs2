@@ -1,6 +1,6 @@
 import { ExpenseStatus, ExpenseRefType } from '../../enums/expense.enum';
 import { ExpenseItem } from '../../value-objects/expense-item.vo';
-import { AggregateRoot, BusinessException, generateUniqueNDigitNumber } from '@ce/nestjs-shared-core';
+import { AggregateRoot, BusinessException, generateUniqueNDigitNumber } from '@nabarun-ngo/nestjs-shared-core';
 import { ExpenseRecordedEvent } from '../../events/expense-recorded.event';
 import { FinanceUserRef } from '../../types/finance-user-ref';
 

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import {
   CreateWorkflowOutboxInput,
   IWorkflowOutboxRepository,
   WorkflowOutboxRecord,
   WorkflowOutboxStatus,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { Prisma, PrismaClient } from '../prisma/client';
 
 type WorkflowOutboxRow = {
@@ -21,7 +21,7 @@ type WorkflowOutboxRow = {
 
 @Injectable()
 export class WorkflowOutboxPrismaRepository implements IWorkflowOutboxRepository {
-  constructor(private readonly database: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly database: BasePrismaService<PrismaClient>) { }
 
   private get client(): PrismaClient {
     return this.database.client;

@@ -6,7 +6,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { QueryBus } from '@nestjs/cqrs';
-import { ApiAutoPagedResponse, ApiAutoResponse, BaseFilter, PagedResponse, PaginatedQueryDto } from '@ce/nestjs-shared-core';
+import { ApiAutoPagedResponse, ApiAutoResponse, BaseFilter, PagedResponse, PaginatedQueryDto } from '@nabarun-ngo/nestjs-shared-core';
 import { RoleGroupFilter } from '../../domain/aggregates/role-group/role-group.aggregate';
 import { ListRoleGroupsQuery } from '../../application/queries/list-role-groups/list-role-groups.query';
 import { GetRoleGroupQuery } from '../../application/queries/get-role-group/get-role-group.query';
@@ -18,7 +18,7 @@ import { RequirePermissions } from '../decorators/require-permissions.decorator'
 @ApiTags('Auth2 — Role Groups')
 @Controller('auth/role-groups')
 export class RoleGroupsController {
-  constructor(private readonly queryBus: QueryBus) {}
+  constructor(private readonly queryBus: QueryBus) { }
 
   @Get()
   @RequirePermissions('read:role_groups')

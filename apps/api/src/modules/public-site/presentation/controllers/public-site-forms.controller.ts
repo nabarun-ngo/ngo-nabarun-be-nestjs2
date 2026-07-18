@@ -5,8 +5,8 @@ import {
   ExpectedRecaptchaAction,
   Public,
   PublicFormPostThrottle,
-} from '@ce/nestjs-shared-auth';
-import { ApiAutoResponse } from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-auth';
+import { ApiAutoResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { SubmitPublicFormCommand } from '../../application/commands/submit-public-form/submit-public-form.command';
 import { SubmitPublicFormResult } from '../../application/commands/submit-public-form/submit-public-form.handler';
 
@@ -14,7 +14,7 @@ import { SubmitPublicFormResult } from '../../application/commands/submit-public
 @Controller('public-site/forms')
 @Public()
 export class PublicSiteFormsController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus) { }
 
   @Post('submit-contact-request')
   @PublicFormPostThrottle()

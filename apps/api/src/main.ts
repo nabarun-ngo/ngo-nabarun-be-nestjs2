@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { RequestMethod } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { applyConfig } from '@ce/nestjs-shared-core';
+import { applyConfig } from '@nabarun-ngo/nestjs-shared-core';
 import { AppModule } from './app.module';
 import { Configkey } from './shared/config-keys';
 

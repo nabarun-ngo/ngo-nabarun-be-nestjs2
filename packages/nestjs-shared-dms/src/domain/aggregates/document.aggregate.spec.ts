@@ -5,7 +5,7 @@ import { DocumentVisibility } from '../enums/document-visibility.enum';
 import { DocumentUploadedEvent } from '../events/document-uploaded.event';
 import { DocumentDeletedEvent } from '../events/document-deleted.event';
 import { DocumentRenamedEvent } from '../events/document-renamed.event';
-import { BusinessError } from '@ce/nestjs-shared-core';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 
 const BASE_PARAMS = {
   fileName: 'report.pdf',

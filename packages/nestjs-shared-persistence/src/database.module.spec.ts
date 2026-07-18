@@ -1,6 +1,6 @@
 import { DynamicModule } from '@nestjs/common';
-import { DatabaseModule, DATABASE_OPTIONS } from '@ce/nestjs-shared-persistence/database.module';
-import { PRISMA_CLIENT } from '@ce/nestjs-shared-persistence/prisma/base-prisma.service';
+import { DatabaseModule, DATABASE_OPTIONS } from '@nabarun-ngo/nestjs-shared-persistence/database.module';
+import { PRISMA_CLIENT } from '@nabarun-ngo/nestjs-shared-persistence/prisma/base-prisma.service';
 
 const validOptions = {
   postgresUrl: 'postgresql://user:pass@localhost:5432/db',

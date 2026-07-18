@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot, BusinessException } from '@ce/nestjs-shared-core';
+import { AggregateRoot, BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { BeneficiaryGender, BeneficiaryStatus, BeneficiaryType } from '../../enums/beneficiary.enum';
 
 export interface BeneficiaryFilter { projectId?: string; status?: BeneficiaryStatus; type?: BeneficiaryType; category?: string; }

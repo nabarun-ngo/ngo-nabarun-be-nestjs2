@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { Transaction } from '../entities/transaction.entity';
 import { TransactionRefType, TransactionStatus, TransactionType } from '../enums/transaction.enum';
 
@@ -16,4 +16,4 @@ export interface TransactionFilter {
 
 export const ITransactionRepository = Symbol('ITransactionRepository');
 
-export interface ITransactionRepository extends IRepository<Transaction, string, TransactionFilter> {}
+export interface ITransactionRepository extends IRepository<Transaction, string, TransactionFilter> { }

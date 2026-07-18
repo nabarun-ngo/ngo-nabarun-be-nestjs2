@@ -14,8 +14,8 @@ import { ApiBearerAuth, ApiProperty, ApiPropertyOptional, ApiSecurity, ApiTags }
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { FormStatus } from '../../domain/enums/form-status.enum';
-import { AuthUser, CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
-import { ApiAutoResponse } from '@ce/nestjs-shared-core';
+import { AuthUser, CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
+import { ApiAutoResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { CreateFormCommand } from '../../application/commands/create-form/create-form.command';
 import { UpdateFormCommand } from '../../application/commands/update-form/update-form.command';
 import { PublishFormCommand } from '../../application/commands/publish-form/publish-form.command';
@@ -49,7 +49,7 @@ export class FormController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

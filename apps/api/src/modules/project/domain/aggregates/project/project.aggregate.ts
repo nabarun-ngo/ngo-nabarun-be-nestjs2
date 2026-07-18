@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot, BusinessException } from '@ce/nestjs-shared-core';
+import { AggregateRoot, BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { ProjectCategory, ProjectPhase, ProjectStatus } from '../../enums/project.enum';
 
 export interface ProjectFilter {

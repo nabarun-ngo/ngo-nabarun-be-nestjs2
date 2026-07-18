@@ -2,18 +2,18 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient } from '../prisma/client';
 import {
   DocumentReferenceWhereInput,
   DocumentReferenceWhereUniqueInput,
   DocumentReferenceOrderByWithRelationInput,
 } from '../prisma/models';
-import { DocumentFilter, IDocumentRepository } from '@ce/nestjs-shared-dms';
-import { Document } from '@ce/nestjs-shared-dms/domain/aggregates/document.aggregate';
-import { DocumentMapping } from '@ce/nestjs-shared-dms/domain/entities/document-mapping.entity';
-import { FileMetadata } from '@ce/nestjs-shared-dms/domain/value-objects/file-metadata.vo';
-import { DocumentVisibility } from '@ce/nestjs-shared-dms/domain/enums/document-visibility.enum';
+import { DocumentFilter, IDocumentRepository } from '@nabarun-ngo/nestjs-shared-dms';
+import { Document } from '@nabarun-ngo/nestjs-shared-dms/domain/aggregates/document.aggregate';
+import { DocumentMapping } from '@nabarun-ngo/nestjs-shared-dms/domain/entities/document-mapping.entity';
+import { FileMetadata } from '@nabarun-ngo/nestjs-shared-dms/domain/value-objects/file-metadata.vo';
+import { DocumentVisibility } from '@nabarun-ngo/nestjs-shared-dms/domain/enums/document-visibility.enum';
 
 type MappingRow = {
   id: string;
@@ -77,8 +77,7 @@ export class DocumentPrismaRepository
     DocumentReferenceOrderByWithRelationInput,
     typeof INCLUDE_MAPPINGS
   >
-  implements IDocumentRepository
-{
+  implements IDocumentRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'documentReference');
   }
@@ -213,13 +212,13 @@ export class DocumentPrismaRepository
       ...(filter?.uploadedById ? { uploadedById: filter.uploadedById } : {}),
       ...(filter?.refType || filter?.refId
         ? {
-            mappings: {
-              some: {
-                ...(filter?.refType ? { entityType: filter.refType } : {}),
-                ...(filter?.refId ? { entityId: filter.refId } : {}),
-              },
+          mappings: {
+            some: {
+              ...(filter?.refType ? { entityType: filter.refType } : {}),
+              ...(filter?.refId ? { entityId: filter.refId } : {}),
             },
-          }
+          },
+        }
         : {}),
     };
   }

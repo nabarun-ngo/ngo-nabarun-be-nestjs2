@@ -1,8 +1,8 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { BypassSuccessEnvelope } from '@ce/nestjs-shared-core';
-import { PublicGetThrottle, UseApiKey } from '@ce/nestjs-shared-auth';
+import { BypassSuccessEnvelope } from '@nabarun-ngo/nestjs-shared-core';
+import { PublicGetThrottle, UseApiKey } from '@nabarun-ngo/nestjs-shared-auth';
 import { GetStaticContentQuery } from '../../application/queries/get-static-content/get-static-content.query';
 import { GetDynamicContentQuery } from '../../application/queries/get-dynamic-content/get-dynamic-content.query';
 import { GetFormDefinitionQuery } from '../../application/queries/get-form-definition/get-form-definition.query';
@@ -13,7 +13,7 @@ import { GetFormDefinitionQuery } from '../../application/queries/get-form-defin
 @ApiSecurity('api-key')
 @BypassSuccessEnvelope()
 export class PublicSiteContentsController {
-  constructor(private readonly queryBus: QueryBus) {}
+  constructor(private readonly queryBus: QueryBus) { }
 
   @Get('static')
   @PublicGetThrottle()

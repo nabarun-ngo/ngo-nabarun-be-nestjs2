@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EventBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { AuthFacade } from '@ce/nestjs-shared-auth';
-import { CorrespondenceRequestEvent } from '@ce/nestjs-shared-correspondence';
+import { AuthFacade } from '@nabarun-ngo/nestjs-shared-auth';
+import { CorrespondenceRequestEvent } from '@nabarun-ngo/nestjs-shared-correspondence';
 import { UserCreatedEvent } from '../../../domain/events/user-created.event';
 import { USER_OPTIONS } from '../../../infrastructure/user-options.token';
 import type { UserModuleOptions } from '../../../user.schema';

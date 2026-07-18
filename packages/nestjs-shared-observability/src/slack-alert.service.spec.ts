@@ -1,5 +1,5 @@
 import { of, throwError } from 'rxjs';
-import { SlackAlertAdapter } from '@ce/nestjs-shared-observability/infrastructure/adapters/slack-alert.adapter';
+import { SlackAlertAdapter } from '@nabarun-ngo/nestjs-shared-observability/infrastructure/adapters/slack-alert.adapter';
 
 function makeService(options: any) {
   const post = jest.fn().mockReturnValue(of({ data: 'ok' }));

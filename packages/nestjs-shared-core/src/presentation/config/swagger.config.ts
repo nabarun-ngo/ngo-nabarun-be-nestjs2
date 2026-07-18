@@ -3,6 +3,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { PagedResponse } from '../models/paged-response';
 import { ErrorResponse, SuccessResponse } from '../models/response-model';
 
+
 export interface SwaggerOptions {
   title?: string;
   description?: string;
@@ -55,9 +56,9 @@ export function configureSwagger(app: INestApplication, options: SwaggerOptions 
         ['get', 'post', 'put', 'delete', 'patch', 'options', 'head'].includes(method)
       ) {
         const operation: any = pathItem[method];
-        if (operation && operation['x-required-permissions']) {
+        if (operation) {
           const permissions = operation['x-required-permissions'] as string[];
-          const requireAll = operation['x-require-all-permissions'] === true;
+          const requireAll = operation['x-require-all-permissions'] == true;
 
           if (Array.isArray(permissions) && permissions.length > 0) {
             const permissionList = permissions.map((p) => `- \`${p}\``).join('\n');

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService, PrismaCrudRepositoryBase } from '@ce/nestjs-shared-persistence';
+import { BasePrismaService, PrismaCrudRepositoryBase } from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient, Prisma } from '../prisma/client';
 import type {
   UserProfileWhereInput,

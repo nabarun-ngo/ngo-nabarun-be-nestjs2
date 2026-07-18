@@ -1,4 +1,4 @@
-import { BaseDomain, BusinessException, generateUniqueNDigitNumber } from '@ce/nestjs-shared-core';
+import { BaseDomain, BusinessException, generateUniqueNDigitNumber } from '@nabarun-ngo/nestjs-shared-core';
 import { TransactionRefType, TransactionStatus, TransactionType } from '../enums/transaction.enum';
 
 /**

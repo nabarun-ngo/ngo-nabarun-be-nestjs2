@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
-import { ErrorResponse, getTraceId, TechnicalErrorPayload } from "@ce/nestjs-shared-core";
+import { ErrorResponse, getTraceId, TechnicalErrorPayload } from "@nabarun-ngo/nestjs-shared-core";
 import { IAlertPort } from "../../domain/ports/alert.port";
 import { AlertMessage } from "../../domain/value-objects/alert-message.vo";
 import { AppTechnicalError } from "../events/app-technical-error.event";
@@ -25,7 +25,7 @@ export class AppTechnicalErrorHandler implements IEventHandler<AppTechnicalError
   constructor(
     @Inject(IAlertPort)
     private readonly alertPort: IAlertPort,
-  ) {}
+  ) { }
 
   async handle(event: AppTechnicalError): Promise<void> {
     try {

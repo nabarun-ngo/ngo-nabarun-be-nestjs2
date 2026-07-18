@@ -4,8 +4,8 @@ import {
   HttpStatus,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { GlobalExceptionFilter } from '@ce/nestjs-shared-core';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { GlobalExceptionFilter } from '@nabarun-ngo/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 
 function makeHost(): { host: ArgumentsHost; json: jest.Mock; status: jest.Mock } {
   const json = jest.fn();

@@ -5,7 +5,7 @@ import {
   isEncryptedText,
   safeEqual,
   validateApiKey,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 
 describe('Crypto utilities', () => {
   jest.setTimeout(30000);

@@ -5,18 +5,17 @@ import { IUserNotificationRepository } from '../../../domain/repositories/user-n
 import { INotificationRepository } from '../../../domain/repositories/notification.repository';
 import { NotificationMapper } from '../../mappers/notification.mapper';
 import { UserNotificationResponseDto } from '../../dtos/user-notification-response.dto';
-import { Page } from '@ce/nestjs-shared-core';
+import { Page } from '@nabarun-ngo/nestjs-shared-core';
 
 @QueryHandler(GetUserNotificationsQuery)
 export class GetUserNotificationsHandler
-  implements IQueryHandler<GetUserNotificationsQuery, Page<UserNotificationResponseDto>>
-{
+  implements IQueryHandler<GetUserNotificationsQuery, Page<UserNotificationResponseDto>> {
   constructor(
     @Inject(IUserNotificationRepository)
     private readonly userNotificationRepo: IUserNotificationRepository,
     @Inject(INotificationRepository)
     private readonly notificationRepo: INotificationRepository,
-  ) {}
+  ) { }
 
   async execute(query: GetUserNotificationsQuery): Promise<Page<UserNotificationResponseDto>> {
     const page = await this.userNotificationRepo.findPaged({

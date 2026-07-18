@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject, Injectable } from '@nestjs/common';
-import { Page } from '@ce/nestjs-shared-core';
+import { Page } from '@nabarun-ngo/nestjs-shared-core';
 import { ListAccountsQuery } from './list-accounts.query';
 import { IOAuthAccountRepository } from '../../../domain/repositories/oauth-account.repository';
 import type { IOAuthAccountRepository as IAccountRepo } from '../../../domain/repositories/oauth-account.repository';
@@ -12,7 +12,7 @@ import { OAuthTokenMapper } from '../../mappers/oauth-token.mapper';
 export class ListAccountsHandler implements IQueryHandler<ListAccountsQuery, Page<OAuthAccountDto>> {
   constructor(
     @Inject(IOAuthAccountRepository) private readonly accountRepo: IAccountRepo,
-  ) {}
+  ) { }
 
   async execute(query: ListAccountsQuery): Promise<Page<OAuthAccountDto>> {
     const { provider, pageIndex = 0, pageSize = 20 } = query.params;

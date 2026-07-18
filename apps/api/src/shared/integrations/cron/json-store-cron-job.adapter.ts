@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CronJob, CRON_JOB_STORE_PORT, CronJobPayloadSchema, ICronJobStorePort } from '@ce/nestjs-shared-cron';
-import { JsonStoreFacade } from '@ce/nestjs-shared-json-store';
+import { CronJob, CRON_JOB_STORE_PORT, CronJobPayloadSchema, ICronJobStorePort } from '@nabarun-ngo/nestjs-shared-cron';
+import { JsonStoreFacade } from '@nabarun-ngo/nestjs-shared-json-store';
 
 const NAMESPACE = 'cron';
 
@@ -8,7 +8,7 @@ const NAMESPACE = 'cron';
 export class JsonStoreCronJobAdapter implements ICronJobStorePort {
   private readonly logger = new Logger(JsonStoreCronJobAdapter.name);
 
-  constructor(private readonly jsonStore: JsonStoreFacade) {}
+  constructor(private readonly jsonStore: JsonStoreFacade) { }
 
   async findAll(): Promise<CronJob[]> {
     const docs = await this.jsonStore.list(NAMESPACE);

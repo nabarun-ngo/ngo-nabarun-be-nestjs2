@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import { randomUUID } from 'crypto';
-import { AggregateRoot, hashText } from '@ce/nestjs-shared-core';
+import { AggregateRoot, hashText } from '@nabarun-ngo/nestjs-shared-core';
 import { ApiKeyCreatedEvent, type ApiKeyCreatedSnapshot } from '../../events/api-key-created.event';
 import { ApiKeyUsedEvent, type ApiKeyUsedSnapshot } from '../../events/api-key-used.event';
 import { ApiKeyRevokedEvent, type ApiKeyRevokedSnapshot } from '../../events/api-key-revoked.event';

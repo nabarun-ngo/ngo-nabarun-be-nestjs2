@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@ce/nestjs-shared-queue';
+import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@nabarun-ngo/nestjs-shared-queue';
 import { OutboxDispatchJob } from '../../application/jobs/outbox-dispatch.job';
 import { IWorkflowOutboxRepository } from '../../domain/ports/workflow-outbox.repository';
 import { WORKFLOW_OPTIONS } from '../workflow-options.token';
@@ -14,7 +14,7 @@ export class OutboxDispatchHandler implements IQueueHandler<OutboxDispatchJob> {
     private readonly outboxRepo: IWorkflowOutboxRepository,
     @Inject(WORKFLOW_OPTIONS)
     private readonly options: WorkflowModuleOptions,
-  ) {}
+  ) { }
 
   async execute(job: Job<OutboxDispatchJob>, _ctx: JobExecutionContext): Promise<void> {
     const raw = job.data as { payload?: { batchSize?: number }; batchSize?: number };

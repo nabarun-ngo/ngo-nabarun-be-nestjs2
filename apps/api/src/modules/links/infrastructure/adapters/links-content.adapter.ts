@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { JsonStoreFacade } from '@ce/nestjs-shared-json-store';
+import { JsonStoreFacade } from '@nabarun-ngo/nestjs-shared-json-store';
 import { ILinksContentPort, LinkItem } from '../../domain/ports/links-content.port';
 import { AppLinksPayloadSchema, ContentLinksPayloadSchema } from '../../links.schema';
 
@@ -8,7 +8,7 @@ export class LinksContentAdapter implements ILinksContentPort {
   private static readonly NAMESPACE = 'links';
   private readonly logger = new Logger(LinksContentAdapter.name);
 
-  constructor(private readonly jsonStore: JsonStoreFacade) {}
+  constructor(private readonly jsonStore: JsonStoreFacade) { }
 
   getUserGuides(): Promise<LinkItem[]> {
     return this.loadContentLinks('user-guides');

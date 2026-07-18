@@ -1,8 +1,8 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
-import { BusinessException } from '@ce/nestjs-shared-core';
-import { RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
+import { RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
 import { PrismaClient } from '../../../../shared/persistence/prisma/client';
 import { RiskCategory, RiskProbability, RiskSeverity, RiskStatus } from '../../domain/enums/risk.enum';
 import { randomUUID } from 'crypto';
@@ -13,7 +13,7 @@ import { randomUUID } from 'crypto';
 @UseGuards(UnifiedAuthGuard)
 @Controller('projects/:projectId/risks')
 export class ProjectRiskController {
-  constructor(private readonly db: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly db: BasePrismaService<PrismaClient>) { }
 
   @Get()
   @RequirePermissions('read:risk')

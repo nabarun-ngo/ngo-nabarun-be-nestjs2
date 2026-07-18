@@ -4,7 +4,7 @@ import {
   CorrespondenceRequestEvent,
   NotificationCategory,
   NotificationType,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 import { CommentAddedEvent } from '../../../domain/events/comment-added.event';
 import { COMMENT2_OPTIONS } from '../../../infrastructure/comment-options.token';
 import { Comment2ModuleOptions } from '../../../comment.schema';
@@ -22,7 +22,7 @@ export class OnCommentAddedSubscriberHandler implements IEventHandler<CommentAdd
   constructor(
     private readonly eventBus: EventBus,
     @Inject(COMMENT2_OPTIONS) private readonly options: Comment2ModuleOptions,
-  ) {}
+  ) { }
 
   handle(event: CommentAddedEvent): void {
     if (this.options.notifications?.notifySubscribers === false) return;

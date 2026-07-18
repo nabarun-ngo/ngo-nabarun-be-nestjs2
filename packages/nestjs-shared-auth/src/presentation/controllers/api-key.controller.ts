@@ -24,7 +24,7 @@ import {
   BaseFilter,
   PagedResponse,
   PaginatedQueryDto,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 import { GenerateApiKeyCommand } from '../../application/commands/generate-api-key/generate-api-key.command';
 import { RevokeApiKeyCommand } from '../../application/commands/revoke-api-key/revoke-api-key.command';
 import { UpdateApiKeyPermissionsCommand } from '../../application/commands/update-api-key-permissions/update-api-key-permissions.command';
@@ -46,7 +46,7 @@ export class ApiKeyController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Post('generate')
   @RequirePermissions('create:api_keys')

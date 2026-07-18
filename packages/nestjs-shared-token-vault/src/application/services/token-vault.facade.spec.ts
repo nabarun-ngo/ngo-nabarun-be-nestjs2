@@ -1,6 +1,6 @@
-import { TokenVaultFacade } from '@ce/nestjs-shared-token-vault/application/services/token-vault.facade';
-import { GetValidTokenQuery } from '@ce/nestjs-shared-token-vault/application/queries/get-valid-token/get-valid-token.query';
-import { InitiateOAuthCommand } from '@ce/nestjs-shared-token-vault/application/commands/initiate-oauth/initiate-oauth.command';
+import { TokenVaultFacade } from '@nabarun-ngo/nestjs-shared-token-vault/application/services/token-vault.facade';
+import { GetValidTokenQuery } from '@nabarun-ngo/nestjs-shared-token-vault/application/queries/get-valid-token/get-valid-token.query';
+import { InitiateOAuthCommand } from '@nabarun-ngo/nestjs-shared-token-vault/application/commands/initiate-oauth/initiate-oauth.command';
 
 const makeQueryBus = (result?: any) => ({
   execute: jest.fn().mockResolvedValue(result ?? 'decrypted-access-token'),

@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject, Injectable } from '@nestjs/common';
 import { createHash, randomBytes } from 'crypto';
-import { CacheService } from '@ce/nestjs-shared-persistence';
+import { CacheService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { InitiateOAuthCommand } from './initiate-oauth.command';
 import { OAUTH_PROVIDER_REGISTRY } from '../../ports/oauth-provider.port';
 import type { IOAuthProvider } from '../../ports/oauth-provider.port';
@@ -21,7 +21,7 @@ export class InitiateOAuthHandler implements ICommandHandler<InitiateOAuthComman
   constructor(
     @Inject(OAUTH_PROVIDER_REGISTRY) private readonly registry: Map<string, IOAuthProvider>,
     private readonly cacheService: CacheService,
-  ) {}
+  ) { }
 
   async execute(command: InitiateOAuthCommand): Promise<InitiateOAuthResult> {
     const { provider, scopes, ownerSub, customState } = command.params;

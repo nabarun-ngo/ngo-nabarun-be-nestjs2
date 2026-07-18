@@ -28,10 +28,10 @@ src/
 
 | Module | Purpose |
 |---|---|
-| `@ce/nestjs-shared-core` | `AggregateRoot`, `BaseDomain`, `BusinessError`, `bootstrapApp`, `CoreModule` |
-| `@ce/nestjs-shared-persistence` | `DatabaseModule`, `BasePrismaService`, `PrismaCrudRepositoryBase`, `CacheService`, Redis |
-| `@ce/nestjs-shared-auth` | `AuthModule`, `UnifiedAuthGuard`, `@CurrentUser()`, `@RequirePermissions()`, `@Public()` |
-| `@ce/nestjs-shared-observability` | `ObservabilityModule` — Slack alerts for `AppTechnicalError` |
+| `@nabarun-ngo/nestjs-shared-core` | `AggregateRoot`, `BaseDomain`, `BusinessError`, `bootstrapApp`, `CoreModule` |
+| `@nabarun-ngo/nestjs-shared-persistence` | `DatabaseModule`, `BasePrismaService`, `PrismaCrudRepositoryBase`, `CacheService`, Redis |
+| `@nabarun-ngo/nestjs-shared-auth` | `AuthModule`, `UnifiedAuthGuard`, `@CurrentUser()`, `@RequirePermissions()`, `@Public()` |
+| `@nabarun-ngo/nestjs-shared-observability` | `ObservabilityModule` — Slack alerts for `AppTechnicalError` |
 
 ---
 
@@ -147,7 +147,7 @@ Swagger UI (non-production only) is at `http://localhost:3000/api/docs`.
 
 Follow the DDD checklist from the workspace rules:
 
-1. Create `src/<module>/domain/aggregates/<name>.aggregate.ts` — extend `AggregateRoot<string>` from `@ce/nestjs-shared-core`.
+1. Create `src/<module>/domain/aggregates/<name>.aggregate.ts` — extend `AggregateRoot<string>` from `@nabarun-ngo/nestjs-shared-core`.
 2. Add domain errors in `domain/errors/` — extend `BusinessError`.
 3. Define the repository interface in `domain/repositories/` — extend `IRepository<T, ID, Filter>`.
 4. Write CQRS handlers in `application/commands/` and `application/queries/`.

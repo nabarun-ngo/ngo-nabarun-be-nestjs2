@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { Meeting, MeetingFilter } from '../aggregates/meeting/meeting.aggregate';
 
 export const IMeetingRepository = Symbol('IMeetingRepository');

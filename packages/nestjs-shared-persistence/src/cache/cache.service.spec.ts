@@ -1,4 +1,4 @@
-import { CacheService } from '@ce/nestjs-shared-persistence/cache/cache.service';
+import { CacheService } from '@nabarun-ngo/nestjs-shared-persistence/cache/cache.service';
 
 describe('CacheService', () => {
   function makeService() {

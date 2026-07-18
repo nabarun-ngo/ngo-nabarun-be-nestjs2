@@ -1,5 +1,5 @@
 import { Injectable, Inject, Optional, Logger } from '@nestjs/common';
-import { encryptText, decryptText } from '@ce/nestjs-shared-core';
+import { encryptText, decryptText } from '@nabarun-ngo/nestjs-shared-core';
 import { CustomFieldType } from '../../domain/enums/custom-field-type.enum';
 import {
   EncryptionKeyMissingError,
@@ -22,7 +22,7 @@ export class FieldValueCodecService {
     @Optional()
     @Inject(CUSTOM_FORMS_OPTIONS)
     private readonly options: CustomFormsModuleOptions | null,
-  ) {}
+  ) { }
 
   /** Converts a typed in-memory value to the raw string written to the DB. */
   serialise(fieldType: CustomFieldType, value: unknown): string {

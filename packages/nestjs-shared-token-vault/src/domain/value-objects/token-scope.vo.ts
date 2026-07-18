@@ -1,4 +1,4 @@
-import { BusinessError } from '@ce/nestjs-shared-core';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 
 /**
  * Immutable value object representing an OAuth scope set.

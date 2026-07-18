@@ -2,9 +2,9 @@
  * Notification aggregate — pure domain unit tests.
  * No NestJS imports, no Prisma, no I/O.
  */
-import { Notification } from '@ce/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
-import { NotificationType, NotificationCategory, NotificationPriority } from '@ce/nestjs-shared-correspondence/domain/enums/notification-type.enum';
-import { NotificationCreatedEvent } from '@ce/nestjs-shared-correspondence/domain/events/notification-created.event';
+import { Notification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
+import { NotificationType, NotificationCategory, NotificationPriority } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/notification-type.enum';
+import { NotificationCreatedEvent } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/notification-created.event';
 
 const baseCreate = () =>
   Notification.create({

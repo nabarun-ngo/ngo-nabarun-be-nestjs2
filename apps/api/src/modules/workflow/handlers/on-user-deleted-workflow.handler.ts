@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { UserDeletedEvent } from '../../user/domain/events/user-deleted.event';
 import { PrismaClient } from '../../../shared/persistence/prisma/client';
 

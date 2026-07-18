@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot } from '@ce/nestjs-shared-core';
+import { AggregateRoot } from '@nabarun-ngo/nestjs-shared-core';
 
 export class RoleGroupFilter {
   key?: string;

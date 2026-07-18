@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
+import { RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
 import { CreateBeneficiaryCommand } from '../../application/commands/create-beneficiary/create-beneficiary.command';
 import { UpdateBeneficiaryCommand } from '../../application/commands/update-beneficiary/update-beneficiary.command';
 import { ListBeneficiariesQuery } from '../../application/queries/list-beneficiaries/list-beneficiaries.query';
@@ -15,7 +15,7 @@ import { BeneficiaryDetailDto, BeneficiaryDetailFilterDto, BeneficiaryListRespon
 @UseGuards(UnifiedAuthGuard)
 @Controller('projects/:projectId/beneficiaries')
 export class BeneficiaryController {
-  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
+  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) { }
   @Get()
   @RequirePermissions('read:beneficiary')
   list(@Param('projectId') projectId: string, @Query('pageIndex') pageIndex?: number, @Query('pageSize') pageSize?: number, @Query() filter?: BeneficiaryDetailFilterDto): Promise<BeneficiaryListResponseDto> {

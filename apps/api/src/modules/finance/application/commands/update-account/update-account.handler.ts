@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { Account } from '../../../domain/aggregates/account/account.aggregate';
 import { BankDetail } from '../../../domain/value-objects/bank-detail.vo';
 import { UPIDetail } from '../../../domain/value-objects/upi-detail.vo';
@@ -10,7 +10,7 @@ import { UpdateAccountCommand } from './update-account.command';
 @CommandHandler(UpdateAccountCommand)
 @Injectable()
 export class UpdateAccountHandler implements ICommandHandler<UpdateAccountCommand, Account> {
-  constructor(@Inject(IAccountRepository) private readonly accountRepository: IAccountRepository) {}
+  constructor(@Inject(IAccountRepository) private readonly accountRepository: IAccountRepository) { }
 
   async execute({ params: request }: UpdateAccountCommand): Promise<Account> {
     const account = await this.accountRepository.findById(request.id);

@@ -9,7 +9,7 @@ import {
 import {
   BaseDynamicModule,
   DynamicModuleAsyncOptions,
-} from "@ce/nestjs-shared-core";
+} from "@nabarun-ngo/nestjs-shared-core";
 import { DatabaseOptionsSchema } from "./database.schema";
 import { CacheService } from "./cache/cache.service";
 import { LockingService } from "./prisma/locking.service";
@@ -64,7 +64,7 @@ export interface DatabaseModuleOptions<
 
 export interface DatabaseModuleAsyncOptions<
   TClient extends PrismaClientLike = PrismaClientLike,
-> extends DynamicModuleAsyncOptions<DatabaseModuleOptions<TClient>> {}
+> extends DynamicModuleAsyncOptions<DatabaseModuleOptions<TClient>> { }
 
 /** Holds shared options/redis providers so CacheModule.registerAsync can import them. */
 @Module({})
@@ -80,8 +80,7 @@ class DatabaseInfrastructureModule {
             const store = new KeyvRedis(opts.redisUrl);
             store.on("error", (err: unknown) =>
               redisLogger.error(
-                `KeyvRedis cache error: ${
-                  err instanceof Error ? err.message : String(err)
+                `KeyvRedis cache error: ${err instanceof Error ? err.message : String(err)
                 }`,
               ),
             );

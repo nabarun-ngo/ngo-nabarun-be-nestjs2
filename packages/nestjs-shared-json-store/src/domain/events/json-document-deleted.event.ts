@@ -1,4 +1,4 @@
-import { DomainEvent } from '@ce/nestjs-shared-core';
+import { DomainEvent } from '@nabarun-ngo/nestjs-shared-core';
 import type { JsonDocument } from '../aggregates/json-document.aggregate';
 
 export type JsonDocumentDeletedSnapshot = Pick<JsonDocument, 'id' | 'key' | 'namespace'>;

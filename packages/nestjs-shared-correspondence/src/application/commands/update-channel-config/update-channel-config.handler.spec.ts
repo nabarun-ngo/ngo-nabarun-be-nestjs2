@@ -1,14 +1,14 @@
 /**
  * UpdateChannelConfigHandler unit tests.
  */
-import { UpdateChannelConfigHandler } from '@ce/nestjs-shared-correspondence/application/commands/update-channel-config/update-channel-config.handler';
-import { UpdateChannelConfigCommand } from '@ce/nestjs-shared-correspondence/application/commands/update-channel-config/update-channel-config.command';
-import { IResourceSubscriptionRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
-import { SubscriptionNotFoundError } from '@ce/nestjs-shared-correspondence/domain/errors/correspondence.errors';
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { ChannelType } from '@ce/nestjs-shared-correspondence/domain/enums/channel-type.enum';
-import { EmailRole } from '@ce/nestjs-shared-correspondence/domain/enums/email-role.enum';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { UpdateChannelConfigHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/update-channel-config/update-channel-config.handler';
+import { UpdateChannelConfigCommand } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/update-channel-config/update-channel-config.command';
+import { IResourceSubscriptionRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
+import { SubscriptionNotFoundError } from '@nabarun-ngo/nestjs-shared-correspondence/domain/errors/correspondence.errors';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { ChannelType } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/channel-type.enum';
+import { EmailRole } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/email-role.enum';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
 
 function makeUserSub(userId = 'user-1') {
   return ResourceSubscription.createUserSubscription({

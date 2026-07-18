@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { JsonStoreFacade } from '@ce/nestjs-shared-json-store';
+import { JsonStoreFacade } from '@nabarun-ngo/nestjs-shared-json-store';
 import {
   IUserReferenceDataPort,
   KeyValueOption,
@@ -13,7 +13,7 @@ import { UserReferenceDataPayloadSchema } from '../../user-reference-data.schema
  * Each document key matches the data set name (e.g. 'titles', 'genders').
  * Document payload shape: { "items": KeyValueOption[] }
  *
- * Seeding: use `loadJsonStoreSeedFromDir` + `seedJsonStore` from @ce/nestjs-shared-json-store
+ * Seeding: use `loadJsonStoreSeedFromDir` + `seedJsonStore` from @nabarun-ngo/nestjs-shared-json-store
  * in your seed script, pointing at the assets/user-reference-data directory.
  * Each JSON file in that directory must have the shape: { "items": [...] }
  */
@@ -22,7 +22,7 @@ export class UserReferenceDataAdapter implements IUserReferenceDataPort {
   private static readonly NAMESPACE = 'user-reference-data';
   private readonly logger = new Logger(UserReferenceDataAdapter.name);
 
-  constructor(private readonly jsonStore: JsonStoreFacade) {}
+  constructor(private readonly jsonStore: JsonStoreFacade) { }
 
   async getTitles(): Promise<KeyValueOption[]> {
     return this.loadItems('titles');

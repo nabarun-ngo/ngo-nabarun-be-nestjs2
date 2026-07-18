@@ -2,7 +2,7 @@ import { DonationType } from '../../enums/donation-type.enum';
 import { DonationStatus } from '../../enums/donation-status.enum';
 import { PaymentMethod } from '../../enums/payment-method.enum';
 import { UPIPaymentType } from '../../enums/upi-payment-type.enum';
-import { AggregateRoot, BusinessException, generateUniqueNDigitNumber } from '@ce/nestjs-shared-core';
+import { AggregateRoot, BusinessException, generateUniqueNDigitNumber } from '@nabarun-ngo/nestjs-shared-core';
 import { DonationRaisedEvent } from '../../events/donation-raised.event';
 import { DonationPaidEvent } from '../../events/donation-paid.event';
 import { FinanceUserRef } from '../../types/finance-user-ref';

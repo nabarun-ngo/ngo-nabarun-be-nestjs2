@@ -8,8 +8,8 @@ import {
   WorkflowQueueJobPayload,
   WorkflowQueueJobType,
   WorkflowTimerJob,
-} from '@ce/nestjs-shared-workflow';
-import { QueueProcessingService } from '@ce/nestjs-shared-queue';
+} from '@nabarun-ngo/nestjs-shared-workflow';
+import { QueueProcessingService } from '@nabarun-ngo/nestjs-shared-queue';
 
 const JOB_NAME_BY_TYPE: Record<WorkflowQueueJobType, string> = {
   serviceTask: ProcessServiceTaskJob.name,
@@ -19,7 +19,7 @@ const JOB_NAME_BY_TYPE: Record<WorkflowQueueJobType, string> = {
 
 @Injectable()
 export class QueueWorkflowJobAdapter implements IWorkflowQueuePort {
-  constructor(private readonly queueProcessing: QueueProcessingService) {}
+  constructor(private readonly queueProcessing: QueueProcessingService) { }
 
   async enqueue(
     jobType: WorkflowQueueJobType,

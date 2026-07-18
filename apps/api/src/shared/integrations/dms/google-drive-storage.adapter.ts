@@ -6,13 +6,13 @@ import {
   BusinessError,
   IOAuthAccessTokenPort,
   OAUTH_ACCESS_TOKEN_PORT,
-} from '@ce/nestjs-shared-core';
-import { DMS2_OPTIONS } from '@ce/nestjs-shared-dms/infrastructure/dms-options.token';
+} from '@nabarun-ngo/nestjs-shared-core';
+import { DMS2_OPTIONS } from '@nabarun-ngo/nestjs-shared-dms/infrastructure/dms-options.token';
 import {
   IStorageProvider,
   StorageUploadParams,
   StorageUploadResult,
-} from '@ce/nestjs-shared-dms';
+} from '@nabarun-ngo/nestjs-shared-dms';
 
 const GOOGLE_DRIVE_FILE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
 
@@ -30,7 +30,7 @@ export class GoogleDriveStorageAdapter implements IStorageProvider {
     @Inject(DMS2_OPTIONS) private readonly options: Dms2OptionsWithDrive,
     @Inject(OAUTH_ACCESS_TOKEN_PORT)
     private readonly oauthTokens: IOAuthAccessTokenPort,
-  ) {}
+  ) { }
 
   private async getClient(ownerSub?: string): Promise<drive_v3.Drive> {
     let accessToken: string;

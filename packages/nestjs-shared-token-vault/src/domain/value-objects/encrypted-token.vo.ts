@@ -1,4 +1,4 @@
-import { decryptText, encryptText, isEncryptedText } from '@ce/nestjs-shared-core';
+import { decryptText, encryptText, isEncryptedText } from '@nabarun-ngo/nestjs-shared-core';
 import { InvalidEncryptedTokenError } from '../errors/token-vault.errors';
 
 /**
@@ -12,7 +12,7 @@ import { InvalidEncryptedTokenError } from '../errors/token-vault.errors';
  * The aggregate never holds plaintext. All crypto details are encapsulated here.
  */
 export class EncryptedToken {
-  private constructor(private readonly _value: string) {}
+  private constructor(private readonly _value: string) { }
 
   static fromEncrypted(raw: string): EncryptedToken {
     if (!isEncryptedText(raw)) {

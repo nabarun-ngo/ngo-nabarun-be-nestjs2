@@ -1,8 +1,8 @@
-import { OAuthTokenMapper } from '@ce/nestjs-shared-token-vault/application/mappers/oauth-token.mapper';
-import { OAuthAccount } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { TokenScope } from '@ce/nestjs-shared-token-vault/domain/value-objects/token-scope.vo';
+import { OAuthTokenMapper } from '@nabarun-ngo/nestjs-shared-token-vault/application/mappers/oauth-token.mapper';
+import { OAuthAccount } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { TokenScope } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/token-scope.vo';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 const FUTURE = new Date(Date.now() + 3_600_000);

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter } from '@ce/nestjs-shared-core';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
 import { IAccountRepository } from '../../../domain/repositories/account.repository';
 import { AccountListResponseDto } from '../../dtos/account-list.dto';
 import { AccountMapper } from '../../mappers/account.mapper';
@@ -9,7 +9,7 @@ import { ListAccountsQuery } from './list-accounts.query';
 @QueryHandler(ListAccountsQuery)
 @Injectable()
 export class ListAccountsHandler implements IQueryHandler<ListAccountsQuery, AccountListResponseDto> {
-  constructor(@Inject(IAccountRepository) private readonly repo: IAccountRepository) {}
+  constructor(@Inject(IAccountRepository) private readonly repo: IAccountRepository) { }
 
   async execute(query: ListAccountsQuery): Promise<AccountListResponseDto> {
     const filter = new BaseFilter(query.filter, query.pageIndex ?? 0, query.pageSize ?? 20);

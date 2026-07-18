@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FormFieldDefinition } from '@ce/nestjs-shared-custom-forms/domain/entities/form-field-definition/form-field-definition.entity';
+import { FormFieldDefinition } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/entities/form-field-definition/form-field-definition.entity';
 import { toPublicApiFieldType } from '../../services/public-form-field-type.mapper';
 import { PublicFormValidatorService } from '../../services/public-form-validator.service';
 import { GetFormDefinitionQuery } from './get-form-definition.query';
@@ -37,9 +37,8 @@ export interface PublicFormFieldDefinitionDto {
 
 @QueryHandler(GetFormDefinitionQuery)
 export class GetFormDefinitionHandler
-  implements IQueryHandler<GetFormDefinitionQuery, PublicFormDefinitionDto>
-{
-  constructor(private readonly validator: PublicFormValidatorService) {}
+  implements IQueryHandler<GetFormDefinitionQuery, PublicFormDefinitionDto> {
+  constructor(private readonly validator: PublicFormValidatorService) { }
 
   async execute(query: GetFormDefinitionQuery): Promise<PublicFormDefinitionDto> {
     const form = await this.validator.loadPublishedForm(query.publicFormId);
@@ -70,27 +69,27 @@ export class GetFormDefinitionHandler
       sortOrder: field.sortOrder,
       condition: field.condition
         ? {
-            dependsOnKey: field.condition.dependsOnKey,
-            operator: field.condition.operator,
-            value: field.condition.value,
-          }
+          dependsOnKey: field.condition.dependsOnKey,
+          operator: field.condition.operator,
+          value: field.condition.value,
+        }
         : null,
       dependentOptions: field.dependentOptions
         ? {
-            dependsOnKey: field.dependentOptions.dependsOnKey,
-            optionMap: Object.fromEntries(
-              Object.entries(field.dependentOptions.optionMap).map(([k, opts]) => [
-                k,
-                [...opts].map((o) => ({ key: o.key, label: o.label })),
-              ]),
-            ),
-          }
+          dependsOnKey: field.dependentOptions.dependsOnKey,
+          optionMap: Object.fromEntries(
+            Object.entries(field.dependentOptions.optionMap).map(([k, opts]) => [
+              k,
+              [...opts].map((o) => ({ key: o.key, label: o.label })),
+            ]),
+          ),
+        }
         : null,
       validationRules: field.validationRules
         ? {
-            pattern: field.validationRules.pattern,
-            regexErrMsg: field.validationRules.regexErrMsg,
-          }
+          pattern: field.validationRules.pattern,
+          regexErrMsg: field.validationRules.regexErrMsg,
+        }
         : null,
     };
   }

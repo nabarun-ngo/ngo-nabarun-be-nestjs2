@@ -1,5 +1,5 @@
-import { TokenScope } from '@ce/nestjs-shared-token-vault/domain/value-objects/token-scope.vo';
-import { BusinessError } from '@ce/nestjs-shared-core';
+import { TokenScope } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/token-scope.vo';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 
 describe('TokenScope value object', () => {
   describe('of()', () => {

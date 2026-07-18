@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Page } from '@ce/nestjs-shared-core';
+import { Page } from '@nabarun-ngo/nestjs-shared-core';
 import { QueueProcessingService } from '../../../infrastructure/services/queue-processing.service';
 import { QueueJobResponseMapper } from '../../mappers/queue-job-response.mapper';
 import { JobDetail } from '../../../presentation/dto/queue.dto';
@@ -11,13 +11,13 @@ import { ListJobsQuery } from './list-jobs.query';
 export class ListJobsHandler implements IQueryHandler<ListJobsQuery, Page<JobDetail>> {
   private readonly logger = new Logger(ListJobsHandler.name);
 
-  constructor(private readonly processing: QueueProcessingService) {}
+  constructor(private readonly processing: QueueProcessingService) { }
 
   async execute({ params }: ListJobsQuery): Promise<Page<JobDetail>> {
-    const page  = params.pageIndex ?? 0;
-    const size  = params.pageSize  ?? 10;
+    const page = params.pageIndex ?? 0;
+    const size = params.pageSize ?? 10;
     const start = page * size;
-    const end   = start + size - 1;
+    const end = start + size - 1;
 
     const { jobs, count } = await this.processing.getJobs(start, end, params.status, params.jobId);
 

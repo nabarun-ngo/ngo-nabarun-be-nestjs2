@@ -1,15 +1,15 @@
-import { RefreshTokenHandler } from '@ce/nestjs-shared-token-vault/application/commands/refresh-token/refresh-token.handler';
-import { RefreshTokenCommand } from '@ce/nestjs-shared-token-vault/application/commands/refresh-token/refresh-token.command';
+import { RefreshTokenHandler } from '@nabarun-ngo/nestjs-shared-token-vault/application/commands/refresh-token/refresh-token.handler';
+import { RefreshTokenCommand } from '@nabarun-ngo/nestjs-shared-token-vault/application/commands/refresh-token/refresh-token.command';
 import {
   NoRefreshTokenError,
   ProviderNotConfiguredError,
   TokenExpiredError,
   TokenNotFoundError,
-} from '@ce/nestjs-shared-token-vault/domain/errors/token-vault.errors';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+} from '@nabarun-ngo/nestjs-shared-token-vault/domain/errors/token-vault.errors';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
 import { EventBus, IEvent } from '@nestjs/cqrs';
-import { LockingService } from '@ce/nestjs-shared-persistence/prisma/locking.service';
+import { LockingService } from '@nabarun-ngo/nestjs-shared-persistence/prisma/locking.service';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 const FUTURE = new Date(Date.now() + 3_600_000);
@@ -46,8 +46,8 @@ const makeProvider = (newTokenSet?: {
   refreshToken: error
     ? jest.fn().mockRejectedValue(error)
     : jest.fn().mockResolvedValue(
-        newTokenSet ?? { accessToken: 'new-access', expiresAt: FUTURE, tokenType: 'Bearer' },
-      ),
+      newTokenSet ?? { accessToken: 'new-access', expiresAt: FUTURE, tokenType: 'Bearer' },
+    ),
   getAuthorizationUrl: jest.fn(),
   exchangeCode: jest.fn(),
   revokeToken: jest.fn(),

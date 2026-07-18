@@ -1,4 +1,4 @@
-import { CustomFieldType } from '@ce/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
+import { CustomFieldType } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
 import { toPublicApiFieldType } from './public-form-field-type.mapper';
 
 describe('toPublicApiFieldType', () => {

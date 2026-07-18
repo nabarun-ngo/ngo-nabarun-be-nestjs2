@@ -1,4 +1,4 @@
-import { RedisLifecycleService } from '@ce/nestjs-shared-persistence/redis/redis-lifecycle.service';
+import { RedisLifecycleService } from '@nabarun-ngo/nestjs-shared-persistence/redis/redis-lifecycle.service';
 
 describe('RedisLifecycleService', () => {
   it('disconnects the KeyvRedis client on application shutdown', async () => {

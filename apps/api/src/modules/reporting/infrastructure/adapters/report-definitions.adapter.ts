@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { JsonStoreFacade } from '@ce/nestjs-shared-json-store';
+import { JsonStoreFacade } from '@nabarun-ngo/nestjs-shared-json-store';
 import { IReportDefinitionsPort } from '../../domain/ports/report-definitions.port';
 import { ReportDefinition } from '../../domain/reporting.interface';
 import { ReportDefinitionsPayloadSchema } from '../../reporting.schema';
@@ -11,7 +11,7 @@ const DOCUMENT_KEY = 'reports';
 export class ReportDefinitionsAdapter implements IReportDefinitionsPort {
   private readonly logger = new Logger(ReportDefinitionsAdapter.name);
 
-  constructor(private readonly jsonStore: JsonStoreFacade) {}
+  constructor(private readonly jsonStore: JsonStoreFacade) { }
 
   async listDefinitions(): Promise<ReportDefinition[]> {
     const payload = await this.jsonStore.get(DOCUMENT_KEY, NAMESPACE);

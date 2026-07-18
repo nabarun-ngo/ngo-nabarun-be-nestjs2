@@ -2,14 +2,14 @@
  * UserNotification aggregate — pure domain unit tests.
  * No NestJS imports, no Prisma, no I/O.
  */
-import { UserNotification } from '@ce/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
-import { UserNotificationReadEvent } from '@ce/nestjs-shared-correspondence/domain/events/user-notification-read.event';
-import { UserNotificationArchivedEvent } from '@ce/nestjs-shared-correspondence/domain/events/user-notification-archived.event';
-import { NotificationPushDeliveredEvent } from '@ce/nestjs-shared-correspondence/domain/events/notification-push-delivered.event';
+import { UserNotification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
+import { UserNotificationReadEvent } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/user-notification-read.event';
+import { UserNotificationArchivedEvent } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/user-notification-archived.event';
+import { NotificationPushDeliveredEvent } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/notification-push-delivered.event';
 import {
   NotificationAlreadyReadError,
   NotificationAlreadyArchivedError,
-} from '@ce/nestjs-shared-correspondence/domain/errors/correspondence.errors';
+} from '@nabarun-ngo/nestjs-shared-correspondence/domain/errors/correspondence.errors';
 
 const make = () =>
   UserNotification.create({ notificationId: 'notif-1', userId: 'user-1' });

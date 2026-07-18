@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { IDocumentRepository } from '@ce/nestjs-shared-dms';
-import { UploadDocumentCommand } from '@ce/nestjs-shared-dms/application/commands/upload-document/upload-document.command';
+import { IDocumentRepository } from '@nabarun-ngo/nestjs-shared-dms';
+import { UploadDocumentCommand } from '@nabarun-ngo/nestjs-shared-dms/application/commands/upload-document/upload-document.command';
 
 @Injectable()
 export class ReportingDmsFacade {
   constructor(
     private readonly commandBus: CommandBus,
     @Inject(IDocumentRepository) private readonly documentRepo: IDocumentRepository,
-  ) {}
+  ) { }
 
   async uploadReportDocument(params: {
     buffer: Buffer;

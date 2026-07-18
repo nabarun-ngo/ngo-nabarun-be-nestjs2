@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence'
+} from '@nabarun-ngo/nestjs-shared-persistence'
 import { PrismaClient } from '../prisma/client';
 import {
   CommentWhereInput,
@@ -15,7 +15,7 @@ import {
   CommentMention,
   ICommentRepository,
   MentionInput,
-} from '@ce/nestjs-shared-comment';
+} from '@nabarun-ngo/nestjs-shared-comment';
 
 /**
  * Local row shape — includes new columns (authorName, mention.displayName,
@@ -85,8 +85,7 @@ export class PrismaCommentRepository
     CommentOrderByWithRelationInput,
     typeof INCLUDE_MENTIONS
   >
-  implements ICommentRepository
-{
+  implements ICommentRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'comment');
   }
@@ -127,11 +126,15 @@ export class PrismaCommentRepository
         mentions: {
           deleteMany: {},
           ...(entity.mentionItems.length > 0
-            ? { createMany: { data: entity.mentionItems.map((m) => ({
-                mentionedUserId: m.mentionedUserId,
-                displayName: m.displayName,
-                email: m.email,
-              })) } }
+            ? {
+              createMany: {
+                data: entity.mentionItems.map((m) => ({
+                  mentionedUserId: m.mentionedUserId,
+                  displayName: m.displayName,
+                  email: m.email,
+                }))
+              }
+            }
             : {}),
         },
       },

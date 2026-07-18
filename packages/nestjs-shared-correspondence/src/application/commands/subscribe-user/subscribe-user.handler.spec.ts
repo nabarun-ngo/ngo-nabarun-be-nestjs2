@@ -1,13 +1,13 @@
 /**
  * SubscribeUserHandler unit tests.
  */
-import { SubscribeUserHandler } from '@ce/nestjs-shared-correspondence/application/commands/subscribe-user/subscribe-user.handler';
-import { SubscribeUserCommand } from '@ce/nestjs-shared-correspondence/application/commands/subscribe-user/subscribe-user.command';
-import { IResourceSubscriptionRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
-import { ChannelType } from '@ce/nestjs-shared-correspondence/domain/enums/channel-type.enum';
-import { EmailRole } from '@ce/nestjs-shared-correspondence/domain/enums/email-role.enum';
+import { SubscribeUserHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/subscribe-user/subscribe-user.handler';
+import { SubscribeUserCommand } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/subscribe-user/subscribe-user.command';
+import { IResourceSubscriptionRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { ChannelType } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/channel-type.enum';
+import { EmailRole } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/email-role.enum';
 
 function makeActiveUserSub() {
   return ResourceSubscription.createUserSubscription({

@@ -11,7 +11,7 @@
  */
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs';
 import { basename, join } from 'path';
-import { parseWorkflowDefinition, WorkflowDefinition } from '@ce/nestjs-shared-workflow';
+import { parseWorkflowDefinition, WorkflowDefinition } from '@nabarun-ngo/nestjs-shared-workflow';
 
 interface StageField {
   key: string;

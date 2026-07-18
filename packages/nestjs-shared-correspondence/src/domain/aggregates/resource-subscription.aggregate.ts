@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot } from '@ce/nestjs-shared-core';
+import { AggregateRoot } from '@nabarun-ngo/nestjs-shared-core';
 import { SubscriptionDeactivatedEvent, type SubscriptionDeactivatedSnapshot } from '../events/subscription-deactivated.event';
 import { SubscriptionReactivatedEvent, type SubscriptionReactivatedSnapshot } from '../events/subscription-reactivated.event';
 import { SubscriberType } from '../enums/subscriber-type.enum';

@@ -1,11 +1,11 @@
 /**
  * MarkUserNotificationReadHandler unit tests.
  */
-import { MarkUserNotificationReadHandler } from '@ce/nestjs-shared-correspondence/application/commands/mark-user-notification-read/mark-user-notification-read.handler';
-import { MarkUserNotificationReadCommand } from '@ce/nestjs-shared-correspondence/application/commands/mark-user-notification-read/mark-user-notification-read.command';
-import { IUserNotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
-import { UserNotificationNotFoundError } from '@ce/nestjs-shared-correspondence/domain/errors/correspondence.errors';
-import { UserNotification } from '@ce/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
+import { MarkUserNotificationReadHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/mark-user-notification-read/mark-user-notification-read.handler';
+import { MarkUserNotificationReadCommand } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/mark-user-notification-read/mark-user-notification-read.command';
+import { IUserNotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
+import { UserNotificationNotFoundError } from '@nabarun-ngo/nestjs-shared-correspondence/domain/errors/correspondence.errors';
+import { UserNotification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
 
 function makeUN(userId = 'user-1') {
   return UserNotification.create({ notificationId: 'notif-1', userId });

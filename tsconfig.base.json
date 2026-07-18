@@ -20,88 +20,88 @@
       "node"
     ],
     "paths": {
-      "@ce/nestjs-shared-core": [
+      "@nabarun-ngo/nestjs-shared-core": [
         "./packages/nestjs-shared-core/src/index.ts"
       ],
-      "@ce/nestjs-shared-core/*": [
+      "@nabarun-ngo/nestjs-shared-core/*": [
         "./packages/nestjs-shared-core/src/*"
       ],
-      "@ce/nestjs-shared-persistence": [
+      "@nabarun-ngo/nestjs-shared-persistence": [
         "./packages/nestjs-shared-persistence/src/index.ts"
       ],
-      "@ce/nestjs-shared-persistence/*": [
+      "@nabarun-ngo/nestjs-shared-persistence/*": [
         "./packages/nestjs-shared-persistence/src/*"
       ],
-      "@ce/nestjs-shared-auth": [
+      "@nabarun-ngo/nestjs-shared-auth": [
         "./packages/nestjs-shared-auth/src/index.ts"
       ],
-      "@ce/nestjs-shared-auth/*": [
+      "@nabarun-ngo/nestjs-shared-auth/*": [
         "./packages/nestjs-shared-auth/src/*"
       ],
-      "@ce/nestjs-shared-observability": [
+      "@nabarun-ngo/nestjs-shared-observability": [
         "./packages/nestjs-shared-observability/src/index.ts"
       ],
-      "@ce/nestjs-shared-observability/*": [
+      "@nabarun-ngo/nestjs-shared-observability/*": [
         "./packages/nestjs-shared-observability/src/*"
       ],
-      "@ce/nestjs-shared-queue": [
+      "@nabarun-ngo/nestjs-shared-queue": [
         "./packages/nestjs-shared-queue/src/index.ts"
       ],
-      "@ce/nestjs-shared-queue/*": [
+      "@nabarun-ngo/nestjs-shared-queue/*": [
         "./packages/nestjs-shared-queue/src/*"
       ],
-      "@ce/nestjs-shared-json-store": [
+      "@nabarun-ngo/nestjs-shared-json-store": [
         "./packages/nestjs-shared-json-store/src/index.ts"
       ],
-      "@ce/nestjs-shared-json-store/*": [
+      "@nabarun-ngo/nestjs-shared-json-store/*": [
         "./packages/nestjs-shared-json-store/src/*"
       ],
-      "@ce/nestjs-shared-token-vault": [
+      "@nabarun-ngo/nestjs-shared-token-vault": [
         "./packages/nestjs-shared-token-vault/src/index.ts"
       ],
-      "@ce/nestjs-shared-token-vault/*": [
+      "@nabarun-ngo/nestjs-shared-token-vault/*": [
         "./packages/nestjs-shared-token-vault/src/*"
       ],
-      "@ce/nestjs-shared-dms": [
+      "@nabarun-ngo/nestjs-shared-dms": [
         "./packages/nestjs-shared-dms/src/index.ts"
       ],
-      "@ce/nestjs-shared-dms/*": [
+      "@nabarun-ngo/nestjs-shared-dms/*": [
         "./packages/nestjs-shared-dms/src/*"
       ],
-      "@ce/nestjs-shared-comment": [
+      "@nabarun-ngo/nestjs-shared-comment": [
         "./packages/nestjs-shared-comment/src/index.ts"
       ],
-      "@ce/nestjs-shared-comment/*": [
+      "@nabarun-ngo/nestjs-shared-comment/*": [
         "./packages/nestjs-shared-comment/src/*"
       ],
-      "@ce/nestjs-shared-custom-forms": [
+      "@nabarun-ngo/nestjs-shared-custom-forms": [
         "./packages/nestjs-shared-custom-forms/src/index.ts"
       ],
-      "@ce/nestjs-shared-custom-forms/*": [
+      "@nabarun-ngo/nestjs-shared-custom-forms/*": [
         "./packages/nestjs-shared-custom-forms/src/*"
       ],
-      "@ce/nestjs-shared-cron": [
+      "@nabarun-ngo/nestjs-shared-cron": [
         "./packages/nestjs-shared-cron/src/index.ts"
       ],
-      "@ce/nestjs-shared-cron/*": [
+      "@nabarun-ngo/nestjs-shared-cron/*": [
         "./packages/nestjs-shared-cron/src/*"
       ],
-      "@ce/nestjs-shared-correspondence": [
+      "@nabarun-ngo/nestjs-shared-correspondence": [
         "./packages/nestjs-shared-correspondence/src/index.ts"
       ],
-      "@ce/nestjs-shared-correspondence/*": [
+      "@nabarun-ngo/nestjs-shared-correspondence/*": [
         "./packages/nestjs-shared-correspondence/src/*"
       ],
-      "@ce/nestjs-shared-workflow": [
+      "@nabarun-ngo/nestjs-shared-workflow": [
         "./packages/nestjs-shared-workflow/src/index.ts"
       ],
-      "@ce/nestjs-shared-workflow/*": [
+      "@nabarun-ngo/nestjs-shared-workflow/*": [
         "./packages/nestjs-shared-workflow/src/*"
       ],
-      "@ce/nestjs-shared-document-generator": [
+      "@nabarun-ngo/nestjs-shared-document-generator": [
         "./packages/nestjs-shared-document-generator/src/index.ts"
       ],
-      "@ce/nestjs-shared-document-generator/*": [
+      "@nabarun-ngo/nestjs-shared-document-generator/*": [
         "./packages/nestjs-shared-document-generator/src/*"
       ]
     }

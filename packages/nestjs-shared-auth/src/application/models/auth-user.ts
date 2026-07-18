@@ -1,4 +1,4 @@
-import { UserInfo } from '@ce/nestjs-shared-core';
+import { UserInfo } from '@nabarun-ngo/nestjs-shared-core';
 
 export interface ScopedRoleContext {
   permissions: string[];

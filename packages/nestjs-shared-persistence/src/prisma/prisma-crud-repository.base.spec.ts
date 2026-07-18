@@ -1,7 +1,7 @@
-import { BaseFilter } from '@ce/nestjs-shared-core';
-import type { AuditedDatabaseClient } from '@ce/nestjs-shared-persistence/prisma/audited-database-client.interface';
-import type { PrismaClientLike } from '@ce/nestjs-shared-persistence/prisma/base-prisma.service';
-import { PrismaCrudRepositoryBase } from '@ce/nestjs-shared-persistence/prisma/prisma-crud-repository.base';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
+import type { AuditedDatabaseClient } from '@nabarun-ngo/nestjs-shared-persistence/prisma/audited-database-client.interface';
+import type { PrismaClientLike } from '@nabarun-ngo/nestjs-shared-persistence/prisma/base-prisma.service';
+import { PrismaCrudRepositoryBase } from '@nabarun-ngo/nestjs-shared-persistence/prisma/prisma-crud-repository.base';
 
 interface TestRow {
   id: string;
@@ -58,7 +58,7 @@ class TestRepository extends PrismaCrudRepositoryBase<
   any, // TCreateInput
   any, // TUpdateInput
   any  // TOrderBy
-  // TInclude omitted — uses default Record<string, boolean | object>
+// TInclude omitted — uses default Record<string, boolean | object>
 > {
   constructor(database: AuditedDatabaseClient<TestClient>) {
     super(database, 'testModel');

@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { BaseDynamicModule, DynamicModuleAsyncOptions, createRequiredPortsGuard } from '@ce/nestjs-shared-core';
+import { BaseDynamicModule, DynamicModuleAsyncOptions, createRequiredPortsGuard } from '@nabarun-ngo/nestjs-shared-core';
 
 import { Cron2ModuleOptions, Cron2OptionsSchema } from './cron.schema';
 import { CRON2_OPTIONS } from './infrastructure/cron-options.token';
@@ -21,7 +21,7 @@ import { Cron2Controller } from './presentation/controllers/cron.controller';
 export type { Cron2ModuleOptions } from './cron.schema';
 
 export interface Cron2ModuleAsyncOptions
-  extends DynamicModuleAsyncOptions<Cron2ModuleOptions> {}
+  extends DynamicModuleAsyncOptions<Cron2ModuleOptions> { }
 
 const CronRequiredPortsGuard = createRequiredPortsGuard('Cron2Module', [
   {

@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { WorkflowInstanceStatus } from '../enums/workflow-instance-status.enum';
 
 export interface WorkflowInstanceRecord {

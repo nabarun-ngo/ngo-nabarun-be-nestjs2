@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { RolePrismaRepository } from './role.prisma-repository';
-import { Role } from '@ce/nestjs-shared-auth/domain/aggregates/role/role.aggregate';
+import { Role } from '@nabarun-ngo/nestjs-shared-auth/domain/aggregates/role/role.aggregate';
 
 type RoleRow = {
   id: string;

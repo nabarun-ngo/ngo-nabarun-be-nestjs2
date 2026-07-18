@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Form } from '@ce/nestjs-shared-custom-forms/domain/aggregates/form/form.aggregate';
-import { FormFieldDefinition } from '@ce/nestjs-shared-custom-forms/domain/entities/form-field-definition/form-field-definition.entity';
-import { CustomFieldType } from '@ce/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
-import { FormStatus } from '@ce/nestjs-shared-custom-forms/domain/enums/form-status.enum';
-import { IFormRepository } from '@ce/nestjs-shared-custom-forms';
+import { Form } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/aggregates/form/form.aggregate';
+import { FormFieldDefinition } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/entities/form-field-definition/form-field-definition.entity';
+import { CustomFieldType } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
+import { FormStatus } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/enums/form-status.enum';
+import { IFormRepository } from '@nabarun-ngo/nestjs-shared-custom-forms';
 import { PublicFormValidatorService } from './public-form-validator.service';
 
 function makeForm(fields: FormFieldDefinition[]): Form {

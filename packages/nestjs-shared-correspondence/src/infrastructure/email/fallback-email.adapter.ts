@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import {
   IOAuthAccessTokenPort,
   OAUTH_ACCESS_TOKEN_PORT,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 import { IEmailSenderPort, EmailMessage } from '../../domain/ports/email-sender.port';
 import { GmailEmailAdapter } from './gmail-email.adapter';
 import { SmtpEmailAdapter } from './smtp-email.adapter';
@@ -23,7 +23,7 @@ export class FallbackEmailAdapter implements IEmailSenderPort {
     private readonly oauthTokens: IOAuthAccessTokenPort,
     private readonly gmailAdapter: GmailEmailAdapter,
     private readonly smtpAdapter: SmtpEmailAdapter,
-  ) {}
+  ) { }
 
   async send(message: EmailMessage): Promise<void> {
     let tokenAvailable = false;

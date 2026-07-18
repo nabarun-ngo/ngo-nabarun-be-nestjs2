@@ -1,4 +1,4 @@
-import { ObservabilityModule, OBSERVABILITY_OPTIONS } from '@ce/nestjs-shared-observability';
+import { ObservabilityModule, OBSERVABILITY_OPTIONS } from '@nabarun-ngo/nestjs-shared-observability';
 
 describe('ObservabilityModule', () => {
   describe('forRoot()', () => {

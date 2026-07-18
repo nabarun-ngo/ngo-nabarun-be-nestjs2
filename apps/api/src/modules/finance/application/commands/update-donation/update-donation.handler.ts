@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandBus, CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { Donation } from '../../../domain/aggregates/donation/donation.aggregate';
 import { DonationStatus } from '../../../domain/enums/donation-status.enum';
 import { TransactionRefType, TransactionType } from '../../../domain/enums/transaction.enum';
@@ -18,7 +18,7 @@ export class UpdateDonationHandler implements ICommandHandler<UpdateDonationComm
     private readonly commandBus: CommandBus,
     private readonly eventBus: EventBus,
     private readonly dmsFacade: DmsFacade,
-  ) {}
+  ) { }
 
   async execute({ params: request }: UpdateDonationCommand): Promise<Donation> {
     const donation = await this.donationRepository.findById(request.id);

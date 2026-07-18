@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BusinessException, formatDate } from '@ce/nestjs-shared-core';
+import { BusinessException, formatDate } from '@nabarun-ngo/nestjs-shared-core';
 import {
   DocumentGeneratorService,
   ExcelStyles,
-} from '@ce/nestjs-shared-document-generator';
+} from '@nabarun-ngo/nestjs-shared-document-generator';
 import { DateTime } from 'luxon';
 import {
   IReportProvider,
@@ -35,7 +35,7 @@ export class AnnualAuditReportProvider implements IReportProvider<{ financialYea
     @Inject(IAccountRepository) private readonly accountRepository: IAccountRepository,
     private readonly documentGenerator: DocumentGeneratorService,
     private readonly referenceDataService: FinanceReportReferenceDataService,
-  ) {}
+  ) { }
 
   readonly reportParams: ReportFieldDef<'financialYear'>[] = [
     {

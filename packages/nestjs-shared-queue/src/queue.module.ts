@@ -3,7 +3,7 @@ import { Redis } from "ioredis";
 import { BullModule } from "@nestjs/bullmq";
 import { DynamicModule, Logger, Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
-import { BaseDynamicModule, DynamicModuleAsyncOptions } from "@ce/nestjs-shared-core";
+import { BaseDynamicModule, DynamicModuleAsyncOptions } from "@nabarun-ngo/nestjs-shared-core";
 import { QueueController } from "./presentation/controllers/queue.controller";
 import { QueueFacade } from "./application/services/queue.facade";
 import { QueueProcessingService } from "./infrastructure/services/queue-processing.service";
@@ -69,7 +69,7 @@ function toBullMqDefaultJobOptions(
   const mapped: DefaultJobOptions = {
     ...(options.attempts !== undefined ? { attempts: options.attempts } : {}),
     ...(options.removeOnComplete !== undefined ? { removeOnComplete: toKeepJobs(options.removeOnComplete) } : {}),
-    ...(options.removeOnFail     !== undefined ? { removeOnFail:     toKeepJobs(options.removeOnFail) }     : {}),
+    ...(options.removeOnFail !== undefined ? { removeOnFail: toKeepJobs(options.removeOnFail) } : {}),
   };
   if (options.backoff) {
     mapped.backoff = { type: options.backoff.type, delay: options.backoff.delay };
@@ -88,12 +88,12 @@ function createRedisClient(connection: QueueModuleOptions["connection"]): Redis 
   const client = connection.url
     ? new Redis(connection.url, opts)
     : new Redis({
-        host:     connection.host,
-        port:     connection.port,
-        password: connection.password,
-        db:       connection.db,
-        ...opts,
-      });
+      host: connection.host,
+      port: connection.port,
+      password: connection.password,
+      db: connection.db,
+      ...opts,
+    });
   client.on("error", (err: Error) =>
     logger.error(`QueueJobStore Redis error: ${err?.message ?? err}`),
   );
@@ -105,7 +105,7 @@ const DEFAULT_QUEUE_NAME = "default";
 const DEFAULT_FLOW_PRODUCER_NAME = `${DEFAULT_QUEUE_NAME}-flow-producer`;
 
 export interface QueueModuleAsyncOptions
-  extends DynamicModuleAsyncOptions<QueueModuleOptions> {}
+  extends DynamicModuleAsyncOptions<QueueModuleOptions> { }
 
 @Module({})
 export class QueueModule extends BaseDynamicModule {

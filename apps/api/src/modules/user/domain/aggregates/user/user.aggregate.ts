@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot } from '@ce/nestjs-shared-core';
+import { AggregateRoot } from '@nabarun-ngo/nestjs-shared-core';
 import { UserStatus } from '../../enums/user-status.enum';
 import { PhoneNumber } from '../../value-objects/phone-number.vo';
 import { Address } from '../../value-objects/address.vo';

@@ -5,21 +5,21 @@
  */
 
 // ── Mock deep infrastructure ──────────────────────────────────────────────
-jest.mock('@ce/nestjs-shared-queue/infrastructure/services/queue-processing.service', () => ({
-  QueueProcessingService: class QueueProcessingService {},
+jest.mock('@nabarun-ngo/nestjs-shared-queue/infrastructure/services/queue-processing.service', () => ({
+  QueueProcessingService: class QueueProcessingService { },
 }));
-jest.mock('@ce/nestjs-shared-queue/infrastructure/services/queue-processor-registry.service', () => ({
-  QueueProcessorRegistry: class QueueProcessorRegistry {},
+jest.mock('@nabarun-ngo/nestjs-shared-queue/infrastructure/services/queue-processor-registry.service', () => ({
+  QueueProcessorRegistry: class QueueProcessorRegistry { },
 }));
-jest.mock('@ce/nestjs-shared-queue/application/services/queue.facade', () => ({
-  QueueFacade: class QueueFacade {},
+jest.mock('@nabarun-ngo/nestjs-shared-queue/application/services/queue.facade', () => ({
+  QueueFacade: class QueueFacade { },
 }));
-jest.mock('@ce/nestjs-shared-queue/presentation/controllers/queue.controller', () => ({
-  QueueController: class QueueController {},
+jest.mock('@nabarun-ngo/nestjs-shared-queue/presentation/controllers/queue.controller', () => ({
+  QueueController: class QueueController { },
 }));
 
 // ── Imports ──────────────────────────────────────────────────────────────────
-import { QueueModule } from '@ce/nestjs-shared-queue/queue.module';
+import { QueueModule } from '@nabarun-ngo/nestjs-shared-queue/queue.module';
 
 const validConnection = { url: 'redis://localhost:6379' };
 

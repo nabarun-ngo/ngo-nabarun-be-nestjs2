@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
-import { WorkflowFacade, WorkflowTaskHandler, WorkflowTaskHandlerContract } from '@ce/nestjs-shared-workflow';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
+import { WorkflowFacade, WorkflowTaskHandler, WorkflowTaskHandlerContract } from '@nabarun-ngo/nestjs-shared-workflow';
 import { UpdateUserAdminCommand } from '../../../user/application/commands/update-user-admin/update-user-admin.command';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class DonationPauseUpdateHandler implements WorkflowTaskHandlerContract {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly workflowFacade: WorkflowFacade,
-  ) {}
+  ) { }
 
   async execute(params: {
     instanceId: string;

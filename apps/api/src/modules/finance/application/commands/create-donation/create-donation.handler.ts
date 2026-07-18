@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { Donation } from '../../../domain/aggregates/donation/donation.aggregate';
 import { DonationStatus } from '../../../domain/enums/donation-status.enum';
 import { DonationType } from '../../../domain/enums/donation-type.enum';
@@ -13,7 +13,7 @@ export class CreateDonationHandler implements ICommandHandler<CreateDonationComm
   constructor(
     @Inject(IDonationRepository) private readonly donationRepository: IDonationRepository,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute({ params: request }: CreateDonationCommand): Promise<Donation> {
     const donation = Donation.create({

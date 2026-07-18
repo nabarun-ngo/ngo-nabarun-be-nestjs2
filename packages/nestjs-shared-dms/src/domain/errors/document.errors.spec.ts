@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { BusinessError } from '@ce/nestjs-shared-core';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 import {
   DocumentNotFoundError,
   DocumentAccessDeniedError,

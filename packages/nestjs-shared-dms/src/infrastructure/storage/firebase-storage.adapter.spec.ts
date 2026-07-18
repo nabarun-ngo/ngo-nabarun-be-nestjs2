@@ -1,6 +1,6 @@
 /**
  * FirebaseStorageAdapter unit tests.
- * Ported from test/dms/firebase-storage.adapter.spec.ts (stale @ce/nestjs-shared-dms/* imports).
+ * Ported from test/dms/firebase-storage.adapter.spec.ts (stale @nabarun-ngo/nestjs-shared-dms/* imports).
  * The adapter delegates all operations to FirebaseStorageService, which is mocked here.
  */
 import 'reflect-metadata';

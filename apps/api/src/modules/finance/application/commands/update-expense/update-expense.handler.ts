@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { Expense } from '../../../domain/aggregates/expense/expense.aggregate';
 import { ExpenseStatus } from '../../../domain/enums/expense.enum';
 import { ExpenseItem } from '../../../domain/value-objects/expense-item.vo';
@@ -10,7 +10,7 @@ import { UpdateExpenseCommand } from './update-expense.command';
 @CommandHandler(UpdateExpenseCommand)
 @Injectable()
 export class UpdateExpenseHandler implements ICommandHandler<UpdateExpenseCommand, Expense> {
-  constructor(@Inject(IExpenseRepository) private readonly expenseRepository: IExpenseRepository) {}
+  constructor(@Inject(IExpenseRepository) private readonly expenseRepository: IExpenseRepository) { }
 
   async execute({ params: request }: UpdateExpenseCommand): Promise<Expense> {
     const expense = await this.expenseRepository.findById(request.id);

@@ -4,7 +4,7 @@
  */
 
 jest.mock('axios', () => ({}), { virtual: true });
-jest.mock('@nestjs/axios', () => ({ HttpModule: class {}, HttpService: class {} }), {
+jest.mock('@nestjs/axios', () => ({ HttpModule: class { }, HttpService: class { } }), {
   virtual: true,
 });
 
@@ -25,7 +25,7 @@ jest.mock('google-auth-library', () => ({
 }));
 
 import { Logger } from '@nestjs/common';
-import { GmailEmailAdapter } from '@ce/nestjs-shared-correspondence/infrastructure/email/gmail-email.adapter';
+import { GmailEmailAdapter } from '@nabarun-ngo/nestjs-shared-correspondence/infrastructure/email/gmail-email.adapter';
 
 function getGmailMocks() {
   const mod = require('@googleapis/gmail');
@@ -47,7 +47,7 @@ function makeOAuthPort(accessToken = 'fake-token') {
 
 describe('GmailEmailAdapter', () => {
   beforeEach(() => {
-    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => { });
     const { gmailFn, mockSend } = getGmailMocks();
     gmailFn.mockClear();
     mockSend.mockClear();

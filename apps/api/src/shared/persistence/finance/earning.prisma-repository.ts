@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
-import { BaseFilter, Page } from '@ce/nestjs-shared-core';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
+import { BaseFilter, Page } from '@nabarun-ngo/nestjs-shared-core';
 import { Prisma, PrismaClient } from '../prisma/client';
 import { IEarningRepository, EarningFilter } from '../../../modules/finance/domain/repositories/earning.repository';
 import { Earning } from '../../../modules/finance/domain/aggregates/earning/earning.aggregate';

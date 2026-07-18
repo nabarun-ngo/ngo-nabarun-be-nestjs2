@@ -2,23 +2,23 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient } from '../prisma/client';
 import {
   FormWhereInput,
   FormWhereUniqueInput,
   FormOrderByWithRelationInput,
 } from '../prisma/models';
-import { IFormRepository } from '@ce/nestjs-shared-custom-forms';
-import { Form } from '@ce/nestjs-shared-custom-forms/domain/aggregates/form/form.aggregate';
-import { FormFieldDefinition } from '@ce/nestjs-shared-custom-forms/domain/entities/form-field-definition/form-field-definition.entity';
-import { FormStatus } from '@ce/nestjs-shared-custom-forms/domain/enums/form-status.enum';
-import { CustomFieldType } from '@ce/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
-import { FieldOption } from '@ce/nestjs-shared-custom-forms/domain/value-objects/field-option/field-option.vo';
-import { FieldCondition } from '@ce/nestjs-shared-custom-forms/domain/value-objects/field-condition/field-condition.vo';
-import { DependentOptions } from '@ce/nestjs-shared-custom-forms/domain/value-objects/dependent-options/dependent-options.vo';
-import { FieldValidationRules } from '@ce/nestjs-shared-custom-forms/domain/value-objects/field-validation-rules/field-validation-rules.vo';
-import { FormFilter } from '@ce/nestjs-shared-custom-forms/domain/repositories/form.repository';
+import { IFormRepository } from '@nabarun-ngo/nestjs-shared-custom-forms';
+import { Form } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/aggregates/form/form.aggregate';
+import { FormFieldDefinition } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/entities/form-field-definition/form-field-definition.entity';
+import { FormStatus } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/enums/form-status.enum';
+import { CustomFieldType } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
+import { FieldOption } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/value-objects/field-option/field-option.vo';
+import { FieldCondition } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/value-objects/field-condition/field-condition.vo';
+import { DependentOptions } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/value-objects/dependent-options/dependent-options.vo';
+import { FieldValidationRules } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/value-objects/field-validation-rules/field-validation-rules.vo';
+import { FormFilter } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/repositories/form.repository';
 
 type FormFieldDefinitionRow = {
   id: string;
@@ -77,8 +77,7 @@ export class FormPrismaRepository
     any,
     FormOrderByWithRelationInput
   >
-  implements IFormRepository
-{
+  implements IFormRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'form');
   }
@@ -189,45 +188,45 @@ export class FormPrismaRepository
   private toFieldDomain(row: FormFieldDefinitionRow): FormFieldDefinition {
     const fieldOptions: FieldOption[] = row.fieldOptionsJson
       ? (JSON.parse(row.fieldOptionsJson) as Array<{ key: string; label: string }>).map(
-          (o) => FieldOption.of(o.key, o.label),
-        )
+        (o) => FieldOption.of(o.key, o.label),
+      )
       : [];
 
     const condition: FieldCondition | null = row.conditionJson
       ? (() => {
-          const c = JSON.parse(row.conditionJson) as {
-            dependsOnKey: string;
-            operator: 'equals' | 'not_equals' | 'in' | 'not_in';
-            value: string | number | boolean | string[];
-          };
-          return FieldCondition.of(c.dependsOnKey, c.operator, c.value);
-        })()
+        const c = JSON.parse(row.conditionJson) as {
+          dependsOnKey: string;
+          operator: 'equals' | 'not_equals' | 'in' | 'not_in';
+          value: string | number | boolean | string[];
+        };
+        return FieldCondition.of(c.dependsOnKey, c.operator, c.value);
+      })()
       : null;
 
     const dependentOptions: DependentOptions | null = row.dependentOptionsJson
       ? (() => {
-          const d = JSON.parse(row.dependentOptionsJson) as {
-            dependsOnKey: string;
-            optionMap: Record<string, Array<{ key: string; label: string }>>;
-          };
-          const optionMap = Object.fromEntries(
-            Object.entries(d.optionMap).map(([k, opts]) => [
-              k,
-              opts.map((o) => FieldOption.of(o.key, o.label)),
-            ]),
-          );
-          return DependentOptions.of(d.dependsOnKey, optionMap);
-        })()
+        const d = JSON.parse(row.dependentOptionsJson) as {
+          dependsOnKey: string;
+          optionMap: Record<string, Array<{ key: string; label: string }>>;
+        };
+        const optionMap = Object.fromEntries(
+          Object.entries(d.optionMap).map(([k, opts]) => [
+            k,
+            opts.map((o) => FieldOption.of(o.key, o.label)),
+          ]),
+        );
+        return DependentOptions.of(d.dependsOnKey, optionMap);
+      })()
       : null;
 
     const validationRules: FieldValidationRules | null = row.validationRulesJson
       ? (() => {
-          const v = JSON.parse(row.validationRulesJson) as {
-            pattern: string;
-            regexErrMsg?: string;
-          };
-          return FieldValidationRules.fromPersisted(v.pattern, v.regexErrMsg);
-        })()
+        const v = JSON.parse(row.validationRulesJson) as {
+          pattern: string;
+          regexErrMsg?: string;
+        };
+        return FieldValidationRules.fromPersisted(v.pattern, v.regexErrMsg);
+      })()
       : null;
 
     const viewPermissions: string[] = row.viewPermissionsJson
@@ -259,12 +258,12 @@ export class FormPrismaRepository
 
   protected toCreateInput(entity: Form): any {
     return {
-      id:                    entity.id,
-      entityType:            entity.entityType,
-      key:                   entity.key,
-      label:                 entity.label,
-      description:           entity.description,
-      status:                entity.status,
+      id: entity.id,
+      entityType: entity.entityType,
+      key: entity.key,
+      label: entity.label,
+      description: entity.description,
+      status: entity.status,
       managePermissionsJson: entity.managePermissions.length
         ? JSON.stringify([...entity.managePermissions])
         : '[]',
@@ -282,9 +281,9 @@ export class FormPrismaRepository
 
   protected toUpdateInput(_id: string, entity: Form): any {
     return {
-      label:                 entity.label,
-      description:           entity.description,
-      status:                entity.status,
+      label: entity.label,
+      description: entity.description,
+      status: entity.status,
       managePermissionsJson: entity.managePermissions.length
         ? JSON.stringify([...entity.managePermissions])
         : '[]',
@@ -295,50 +294,50 @@ export class FormPrismaRepository
         ? JSON.stringify([...entity.writePermissions])
         : '[]',
       publishedBy: entity.publishedBy ?? null,
-      disabledBy:  entity.disabledBy ?? null,
-      updatedAt:   entity.updatedAt ?? new Date(),
+      disabledBy: entity.disabledBy ?? null,
+      updatedAt: entity.updatedAt ?? new Date(),
     };
   }
 
   private toFieldCreateInput(field: FormFieldDefinition): any {
     return {
-      id:                   field.id,
-      formId:               field.formId,
-      key:                  field.key,
-      label:                field.label,
-      fieldType:            field.fieldType,
-      mandatory:            field.mandatory,
-      fieldOptionsJson:     this.serialiseFieldOptions(field),
-      isHidden:             field.isHidden,
-      isEncrypted:          field.isEncrypted,
-      enabled:              field.enabled,
-      sortOrder:            field.sortOrder,
-      conditionJson:        this.serialiseCondition(field),
+      id: field.id,
+      formId: field.formId,
+      key: field.key,
+      label: field.label,
+      fieldType: field.fieldType,
+      mandatory: field.mandatory,
+      fieldOptionsJson: this.serialiseFieldOptions(field),
+      isHidden: field.isHidden,
+      isEncrypted: field.isEncrypted,
+      enabled: field.enabled,
+      sortOrder: field.sortOrder,
+      conditionJson: this.serialiseCondition(field),
       dependentOptionsJson: this.serialiseDependentOptions(field),
-      validationRulesJson:  this.serialiseValidationRules(field),
-      viewPermissionsJson:  this.serialiseViewPermissions(field),
-      createdBy:            field.createdBy ?? null,
-      createdAt:            field.createdAt ?? new Date(),
-      updatedAt:            field.updatedAt ?? new Date(),
+      validationRulesJson: this.serialiseValidationRules(field),
+      viewPermissionsJson: this.serialiseViewPermissions(field),
+      createdBy: field.createdBy ?? null,
+      createdAt: field.createdAt ?? new Date(),
+      updatedAt: field.updatedAt ?? new Date(),
     };
   }
 
   private toFieldUpdateInput(field: FormFieldDefinition): any {
     return {
-      label:                field.label,
-      fieldType:            field.fieldType,
-      mandatory:            field.mandatory,
-      fieldOptionsJson:     this.serialiseFieldOptions(field),
-      isHidden:             field.isHidden,
-      isEncrypted:          field.isEncrypted,
-      enabled:              field.enabled,
-      sortOrder:            field.sortOrder,
-      conditionJson:        this.serialiseCondition(field),
+      label: field.label,
+      fieldType: field.fieldType,
+      mandatory: field.mandatory,
+      fieldOptionsJson: this.serialiseFieldOptions(field),
+      isHidden: field.isHidden,
+      isEncrypted: field.isEncrypted,
+      enabled: field.enabled,
+      sortOrder: field.sortOrder,
+      conditionJson: this.serialiseCondition(field),
       dependentOptionsJson: this.serialiseDependentOptions(field),
-      validationRulesJson:  this.serialiseValidationRules(field),
-      viewPermissionsJson:  this.serialiseViewPermissions(field),
-      disabledBy:           field.disabledBy ?? null,
-      updatedAt:            field.updatedAt ?? new Date(),
+      validationRulesJson: this.serialiseValidationRules(field),
+      viewPermissionsJson: this.serialiseViewPermissions(field),
+      disabledBy: field.disabledBy ?? null,
+      updatedAt: field.updatedAt ?? new Date(),
     };
   }
 
@@ -351,37 +350,37 @@ export class FormPrismaRepository
   private serialiseCondition(field: FormFieldDefinition): string | null {
     return field.condition
       ? JSON.stringify({
-          dependsOnKey: field.condition.dependsOnKey,
-          operator:     field.condition.operator,
-          value:        field.condition.value,
-        })
+        dependsOnKey: field.condition.dependsOnKey,
+        operator: field.condition.operator,
+        value: field.condition.value,
+      })
       : null;
   }
 
   private serialiseDependentOptions(field: FormFieldDefinition): string | null {
     return field.dependentOptions
       ? JSON.stringify({
-          dependsOnKey: field.dependentOptions.dependsOnKey,
-          optionMap: Object.fromEntries(
-            Object.entries(field.dependentOptions.optionMap).map(
-              ([k, opts]: [string, ReadonlyArray<FieldOption>]) => [
-                k,
-                [...opts].map((o) => ({ key: o.key, label: o.label })),
-              ],
-            ),
+        dependsOnKey: field.dependentOptions.dependsOnKey,
+        optionMap: Object.fromEntries(
+          Object.entries(field.dependentOptions.optionMap).map(
+            ([k, opts]: [string, ReadonlyArray<FieldOption>]) => [
+              k,
+              [...opts].map((o) => ({ key: o.key, label: o.label })),
+            ],
           ),
-        })
+        ),
+      })
       : null;
   }
 
   private serialiseValidationRules(field: FormFieldDefinition): string | null {
     return field.validationRules
       ? JSON.stringify({
-          pattern: field.validationRules.pattern,
-          ...(field.validationRules.regexErrMsg
-            ? { regexErrMsg: field.validationRules.regexErrMsg }
-            : {}),
-        })
+        pattern: field.validationRules.pattern,
+        ...(field.validationRules.regexErrMsg
+          ? { regexErrMsg: field.validationRules.regexErrMsg }
+          : {}),
+      })
       : null;
   }
 
@@ -398,8 +397,8 @@ export class FormPrismaRepository
   protected toFilterWhere(filter?: FormFilter): FormWhereInput {
     return {
       ...(filter?.entityType ? { entityType: filter.entityType } : {}),
-      ...(filter?.status     ? { status:     filter.status }     : {}),
-      ...(filter?.key        ? { key:        filter.key }        : {}),
+      ...(filter?.status ? { status: filter.status } : {}),
+      ...(filter?.key ? { key: filter.key } : {}),
     };
   }
 

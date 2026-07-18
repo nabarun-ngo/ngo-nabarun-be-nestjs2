@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { QueueHandler, IQueueHandler, Job } from '@ce/nestjs-shared-queue';
+import { QueueHandler, IQueueHandler, Job } from '@nabarun-ngo/nestjs-shared-queue';
 import { IMeetingRepository } from '../../domain/repositories/meeting.repository';
 import { ProcessFathomMeetingWebhookJob } from './process-fathom-meeting-webhook.job';
 
@@ -12,7 +12,7 @@ const FUZZY_END_WINDOW_MINUTES = 10;
 export class ProcessFathomMeetingWebhookHandler implements IQueueHandler<ProcessFathomMeetingWebhookJob> {
   private readonly logger = new Logger(ProcessFathomMeetingWebhookHandler.name);
 
-  constructor(@Inject(IMeetingRepository) private readonly meetingRepo: IMeetingRepository) {}
+  constructor(@Inject(IMeetingRepository) private readonly meetingRepo: IMeetingRepository) { }
 
   async execute(job: Job<ProcessFathomMeetingWebhookJob>): Promise<{ success: boolean; reason?: string; meetingId?: string }> {
     const payload = job.data.payload;

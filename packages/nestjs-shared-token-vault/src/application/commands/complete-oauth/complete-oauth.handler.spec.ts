@@ -1,14 +1,14 @@
-import { CompleteOAuthHandler } from '@ce/nestjs-shared-token-vault/application/commands/complete-oauth/complete-oauth.handler';
-import { CompleteOAuthCommand } from '@ce/nestjs-shared-token-vault/application/commands/complete-oauth/complete-oauth.command';
+import { CompleteOAuthHandler } from '@nabarun-ngo/nestjs-shared-token-vault/application/commands/complete-oauth/complete-oauth.handler';
+import { CompleteOAuthCommand } from '@nabarun-ngo/nestjs-shared-token-vault/application/commands/complete-oauth/complete-oauth.command';
 import {
   DuplicateAuthorizationCodeError,
   InvalidCallbackStateError,
   OAuthCallbackError,
   ProviderNotConfiguredError,
-} from '@ce/nestjs-shared-token-vault/domain/errors/token-vault.errors';
-import { OAuthAccount } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+} from '@nabarun-ngo/nestjs-shared-token-vault/domain/errors/token-vault.errors';
+import { OAuthAccount } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 const FUTURE = new Date(Date.now() + 3_600_000);

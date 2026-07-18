@@ -1,4 +1,4 @@
-import { BaseFilter, IRepository } from '@ce/nestjs-shared-core';
+import { BaseFilter, IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { Project, ProjectFilter } from '../aggregates/project/project.aggregate';
 
 export const IProjectRepository = Symbol('IProjectRepository');

@@ -1,9 +1,9 @@
 /**
  * MarkAllUserNotificationsReadHandler unit tests.
  */
-import { MarkAllUserNotificationsReadHandler } from '@ce/nestjs-shared-correspondence/application/commands/mark-all-user-notifications-read/mark-all-user-notifications-read.handler';
-import { MarkAllUserNotificationsReadCommand } from '@ce/nestjs-shared-correspondence/application/commands/mark-all-user-notifications-read/mark-all-user-notifications-read.command';
-import { IUserNotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
+import { MarkAllUserNotificationsReadHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/mark-all-user-notifications-read/mark-all-user-notifications-read.handler';
+import { MarkAllUserNotificationsReadCommand } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/mark-all-user-notifications-read/mark-all-user-notifications-read.command';
+import { IUserNotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
 import { EventBus, IEvent } from '@nestjs/cqrs';
 
 function buildHandler() {

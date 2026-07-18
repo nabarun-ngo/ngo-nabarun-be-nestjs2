@@ -1,4 +1,4 @@
-import { SortOrder } from '@ce/nestjs-shared-core';
+import { SortOrder } from '@nabarun-ngo/nestjs-shared-core';
 import { UserFilter } from '../../../domain/repositories/user.repository';
 
 export class ListUsersQuery {
@@ -8,5 +8,5 @@ export class ListUsersQuery {
     public readonly pageSize?: number,
     public readonly sortBy?: string,
     public readonly sortDir?: SortOrder,
-  ) {}
+  ) { }
 }

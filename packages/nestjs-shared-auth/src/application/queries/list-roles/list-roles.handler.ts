@@ -3,13 +3,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ListRolesQuery } from './list-roles.query';
 import { IRoleRepository } from '../../../domain/repositories/role.repository';
 import { RoleResponseMapper } from '../../mappers/role-response.mapper';
-import { PagedResponse } from '@ce/nestjs-shared-core';
+import { PagedResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { RoleResponseDto } from '../../dtos/response/auth-response.dtos';
 
 @QueryHandler(ListRolesQuery)
 @Injectable()
 export class ListRolesHandler implements IQueryHandler<ListRolesQuery, PagedResponse<RoleResponseDto>> {
-  constructor(@Inject(IRoleRepository) private readonly repo: IRoleRepository) {}
+  constructor(@Inject(IRoleRepository) private readonly repo: IRoleRepository) { }
 
   async execute(query: ListRolesQuery): Promise<PagedResponse<RoleResponseDto>> {
     const activeFilter = {

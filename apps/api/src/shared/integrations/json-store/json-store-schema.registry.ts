@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { EmailTemplatePayloadSchema } from '@ce/nestjs-shared-correspondence';
-import { CronJobPayloadSchema } from '@ce/nestjs-shared-cron';
-import { WorkflowDefinitionSchema } from '@ce/nestjs-shared-workflow';
+import { EmailTemplatePayloadSchema } from '@nabarun-ngo/nestjs-shared-correspondence';
+import { CronJobPayloadSchema } from '@nabarun-ngo/nestjs-shared-cron';
+import { WorkflowDefinitionSchema } from '@nabarun-ngo/nestjs-shared-workflow';
 import { UserReferenceDataPayloadSchema } from '../../../modules/user/user-reference-data.schema';
 import { FinanceReferenceDataPayloadSchema } from '../../../modules/finance/finance-reference-data.schema';
 import { ProjectReferenceDataPayloadSchema } from '../../../modules/project/project-reference-data.schema';

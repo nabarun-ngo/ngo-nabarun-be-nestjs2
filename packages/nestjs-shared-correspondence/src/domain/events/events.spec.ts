@@ -2,16 +2,16 @@
  * Domain events — payload correctness tests.
  * Pure unit tests, no framework imports.
  */
-import { Notification } from '@ce/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
-import { UserNotification } from '@ce/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { NotificationCreatedEvent, type NotificationCreatedSnapshot } from '@ce/nestjs-shared-correspondence/domain/events/notification-created.event';
-import { UserNotificationReadEvent, type UserNotificationReadSnapshot } from '@ce/nestjs-shared-correspondence/domain/events/user-notification-read.event';
-import { UserNotificationArchivedEvent, type UserNotificationArchivedSnapshot } from '@ce/nestjs-shared-correspondence/domain/events/user-notification-archived.event';
-import { NotificationPushDeliveredEvent, type NotificationPushDeliveredSnapshot } from '@ce/nestjs-shared-correspondence/domain/events/notification-push-delivered.event';
-import { SubscriptionDeactivatedEvent, type SubscriptionDeactivatedSnapshot } from '@ce/nestjs-shared-correspondence/domain/events/subscription-deactivated.event';
-import { NotificationType, NotificationCategory } from '@ce/nestjs-shared-correspondence/domain/enums/notification-type.enum';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { Notification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
+import { UserNotification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { NotificationCreatedEvent, type NotificationCreatedSnapshot } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/notification-created.event';
+import { UserNotificationReadEvent, type UserNotificationReadSnapshot } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/user-notification-read.event';
+import { UserNotificationArchivedEvent, type UserNotificationArchivedSnapshot } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/user-notification-archived.event';
+import { NotificationPushDeliveredEvent, type NotificationPushDeliveredSnapshot } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/notification-push-delivered.event';
+import { SubscriptionDeactivatedEvent, type SubscriptionDeactivatedSnapshot } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/subscription-deactivated.event';
+import { NotificationType, NotificationCategory } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/notification-type.enum';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
 
 describe('Domain events', () => {
   describe('NotificationCreatedEvent', () => {

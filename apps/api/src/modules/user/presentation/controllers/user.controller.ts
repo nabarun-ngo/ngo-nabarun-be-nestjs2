@@ -13,8 +13,8 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
-import type { AuthUser } from '@ce/nestjs-shared-auth';
+import { CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
+import type { AuthUser } from '@nabarun-ngo/nestjs-shared-auth';
 
 import { CreateUserCommand } from '../../application/commands/create-user/create-user.command';
 import { UpdateUserProfileCommand } from '../../application/commands/update-user-profile/update-user-profile.command';

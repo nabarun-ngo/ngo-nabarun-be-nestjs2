@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot, BusinessException } from '@ce/nestjs-shared-core';
+import { AggregateRoot, BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { GoalPriority, GoalStatus } from '../../enums/goal.enum';
 export interface GoalFilter { projectId?: string; status?: GoalStatus; priority?: GoalPriority; }
 export class Goal extends AggregateRoot<string> {

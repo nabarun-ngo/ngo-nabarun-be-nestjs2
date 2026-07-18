@@ -1,5 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
-import { AuthFacade } from '@ce/nestjs-shared-auth';
+import { AuthFacade } from '@nabarun-ngo/nestjs-shared-auth';
 import { OnUserCreatedHandler } from './on-user-created.handler';
 import { UserCreatedEvent } from '../../../domain/events/user-created.event';
 import { USER_OPTIONS } from '../../../infrastructure/user-options.token';

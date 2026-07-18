@@ -1,9 +1,9 @@
 import { BadRequestException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
-import { OAuthController } from "@ce/nestjs-shared-token-vault/presentation/controllers/oauth.controller";
-import { OAUTH_PROVIDER_REGISTRY } from "@ce/nestjs-shared-token-vault/application/ports/oauth-provider.port";
-import { ProviderNotConfiguredError } from "@ce/nestjs-shared-token-vault/domain/errors/token-vault.errors";
+import { OAuthController } from "@nabarun-ngo/nestjs-shared-token-vault/presentation/controllers/oauth.controller";
+import { OAUTH_PROVIDER_REGISTRY } from "@nabarun-ngo/nestjs-shared-token-vault/application/ports/oauth-provider.port";
+import { ProviderNotConfiguredError } from "@nabarun-ngo/nestjs-shared-token-vault/domain/errors/token-vault.errors";
 
 const makeProviderMock = () => ({
   getSupportedScopes: jest.fn(),

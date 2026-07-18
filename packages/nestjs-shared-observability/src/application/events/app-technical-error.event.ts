@@ -1,1 +1,1 @@
-export { AppTechnicalError } from "@ce/nestjs-shared-core";
+export { AppTechnicalError } from "@nabarun-ngo/nestjs-shared-core";

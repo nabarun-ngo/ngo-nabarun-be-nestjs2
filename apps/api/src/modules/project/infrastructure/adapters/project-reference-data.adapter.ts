@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { JsonStoreFacade } from '@ce/nestjs-shared-json-store';
+import { JsonStoreFacade } from '@nabarun-ngo/nestjs-shared-json-store';
 import { IProjectReferenceDataPort, KeyValueOption } from '../../application/ports/project-reference-data.port';
 import { ProjectReferenceDataPayloadSchema } from '../../project-reference-data.schema';
 
@@ -8,7 +8,7 @@ export class ProjectReferenceDataAdapter implements IProjectReferenceDataPort {
   private static readonly NAMESPACE = 'project-reference-data';
   private readonly logger = new Logger(ProjectReferenceDataAdapter.name);
 
-  constructor(private readonly jsonStore: JsonStoreFacade) {}
+  constructor(private readonly jsonStore: JsonStoreFacade) { }
 
   async getProjectReferenceData(): Promise<Record<string, KeyValueOption[]>> {
     const [

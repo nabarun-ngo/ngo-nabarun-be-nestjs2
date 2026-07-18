@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BaseDynamicModule } from '@ce/nestjs-shared-core';
+import { BaseDynamicModule } from '@nabarun-ngo/nestjs-shared-core';
 
 const TEST_OPTIONS = Symbol('TEST_OPTIONS');
 

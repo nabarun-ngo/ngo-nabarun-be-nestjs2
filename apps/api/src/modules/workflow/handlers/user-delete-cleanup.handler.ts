@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import {
   WorkflowFacade,
   WorkflowTaskHandler,
   WorkflowTaskHandlerContract,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { PrismaClient } from '../../../shared/persistence/prisma/client';
 import { DeleteUserCommand } from '../../user/application/commands/delete-user/delete-user.command';
 

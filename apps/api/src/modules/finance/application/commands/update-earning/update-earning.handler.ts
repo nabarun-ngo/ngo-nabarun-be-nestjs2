@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { Earning } from '../../../domain/aggregates/earning/earning.aggregate';
 import { EarningStatus } from '../../../domain/enums/earning.enum';
 import { TransactionRefType, TransactionType } from '../../../domain/enums/transaction.enum';
@@ -14,7 +14,7 @@ export class UpdateEarningHandler implements ICommandHandler<UpdateEarningComman
   constructor(
     @Inject(IEarningRepository) private readonly earningRepository: IEarningRepository,
     private readonly commandBus: CommandBus,
-  ) {}
+  ) { }
 
   async execute({ params: request }: UpdateEarningCommand): Promise<Earning> {
     const earning = await this.earningRepository.findById(request.id);

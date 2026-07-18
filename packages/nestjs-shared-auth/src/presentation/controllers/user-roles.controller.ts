@@ -15,7 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiAutoResponse } from '@ce/nestjs-shared-core';
+import { ApiAutoResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { GrantUserRoleCommand } from '../../application/commands/grant-user-role/grant-user-role.command';
 import { RevokeUserRoleCommand } from '../../application/commands/revoke-user-role/revoke-user-role.command';
 import { AddUserToGroupCommand } from '../../application/commands/add-user-to-group/add-user-to-group.command';
@@ -41,7 +41,7 @@ export class UserRolesController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   /** Returns the best available caller ID for audit fields: prefers app userId over raw IdP sub. */
   private auditId(caller: AuthUser): string {

@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { Permission, PermissionFilter } from '../aggregates/permission/permission.aggregate';
 
 export const IPermissionRepository = Symbol('IPermissionRepository');

@@ -5,7 +5,7 @@
 
 // Mock axios and @nestjs/axios to avoid missing peer dependency in transitive imports
 jest.mock('axios', () => ({}), { virtual: true });
-jest.mock('@nestjs/axios', () => ({ HttpModule: class {}, HttpService: class {} }), {
+jest.mock('@nestjs/axios', () => ({ HttpModule: class { }, HttpService: class { } }), {
   virtual: true,
 });
 
@@ -31,8 +31,8 @@ jest.mock('@onesignal/node-onesignal', () => {
   };
 });
 
-import { OneSignalPushAdapter } from '@ce/nestjs-shared-correspondence/infrastructure/push/onesignal-push.adapter';
-import { PushNotificationPayload } from '@ce/nestjs-shared-correspondence/domain/ports/push-notification.port';
+import { OneSignalPushAdapter } from '@nabarun-ngo/nestjs-shared-correspondence/infrastructure/push/onesignal-push.adapter';
+import { PushNotificationPayload } from '@nabarun-ngo/nestjs-shared-correspondence/domain/ports/push-notification.port';
 import * as OneSignal from '@onesignal/node-onesignal';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
@@ -53,8 +53,8 @@ const options = {
 
 describe('OneSignalPushAdapter', () => {
   beforeEach(() => {
-    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
-    jest.spyOn(Logger.prototype, 'warn').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => { });
+    jest.spyOn(Logger.prototype, 'warn').mockImplementation(() => { });
     const { MockNotification, mockCreateNotification } = getOneSignalMocks();
     MockNotification.mockClear();
     mockCreateNotification.mockClear();

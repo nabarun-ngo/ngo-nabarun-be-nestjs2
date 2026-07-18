@@ -1,4 +1,4 @@
-import { BusinessError } from '@ce/nestjs-shared-core';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 
 export class EntityTypeForbiddenError extends BusinessError {
   constructor(entityType: string) {

@@ -1,6 +1,6 @@
-import { BaseFilter } from '@ce/nestjs-shared-core';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
 import { PermissionFilter } from '../../../domain/aggregates/permission/permission.aggregate';
 
 export class ListPermissionsQuery {
-  constructor(public readonly filter?: BaseFilter<PermissionFilter>) {}
+  constructor(public readonly filter?: BaseFilter<PermissionFilter>) { }
 }

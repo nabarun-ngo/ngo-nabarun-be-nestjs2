@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { IUserRolePort } from '../../domain/ports/user-role.port';
-import { IUserLookupPort, UserInfo } from '@ce/nestjs-shared-core';
+import { IUserLookupPort, UserInfo } from '@nabarun-ngo/nestjs-shared-core';
 import { GrantUserRoleCommand } from '../commands/grant-user-role/grant-user-role.command';
 import { RevokeUserRoleCommand } from '../commands/revoke-user-role/revoke-user-role.command';
 import { ListUserRolesQuery } from '../queries/list-user-roles/list-user-roles.query';
@@ -20,9 +20,9 @@ export class AuthFacade {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-    @Optional() @Inject(IUserRolePort)   private readonly userRole: IUserRolePort | null,
+    @Optional() @Inject(IUserRolePort) private readonly userRole: IUserRolePort | null,
     @Optional() @Inject(IUserLookupPort) private readonly userLookup: IUserLookupPort | null,
-  ) {}
+  ) { }
 
   /** List all active roles for a user identified by their IdP subject. */
   getUserRoles(idpSub: string): Promise<UserRoleResponseDto[]> {

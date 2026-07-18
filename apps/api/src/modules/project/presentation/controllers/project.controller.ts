@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
+import { CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
 import { CreateProjectCommand } from '../../application/commands/create-project/create-project.command';
 import { UpdateProjectCommand } from '../../application/commands/update-project/update-project.command';
 import { CreateActivityCommand } from '../../application/commands/create-activity/create-activity.command';
@@ -38,7 +38,7 @@ import { ActivityListResponseDto } from '../../application/dtos/activity-list.dt
 @UseGuards(UnifiedAuthGuard)
 @Controller('projects')
 export class ProjectController {
-  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
+  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) { }
 
   @Get('static/referenceData')
   @RequirePermissions('read:project')

@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@ce/nestjs-shared-queue';
+import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@nabarun-ngo/nestjs-shared-queue';
 import { ProcessServiceTaskJob } from '../../application/jobs/process-service-task.job';
 import type { WorkflowQueueJobPayload } from '../../domain/ports/workflow-queue.port';
 import { WorkflowOrchestratorService } from '../../application/services/workflow-orchestrator.service';
@@ -18,7 +18,7 @@ export class ProcessServiceTaskHandler implements IQueueHandler<ProcessServiceTa
     private readonly orchestrator: WorkflowOrchestratorService,
     private readonly handlerRegistry: TaskHandlerRegistryService,
     private readonly idempotency: IdempotencyService,
-  ) {}
+  ) { }
 
   async execute(job: Job<ProcessServiceTaskJob>, _ctx: JobExecutionContext): Promise<void> {
     const payload =

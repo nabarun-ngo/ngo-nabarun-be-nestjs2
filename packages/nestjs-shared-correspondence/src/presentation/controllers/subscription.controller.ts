@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UnifiedAuthGuard, CurrentUser, AuthUser } from '@ce/nestjs-shared-auth';
+import { UnifiedAuthGuard, CurrentUser, AuthUser } from '@nabarun-ngo/nestjs-shared-auth';
 import { SubscribeUserCommand } from '../../application/commands/subscribe-user/subscribe-user.command';
 import { UnsubscribeUserCommand } from '../../application/commands/unsubscribe-user/unsubscribe-user.command';
 import { UpdateChannelConfigCommand } from '../../application/commands/update-channel-config/update-channel-config.command';
@@ -16,7 +16,7 @@ export class SubscriptionController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   private requireProfileId(user: AuthUser): string {
     if (!user.userId) throw new UnauthorizedException('User profile not resolved');

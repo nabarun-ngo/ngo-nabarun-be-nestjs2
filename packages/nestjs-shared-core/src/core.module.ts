@@ -28,7 +28,7 @@ import { registerHandlebarsHelpers } from './infrastructure/handlebars/handlebar
  *
  * @example
  * // app.module.ts
- * import { CoreModule } from '@ce/nestjs-shared-core';
+ * import { CoreModule } from '@nabarun-ngo/nestjs-shared-core';
  *
  * @Module({ imports: [CoreModule, ...] })
  * export class AppModule {}

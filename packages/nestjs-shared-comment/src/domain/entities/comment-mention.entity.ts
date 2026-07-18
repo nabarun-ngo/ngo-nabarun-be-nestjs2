@@ -1,4 +1,4 @@
-import { BaseDomain } from '@ce/nestjs-shared-core';
+import { BaseDomain } from '@nabarun-ngo/nestjs-shared-core';
 
 export type CommentMentionId = { commentId: string; mentionedUserId: string };
 

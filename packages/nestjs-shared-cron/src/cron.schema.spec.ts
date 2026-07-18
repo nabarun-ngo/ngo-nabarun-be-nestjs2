@@ -3,7 +3,7 @@
  * Validates that module options are correctly accepted or rejected.
  * Supersedes: test/cron/cron.schema.spec.ts (timezone/defaults coverage for cron)
  */
-import { Cron2OptionsSchema } from '@ce/nestjs-shared-cron/cron.schema';
+import { Cron2OptionsSchema } from '@nabarun-ngo/nestjs-shared-cron/cron.schema';
 
 describe('Cron2OptionsSchema', () => {
   describe('valid inputs', () => {

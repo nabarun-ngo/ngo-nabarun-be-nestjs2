@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { formatDate } from '@ce/nestjs-shared-core';
+import { formatDate } from '@nabarun-ngo/nestjs-shared-core';
 import ExcelJS from 'exceljs';
 import { DateTime } from 'luxon';
 import {
@@ -22,7 +22,7 @@ export class DonationSummaryReportProvider implements IReportProvider<{ startDat
     { key: 'endDate', defKey: 'INPUT_DATE_FIELD', label: 'End Date', mandatory: true },
   ];
 
-  constructor(@Inject(IDonationRepository) private readonly donationRepository: IDonationRepository) {}
+  constructor(@Inject(IDonationRepository) private readonly donationRepository: IDonationRepository) { }
 
   async generate(params: { startDate: Date; endDate: Date }): Promise<ReportGeneratedData> {
     const startDt = this.toDateTime(params.startDate).setZone('Asia/Kolkata');

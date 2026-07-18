@@ -1,4 +1,4 @@
-import { DomainEvent } from '@ce/nestjs-shared-core';
+import { DomainEvent } from '@nabarun-ngo/nestjs-shared-core';
 import type { Form } from '../aggregates/form/form.aggregate';
 
 export type FormPublishedSnapshot = Pick<Form, 'id' | 'entityType' | 'key' | 'status' | 'publishedBy'>;

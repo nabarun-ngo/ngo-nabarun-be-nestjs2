@@ -1,12 +1,12 @@
 /**
  * UnsubscribeUserHandler unit tests.
  */
-import { UnsubscribeUserHandler } from '@ce/nestjs-shared-correspondence/application/commands/unsubscribe-user/unsubscribe-user.handler';
-import { UnsubscribeUserCommand } from '@ce/nestjs-shared-correspondence/application/commands/unsubscribe-user/unsubscribe-user.command';
-import { IResourceSubscriptionRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
-import { SubscriptionNotFoundError } from '@ce/nestjs-shared-correspondence/domain/errors/correspondence.errors';
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { UnsubscribeUserHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/unsubscribe-user/unsubscribe-user.handler';
+import { UnsubscribeUserCommand } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/unsubscribe-user/unsubscribe-user.command';
+import { IResourceSubscriptionRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
+import { SubscriptionNotFoundError } from '@nabarun-ngo/nestjs-shared-correspondence/domain/errors/correspondence.errors';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
 
 function makeActiveSub() {
   return ResourceSubscription.createUserSubscription({

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter } from '@ce/nestjs-shared-core';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
 import { IDonationRepository } from '../../../domain/repositories/donation.repository';
 import { DonationListResponseDto } from '../../dtos/donation-list.dto';
 import { DonationMapper } from '../../mappers/donation.mapper';
@@ -9,7 +9,7 @@ import { ListDonationsQuery } from './list-donations.query';
 @QueryHandler(ListDonationsQuery)
 @Injectable()
 export class ListDonationsHandler implements IQueryHandler<ListDonationsQuery, DonationListResponseDto> {
-  constructor(@Inject(IDonationRepository) private readonly repo: IDonationRepository) {}
+  constructor(@Inject(IDonationRepository) private readonly repo: IDonationRepository) { }
 
   async execute(query: ListDonationsQuery): Promise<DonationListResponseDto> {
     const filter = new BaseFilter(query.filter, query.pageIndex ?? 0, query.pageSize ?? 20);

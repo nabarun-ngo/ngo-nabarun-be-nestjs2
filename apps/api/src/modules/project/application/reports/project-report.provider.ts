@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import ExcelJS from 'exceljs';
-import { formatDate } from '@ce/nestjs-shared-core';
+import { formatDate } from '@nabarun-ngo/nestjs-shared-core';
 import { IReportProvider, ReportFieldDef, ReportGeneratedData, ReportProvider } from '../../../reporting/domain/reporting.interface';
 import { IProjectRepository } from '../../domain/repositories/project.repository';
 import { IActivityRepository } from '../../domain/repositories/activity.repository';

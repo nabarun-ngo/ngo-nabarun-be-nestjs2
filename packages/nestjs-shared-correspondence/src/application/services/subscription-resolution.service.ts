@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { IResourceSubscriptionRepository } from '../../domain/repositories/resource-subscription.repository';
-import { IUserLookupPort } from '@ce/nestjs-shared-core';
-import { IUserRolePort } from '@ce/nestjs-shared-auth';
+import { IUserLookupPort } from '@nabarun-ngo/nestjs-shared-core';
+import { IUserRolePort } from '@nabarun-ngo/nestjs-shared-auth';
 import {
   Correspondence2Recipients,
   TargetUsersRecipients,
@@ -36,8 +36,8 @@ export class SubscriptionResolutionService {
     @Inject(IResourceSubscriptionRepository)
     private readonly subscriptionRepo: IResourceSubscriptionRepository,
     @Optional() @Inject(IUserLookupPort) private readonly userLookup: IUserLookupPort | null,
-    @Optional() @Inject(IUserRolePort)   private readonly userRole: IUserRolePort | null,
-  ) {}
+    @Optional() @Inject(IUserRolePort) private readonly userRole: IUserRolePort | null,
+  ) { }
 
   async resolve(
     recipients: Correspondence2Recipients,
@@ -120,9 +120,9 @@ export class SubscriptionResolutionService {
     const emailTo = overrideEmails?.length
       ? overrideEmails
       : emailSubscriptions
-          .filter((s) => EmailRecipientPolicy.getEmailRole(s) === EmailRole.TO)
-          .map((s) => s.userEmail)
-          .filter((e): e is string => !!e);
+        .filter((s) => EmailRecipientPolicy.getEmailRole(s) === EmailRole.TO)
+        .map((s) => s.userEmail)
+        .filter((e): e is string => !!e);
 
     const emailCcFromSubs = emailSubscriptions
       .filter((s) => EmailRecipientPolicy.getEmailRole(s) === EmailRole.CC)

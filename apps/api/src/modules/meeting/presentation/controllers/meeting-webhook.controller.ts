@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Logger, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Public } from '@ce/nestjs-shared-auth';
-import { QueueFacade } from '@ce/nestjs-shared-queue';
+import { Public } from '@nabarun-ngo/nestjs-shared-auth';
+import { QueueFacade } from '@nabarun-ngo/nestjs-shared-queue';
 import { FathomWebhookDto } from '../../application/dtos/fathom-webhook.dto';
 import { ProcessFathomMeetingWebhookJob } from '../../application/jobs/process-fathom-meeting-webhook.job';
 
@@ -11,7 +11,7 @@ import { ProcessFathomMeetingWebhookJob } from '../../application/jobs/process-f
 export class MeetingWebhookController {
   private readonly logger = new Logger(MeetingWebhookController.name);
 
-  constructor(private readonly queueFacade: QueueFacade) {}
+  constructor(private readonly queueFacade: QueueFacade) { }
 
   @Post('fathom')
   @HttpCode(HttpStatus.OK)

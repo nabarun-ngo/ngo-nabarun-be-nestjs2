@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException, generateUniqueNDigitNumber } from '@ce/nestjs-shared-core';
-import { LockingService } from '@ce/nestjs-shared-persistence';
+import { BusinessException, generateUniqueNDigitNumber } from '@nabarun-ngo/nestjs-shared-core';
+import { LockingService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { IAccountRepository } from '../../../domain/repositories/account.repository';
 import { TransactionRefType } from '../../../domain/enums/transaction.enum';
 import { CreateTransactionCommand } from './create-transaction.command';
@@ -13,7 +13,7 @@ export class CreateTransactionHandler implements ICommandHandler<CreateTransacti
     @Inject(IAccountRepository) private readonly accountRepository: IAccountRepository,
     private readonly eventBus: EventBus,
     private readonly lockingService: LockingService,
-  ) {}
+  ) { }
 
   async execute({ params: request }: CreateTransactionCommand): Promise<string> {
     if (request.actorUserId) {

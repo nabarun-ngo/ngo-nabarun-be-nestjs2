@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   IJsonDocumentPayloadValidatorPort,
   JsonDocumentInvalidError,
-} from '@ce/nestjs-shared-json-store';
+} from '@nabarun-ngo/nestjs-shared-json-store';
 import {
   formatZodValidationErrors,
   JSON_STORE_SCHEMA_REGISTRY,

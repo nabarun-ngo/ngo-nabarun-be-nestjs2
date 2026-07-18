@@ -1,5 +1,5 @@
 import { OAuthAccountPrismaRepository } from './oauth-account.prisma-repository';
-import { OAuthAccount } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
+import { OAuthAccount } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
 
 class TestableOAuthAccountRepo extends OAuthAccountPrismaRepository {
   publicToDomain(row: any): OAuthAccount {

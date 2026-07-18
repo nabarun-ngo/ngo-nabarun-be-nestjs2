@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter, BusinessException } from '@ce/nestjs-shared-core';
+import { BaseFilter, BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { IAccountRepository } from '../../../domain/repositories/account.repository';
 import { ITransactionRepository } from '../../../domain/repositories/transaction.repository';
 import { TransactionListResponseDto } from '../../dtos/account-list.dto';
@@ -13,7 +13,7 @@ export class ListAccountTransactionsHandler implements IQueryHandler<ListAccount
   constructor(
     @Inject(IAccountRepository) private readonly accountRepo: IAccountRepository,
     @Inject(ITransactionRepository) private readonly txnRepo: ITransactionRepository,
-  ) {}
+  ) { }
 
   async execute(query: ListAccountTransactionsQuery): Promise<TransactionListResponseDto> {
     const account = await this.accountRepo.findById(query.accountId);

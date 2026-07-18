@@ -1,6 +1,6 @@
 import { DynamicModule, FactoryProvider, ModuleMetadata, Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { createRequiredPortsGuard } from '@ce/nestjs-shared-core';
+import { createRequiredPortsGuard } from '@nabarun-ngo/nestjs-shared-core';
 
 import { UserModuleInput, UserModuleOptions, UserModuleOptionsSchema } from './user.schema';
 import { USER_OPTIONS } from './infrastructure/user-options.token';
@@ -9,7 +9,7 @@ import { IUserRepository } from './domain/repositories/user.repository';
 import { IIdentityProvider } from './domain/ports/identity-provider.port';
 import { IUserReferenceDataPort } from './application/ports/user-reference-data.port';
 
-import { IUserLookupPort } from '@ce/nestjs-shared-core';
+import { IUserLookupPort } from '@nabarun-ngo/nestjs-shared-core';
 
 import { UserPrismaRepository } from '../../shared/persistence/user/user.prisma-repository';
 import { Auth0IdentityAdapter } from './infrastructure/external/auth0-identity.adapter';

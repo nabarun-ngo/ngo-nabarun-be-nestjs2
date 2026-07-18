@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { Expense } from '../../../domain/aggregates/expense/expense.aggregate';
 import { IExpenseRepository } from '../../../domain/repositories/expense.repository';
 import { FinalizeExpenseCommand } from './finalize-expense.command';
@@ -8,7 +8,7 @@ import { FinalizeExpenseCommand } from './finalize-expense.command';
 @CommandHandler(FinalizeExpenseCommand)
 @Injectable()
 export class FinalizeExpenseHandler implements ICommandHandler<FinalizeExpenseCommand, Expense> {
-  constructor(@Inject(IExpenseRepository) private readonly expenseRepository: IExpenseRepository) {}
+  constructor(@Inject(IExpenseRepository) private readonly expenseRepository: IExpenseRepository) { }
 
   async execute({ params: request }: FinalizeExpenseCommand): Promise<Expense> {
     const expense = await this.expenseRepository.findById(request.id);

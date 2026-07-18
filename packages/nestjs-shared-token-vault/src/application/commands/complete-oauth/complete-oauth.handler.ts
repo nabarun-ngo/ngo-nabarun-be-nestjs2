@@ -1,6 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { CacheService } from '@ce/nestjs-shared-persistence';
+import { CacheService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { CompleteOAuthCommand } from './complete-oauth.command';
 import { OAUTH_PROVIDER_REGISTRY } from '../../ports/oauth-provider.port';
 import type { IOAuthProvider } from '../../ports/oauth-provider.port';
@@ -41,7 +41,7 @@ export class CompleteOAuthHandler implements ICommandHandler<CompleteOAuthComman
     @Inject(TOKEN_VAULT2_OPTIONS) private readonly options: TokenVault2ModuleOptions,
     private readonly cacheService: CacheService,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute(command: CompleteOAuthCommand): Promise<CompleteOAuthResult> {
     const { provider, code, state } = command.params;

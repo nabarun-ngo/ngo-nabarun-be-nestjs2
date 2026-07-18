@@ -1,4 +1,4 @@
-import { DmsModule } from "@ce/nestjs-shared-dms";
+import { DmsModule } from "@nabarun-ngo/nestjs-shared-dms";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Configkey } from "../shared/config-keys";
 

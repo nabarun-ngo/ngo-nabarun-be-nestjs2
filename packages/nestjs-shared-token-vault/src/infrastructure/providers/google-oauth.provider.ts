@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Credentials, OAuth2Client, CodeChallengeMethod } from 'google-auth-library';
-import { AppTechnicalError } from '@ce/nestjs-shared-core';
+import { AppTechnicalError } from '@nabarun-ngo/nestjs-shared-core';
 import { EventBus } from '@nestjs/cqrs';
 import { TOKEN_VAULT2_OPTIONS, TokenVault2ModuleOptions } from '../../token-vault-options';
 import type {
@@ -65,7 +65,7 @@ export class GoogleOAuthProvider implements IOAuthProvider {
     if (!this.oauthClient) {
       throw new Error(
         '[TokenVault2Module] Google OAuth is not configured. ' +
-          'Set googleOAuth.clientId, clientSecret, and callbackUrl in TokenVault2Module options.',
+        'Set googleOAuth.clientId, clientSecret, and callbackUrl in TokenVault2Module options.',
       );
     }
     return this.oauthClient;
@@ -90,9 +90,9 @@ export class GoogleOAuthProvider implements IOAuthProvider {
       include_granted_scopes: true,
       ...(params.codeChallenge
         ? {
-            code_challenge: params.codeChallenge,
-            code_challenge_method: CodeChallengeMethod.S256,
-          }
+          code_challenge: params.codeChallenge,
+          code_challenge_method: CodeChallengeMethod.S256,
+        }
         : {}),
     });
     return { url, state: params.state };

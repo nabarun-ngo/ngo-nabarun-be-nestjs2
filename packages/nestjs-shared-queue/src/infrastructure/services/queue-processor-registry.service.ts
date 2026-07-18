@@ -9,7 +9,7 @@ import {
 import { ModulesContainer } from "@nestjs/core/injector/modules-container";
 import { EventBus } from "@nestjs/cqrs";
 import { Job as BullJob, Queue, UnrecoverableError, WaitingChildrenError, Worker } from "bullmq";
-import { AppTechnicalError } from "@ce/nestjs-shared-core";
+import { AppTechnicalError } from "@nabarun-ngo/nestjs-shared-core";
 import {
   QUEUE_HANDLER_METADATA,
   QueueHandlerOptions,
@@ -30,8 +30,7 @@ const DEFAULT_QUEUE_NAME = "default";
 
 @Injectable()
 export class QueueProcessorRegistry
-  implements OnApplicationBootstrap, OnModuleDestroy
-{
+  implements OnApplicationBootstrap, OnModuleDestroy {
   private readonly logger = new Logger(QueueProcessorRegistry.name);
   private readonly handlers = new Map<
     string,
@@ -49,7 +48,7 @@ export class QueueProcessorRegistry
     private readonly options: QueueModuleOptions,
     @Inject(IQueueJobRepository)
     private readonly jobRepo: IQueueJobRepository,
-  ) {}
+  ) { }
 
   async onApplicationBootstrap() {
     this.discoverHandlers();
@@ -180,9 +179,9 @@ export class QueueProcessorRegistry
   ): void {
     void this.jobRepo.findById(jobId).then(job => {
       if (!job) return;
-      if (lifecycle === 'active')    job.markActive();
+      if (lifecycle === 'active') job.markActive();
       if (lifecycle === 'completed') job.markCompleted();
-      if (lifecycle === 'failed')    job.markFailed(failedReason ?? 'unknown', attemptsMade ?? 1);
+      if (lifecycle === 'failed') job.markFailed(failedReason ?? 'unknown', attemptsMade ?? 1);
 
       return this.jobRepo.update(jobId, job).then(() => {
         const events = [...job.domainEvents];

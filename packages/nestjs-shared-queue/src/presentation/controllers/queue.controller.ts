@@ -15,8 +15,8 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
-import { ApiAutoPagedResponse, ApiAutoResponse } from "@ce/nestjs-shared-core";
-import { RequirePermissions } from "@ce/nestjs-shared-auth";
+import { ApiAutoPagedResponse, ApiAutoResponse } from "@nabarun-ngo/nestjs-shared-core";
+import { RequirePermissions } from "@nabarun-ngo/nestjs-shared-auth";
 import { CleanJobsCommand } from "../../application/commands/clean-jobs/clean-jobs.command";
 import { PauseQueueCommand } from "../../application/commands/pause-queue/pause-queue.command";
 import { RemoveJobCommand } from "../../application/commands/remove-job/remove-job.command";
@@ -39,7 +39,7 @@ export class QueueController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Get()
   @ApiOperation({ summary: "Get jobs by status" })
@@ -77,11 +77,11 @@ export class QueueController {
 
   @Get("search")
   @ApiOperation({ summary: "Search jobs by name, queue, or status (uses secondary store)" })
-  @ApiQuery({ name: "jobName",   required: false })
+  @ApiQuery({ name: "jobName", required: false })
   @ApiQuery({ name: "queueName", required: false })
-  @ApiQuery({ name: "status",    required: false, enum: JobStatus })
+  @ApiQuery({ name: "status", required: false, enum: JobStatus })
   @ApiQuery({ name: "pageIndex", required: false })
-  @ApiQuery({ name: "pageSize",  required: false })
+  @ApiQuery({ name: "pageSize", required: false })
   @RequirePermissions("read:jobs")
   @ApiAutoPagedResponse(QueueJobSearchResultDto, {
     status: 200,
@@ -90,11 +90,11 @@ export class QueueController {
     wrapInSuccessResponse: true,
   })
   async searchJobs(
-    @Query("jobName")   jobName?: string,
+    @Query("jobName") jobName?: string,
     @Query("queueName") queueName?: string,
-    @Query("status")    status?: JobStatus,
+    @Query("status") status?: JobStatus,
     @Query("pageIndex") pageIndex?: number,
-    @Query("pageSize")  pageSize?: number,
+    @Query("pageSize") pageSize?: number,
   ) {
     return this.queryBus.execute(
       new SearchJobsQuery({ jobName, queueName, status, pageIndex: pageIndex ? +pageIndex : 0, pageSize: pageSize ? +pageSize : 20 }),

@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot, RootEvent } from '@ce/nestjs-shared-core';
+import { AggregateRoot, RootEvent } from '@nabarun-ngo/nestjs-shared-core';
 import { FormSubmissionStatus } from '../../enums/form-submission-status.enum';
 import { FormFieldValue } from '../../entities/form-field-value/form-field-value.entity';
 import { FormSubmissionAlreadySubmittedError } from '../../errors/form.errors';
@@ -29,13 +29,13 @@ export class FormSubmission extends AggregateRoot<string> {
     submittedBy?: string,
   ) {
     super(id, createdAt, updatedAt);
-    this.#entityType   = entityType;
-    this.#entityId     = entityId;
-    this.#formId       = formId;
-    this.#status       = status;
-    this.#fieldValues  = fieldValues;
-    this.#submittedAt  = submittedAt;
-    this.#submittedBy  = submittedBy;
+    this.#entityType = entityType;
+    this.#entityId = entityId;
+    this.#formId = formId;
+    this.#status = status;
+    this.#fieldValues = fieldValues;
+    this.#submittedAt = submittedAt;
+    this.#submittedBy = submittedBy;
   }
 
   static create(params: {
@@ -67,11 +67,11 @@ export class FormSubmission extends AggregateRoot<string> {
       if (!fieldValue) {
         fieldValue = FormFieldValue.create({
           entityType: this.#entityType,
-          entityId:   this.#entityId,
-          formId:     this.#formId,
+          entityId: this.#entityId,
+          formId: this.#formId,
           fieldDefId: entry.fieldDefId,
-          value:      entry.value,
-          changedBy:  entry.changedBy,
+          value: entry.value,
+          changedBy: entry.changedBy,
         });
         this.#fieldValues.push(fieldValue);
         if (entry.value !== null) {
@@ -124,11 +124,11 @@ export class FormSubmission extends AggregateRoot<string> {
     }
   }
 
-  get entityType(): string                              { return this.#entityType; }
-  get entityId(): string                                { return this.#entityId; }
-  get formId(): string                                  { return this.#formId; }
-  get status(): FormSubmissionStatus                    { return this.#status; }
-  get submittedAt(): Date | undefined                   { return this.#submittedAt; }
-  get submittedBy(): string | undefined                 { return this.#submittedBy; }
-  get fieldValues(): ReadonlyArray<FormFieldValue>      { return this.#fieldValues; }
+  get entityType(): string { return this.#entityType; }
+  get entityId(): string { return this.#entityId; }
+  get formId(): string { return this.#formId; }
+  get status(): FormSubmissionStatus { return this.#status; }
+  get submittedAt(): Date | undefined { return this.#submittedAt; }
+  get submittedBy(): string | undefined { return this.#submittedBy; }
+  get fieldValues(): ReadonlyArray<FormFieldValue> { return this.#fieldValues; }
 }

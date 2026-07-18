@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { BaseDomain } from '@ce/nestjs-shared-core';
+import { BaseDomain } from '@nabarun-ngo/nestjs-shared-core';
 import { FormFieldValueHistoryEntry } from '../form-field-value-history-entry/form-field-value-history-entry.entity';
 
 /**
@@ -26,11 +26,11 @@ export class FormFieldValue extends BaseDomain<string> {
   ) {
     super(id, createdAt, updatedAt);
     this.#entityType = entityType;
-    this.#entityId   = entityId;
-    this.#formId     = formId;
+    this.#entityId = entityId;
+    this.#formId = formId;
     this.#fieldDefId = fieldDefId;
-    this.#value      = value;
-    this.#history    = history;
+    this.#value = value;
+    this.#history = history;
   }
 
   static create(params: {
@@ -53,13 +53,13 @@ export class FormFieldValue extends BaseDomain<string> {
     if (params.value !== null) {
       fieldValue.#history.push(
         FormFieldValueHistoryEntry.create({
-          formId:     params.formId,
+          formId: params.formId,
           fieldDefId: params.fieldDefId,
           entityType: params.entityType,
-          entityId:   params.entityId,
-          oldValue:   null,
-          newValue:   params.value,
-          changedBy:  params.changedBy,
+          entityId: params.entityId,
+          oldValue: null,
+          newValue: params.value,
+          changedBy: params.changedBy,
         }),
       );
     }
@@ -75,11 +75,11 @@ export class FormFieldValue extends BaseDomain<string> {
 
     this.#history.push(
       FormFieldValueHistoryEntry.create({
-        formId:     this.#formId,
+        formId: this.#formId,
         fieldDefId: this.#fieldDefId,
         entityType: this.#entityType,
-        entityId:   this.#entityId,
-        oldValue:   this.#value,
+        entityId: this.#entityId,
+        oldValue: this.#value,
         newValue,
         changedBy,
       }),
@@ -89,10 +89,10 @@ export class FormFieldValue extends BaseDomain<string> {
     return true;
   }
 
-  get entityType(): string                                      { return this.#entityType; }
-  get entityId(): string                                        { return this.#entityId; }
-  get formId(): string                                          { return this.#formId; }
-  get fieldDefId(): string                                      { return this.#fieldDefId; }
-  get value(): string | null                                    { return this.#value; }
-  get history(): ReadonlyArray<FormFieldValueHistoryEntry>      { return this.#history; }
+  get entityType(): string { return this.#entityType; }
+  get entityId(): string { return this.#entityId; }
+  get formId(): string { return this.#formId; }
+  get fieldDefId(): string { return this.#fieldDefId; }
+  get value(): string | null { return this.#value; }
+  get history(): ReadonlyArray<FormFieldValueHistoryEntry> { return this.#history; }
 }

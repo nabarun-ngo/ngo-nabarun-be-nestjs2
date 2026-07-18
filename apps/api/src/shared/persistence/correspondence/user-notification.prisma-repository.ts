@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
-import { BaseFilter, Page } from '@ce/nestjs-shared-core';
-import { UserNotification, UserNotificationFilter } from '@ce/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
-import { IUserNotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
+import { BaseFilter, Page } from '@nabarun-ngo/nestjs-shared-core';
+import { UserNotification, UserNotificationFilter } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
+import { IUserNotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
 
 @Injectable()
 export class UserNotificationPrismaRepository implements IUserNotificationRepository {
-  constructor(private readonly prisma: BasePrismaService) {}
+  constructor(private readonly prisma: BasePrismaService) { }
 
   async create(entity: UserNotification): Promise<UserNotification> {
     const row = await (this.prisma).corr2UserNotification.create({
@@ -105,11 +105,11 @@ export class UserNotificationPrismaRepository implements IUserNotificationReposi
       ...(filter.pushDelivered !== undefined ? { pushDelivered: filter.pushDelivered } : {}),
       ...(filter.fromDate || filter.toDate
         ? {
-            createdAt: {
-              ...(filter.fromDate ? { gte: filter.fromDate } : {}),
-              ...(filter.toDate ? { lte: filter.toDate } : {}),
-            },
-          }
+          createdAt: {
+            ...(filter.fromDate ? { gte: filter.fromDate } : {}),
+            ...(filter.toDate ? { lte: filter.toDate } : {}),
+          },
+        }
         : {}),
     };
   }

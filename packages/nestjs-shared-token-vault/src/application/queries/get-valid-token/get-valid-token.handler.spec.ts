@@ -1,12 +1,12 @@
-import { GetValidTokenHandler } from '@ce/nestjs-shared-token-vault/application/queries/get-valid-token/get-valid-token.handler';
-import { GetValidTokenQuery } from '@ce/nestjs-shared-token-vault/application/queries/get-valid-token/get-valid-token.query';
+import { GetValidTokenHandler } from '@nabarun-ngo/nestjs-shared-token-vault/application/queries/get-valid-token/get-valid-token.handler';
+import { GetValidTokenQuery } from '@nabarun-ngo/nestjs-shared-token-vault/application/queries/get-valid-token/get-valid-token.query';
 import {
   AmbiguousTokenSelectionError,
   ProviderNotConfiguredError,
   TokenNotFoundError,
-} from '@ce/nestjs-shared-token-vault/domain/errors/token-vault.errors';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+} from '@nabarun-ngo/nestjs-shared-token-vault/domain/errors/token-vault.errors';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 const FUTURE = new Date(Date.now() + 3_600_000);

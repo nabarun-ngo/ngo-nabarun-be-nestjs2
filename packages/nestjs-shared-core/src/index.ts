@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// @ce/nestjs-shared-core — Public API barrel
+// @nabarun-ngo/nestjs-shared-core — Public API barrel
 //
 // Layer order: Domain → Application → Infrastructure → Presentation
 // ─────────────────────────────────────────────────────────────────────────────

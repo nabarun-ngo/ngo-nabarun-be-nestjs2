@@ -3,10 +3,10 @@ import 'reflect-metadata';
 // Break the auth → @nestjs/axios → axios import chain that occurs when the
 // controller is loaded. The module spec only inspects the static DynamicModule
 // object, so these dependencies are never actually exercised.
-jest.mock('@ce/nestjs-shared-auth', () => ({
-  UnifiedAuthGuard: class MockUnifiedAuthGuard {},
-  RequirePermissions: () => () => {},
-  PermissionsGuard: class MockPermissionsGuard {},
+jest.mock('@nabarun-ngo/nestjs-shared-auth', () => ({
+  UnifiedAuthGuard: class MockUnifiedAuthGuard { },
+  RequirePermissions: () => () => { },
+  PermissionsGuard: class MockPermissionsGuard { },
 }));
 
 import { JsonStoreModule } from './json-store.module';

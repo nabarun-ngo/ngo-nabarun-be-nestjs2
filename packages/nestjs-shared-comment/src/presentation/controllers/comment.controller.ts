@@ -14,8 +14,8 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { AuthUser, CurrentUser, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
-import { ApiAutoResponse, ApiAutoVoidResponse } from '@ce/nestjs-shared-core';
+import { AuthUser, CurrentUser, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
+import { ApiAutoResponse, ApiAutoVoidResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { AddCommentCommand } from '../../application/commands/add-comment/add-comment.command';
 import { UpdateCommentCommand } from '../../application/commands/update-comment/update-comment.command';
 import { DeleteCommentCommand } from '../../application/commands/delete-comment/delete-comment.command';
@@ -36,7 +36,7 @@ export class CommentController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

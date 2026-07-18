@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import {
   IWorkflowIdempotencyRepository,
   WorkflowIdempotencyClaimInput,
   WorkflowIdempotencyRecord,
   WorkflowIdempotencyScope,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { Prisma, PrismaClient } from '../prisma/client';
 
 type WorkflowIdempotencyKeyRow = {
@@ -19,7 +19,7 @@ type WorkflowIdempotencyKeyRow = {
 
 @Injectable()
 export class WorkflowIdempotencyPrismaRepository implements IWorkflowIdempotencyRepository {
-  constructor(private readonly database: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly database: BasePrismaService<PrismaClient>) { }
 
   private get client(): PrismaClient {
     return this.database.client;

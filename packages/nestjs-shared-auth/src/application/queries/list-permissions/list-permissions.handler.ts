@@ -3,13 +3,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ListPermissionsQuery } from './list-permissions.query';
 import { IPermissionRepository } from '../../../domain/repositories/permission.repository';
 import { PermissionResponseMapper } from '../../mappers/permission-response.mapper';
-import { PagedResponse } from '@ce/nestjs-shared-core';
+import { PagedResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { PermissionResponseDto } from '../../dtos/response/auth-response.dtos';
 
 @QueryHandler(ListPermissionsQuery)
 @Injectable()
 export class ListPermissionsHandler implements IQueryHandler<ListPermissionsQuery, PagedResponse<PermissionResponseDto>> {
-  constructor(@Inject(IPermissionRepository) private readonly repo: IPermissionRepository) {}
+  constructor(@Inject(IPermissionRepository) private readonly repo: IPermissionRepository) { }
 
   async execute(query: ListPermissionsQuery): Promise<PagedResponse<PermissionResponseDto>> {
     const activeFilter = {

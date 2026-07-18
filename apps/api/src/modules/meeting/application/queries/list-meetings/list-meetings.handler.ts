@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter } from '@ce/nestjs-shared-core';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
 import { IMeetingRepository } from '../../../domain/repositories/meeting.repository';
 import { MeetingListResponseDto } from '../../dtos/meeting.dto';
 import { MeetingMapper } from '../../mappers/meeting.mapper';
@@ -9,7 +9,7 @@ import { ListMeetingsQuery } from './list-meetings.query';
 @QueryHandler(ListMeetingsQuery)
 @Injectable()
 export class ListMeetingsHandler implements IQueryHandler<ListMeetingsQuery, MeetingListResponseDto> {
-  constructor(@Inject(IMeetingRepository) private readonly repo: IMeetingRepository) {}
+  constructor(@Inject(IMeetingRepository) private readonly repo: IMeetingRepository) { }
 
   async execute(query: ListMeetingsQuery): Promise<MeetingListResponseDto> {
     const filter = new BaseFilter(query.filter, query.pageIndex ?? 0, query.pageSize ?? 20);

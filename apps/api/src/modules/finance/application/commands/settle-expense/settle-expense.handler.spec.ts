@@ -1,5 +1,5 @@
 import { CommandBus, EventBus } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { SettleExpenseHandler } from './settle-expense.handler';
 import { SettleExpenseCommand } from './settle-expense.command';
 import { ExpenseStatus } from '../../../domain/enums/expense.enum';

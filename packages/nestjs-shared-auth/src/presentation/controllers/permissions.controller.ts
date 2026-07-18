@@ -6,7 +6,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { QueryBus } from '@nestjs/cqrs';
-import { ApiAutoPagedResponse, ApiAutoResponse, BaseFilter, PagedResponse, PaginatedQueryDto } from '@ce/nestjs-shared-core';
+import { ApiAutoPagedResponse, ApiAutoResponse, BaseFilter, PagedResponse, PaginatedQueryDto } from '@nabarun-ngo/nestjs-shared-core';
 import { PermissionFilter } from '../../domain/aggregates/permission/permission.aggregate';
 import { ListPermissionsQuery } from '../../application/queries/list-permissions/list-permissions.query';
 import { GetPermissionQuery } from '../../application/queries/get-permission/get-permission.query';
@@ -18,7 +18,7 @@ import { RequirePermissions } from '../decorators/require-permissions.decorator'
 @ApiTags('Auth2 — Permissions')
 @Controller('auth/permissions')
 export class PermissionsController {
-  constructor(private readonly queryBus: QueryBus) {}
+  constructor(private readonly queryBus: QueryBus) { }
 
   @Get()
   @RequirePermissions('read:permissions')

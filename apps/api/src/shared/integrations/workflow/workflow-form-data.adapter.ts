@@ -9,12 +9,12 @@ import {
   SaveFormDraftCommand,
   SubmitFormCommand,
   ValidateFormSubmissionQuery,
-} from '@ce/nestjs-shared-custom-forms';
+} from '@nabarun-ngo/nestjs-shared-custom-forms';
 import {
   IWorkflowFormDataPort,
   WORKFLOW_FORM_DATA_PORT,
   WorkflowFormDataSnapshot,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 
 const WORKFLOW_ENTITY_TYPE = 'workflow';
 
@@ -33,7 +33,7 @@ export class WorkflowFormDataAdapter implements IWorkflowFormDataPort {
     private readonly queryBus: QueryBus,
     @Inject(IFormRepository)
     private readonly formRepo: IFormRepository,
-  ) {}
+  ) { }
 
   async getFormData(params: {
     instanceId: string;

@@ -1,8 +1,8 @@
 import { OAuthTokenPrismaRepository } from './oauth-token.prisma-repository';
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { TokenScope } from '@ce/nestjs-shared-token-vault/domain/value-objects/token-scope.vo';
-import { InvalidEncryptedTokenError } from '@ce/nestjs-shared-token-vault/domain/errors/token-vault.errors';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { TokenScope } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/token-scope.vo';
+import { InvalidEncryptedTokenError } from '@nabarun-ngo/nestjs-shared-token-vault/domain/errors/token-vault.errors';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 const FUTURE = new Date('2099-01-01T00:00:00.000Z');

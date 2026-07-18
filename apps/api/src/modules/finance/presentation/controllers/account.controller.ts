@@ -1,8 +1,8 @@
 import { Body, Controller, Get, HttpCode, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
-import type { AuthUser } from '@ce/nestjs-shared-auth';
+import { CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
+import type { AuthUser } from '@nabarun-ngo/nestjs-shared-auth';
 import { CreateAccountCommand } from '../../application/commands/create-account/create-account.command';
 import { UpdateAccountCommand } from '../../application/commands/update-account/update-account.command';
 import { CreateTransactionCommand } from '../../application/commands/create-transaction/create-transaction.command';
@@ -22,7 +22,7 @@ import { ReverseTransactionDto, TransactionDetailFilterDto } from '../dtos/trans
 @UseGuards(UnifiedAuthGuard)
 @Controller('account')
 export class AccountController {
-  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
+  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) { }
 
   @Get('static/referenceData')
   getAccountReferenceData(): Promise<AccountRefDataDto> {

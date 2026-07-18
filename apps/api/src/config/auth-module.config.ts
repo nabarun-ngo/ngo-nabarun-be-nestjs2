@@ -1,4 +1,4 @@
-import { AuthModule } from "@ce/nestjs-shared-auth";
+import { AuthModule } from "@nabarun-ngo/nestjs-shared-auth";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Configkey } from "../shared/config-keys";
 

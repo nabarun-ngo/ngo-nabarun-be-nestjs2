@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient } from '../../../../../shared/persistence/prisma/client';
 import { IProjectRepository } from '../../../domain/repositories/project.repository';
 import { GetProjectProgressQuery } from './get-project-progress.query';
@@ -24,7 +24,7 @@ export class GetProjectProgressHandler implements IQueryHandler<GetProjectProgre
   constructor(
     @Inject(IProjectRepository) private readonly projectRepository: IProjectRepository,
     private readonly db: BasePrismaService<PrismaClient>,
-  ) {}
+  ) { }
   async execute(q: GetProjectProgressQuery): Promise<ProjectProgressDto> {
     const project = await this.projectRepository.findById(q.projectId);
     if (!project) throw new BusinessException('Project not found');

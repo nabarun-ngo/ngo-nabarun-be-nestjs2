@@ -1,5 +1,5 @@
 {
-  "name": "@ce/nestjs-shared-token-vault",
+  "name": "@nabarun-ngo/nestjs-shared-token-vault",
   "version": "1.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -13,8 +13,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ce/nestjs-shared-core": "*",
-    "@ce/nestjs-shared-auth": "*"
+    "@nabarun-ngo/nestjs-shared-core": "*",
+    "@nabarun-ngo/nestjs-shared-auth": "*"
   },
   "exports": {
     ".": {

@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { BusinessException } from '@ce/nestjs-shared-core';
-import { WorkflowFacade } from '@ce/nestjs-shared-workflow';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
+import { WorkflowFacade } from '@nabarun-ngo/nestjs-shared-workflow';
 import { Report } from '../../domain/aggregates/report/report.aggregate';
 import { ReportStatus } from '../../domain/enums/report-status.enum';
 import { IReportRepository } from '../../domain/repositories/report.repository';

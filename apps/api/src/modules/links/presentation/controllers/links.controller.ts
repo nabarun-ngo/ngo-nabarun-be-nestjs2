@@ -1,7 +1,7 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
+import { RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
 import { APP_LINK_PLATFORMS } from '../../links.schema';
 import { GetUserGuidesQuery } from '../../application/queries/get-user-guides/get-user-guides.query';
 import { GetPoliciesQuery } from '../../application/queries/get-policies/get-policies.query';
@@ -14,7 +14,7 @@ import { LinkGroupDto, LinkItemDto } from '../../application/dtos/links.dto';
 @UseGuards(UnifiedAuthGuard)
 @Controller('links')
 export class LinksController {
-  constructor(private readonly queryBus: QueryBus) {}
+  constructor(private readonly queryBus: QueryBus) { }
 
   @Get('user-guides')
   @RequirePermissions('read:links')

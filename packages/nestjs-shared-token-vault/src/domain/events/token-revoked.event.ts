@@ -1,4 +1,4 @@
-import { DomainEvent } from '@ce/nestjs-shared-core';
+import { DomainEvent } from '@nabarun-ngo/nestjs-shared-core';
 import type { OAuthToken } from '../aggregates/oauth-token/oauth-token.aggregate';
 
 export type TokenRevokedSnapshot = Pick<OAuthToken, 'id' | 'provider' | 'email' | 'accountId'>;

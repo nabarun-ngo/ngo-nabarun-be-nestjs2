@@ -1,6 +1,6 @@
 import { DynamicModule, FactoryProvider, Module, ModuleMetadata, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { createRequiredPortsGuard } from '@ce/nestjs-shared-core';
+import { createRequiredPortsGuard } from '@nabarun-ngo/nestjs-shared-core';
 import { FinanceModuleInput, FinanceModuleOptions, FinanceModuleOptionsSchema } from './finance.schema';
 import { FINANCE_OPTIONS } from './infrastructure/finance-options.token';
 import { IFinanceReferenceDataPort } from './application/ports/finance-reference-data.port';

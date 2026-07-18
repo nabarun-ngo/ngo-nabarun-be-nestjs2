@@ -1,9 +1,9 @@
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { TokenScope } from '@ce/nestjs-shared-token-vault/domain/value-objects/token-scope.vo';
-import { TokenRefreshedEvent } from '@ce/nestjs-shared-token-vault/domain/events/token-refreshed.event';
-import { TokenRevokedEvent } from '@ce/nestjs-shared-token-vault/domain/events/token-revoked.event';
-import { NoRefreshTokenError } from '@ce/nestjs-shared-token-vault/domain/errors/token-vault.errors';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { TokenScope } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/token-scope.vo';
+import { TokenRefreshedEvent } from '@nabarun-ngo/nestjs-shared-token-vault/domain/events/token-refreshed.event';
+import { TokenRevokedEvent } from '@nabarun-ngo/nestjs-shared-token-vault/domain/events/token-revoked.event';
+import { NoRefreshTokenError } from '@nabarun-ngo/nestjs-shared-token-vault/domain/errors/token-vault.errors';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 

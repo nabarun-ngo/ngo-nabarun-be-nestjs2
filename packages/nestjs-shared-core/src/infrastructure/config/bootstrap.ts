@@ -16,7 +16,7 @@ import { applyConfig, AppConfigOptions } from './app.config';
  *
  * @example
  * // main.ts
- * import { bootstrapApp } from '@ce/nestjs-shared-core';
+ * import { bootstrapApp } from '@nabarun-ngo/nestjs-shared-core';
  * import { AppModule } from './app.module';
  *
  * async function main() {

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { ApiKeyPrismaRepository } from './api-key.prisma-repository';
-import { ApiKey } from '@ce/nestjs-shared-auth/domain/aggregates/api-key/api-key.aggregate';
+import { ApiKey } from '@nabarun-ngo/nestjs-shared-auth/domain/aggregates/api-key/api-key.aggregate';
 
 type PrismaApiKeyRow = {
   id: string;

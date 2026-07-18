@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { User } from '../aggregates/user/user.aggregate';
 
 export interface UserFilter {

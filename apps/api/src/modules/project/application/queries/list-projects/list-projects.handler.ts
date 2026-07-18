@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter } from '@ce/nestjs-shared-core';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
 import { IProjectRepository } from '../../../domain/repositories/project.repository';
 import { ProjectListResponseDto } from '../../dtos/project-list.dto';
 import { ProjectMapper } from '../../mappers/project.mapper';
@@ -9,7 +9,7 @@ import { ListProjectsQuery } from './list-projects.query';
 @QueryHandler(ListProjectsQuery)
 @Injectable()
 export class ListProjectsHandler implements IQueryHandler<ListProjectsQuery, ProjectListResponseDto> {
-  constructor(@Inject(IProjectRepository) private readonly repo: IProjectRepository) {}
+  constructor(@Inject(IProjectRepository) private readonly repo: IProjectRepository) { }
 
   async execute(query: ListProjectsQuery): Promise<ProjectListResponseDto> {
     const filter = new BaseFilter(query.filter, query.pageIndex ?? 0, query.pageSize ?? 20);

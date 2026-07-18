@@ -6,7 +6,7 @@ import {
   NotificationCategory,
   NotificationPriority,
   NotificationType,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 import { DonationPaidEvent } from '../../../domain/events/donation-paid.event';
 import { financeUserFullName } from '../../../domain/types/finance-user-ref';
 import { IDonationRepository } from '../../../domain/repositories/donation.repository';
@@ -20,7 +20,7 @@ export class OnDonationPaidHandler implements IEventHandler<DonationPaidEvent> {
   constructor(
     @Inject(IDonationRepository) private readonly donationRepository: IDonationRepository,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async handle(event: DonationPaidEvent): Promise<void> {
     const donation = await this.donationRepository.findById(event.donationId);

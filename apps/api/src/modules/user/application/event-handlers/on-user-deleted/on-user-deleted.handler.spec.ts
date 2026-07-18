@@ -1,6 +1,6 @@
 import { EventBus } from '@nestjs/cqrs';
-import { IUserAccessPort } from '@ce/nestjs-shared-auth';
-import { CorrespondenceRequestEvent } from '@ce/nestjs-shared-correspondence';
+import { IUserAccessPort } from '@nabarun-ngo/nestjs-shared-auth';
+import { CorrespondenceRequestEvent } from '@nabarun-ngo/nestjs-shared-correspondence';
 import { OnUserDeletedHandler } from './on-user-deleted.handler';
 import { UserDeletedEvent } from '../../../domain/events/user-deleted.event';
 

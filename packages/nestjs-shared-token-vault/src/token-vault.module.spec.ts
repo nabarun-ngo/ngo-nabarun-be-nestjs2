@@ -1,18 +1,18 @@
-jest.mock('@ce/nestjs-shared-token-vault/infrastructure/providers/google-oauth.provider', () => ({
-  GoogleOAuthProvider: class GoogleOAuthProvider {},
+jest.mock('@nabarun-ngo/nestjs-shared-token-vault/infrastructure/providers/google-oauth.provider', () => ({
+  GoogleOAuthProvider: class GoogleOAuthProvider { },
 }));
-jest.mock('@ce/nestjs-shared-token-vault/infrastructure/providers/microsoft-oauth.provider', () => ({
-  MicrosoftOAuthProvider: class MicrosoftOAuthProvider {},
+jest.mock('@nabarun-ngo/nestjs-shared-token-vault/infrastructure/providers/microsoft-oauth.provider', () => ({
+  MicrosoftOAuthProvider: class MicrosoftOAuthProvider { },
 }));
-jest.mock('@ce/nestjs-shared-token-vault/presentation/controllers/oauth.controller', () => ({
-  OAuthController: class OAuthController {},
+jest.mock('@nabarun-ngo/nestjs-shared-token-vault/presentation/controllers/oauth.controller', () => ({
+  OAuthController: class OAuthController { },
 }));
 
-import { TokenVault2Module } from '@ce/nestjs-shared-token-vault/token-vault.module';
-import { OAUTH_PROVIDER_REGISTRY } from '@ce/nestjs-shared-token-vault/application/ports/oauth-provider.port';
-import { TOKEN_VAULT2_OPTIONS } from '@ce/nestjs-shared-token-vault/token-vault-options';
-import { GoogleOAuthProvider } from '@ce/nestjs-shared-token-vault/infrastructure/providers/google-oauth.provider';
-import { MicrosoftOAuthProvider } from '@ce/nestjs-shared-token-vault/infrastructure/providers/microsoft-oauth.provider';
+import { TokenVault2Module } from '@nabarun-ngo/nestjs-shared-token-vault/token-vault.module';
+import { OAUTH_PROVIDER_REGISTRY } from '@nabarun-ngo/nestjs-shared-token-vault/application/ports/oauth-provider.port';
+import { TOKEN_VAULT2_OPTIONS } from '@nabarun-ngo/nestjs-shared-token-vault/token-vault-options';
+import { GoogleOAuthProvider } from '@nabarun-ngo/nestjs-shared-token-vault/infrastructure/providers/google-oauth.provider';
+import { MicrosoftOAuthProvider } from '@nabarun-ngo/nestjs-shared-token-vault/infrastructure/providers/microsoft-oauth.provider';
 
 const validOptions = {
   encryption: {

@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@ce/nestjs-shared-queue';
+import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@nabarun-ngo/nestjs-shared-queue';
 import { DetectStuckWorkflowsJob } from '../../application/jobs/detect-stuck-workflows.job';
 import { IWorkflowInstanceRepository } from '../../domain/ports/workflow-instance.repository';
 import { WorkflowInstanceStatus } from '../../domain/enums/workflow-instance-status.enum';
@@ -13,7 +13,7 @@ export class DetectStuckWorkflowsHandler implements IQueueHandler<DetectStuckWor
     @Inject(IWorkflowInstanceRepository)
     private readonly instanceRepo: IWorkflowInstanceRepository,
     private readonly outboxDispatcher: OutboxDispatcherService,
-  ) {}
+  ) { }
 
   async execute(job: Job<DetectStuckWorkflowsJob>, _ctx: JobExecutionContext): Promise<void> {
     const raw = job.data as {

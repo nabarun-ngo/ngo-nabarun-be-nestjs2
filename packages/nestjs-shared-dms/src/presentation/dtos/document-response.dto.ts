@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { AccessGatedResponse } from '@ce/nestjs-shared-core';
+import { AccessGatedResponse } from '@nabarun-ngo/nestjs-shared-core';
 
 export class DocumentMappingDto {
   @ApiProperty()

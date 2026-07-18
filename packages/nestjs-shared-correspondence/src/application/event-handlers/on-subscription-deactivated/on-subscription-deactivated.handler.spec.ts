@@ -2,16 +2,16 @@
  * OnSubscriptionDeactivatedHandler unit tests.
  */
 import { Logger } from '@nestjs/common';
-import { OnSubscriptionDeactivatedHandler } from '@ce/nestjs-shared-correspondence/application/event-handlers/on-subscription-deactivated/on-subscription-deactivated.handler';
-import { SubscriptionDeactivatedEvent, type SubscriptionDeactivatedSnapshot } from '@ce/nestjs-shared-correspondence/domain/events/subscription-deactivated.event';
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { OnSubscriptionDeactivatedHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/event-handlers/on-subscription-deactivated/on-subscription-deactivated.handler';
+import { SubscriptionDeactivatedEvent, type SubscriptionDeactivatedSnapshot } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/subscription-deactivated.event';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
 
 describe('OnSubscriptionDeactivatedHandler', () => {
   let handler: OnSubscriptionDeactivatedHandler;
 
   beforeEach(() => {
-    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => { });
     handler = new OnSubscriptionDeactivatedHandler();
   });
 

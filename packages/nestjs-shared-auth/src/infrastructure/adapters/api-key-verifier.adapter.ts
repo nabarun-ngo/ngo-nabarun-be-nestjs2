@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { validateApiKey as verifyKeyHash, ICACHE_PORT, ICachePort } from '@ce/nestjs-shared-core';
+import { validateApiKey as verifyKeyHash, ICACHE_PORT, ICachePort } from '@nabarun-ngo/nestjs-shared-core';
 import { IApiKeyVerifierPort } from '../../application/ports/api-key-verifier.port';
 import { IApiKeyRepository } from '../../domain/repositories/api-key.repository';
 import { ApiKey } from '../../domain/aggregates/api-key/api-key.aggregate';
@@ -15,7 +15,7 @@ export class ApiKeyVerifierAdapter implements IApiKeyVerifierPort {
     @Inject(IApiKeyRepository) private readonly repo: IApiKeyRepository,
     @Inject(AUTH2_OPTIONS) private readonly options: Auth2ModuleOptions,
     @Inject(ICACHE_PORT) private readonly cache: ICachePort,
-  ) {}
+  ) { }
 
   private cacheKey(keyId: string): string {
     return `api-key:${keyId}`;

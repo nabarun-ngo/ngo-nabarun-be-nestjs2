@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { BaseDomain } from '@ce/nestjs-shared-core';
+import { BaseDomain } from '@nabarun-ngo/nestjs-shared-core';
 
 /**
  * Child entity — no repository. Accessed only through the FormFieldValue entity.
@@ -29,13 +29,13 @@ export class FormFieldValueHistoryEntry extends BaseDomain<string> {
     createdAt?: Date,
   ) {
     super(id, createdAt);
-    this.#formId     = formId;
+    this.#formId = formId;
     this.#fieldDefId = fieldDefId;
     this.#entityType = entityType;
-    this.#entityId   = entityId;
-    this.#oldValue   = oldValue;
-    this.#newValue   = newValue;
-    this.#changedBy  = changedBy;
+    this.#entityId = entityId;
+    this.#oldValue = oldValue;
+    this.#newValue = newValue;
+    this.#changedBy = changedBy;
   }
 
   static create(params: {
@@ -59,11 +59,11 @@ export class FormFieldValueHistoryEntry extends BaseDomain<string> {
     );
   }
 
-  get formId(): string          { return this.#formId; }
-  get fieldDefId(): string      { return this.#fieldDefId; }
-  get entityType(): string      { return this.#entityType; }
-  get entityId(): string        { return this.#entityId; }
+  get formId(): string { return this.#formId; }
+  get fieldDefId(): string { return this.#fieldDefId; }
+  get entityType(): string { return this.#entityType; }
+  get entityId(): string { return this.#entityId; }
   get oldValue(): string | null { return this.#oldValue; }
   get newValue(): string | null { return this.#newValue; }
-  get changedBy(): string       { return this.#changedBy; }
+  get changedBy(): string { return this.#changedBy; }
 }

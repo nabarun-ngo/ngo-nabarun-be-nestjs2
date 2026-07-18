@@ -4,16 +4,15 @@ import { GetNotificationsAdminQuery } from './get-notifications-admin.query';
 import { INotificationRepository } from '../../../domain/repositories/notification.repository';
 import { NotificationMapper } from '../../mappers/notification.mapper';
 import { NotificationResponseDto } from '../../dtos/notification-response.dto';
-import { Page } from '@ce/nestjs-shared-core';
+import { Page } from '@nabarun-ngo/nestjs-shared-core';
 
 @QueryHandler(GetNotificationsAdminQuery)
 export class GetNotificationsAdminHandler
-  implements IQueryHandler<GetNotificationsAdminQuery, Page<NotificationResponseDto>>
-{
+  implements IQueryHandler<GetNotificationsAdminQuery, Page<NotificationResponseDto>> {
   constructor(
     @Inject(INotificationRepository)
     private readonly notificationRepo: INotificationRepository,
-  ) {}
+  ) { }
 
   async execute(query: GetNotificationsAdminQuery): Promise<Page<NotificationResponseDto>> {
     const page = await this.notificationRepo.findPaged({

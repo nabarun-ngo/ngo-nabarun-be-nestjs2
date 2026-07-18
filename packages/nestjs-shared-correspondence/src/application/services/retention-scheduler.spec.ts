@@ -11,18 +11,18 @@
  *  - Swallows scheduling errors (logs, does not throw)
  */
 
-// Mock axios and @nestjs/axios to avoid missing peer dependency via @ce/nestjs-shared-queue transitive imports
+// Mock axios and @nestjs/axios to avoid missing peer dependency via @nabarun-ngo/nestjs-shared-queue transitive imports
 jest.mock('axios', () => ({}), { virtual: true });
-jest.mock('@nestjs/axios', () => ({ HttpModule: class {}, HttpService: class {} }), {
+jest.mock('@nestjs/axios', () => ({ HttpModule: class { }, HttpService: class { } }), {
   virtual: true,
 });
 
 import { Logger } from '@nestjs/common';
-import { QueueFacade } from '@ce/nestjs-shared-queue';
-import { RetentionSchedulerService } from '@ce/nestjs-shared-correspondence/application/services/retention-scheduler.service';
-import { PurgeNotificationsJob, PurgeSubscriptionsJob } from '@ce/nestjs-shared-correspondence/application/jobs/retention.jobs';
-import { INotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/notification.repository';
-import { IResourceSubscriptionRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
+import { QueueFacade } from '@nabarun-ngo/nestjs-shared-queue';
+import { RetentionSchedulerService } from '@nabarun-ngo/nestjs-shared-correspondence/application/services/retention-scheduler.service';
+import { PurgeNotificationsJob, PurgeSubscriptionsJob } from '@nabarun-ngo/nestjs-shared-correspondence/application/jobs/retention.jobs';
+import { INotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/notification.repository';
+import { IResourceSubscriptionRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -58,9 +58,9 @@ function buildService(options: Partial<{
 
 describe('RetentionSchedulerService', () => {
   beforeEach(() => {
-    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
-    jest.spyOn(Logger.prototype, 'warn').mockImplementation(() => {});
-    jest.spyOn(Logger.prototype, 'error').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => { });
+    jest.spyOn(Logger.prototype, 'warn').mockImplementation(() => { });
+    jest.spyOn(Logger.prototype, 'error').mockImplementation(() => { });
   });
   afterEach(() => jest.restoreAllMocks());
 

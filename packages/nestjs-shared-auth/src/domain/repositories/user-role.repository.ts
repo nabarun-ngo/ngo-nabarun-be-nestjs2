@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { UserRole, UserRoleFilter } from '../aggregates/user-role/user-role.aggregate';
 
 export const IUserRoleRepository = Symbol('IUserRoleRepository');

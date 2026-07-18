@@ -1,4 +1,4 @@
-import { LockingService } from '@ce/nestjs-shared-persistence/prisma/locking.service';
+import { LockingService } from '@nabarun-ngo/nestjs-shared-persistence/prisma/locking.service';
 
 describe('LockingService', () => {
   it('passes the lock-owning transaction client to the callback', async () => {

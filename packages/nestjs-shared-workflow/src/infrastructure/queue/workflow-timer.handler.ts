@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@ce/nestjs-shared-queue';
+import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@nabarun-ngo/nestjs-shared-queue';
 import { WorkflowTimerJob } from '../../application/jobs/workflow-timer.job';
 import { WORKFLOW_QUEUE_PORT, IWorkflowQueuePort } from '../../domain/ports/workflow-queue.port';
 import { IWorkflowInboxRepository } from '../../domain/ports/workflow-inbox.repository';
@@ -14,7 +14,7 @@ export class WorkflowTimerHandler implements IQueueHandler<WorkflowTimerJob> {
     private readonly inboxRepo: IWorkflowInboxRepository,
     @Inject(WORKFLOW_QUEUE_PORT)
     private readonly queuePort: IWorkflowQueuePort,
-  ) {}
+  ) { }
 
   async execute(job: Job<WorkflowTimerJob>, _ctx: JobExecutionContext): Promise<void> {
     const payload =

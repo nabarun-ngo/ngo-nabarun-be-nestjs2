@@ -1,4 +1,4 @@
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 
 export class BankDetail {
   constructor(
@@ -8,5 +8,5 @@ export class BankDetail {
     public bankAccountNumber?: string,
     public bankAccountType?: string,
     public IFSCNumber?: string,
-  ) {}
+  ) { }
 }

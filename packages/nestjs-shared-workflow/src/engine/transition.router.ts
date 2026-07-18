@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { evaluateCondition } from '@ce/nestjs-shared-core';
+import { evaluateCondition } from '@nabarun-ngo/nestjs-shared-core';
 import type { SequenceFlow, WorkflowDefinition, WorkflowElement } from '../dsl/workflow-definition.schema';
 import { WorkflowNoOutgoingFlowError } from '../domain/errors/workflow.errors';
 

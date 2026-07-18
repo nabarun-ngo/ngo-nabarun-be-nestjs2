@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@ce/nestjs-shared-queue';
+import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@nabarun-ngo/nestjs-shared-queue';
 import { IFinanceDonationSchedulePort } from '../ports/finance-donation-schedule.port';
 import { FINANCE_OPTIONS } from '../../infrastructure/finance-options.token';
 import type { FinanceModuleOptions } from '../../finance.schema';
@@ -14,7 +14,7 @@ export class TriggerMonthlyDonationHandler implements IQueueHandler<TriggerMonth
   constructor(
     @Inject(IFinanceDonationSchedulePort) private readonly schedulePort: IFinanceDonationSchedulePort,
     @Inject(FINANCE_OPTIONS) private readonly options: FinanceModuleOptions,
-  ) {}
+  ) { }
 
   async execute(job: Job<TriggerMonthlyDonationJob>, ctx: JobExecutionContext): Promise<void> {
     const userId = job.data.payload?.userId;

@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { validateModuleOptions } from '@ce/nestjs-shared-core';
+import { validateModuleOptions } from '@nabarun-ngo/nestjs-shared-core';
 
 const TestSchema = z.object({
   name: z.string().min(1, 'name is required'),
   port: z.number().positive('port must be positive'),
-  url:  z.string().url('url must be valid').optional(),
+  url: z.string().url('url must be valid').optional(),
 });
 
 describe('validateModuleOptions', () => {

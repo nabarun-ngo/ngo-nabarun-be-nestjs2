@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
-import { isEncryptedText } from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-persistence';
+import { isEncryptedText } from '@nabarun-ngo/nestjs-shared-core';
 import type { PrismaClient } from '../prisma/client';
 import type {
   TokenVault2OAuthTokenWhereInput,
@@ -22,7 +22,7 @@ import {
   OAuthToken,
   OAuthTokenFilter,
   TokenScope,
-} from '@ce/nestjs-shared-token-vault';
+} from '@nabarun-ngo/nestjs-shared-token-vault';
 
 /**
  * Extended row type that includes the eagerly-loaded account relation.
@@ -85,8 +85,7 @@ export class OAuthTokenPrismaRepository
     TokenVault2OAuthTokenOrderByWithRelationInput,
     { account: true }
   >
-  implements IOAuthTokenRepository
-{
+  implements IOAuthTokenRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'tokenVault2OAuthToken');
   }
@@ -112,15 +111,15 @@ export class OAuthTokenPrismaRepository
   protected toDomain(row: TokenRow): OAuthToken {
     const account: OAuthAccountSnapshot | undefined = row.account
       ? {
-          id: row.account.id,
-          email: row.account.email,
-          externalId: row.account.externalId ?? undefined,
-          name: row.account.name ?? undefined,
-          givenName: row.account.givenName ?? undefined,
-          familyName: row.account.familyName ?? undefined,
-          pictureUrl: row.account.pictureUrl ?? undefined,
-          locale: row.account.locale ?? undefined,
-        }
+        id: row.account.id,
+        email: row.account.email,
+        externalId: row.account.externalId ?? undefined,
+        name: row.account.name ?? undefined,
+        givenName: row.account.givenName ?? undefined,
+        familyName: row.account.familyName ?? undefined,
+        pictureUrl: row.account.pictureUrl ?? undefined,
+        locale: row.account.locale ?? undefined,
+      }
       : undefined;
 
     return OAuthToken.rehydrate({

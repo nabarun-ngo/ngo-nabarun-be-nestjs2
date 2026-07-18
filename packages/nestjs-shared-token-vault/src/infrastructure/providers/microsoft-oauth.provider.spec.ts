@@ -1,10 +1,10 @@
 // axios is not installed in this repo; mock the module so that HttpService is importable.
 jest.mock('@nestjs/axios', () => ({
-  HttpService: class HttpService {},
+  HttpService: class HttpService { },
 }));
 
-import { MicrosoftOAuthProvider } from '@ce/nestjs-shared-token-vault/infrastructure/providers/microsoft-oauth.provider';
-import { MICROSOFT_SCOPES } from '@ce/nestjs-shared-token-vault/scopes';
+import { MicrosoftOAuthProvider } from '@nabarun-ngo/nestjs-shared-token-vault/infrastructure/providers/microsoft-oauth.provider';
+import { MICROSOFT_SCOPES } from '@nabarun-ngo/nestjs-shared-token-vault/scopes';
 import { of, throwError } from 'rxjs';
 
 const ENCRYPTION_KEY = 'test-encryption-key-that-is-at-least-32chars';

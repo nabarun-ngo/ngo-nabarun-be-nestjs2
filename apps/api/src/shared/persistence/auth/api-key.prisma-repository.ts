@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient } from '../prisma/client';
 import {
   AuthApiKeyWhereInput,
@@ -13,8 +13,8 @@ import {
   AuthApiKeyUncheckedUpdateInput,
   AuthApiKeyOrderByWithRelationInput,
 } from '../prisma/models';
-import { ApiKey, ApiKeyFilter } from '@ce/nestjs-shared-auth/domain/aggregates/api-key/api-key.aggregate';
-import { IApiKeyRepository } from '@ce/nestjs-shared-auth/domain/repositories/api-key.repository';
+import { ApiKey, ApiKeyFilter } from '@nabarun-ngo/nestjs-shared-auth/domain/aggregates/api-key/api-key.aggregate';
+import { IApiKeyRepository } from '@nabarun-ngo/nestjs-shared-auth/domain/repositories/api-key.repository';
 
 type ApiKeyRow = {
   id: string;
@@ -45,8 +45,7 @@ export class ApiKeyPrismaRepository
     ({} & AuthApiKeyUncheckedUpdateInput) | ({} & AuthApiKeyUpdateInput),
     AuthApiKeyOrderByWithRelationInput
   >
-  implements IApiKeyRepository
-{
+  implements IApiKeyRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'authApiKey');
   }

@@ -1,4 +1,4 @@
-import { DatabaseOptionsSchema } from '@ce/nestjs-shared-persistence/database.schema';
+import { DatabaseOptionsSchema } from '@nabarun-ngo/nestjs-shared-persistence/database.schema';
 
 describe('DatabaseOptionsSchema', () => {
   const validOptions = {

@@ -1,11 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { JsonStoreFacade } from '@ce/nestjs-shared-json-store';
+import { JsonStoreFacade } from '@nabarun-ngo/nestjs-shared-json-store';
 import {
   EmailTemplatePayloadSchema,
   ITemplatePort,
   EmailTemplateData,
   TEMPLATE_PORT,
-} from '@ce/nestjs-shared-correspondence';
+} from '@nabarun-ngo/nestjs-shared-correspondence';
 
 const JSON_STORE_NAMESPACE = 'correspondence';
 
@@ -13,7 +13,7 @@ const JSON_STORE_NAMESPACE = 'correspondence';
 export class JsonStoreTemplateAdapter implements ITemplatePort {
   private readonly logger = new Logger(JsonStoreTemplateAdapter.name);
 
-  constructor(private readonly jsonStore: JsonStoreFacade) {}
+  constructor(private readonly jsonStore: JsonStoreFacade) { }
 
   async findByKey(key: string): Promise<EmailTemplateData | null> {
     const payload = await this.jsonStore.get(key, JSON_STORE_NAMESPACE);

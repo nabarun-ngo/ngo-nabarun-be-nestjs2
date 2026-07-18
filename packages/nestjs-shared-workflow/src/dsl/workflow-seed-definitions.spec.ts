@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { parseWorkflowDefinition } from '@ce/nestjs-shared-workflow';
+import { parseWorkflowDefinition } from '@nabarun-ngo/nestjs-shared-workflow';
 
 const WORKFLOW_SEED_DIR = join(
   __dirname,

@@ -1,4 +1,4 @@
-import { IUserAccessPort } from '@ce/nestjs-shared-auth';
+import { IUserAccessPort } from '@nabarun-ngo/nestjs-shared-auth';
 import { OnUserStatusChangedHandler } from './on-user-status-changed.handler';
 import { UserStatusChangedEvent } from '../../../domain/events/user-status-changed.event';
 import { UserStatus } from '../../../domain/enums/user-status.enum';

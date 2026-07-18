@@ -13,7 +13,7 @@ JsonStore (workflow definitions)     Custom Forms (entityType: workflow)
               │                                    │
               └──────────┬─────────────────────────┘
                          ▼
-              @ce/nestjs-shared-workflow
+              @nabarun-ngo/nestjs-shared-workflow
               WorkflowFacade / StateMachineRunner
                          │
          ┌───────────────┼───────────────┐
@@ -131,7 +131,7 @@ Required port adapters are registered in `IntegrationsModule` and `PersistenceMo
 Prefer `WorkflowFacade` for in-process starts (cron jobs, domain events, other modules). Do **not** dispatch a “start workflow” queue job.
 
 ```typescript
-import { WorkflowFacade, WorkflowRequesterType } from '@ce/nestjs-shared-workflow';
+import { WorkflowFacade, WorkflowRequesterType } from '@nabarun-ngo/nestjs-shared-workflow';
 
 @Injectable()
 export class MyService {
@@ -239,7 +239,7 @@ Definitions are stored in JsonStore namespace `workflow`, validated by `Workflow
 Validate locally:
 
 ```typescript
-import { parseWorkflowDefinition } from '@ce/nestjs-shared-workflow';
+import { parseWorkflowDefinition } from '@nabarun-ngo/nestjs-shared-workflow';
 parseWorkflowDefinition(json); // throws on invalid graph
 ```
 
@@ -277,7 +277,7 @@ import { Injectable } from '@nestjs/common';
 import {
   WorkflowTaskHandler,
   WorkflowTaskHandlerContract,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 
 @Injectable()
 @WorkflowTaskHandler('MyHandler')

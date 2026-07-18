@@ -56,7 +56,7 @@ interface NamespaceOptions {
  * ```ts
  * import { join } from 'path';
  * import { PrismaClient } from '@prisma/client';
- * import { loadJsonStoreSeedFromDir, seedJsonStore } from '@ce/nestjs-shared-json-store';
+ * import { loadJsonStoreSeedFromDir, seedJsonStore } from '@nabarun-ngo/nestjs-shared-json-store';
  *
  * const prisma = new PrismaClient();
  * const data = loadJsonStoreSeedFromDir(join(__dirname, 'seeds/json-store'));

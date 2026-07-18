@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { IUserAccessPort } from '@ce/nestjs-shared-auth';
+import { IUserAccessPort } from '@nabarun-ngo/nestjs-shared-auth';
 import { UserProfileUpdatedEvent } from '../../../domain/events/user-profile-updated.event';
 import { IIdentityProvider } from '../../../domain/ports/identity-provider.port';
 

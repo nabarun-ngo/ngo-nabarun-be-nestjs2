@@ -3,7 +3,7 @@
  * Pure TypeScript — zero framework imports.
  */
 import { InvalidCronExpressionError, CronJobNotFoundError } from './cron.errors';
-import { BusinessError } from '@ce/nestjs-shared-core/domain/errors/business-error';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core/domain/errors/business-error';
 
 describe('InvalidCronExpressionError', () => {
   it('is an instance of BusinessError', () => {

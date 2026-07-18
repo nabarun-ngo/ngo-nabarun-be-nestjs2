@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient } from '../prisma/client';
 import {
   AuthPermissionWhereInput,
@@ -13,8 +13,8 @@ import {
   AuthPermissionUncheckedUpdateInput,
   AuthPermissionOrderByWithRelationInput,
 } from '../prisma/models';
-import { Permission, PermissionFilter } from '@ce/nestjs-shared-auth/domain/aggregates/permission/permission.aggregate';
-import { IPermissionRepository } from '@ce/nestjs-shared-auth/domain/repositories/permission.repository';
+import { Permission, PermissionFilter } from '@nabarun-ngo/nestjs-shared-auth/domain/aggregates/permission/permission.aggregate';
+import { IPermissionRepository } from '@nabarun-ngo/nestjs-shared-auth/domain/repositories/permission.repository';
 
 type PermissionRow = {
   id: string;
@@ -40,8 +40,7 @@ export class PermissionPrismaRepository
     ({} & AuthPermissionUncheckedUpdateInput) | ({} & AuthPermissionUpdateInput),
     AuthPermissionOrderByWithRelationInput
   >
-  implements IPermissionRepository
-{
+  implements IPermissionRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'authPermission');
   }

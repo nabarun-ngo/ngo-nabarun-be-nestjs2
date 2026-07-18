@@ -1,4 +1,4 @@
-import { RootEvent } from '@ce/nestjs-shared-core';
+import { RootEvent } from '@nabarun-ngo/nestjs-shared-core';
 
 /**
  * Emitted after all form submission values for an entity record are cleared.

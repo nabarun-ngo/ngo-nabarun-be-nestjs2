@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot } from '@ce/nestjs-shared-core';
+import { AggregateRoot } from '@nabarun-ngo/nestjs-shared-core';
 import { UserRoleGroupGrantedEvent, type UserRoleGroupGrantedSnapshot } from '../../events/user-role-group-granted.event';
 import { UserRoleGroupRevokedEvent, type UserRoleGroupRevokedSnapshot } from '../../events/user-role-group-revoked.event';
 import { UserRoleGroupAlreadyRevokedError } from '../../errors/auth.errors';

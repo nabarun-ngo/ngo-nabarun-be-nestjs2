@@ -1,12 +1,12 @@
 import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { Parser } from 'expr-eval';
-import { IUserRolePort } from '@ce/nestjs-shared-auth';
-import { IUserLookupPort } from '@ce/nestjs-shared-core';
+import { IUserRolePort } from '@nabarun-ngo/nestjs-shared-auth';
+import { IUserLookupPort } from '@nabarun-ngo/nestjs-shared-core';
 import {
   IWorkflowUserResolutionPort,
   ResolvedWorkflowAssignee,
   WORKFLOW_USER_RESOLUTION_PORT,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 
 @Injectable()
 export class WorkflowUserResolutionAdapter implements IWorkflowUserResolutionPort {
@@ -15,7 +15,7 @@ export class WorkflowUserResolutionAdapter implements IWorkflowUserResolutionPor
   constructor(
     @Optional() @Inject(IUserRolePort) private readonly userRole: IUserRolePort | null,
     @Optional() @Inject(IUserLookupPort) private readonly userLookup: IUserLookupPort | null,
-  ) {}
+  ) { }
 
   async resolveCandidates(params: {
     roleNames: string[];

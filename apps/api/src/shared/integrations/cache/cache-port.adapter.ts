@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICACHE_PORT, ICachePort, CacheSetOptions } from '@ce/nestjs-shared-core';
-import { CacheService } from '@ce/nestjs-shared-persistence';
+import { ICACHE_PORT, ICachePort, CacheSetOptions } from '@nabarun-ngo/nestjs-shared-core';
+import { CacheService } from '@nabarun-ngo/nestjs-shared-persistence';
 
 @Injectable()
 export class CachePortAdapter implements ICachePort {
-  constructor(private readonly cache: CacheService) {}
+  constructor(private readonly cache: CacheService) { }
 
   get<T>(key: string): Promise<T | null> {
     return this.cache.get<T>(key).then((v) => v ?? null);

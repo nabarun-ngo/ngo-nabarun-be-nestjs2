@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { ExpenseRefType } from '../../../../finance/domain/enums/expense.enum';
 import { IExpenseRepository } from '../../../../finance/domain/repositories/expense.repository';
 import { IActivityRepository } from '../../../domain/repositories/activity.repository';
@@ -12,7 +12,7 @@ export class LinkExpenseToActivityHandler implements ICommandHandler<LinkExpense
   constructor(
     @Inject(IActivityRepository) private readonly activityRepository: IActivityRepository,
     @Inject(IExpenseRepository) private readonly expenseRepository: IExpenseRepository,
-  ) {}
+  ) { }
 
   async execute({ params }: LinkExpenseToActivityCommand): Promise<void> {
     const activity = await this.activityRepository.findById(params.activityId);

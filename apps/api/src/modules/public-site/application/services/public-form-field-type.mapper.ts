@@ -1,4 +1,4 @@
-import { CustomFieldType } from '@ce/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
+import { CustomFieldType } from '@nabarun-ngo/nestjs-shared-custom-forms/domain/enums/custom-field-type.enum';
 
 const FIELD_TYPE_MAP: Record<CustomFieldType, string> = {
   [CustomFieldType.Text]: 'TEXT',

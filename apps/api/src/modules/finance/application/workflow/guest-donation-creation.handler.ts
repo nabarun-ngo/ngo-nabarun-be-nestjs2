@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { WorkflowTaskHandler, WorkflowTaskHandlerContract } from '@ce/nestjs-shared-workflow';
+import { WorkflowTaskHandler, WorkflowTaskHandlerContract } from '@nabarun-ngo/nestjs-shared-workflow';
 import { DonationType } from '../../domain/enums/donation-type.enum';
 import { CreateDonationCommand } from '../commands/create-donation/create-donation.command';
 import { DonationMapper } from '../mappers/donation.mapper';
@@ -8,7 +8,7 @@ import { DonationMapper } from '../mappers/donation.mapper';
 @Injectable()
 @WorkflowTaskHandler('GuestDonationCreationHandler')
 export class GuestDonationCreationHandler implements WorkflowTaskHandlerContract {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus) { }
 
   async execute(params: {
     instanceId: string;

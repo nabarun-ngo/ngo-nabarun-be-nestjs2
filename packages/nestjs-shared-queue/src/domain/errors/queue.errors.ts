@@ -1,4 +1,4 @@
-import { BusinessError } from '@ce/nestjs-shared-core';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 
 export class QueueJobInvalidStateTransitionError extends BusinessError {
   constructor(jobId: string, from: string, to: string) {

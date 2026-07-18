@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot } from '@ce/nestjs-shared-core';
+import { AggregateRoot } from '@nabarun-ngo/nestjs-shared-core';
 import { UserNotificationReadEvent, type UserNotificationReadSnapshot } from '../events/user-notification-read.event';
 import { UserNotificationArchivedEvent, type UserNotificationArchivedSnapshot } from '../events/user-notification-archived.event';
 import { NotificationPushDeliveredEvent, type NotificationPushDeliveredSnapshot } from '../events/notification-push-delivered.event';

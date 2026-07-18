@@ -1,12 +1,12 @@
-import { RevokeTokenHandler } from '@ce/nestjs-shared-token-vault/application/commands/revoke-token/revoke-token.handler';
-import { RevokeTokenCommand } from '@ce/nestjs-shared-token-vault/application/commands/revoke-token/revoke-token.command';
+import { RevokeTokenHandler } from '@nabarun-ngo/nestjs-shared-token-vault/application/commands/revoke-token/revoke-token.handler';
+import { RevokeTokenCommand } from '@nabarun-ngo/nestjs-shared-token-vault/application/commands/revoke-token/revoke-token.command';
 import {
   ProviderNotConfiguredError,
   TokenNotFoundError,
-} from '@ce/nestjs-shared-token-vault/domain/errors/token-vault.errors';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
-import { TokenRevokedEvent } from '@ce/nestjs-shared-token-vault/domain/events/token-revoked.event';
+} from '@nabarun-ngo/nestjs-shared-token-vault/domain/errors/token-vault.errors';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+import { TokenRevokedEvent } from '@nabarun-ngo/nestjs-shared-token-vault/domain/events/token-revoked.event';
 import { EventBus, IEvent } from '@nestjs/cqrs';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';

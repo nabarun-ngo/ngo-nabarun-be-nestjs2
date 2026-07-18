@@ -1,7 +1,7 @@
 import { DynamicModule, Module, ModuleMetadata, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { z } from 'zod';
-import { BaseDynamicModule, DynamicModuleAsyncOptions, createRequiredPortsGuard } from '@ce/nestjs-shared-core';
+import { BaseDynamicModule, DynamicModuleAsyncOptions, createRequiredPortsGuard } from '@nabarun-ngo/nestjs-shared-core';
 import { Correspondence2OptionsSchema } from './correspondence.schema';
 import { CORRESPONDENCE2_OPTIONS } from './correspondence-options.token';
 
@@ -60,7 +60,7 @@ import { SubscriptionController } from './presentation/controllers/subscription.
 export type Correspondence2ModuleOptions = z.infer<typeof Correspondence2OptionsSchema>;
 
 export interface Correspondence2AsyncOptions
-  extends DynamicModuleAsyncOptions<Correspondence2ModuleOptions> {}
+  extends DynamicModuleAsyncOptions<Correspondence2ModuleOptions> { }
 
 export interface Correspondence2ModuleOverrides {
   /**

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter } from '@ce/nestjs-shared-core';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
 import { IExpenseRepository } from '../../../domain/repositories/expense.repository';
 import { ExpenseListResponseDto } from '../../dtos/expense-list.dto';
 import { ExpenseMapper } from '../../mappers/expense.mapper';
@@ -9,7 +9,7 @@ import { ListExpensesQuery } from './list-expenses.query';
 @QueryHandler(ListExpensesQuery)
 @Injectable()
 export class ListExpensesHandler implements IQueryHandler<ListExpensesQuery, ExpenseListResponseDto> {
-  constructor(@Inject(IExpenseRepository) private readonly repo: IExpenseRepository) {}
+  constructor(@Inject(IExpenseRepository) private readonly repo: IExpenseRepository) { }
 
   async execute(query: ListExpensesQuery): Promise<ExpenseListResponseDto> {
     const filter = new BaseFilter(query.filter, query.pageIndex ?? 0, query.pageSize ?? 20);

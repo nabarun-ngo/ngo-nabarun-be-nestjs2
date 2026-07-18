@@ -9,7 +9,7 @@
 // Mock axios and @nestjs/axios to avoid missing peer dependency in transitive imports
 // (smtp-email.adapter imports correspondence.module which chains to @nestjs/axios)
 jest.mock('axios', () => ({}), { virtual: true });
-jest.mock('@nestjs/axios', () => ({ HttpModule: class {}, HttpService: class {} }), {
+jest.mock('@nestjs/axios', () => ({ HttpModule: class { }, HttpService: class { } }), {
   virtual: true,
 });
 
@@ -26,8 +26,8 @@ jest.mock('nodemailer', () => {
 
 import { Logger } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { SmtpEmailAdapter } from '@ce/nestjs-shared-correspondence/infrastructure/email/smtp-email.adapter';
-import { EmailDeliveryFailedError } from '@ce/nestjs-shared-correspondence/domain/errors/correspondence.errors';
+import { SmtpEmailAdapter } from '@nabarun-ngo/nestjs-shared-correspondence/infrastructure/email/smtp-email.adapter';
+import { EmailDeliveryFailedError } from '@nabarun-ngo/nestjs-shared-correspondence/domain/errors/correspondence.errors';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -52,7 +52,7 @@ const smtpOptions = {
 
 describe('SmtpEmailAdapter', () => {
   beforeEach(() => {
-    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => { });
     const { createTransport, sendMail } = getNodemailerMocks();
     createTransport.mockClear();
     sendMail.mockClear();

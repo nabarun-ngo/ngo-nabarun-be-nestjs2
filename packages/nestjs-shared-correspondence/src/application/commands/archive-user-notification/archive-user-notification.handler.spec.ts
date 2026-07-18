@@ -1,11 +1,11 @@
 /**
  * ArchiveUserNotificationHandler unit tests.
  */
-import { ArchiveUserNotificationHandler } from '@ce/nestjs-shared-correspondence/application/commands/archive-user-notification/archive-user-notification.handler';
-import { ArchiveUserNotificationCommand } from '@ce/nestjs-shared-correspondence/application/commands/archive-user-notification/archive-user-notification.command';
-import { IUserNotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
-import { UserNotificationNotFoundError } from '@ce/nestjs-shared-correspondence/domain/errors/correspondence.errors';
-import { UserNotification } from '@ce/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
+import { ArchiveUserNotificationHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/archive-user-notification/archive-user-notification.handler';
+import { ArchiveUserNotificationCommand } from '@nabarun-ngo/nestjs-shared-correspondence/application/commands/archive-user-notification/archive-user-notification.command';
+import { IUserNotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
+import { UserNotificationNotFoundError } from '@nabarun-ngo/nestjs-shared-correspondence/domain/errors/correspondence.errors';
+import { UserNotification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
 
 function makeUN(userId = 'user-1') {
   return UserNotification.create({ notificationId: 'notif-1', userId });

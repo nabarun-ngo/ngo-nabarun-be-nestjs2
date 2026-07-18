@@ -7,8 +7,8 @@ import {
   ExpectedRecaptchaAction,
   NewsletterThrottle,
   Public,
-} from '@ce/nestjs-shared-auth';
-import { ApiAutoResponse } from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-auth';
+import { ApiAutoResponse } from '@nabarun-ngo/nestjs-shared-core';
 import { SubscribeNewsletterCommand } from '../../application/commands/subscribe-newsletter/subscribe-newsletter.command';
 
 export class NewsletterSubscribeDto {
@@ -21,7 +21,7 @@ export class NewsletterSubscribeDto {
 @Controller()
 @Public()
 export class NewsletterController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus) { }
 
   @Post('newsletter')
   @NewsletterThrottle()

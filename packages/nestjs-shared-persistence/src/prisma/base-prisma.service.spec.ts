@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BasePrismaService, PRISMA_CLIENT } from '@ce/nestjs-shared-persistence/prisma/base-prisma.service';
-import { DATABASE_OPTIONS } from '@ce/nestjs-shared-persistence/database-options.token';
+import { BasePrismaService, PRISMA_CLIENT } from '@nabarun-ngo/nestjs-shared-persistence/prisma/base-prisma.service';
+import { DATABASE_OPTIONS } from '@nabarun-ngo/nestjs-shared-persistence/database-options.token';
 
 function makeMockPrismaClient() {
   return {

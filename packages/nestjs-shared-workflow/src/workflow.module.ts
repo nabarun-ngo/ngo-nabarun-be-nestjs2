@@ -1,6 +1,6 @@
 import { DynamicModule, Module, ModuleMetadata, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { BaseDynamicModule, DynamicModuleAsyncOptions, createRequiredPortsGuard } from '@ce/nestjs-shared-core';
+import { BaseDynamicModule, DynamicModuleAsyncOptions, createRequiredPortsGuard } from '@nabarun-ngo/nestjs-shared-core';
 import { WorkflowModuleOptionsSchema } from './workflow.schema';
 import type { WorkflowModuleOptions } from './workflow.schema';
 import { WORKFLOW_OPTIONS } from './infrastructure/workflow-options.token';
@@ -52,7 +52,7 @@ import { WorkflowController } from './presentation/controllers/workflow.controll
 import { WorkflowAdminController } from './presentation/controllers/workflow-admin.controller';
 
 export interface WorkflowModuleAsyncOptions
-  extends DynamicModuleAsyncOptions<WorkflowModuleOptions> {}
+  extends DynamicModuleAsyncOptions<WorkflowModuleOptions> { }
 
 export interface WorkflowModuleOverrides {
   imports?: ModuleMetadata['imports'];

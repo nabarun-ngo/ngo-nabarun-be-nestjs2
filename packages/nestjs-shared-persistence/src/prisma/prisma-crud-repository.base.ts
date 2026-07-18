@@ -1,6 +1,6 @@
-import { BaseFilter, SortOrder } from "@ce/nestjs-shared-core";
-import { Page } from "@ce/nestjs-shared-core";
-import type { IRepository } from "@ce/nestjs-shared-core";
+import { BaseFilter, SortOrder } from "@nabarun-ngo/nestjs-shared-core";
+import { Page } from "@nabarun-ngo/nestjs-shared-core";
+import type { IRepository } from "@nabarun-ngo/nestjs-shared-core";
 import type { PrismaClientLike } from "./base-prisma.service";
 import { PrismaRepositoryBase } from "./prisma-repository.base";
 import type {
@@ -56,8 +56,7 @@ export abstract class PrismaCrudRepositoryBase<
   TOrderBy,
   TInclude = Record<string, boolean | object>,
 > extends PrismaRepositoryBase<TClient, TDelegateKey>
-  implements IRepository<TEntity, TId, TFilter>
-{
+  implements IRepository<TEntity, TId, TFilter> {
   async findById(id: TId, include?: TInclude): Promise<TEntity | null> {
     const resolvedInclude = include ?? this.toInclude();
     const delegate = this.delegate as {
@@ -183,14 +182,14 @@ export abstract class PrismaCrudRepositoryBase<
     }
 
     const row = await (this.delegate as {
-        update: (args: {
-          where: TWhereUniqueInput;
-          data: TUpdateInput;
-        }) => Promise<TRow>;
-      }).update({
-        where: where as TWhereUniqueInput,
-        data: data as TUpdateInput,
-      });
+      update: (args: {
+        where: TWhereUniqueInput;
+        data: TUpdateInput;
+      }) => Promise<TRow>;
+    }).update({
+      where: where as TWhereUniqueInput,
+      data: data as TUpdateInput,
+    });
     const saved = this.toDomain(row);
     return saved;
   }

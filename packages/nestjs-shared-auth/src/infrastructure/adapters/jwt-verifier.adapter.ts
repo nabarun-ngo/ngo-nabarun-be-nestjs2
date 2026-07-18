@@ -2,7 +2,7 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { IJwtVerifierPort } from '../../application/ports/jwt-verifier.port';
 import { IUserAccessPort } from '../../application/ports/user-access.port';
 import { AuthUser } from '../../application/models/auth-user';
-import { BusinessError } from '@ce/nestjs-shared-core';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 import { AUTH2_OPTIONS } from '../auth-options.token';
 import { Auth2ModuleOptions } from '../../auth-options';
 
@@ -25,7 +25,7 @@ export class JwtVerifierAdapter implements IJwtVerifierPort, OnModuleInit {
   constructor(
     @Inject(AUTH2_OPTIONS) private readonly options: Auth2ModuleOptions,
     @Inject(IUserAccessPort) private readonly userAccess: IUserAccessPort,
-  ) {}
+  ) { }
 
   async onModuleInit(): Promise<void> {
     this.jose = (await import('jose')) as JoseModule;

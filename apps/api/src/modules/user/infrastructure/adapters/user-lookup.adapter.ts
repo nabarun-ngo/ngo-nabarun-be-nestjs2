@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IUserLookupPort, UserInfo } from '@ce/nestjs-shared-core';
+import { IUserLookupPort, UserInfo } from '@nabarun-ngo/nestjs-shared-core';
 import { IUserRepository } from '../../domain/repositories/user.repository';
 import { User } from '../../domain/aggregates/user/user.aggregate';
 
@@ -7,7 +7,7 @@ import { User } from '../../domain/aggregates/user/user.aggregate';
 export class UserLookupAdapter implements IUserLookupPort {
   constructor(
     @Inject(IUserRepository) private readonly repo: IUserRepository,
-  ) {}
+  ) { }
 
   async findById(id: string): Promise<UserInfo | null> {
     const user = await this.repo.findById(id);

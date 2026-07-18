@@ -1,4 +1,4 @@
-import { Page } from '@ce/nestjs-shared-core';
+import { Page } from '@nabarun-ngo/nestjs-shared-core';
 
 describe('Page', () => {
   it('stores content, totalSize, pageIndex, pageSize', () => {

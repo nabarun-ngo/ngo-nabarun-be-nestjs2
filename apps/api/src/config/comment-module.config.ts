@@ -1,4 +1,4 @@
-import { CommentModule } from "@ce/nestjs-shared-comment";
+import { CommentModule } from "@nabarun-ngo/nestjs-shared-comment";
 
 export const COMMENT_MODULE = CommentModule.forRoot({
     allowedEntityTypes: [

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter, Page } from '@ce/nestjs-shared-core';
+import { BaseFilter, Page } from '@nabarun-ngo/nestjs-shared-core';
 import { IQueueJobRepository, QueueJobFilter } from '../../../domain/repositories/queue-job.repository';
 import { QueueJobResponseMapper } from '../../mappers/queue-job-response.mapper';
 import { QueueJobSearchResultDto } from '../../dtos/queue-job.dtos';
@@ -9,15 +9,14 @@ import { SearchJobsQuery } from './search-jobs.query';
 @QueryHandler(SearchJobsQuery)
 @Injectable()
 export class SearchJobsHandler
-  implements IQueryHandler<SearchJobsQuery, Page<QueueJobSearchResultDto>>
-{
-  constructor(@Inject(IQueueJobRepository) private readonly jobRepo: IQueueJobRepository) {}
+  implements IQueryHandler<SearchJobsQuery, Page<QueueJobSearchResultDto>> {
+  constructor(@Inject(IQueueJobRepository) private readonly jobRepo: IQueueJobRepository) { }
 
   async execute({ params }: SearchJobsQuery): Promise<Page<QueueJobSearchResultDto>> {
     const filter: QueueJobFilter = {
-      jobName:   params.jobName,
+      jobName: params.jobName,
       queueName: params.queueName,
-      status:    params.status,
+      status: params.status,
     };
     const page = await this.jobRepo.findPaged(
       new BaseFilter<QueueJobFilter>(filter, params.pageIndex, params.pageSize),

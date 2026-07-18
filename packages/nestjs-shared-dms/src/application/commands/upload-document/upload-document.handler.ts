@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { EntityTypePolicyUtil, checkEntityRecordAccess } from '@ce/nestjs-shared-core';
+import { EntityTypePolicyUtil, checkEntityRecordAccess } from '@nabarun-ngo/nestjs-shared-core';
 import { Document } from '../../../domain/aggregates/document.aggregate';
 import { DocumentMapping } from '../../../domain/entities/document-mapping.entity';
 import { DocumentVisibility } from '../../../domain/enums/document-visibility.enum';
@@ -25,8 +25,8 @@ import { UploadDocumentCommand } from './upload-document.command';
 // Until then, the magic-byte checks below block the most dangerous executable formats.
 const BLOCKED_MAGIC_PREFIXES: ReadonlyArray<{ label: string; bytes: readonly number[] }> = [
   { label: 'Windows PE executable (.exe/.dll/.sys)', bytes: [0x4d, 0x5a] }, // MZ header
-  { label: 'ELF binary (Linux/Unix executable)',     bytes: [0x7f, 0x45, 0x4c, 0x46] }, // \x7FELF
-  { label: 'Unix script with shebang (#!)',          bytes: [0x23, 0x21] }, // #!
+  { label: 'ELF binary (Linux/Unix executable)', bytes: [0x7f, 0x45, 0x4c, 0x46] }, // \x7FELF
+  { label: 'Unix script with shebang (#!)', bytes: [0x23, 0x21] }, // #!
 ];
 
 function detectBlockedMagicBytes(buf: Buffer): string | null {
@@ -41,8 +41,7 @@ function detectBlockedMagicBytes(buf: Buffer): string | null {
 @CommandHandler(UploadDocumentCommand)
 @Injectable()
 export class UploadDocumentHandler
-  implements ICommandHandler<UploadDocumentCommand, DocumentResponseDto>
-{
+  implements ICommandHandler<UploadDocumentCommand, DocumentResponseDto> {
   private readonly logger = new Logger(UploadDocumentHandler.name);
 
   constructor(
@@ -56,7 +55,7 @@ export class UploadDocumentHandler
     @Inject(IDocumentEntityAccessPort)
     private readonly accessPort: IDocumentEntityAccessPort | null,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute(command: UploadDocumentCommand): Promise<DocumentResponseDto> {
     const {
@@ -110,8 +109,8 @@ export class UploadDocumentHandler
     if (!this.accessPort && mappings.length > 0) {
       this.logger.warn(
         `[DMS2] IDocumentEntityAccessPort is not configured — record-level entity access check ` +
-          `is BYPASSED for upload by user ${userId}. Register IDocumentEntityAccessPort to enable ` +
-          `entity-level access control.`,
+        `is BYPASSED for upload by user ${userId}. Register IDocumentEntityAccessPort to enable ` +
+        `entity-level access control.`,
       );
     }
 
@@ -167,8 +166,8 @@ export class UploadDocumentHandler
         // Compensating delete failed — the blob is now orphaned. Log for manual cleanup.
         this.logger.error(
           `[DMS2] DB insert failed AND compensating storage delete also failed. ` +
-            `Orphaned storage object: "${result.remotePath}". Manual cleanup required. ` +
-            `Delete error: ${deleteError?.message ?? deleteError}`,
+          `Orphaned storage object: "${result.remotePath}". Manual cleanup required. ` +
+          `Delete error: ${deleteError?.message ?? deleteError}`,
         );
       }
       throw dbError;
@@ -190,8 +189,8 @@ export class UploadDocumentHandler
           } catch (rollbackError: any) {
             this.logger.error(
               `[DMS2] Document limit exceeded (TOCTOU race) and rollback failed for ` +
-                `document ${document.id}. Manual cleanup required. ` +
-                `Rollback error: ${rollbackError?.message ?? rollbackError}`,
+              `document ${document.id}. Manual cleanup required. ` +
+              `Rollback error: ${rollbackError?.message ?? rollbackError}`,
             );
           }
           DocumentUploadPolicy.assertLimitNotReached(

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter } from '@ce/nestjs-shared-core';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
 import { IUserRepository } from '../../../domain/repositories/user.repository';
 import { UserListResponseDto, UserResponseDto } from '../../dtos/user-response.dto';
 import { UserResponseMapper } from '../../mappers/user-response.mapper';
@@ -9,11 +9,10 @@ import { ListUsersQuery } from './list-users.query';
 @QueryHandler(ListUsersQuery)
 @Injectable()
 export class ListUsersHandler
-  implements IQueryHandler<ListUsersQuery, UserListResponseDto>
-{
+  implements IQueryHandler<ListUsersQuery, UserListResponseDto> {
   constructor(
     @Inject(IUserRepository) private readonly repo: IUserRepository,
-  ) {}
+  ) { }
 
   async execute(query: ListUsersQuery): Promise<UserListResponseDto> {
     const filter = new BaseFilter(

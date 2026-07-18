@@ -1,8 +1,8 @@
 import { HttpModule } from '@nestjs/axios';
 import { DynamicModule, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { BaseDynamicModule, DynamicModuleAsyncOptions } from '@ce/nestjs-shared-core';
-import { LockingService } from '@ce/nestjs-shared-persistence';
+import { BaseDynamicModule, DynamicModuleAsyncOptions } from '@nabarun-ngo/nestjs-shared-core';
+import { LockingService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { TOKEN_VAULT2_OPTIONS, TokenVault2ModuleOptions } from './token-vault-options';
 import { TokenVault2OptionsSchema } from './token-vault.schema';
 
@@ -40,7 +40,7 @@ export { TokenVault2ModuleOptions } from './token-vault-options';
 export { TokenVault2OptionsSchema } from './token-vault.schema';
 
 export interface TokenVault2AsyncOptions
-  extends DynamicModuleAsyncOptions<TokenVault2ModuleOptions> {}
+  extends DynamicModuleAsyncOptions<TokenVault2ModuleOptions> { }
 
 const COMMAND_HANDLERS = [
   InitiateOAuthHandler,

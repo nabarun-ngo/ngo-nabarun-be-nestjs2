@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { DateTime } from 'luxon';
 import { Meeting } from '../../../domain/aggregates/meeting/meeting.aggregate';
 import { IMeetingRepository } from '../../../domain/repositories/meeting.repository';
@@ -16,7 +16,7 @@ export class UpdateMeetingHandler implements ICommandHandler<UpdateMeetingComman
     @Inject(IMeetingRepository) private readonly meetingRepository: IMeetingRepository,
     @Inject(IMeetingCalendarPort) private readonly calendarPort: IMeetingCalendarPort,
     @Inject(MEETING_OPTIONS) private readonly options: MeetingModuleOptions,
-  ) {}
+  ) { }
 
   async execute({ params }: UpdateMeetingCommand): Promise<Meeting> {
     const meeting = await this.meetingRepository.findById(params.id);

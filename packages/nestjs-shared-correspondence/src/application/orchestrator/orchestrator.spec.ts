@@ -12,12 +12,12 @@
  *  - dispatchQueue.enqueue is called with correct dispatchId, sendEmail, sendPush flags
  */
 import { Logger } from '@nestjs/common';
-import { Correspondence2Orchestrator } from '@ce/nestjs-shared-correspondence/application/orchestrator/correspondence-orchestrator';
-import { CorrespondenceRequestEvent } from '@ce/nestjs-shared-correspondence/application/events/correspondence-request.event';
-import { SubscriptionResolutionService } from '@ce/nestjs-shared-correspondence/application/services/subscription-resolution.service';
-import { INotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/notification.repository';
-import { IDispatchQueuePort } from '@ce/nestjs-shared-correspondence/domain/ports/dispatch-queue.port';
-import { NotificationType, NotificationCategory } from '@ce/nestjs-shared-correspondence/domain/enums/notification-type.enum';
+import { Correspondence2Orchestrator } from '@nabarun-ngo/nestjs-shared-correspondence/application/orchestrator/correspondence-orchestrator';
+import { CorrespondenceRequestEvent } from '@nabarun-ngo/nestjs-shared-correspondence/application/events/correspondence-request.event';
+import { SubscriptionResolutionService } from '@nabarun-ngo/nestjs-shared-correspondence/application/services/subscription-resolution.service';
+import { INotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/notification.repository';
+import { IDispatchQueuePort } from '@nabarun-ngo/nestjs-shared-correspondence/domain/ports/dispatch-queue.port';
+import { NotificationType, NotificationCategory } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/notification-type.enum';
 
 // ── Mocks ──────────────────────────────────────────────────────────────────
 

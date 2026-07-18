@@ -3,7 +3,7 @@ import {
   getUserContext,
   resolveTraceId,
   traceStorage,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 
 describe('Trace context utilities', () => {
   describe('resolveTraceId()', () => {

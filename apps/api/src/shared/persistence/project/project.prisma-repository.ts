@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BaseFilter, Page } from '@ce/nestjs-shared-core';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BaseFilter, Page } from '@nabarun-ngo/nestjs-shared-core';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { Prisma, PrismaClient } from '../prisma/client';
 import { Project, ProjectFilter } from '../../../modules/project/domain/aggregates/project/project.aggregate';
 import { IProjectRepository } from '../../../modules/project/domain/repositories/project.repository';

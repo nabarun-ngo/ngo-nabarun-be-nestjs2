@@ -13,8 +13,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
-import type { AuthUser } from '@ce/nestjs-shared-auth';
+import { CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
+import type { AuthUser } from '@nabarun-ngo/nestjs-shared-auth';
 import { ReportGenerationService } from '../../application/services/report-generation.service';
 import { ReportRegistryService } from '../../application/services/report-registry.service';
 import { IReportDefinitionsPort } from '../../domain/ports/report-definitions.port';
@@ -39,7 +39,7 @@ export class ReportingController {
     private readonly registry: ReportRegistryService,
     @Inject(IReportDefinitionsPort) private readonly definitionsPort: IReportDefinitionsPort,
     @Inject(IReportRepository) private readonly reportRepository: IReportRepository,
-  ) {}
+  ) { }
 
   @Get('registered-reports')
   @RequirePermissions('read:reports')

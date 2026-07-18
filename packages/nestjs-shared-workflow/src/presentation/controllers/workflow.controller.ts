@@ -13,8 +13,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiAutoResponse, SuccessResponse } from '@ce/nestjs-shared-core';
-import { CurrentUser, RequirePermissions, type AuthUser } from '@ce/nestjs-shared-auth';
+import { ApiAutoResponse, SuccessResponse } from '@nabarun-ngo/nestjs-shared-core';
+import { CurrentUser, RequirePermissions, type AuthUser } from '@nabarun-ngo/nestjs-shared-auth';
 import { WorkflowRequesterType } from '../../domain/models/workflow-requester';
 import { StartWorkflowCommand } from '../../application/commands/start-workflow/start-workflow.command';
 import { CompleteUserTaskCommand } from '../../application/commands/complete-user-task/complete-user-task.command';
@@ -42,7 +42,7 @@ export class WorkflowController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Post()
   @RequirePermissions('create:workflow')

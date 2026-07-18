@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
-import { QueueFacade } from '@ce/nestjs-shared-queue';
+import { QueueFacade } from '@nabarun-ngo/nestjs-shared-queue';
 import { INotificationRepository } from '../../domain/repositories/notification.repository';
 import { IResourceSubscriptionRepository } from '../../domain/repositories/resource-subscription.repository';
 import { CORRESPONDENCE2_OPTIONS } from '../../correspondence-options.token';
@@ -18,7 +18,7 @@ export class RetentionSchedulerService implements OnApplicationBootstrap {
     private readonly subscriptionRepo: IResourceSubscriptionRepository,
     @Inject(CORRESPONDENCE2_OPTIONS)
     private readonly options: Correspondence2ModuleOptions,
-  ) {}
+  ) { }
 
   onApplicationBootstrap(): void {
     this.scheduleJobs();

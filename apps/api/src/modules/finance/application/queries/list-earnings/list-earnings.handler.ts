@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BaseFilter } from '@ce/nestjs-shared-core';
+import { BaseFilter } from '@nabarun-ngo/nestjs-shared-core';
 import { IEarningRepository } from '../../../domain/repositories/earning.repository';
 import { EarningListResponseDto } from '../../dtos/earning-list.dto';
 import { EarningMapper } from '../../mappers/earning.mapper';
@@ -9,7 +9,7 @@ import { ListEarningsQuery } from './list-earnings.query';
 @QueryHandler(ListEarningsQuery)
 @Injectable()
 export class ListEarningsHandler implements IQueryHandler<ListEarningsQuery, EarningListResponseDto> {
-  constructor(@Inject(IEarningRepository) private readonly repo: IEarningRepository) {}
+  constructor(@Inject(IEarningRepository) private readonly repo: IEarningRepository) { }
 
   async execute(query: ListEarningsQuery): Promise<EarningListResponseDto> {
     const filter = new BaseFilter(query.filter, query.pageIndex ?? 0, query.pageSize ?? 20);

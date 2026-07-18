@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { Document } from '../aggregates/document.aggregate';
 
 export interface DocumentFilter {

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { ActivityStatus } from '../../../domain/enums/activity.enum';
 import { Activity } from '../../../domain/aggregates/activity/activity.aggregate';
 import { IActivityRepository } from '../../../domain/repositories/activity.repository';
@@ -18,7 +18,7 @@ export class UpdateActivityHandler implements ICommandHandler<UpdateActivityComm
     @Inject(IExpenseRepository) private readonly expenseRepository: IExpenseRepository,
     @Inject(IDonationRepository) private readonly donationRepository: IDonationRepository,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute({ params }: UpdateActivityCommand): Promise<Activity> {
     const activity = await this.activityRepository.findById(params.activityId);

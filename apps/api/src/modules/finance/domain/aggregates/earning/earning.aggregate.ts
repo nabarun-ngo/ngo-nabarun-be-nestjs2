@@ -1,6 +1,6 @@
 import { EarningCategory, EarningStatus } from '../../enums/earning.enum';
 import { FinanceUserRef } from '../../types/finance-user-ref';
-import { AggregateRoot, BusinessException, generateUniqueNDigitNumber } from '@ce/nestjs-shared-core';
+import { AggregateRoot, BusinessException, generateUniqueNDigitNumber } from '@nabarun-ngo/nestjs-shared-core';
 
 /**
  * Earning Domain Model (Aggregate Root)

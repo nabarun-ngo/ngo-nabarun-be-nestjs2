@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CRON_JOB_QUEUE_PORT, ICronJobQueuePort } from '@ce/nestjs-shared-cron';
-import { QueueProcessingService } from '@ce/nestjs-shared-queue';
+import { CRON_JOB_QUEUE_PORT, ICronJobQueuePort } from '@nabarun-ngo/nestjs-shared-cron';
+import { QueueProcessingService } from '@nabarun-ngo/nestjs-shared-queue';
 
 @Injectable()
 export class QueueCronJobAdapter implements ICronJobQueuePort {
-  constructor(private readonly queueProcessing: QueueProcessingService) {}
+  constructor(private readonly queueProcessing: QueueProcessingService) { }
 
   async enqueue(
     cronName: string,

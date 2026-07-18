@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import {
   WorkflowFacade,
   WorkflowTaskHandler,
   WorkflowTaskHandlerContract,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { CreateUserCommand } from '../../user/application/commands/create-user/create-user.command';
 
 @Injectable()

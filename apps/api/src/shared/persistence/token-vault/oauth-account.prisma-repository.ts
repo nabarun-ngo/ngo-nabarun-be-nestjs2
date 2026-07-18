@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import type { PrismaClient } from '../prisma/client';
 import type {
   TokenVault2OAuthAccountWhereInput,
@@ -17,7 +17,7 @@ import {
   OAuthAccount,
   OAuthAccountFilter,
   IOAuthAccountRepository,
-} from '@ce/nestjs-shared-token-vault';
+} from '@nabarun-ngo/nestjs-shared-token-vault';
 
 type AccountRow = {
   id: string;
@@ -49,8 +49,7 @@ export class OAuthAccountPrismaRepository
     ({} & TokenVault2OAuthAccountUncheckedUpdateInput) | ({} & TokenVault2OAuthAccountUpdateInput),
     TokenVault2OAuthAccountOrderByWithRelationInput
   >
-  implements IOAuthAccountRepository
-{
+  implements IOAuthAccountRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'tokenVault2OAuthAccount');
   }

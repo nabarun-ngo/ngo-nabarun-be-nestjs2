@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { Beneficiary } from '../../../domain/aggregates/beneficiary/beneficiary.aggregate';
 import { IBeneficiaryRepository } from '../../../domain/repositories/beneficiary.repository';
 import { IProjectRepository } from '../../../domain/repositories/project.repository';
@@ -12,7 +12,7 @@ export class CreateBeneficiaryHandler implements ICommandHandler<CreateBeneficia
   constructor(
     @Inject(IBeneficiaryRepository) private readonly beneficiaryRepository: IBeneficiaryRepository,
     @Inject(IProjectRepository) private readonly projectRepository: IProjectRepository,
-  ) {}
+  ) { }
   async execute({ params }: CreateBeneficiaryCommand): Promise<Beneficiary> {
     const project = await this.projectRepository.findById(params.projectId);
     if (!project) throw new BusinessException('Project not found');

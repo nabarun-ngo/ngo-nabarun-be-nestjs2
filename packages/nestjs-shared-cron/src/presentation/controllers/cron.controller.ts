@@ -16,8 +16,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiAutoResponse, ApiAutoVoidResponse, SuccessResponse } from '@ce/nestjs-shared-core';
-import { RequirePermissions, UseApiKey } from '@ce/nestjs-shared-auth';
+import { ApiAutoResponse, ApiAutoVoidResponse, SuccessResponse } from '@nabarun-ngo/nestjs-shared-core';
+import { RequirePermissions, UseApiKey } from '@nabarun-ngo/nestjs-shared-auth';
 import { TriggerCronJobsCommand } from '../../application/commands/trigger-cron-jobs/trigger-cron-jobs.command';
 import { CreateCronJobCommand } from '../../application/commands/create-cron-job/create-cron-job.command';
 import { UpdateCronJobCommand } from '../../application/commands/update-cron-job/update-cron-job.command';
@@ -38,7 +38,7 @@ export class Cron2Controller {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   /**
    * Called by the external cloud scheduler on each configured interval.

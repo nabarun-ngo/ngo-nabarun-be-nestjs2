@@ -1,6 +1,6 @@
-import { ListAccountsHandler } from '@ce/nestjs-shared-token-vault/application/queries/list-accounts/list-accounts.handler';
-import { ListAccountsQuery } from '@ce/nestjs-shared-token-vault/application/queries/list-accounts/list-accounts.query';
-import { OAuthAccount } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
+import { ListAccountsHandler } from '@nabarun-ngo/nestjs-shared-token-vault/application/queries/list-accounts/list-accounts.handler';
+import { ListAccountsQuery } from '@nabarun-ngo/nestjs-shared-token-vault/application/queries/list-accounts/list-accounts.query';
+import { OAuthAccount } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-account/oauth-account.aggregate';
 
 function buildAccount(email: string, provider = 'google'): OAuthAccount {
   return OAuthAccount.create(provider, { email, name: 'Test User' });

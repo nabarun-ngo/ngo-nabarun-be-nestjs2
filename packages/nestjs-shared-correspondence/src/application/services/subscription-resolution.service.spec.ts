@@ -2,15 +2,15 @@
  * SubscriptionResolutionService unit tests.
  * Covers: users mode, roles mode, resource mode, and override emails.
  */
-import { SubscriptionResolutionService } from '@ce/nestjs-shared-correspondence/application/services/subscription-resolution.service';
-import { IResourceSubscriptionRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
-import { IUserLookupPort, UserInfo } from '@ce/nestjs-shared-core';
-import { IUserRolePort } from '@ce/nestjs-shared-auth';
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { SubscriptionChannel } from '@ce/nestjs-shared-correspondence/domain/entities/subscription-channel.entity';
-import { ChannelType } from '@ce/nestjs-shared-correspondence/domain/enums/channel-type.enum';
-import { EmailRole } from '@ce/nestjs-shared-correspondence/domain/enums/email-role.enum';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { SubscriptionResolutionService } from '@nabarun-ngo/nestjs-shared-correspondence/application/services/subscription-resolution.service';
+import { IResourceSubscriptionRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
+import { IUserLookupPort, UserInfo } from '@nabarun-ngo/nestjs-shared-core';
+import { IUserRolePort } from '@nabarun-ngo/nestjs-shared-auth';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { SubscriptionChannel } from '@nabarun-ngo/nestjs-shared-correspondence/domain/entities/subscription-channel.entity';
+import { ChannelType } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/channel-type.enum';
+import { EmailRole } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/email-role.enum';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 

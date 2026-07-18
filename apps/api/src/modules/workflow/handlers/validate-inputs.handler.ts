@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import {
   WorkflowTaskHandler,
   WorkflowTaskHandlerContract,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 
 const REQUIRED_BY_DEFINITION: Record<string, string[]> = {
   JOIN_REQUEST: ['firstName', 'lastName', 'email', 'contactNumber', 'hometown'],

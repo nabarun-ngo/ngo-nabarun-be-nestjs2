@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@ce/nestjs-shared-queue';
+import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@nabarun-ngo/nestjs-shared-queue';
 import { EscalationJob } from '../../application/jobs/escalation.job';
 import { IWorkflowInboxRepository } from '../../domain/ports/workflow-inbox.repository';
 import { InboxTaskStatus } from '../../domain/enums/inbox-task-status.enum';
@@ -13,7 +13,7 @@ export class EscalationJobHandler implements IQueueHandler<EscalationJob> {
     @Inject(IWorkflowInboxRepository)
     private readonly inboxRepo: IWorkflowInboxRepository,
     private readonly outboxDispatcher: OutboxDispatcherService,
-  ) {}
+  ) { }
 
   async execute(job: Job<EscalationJob>, _ctx: JobExecutionContext): Promise<void> {
     const payload =

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import {
   AppendWorkflowEventInput,
   IWorkflowEventLogRepository,
   WorkflowEventLogEntry,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { Prisma, PrismaClient } from '../prisma/client';
 
 type WorkflowEventLogRow = {
@@ -22,7 +22,7 @@ type WorkflowEventLogRow = {
 
 @Injectable()
 export class WorkflowEventLogPrismaRepository implements IWorkflowEventLogRepository {
-  constructor(private readonly database: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly database: BasePrismaService<PrismaClient>) { }
 
   private get client(): PrismaClient {
     return this.database.client;

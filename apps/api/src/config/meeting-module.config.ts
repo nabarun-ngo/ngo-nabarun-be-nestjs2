@@ -1,6 +1,6 @@
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { QUEUE_MODULE } from "./queue-module.config";
-import { isProd } from "@ce/nestjs-shared-core";
+import { isProd } from "@nabarun-ngo/nestjs-shared-core";
 import { MeetingModule } from "../modules/meeting/meeting.module";
 import { Configkey } from "../shared/config-keys";
 

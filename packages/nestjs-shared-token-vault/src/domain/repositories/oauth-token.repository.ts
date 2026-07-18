@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { OAuthToken, OAuthTokenFilter } from '../aggregates/oauth-token/oauth-token.aggregate';
 
 export const IOAuthTokenRepository = Symbol('IOAuthTokenRepository');

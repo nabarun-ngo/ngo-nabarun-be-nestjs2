@@ -1,7 +1,7 @@
 import { IsOptional, IsString, IsEnum, IsBoolean, IsIn } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { PaginatedQueryDto } from '@ce/nestjs-shared-core';
+import { PaginatedQueryDto } from '@nabarun-ngo/nestjs-shared-core';
 import { UserStatus } from '../../domain/enums/user-status.enum';
 
 const USER_SORT_FIELDS = ['firstName', 'lastName', 'email', 'status', 'createdAt', 'updatedAt'] as const;

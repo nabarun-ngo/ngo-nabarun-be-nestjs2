@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { loadJsonStoreSeedFromDir, validateJsonStoreSeedData } from '@ce/nestjs-shared-json-store';
+import { loadJsonStoreSeedFromDir, validateJsonStoreSeedData } from '@nabarun-ngo/nestjs-shared-json-store';
 import { ZodJsonDocumentPayloadValidatorAdapter } from './json-document-payload-validator.adapter';
 
 const jsonStoreSeedDir = join(__dirname, '../../../prisma/seeds/json-store');

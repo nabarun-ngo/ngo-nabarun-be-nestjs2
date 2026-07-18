@@ -1,4 +1,4 @@
-import { WorkflowFacade, WorkflowRequesterType } from '@ce/nestjs-shared-workflow';
+import { WorkflowFacade, WorkflowRequesterType } from '@nabarun-ngo/nestjs-shared-workflow';
 import { StartPublicWorkflowService } from './start-public-workflow.service';
 
 describe('StartPublicWorkflowService', () => {

@@ -22,12 +22,12 @@ import {
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import type { Response } from 'express';
-import { AuthUser, CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@ce/nestjs-shared-auth';
+import { AuthUser, CurrentUser, RequirePermissions, UnifiedAuthGuard } from '@nabarun-ngo/nestjs-shared-auth';
 import {
   ApiAutoResponse,
   ApiAutoPrimitiveResponse,
   ApiAutoVoidResponse,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { DocumentVisibility } from '../../domain/enums/document-visibility.enum';
 import { UploadDocumentCommand } from '../../application/commands/upload-document/upload-document.command';
@@ -55,7 +55,7 @@ export class Dms2Controller {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Post('upload')
   @HttpCode(HttpStatus.CREATED)

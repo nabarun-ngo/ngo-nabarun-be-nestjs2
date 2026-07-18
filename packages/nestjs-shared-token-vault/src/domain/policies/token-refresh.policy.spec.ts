@@ -1,6 +1,6 @@
-import { OAuthToken } from '@ce/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
-import { TokenRefreshPolicy } from '@ce/nestjs-shared-token-vault/domain/policies/token-refresh.policy';
+import { OAuthToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/aggregates/oauth-token/oauth-token.aggregate';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { TokenRefreshPolicy } from '@nabarun-ngo/nestjs-shared-token-vault/domain/policies/token-refresh.policy';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 

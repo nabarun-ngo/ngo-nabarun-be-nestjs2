@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { EntityTypePolicyUtil } from '@ce/nestjs-shared-core';
+import { EntityTypePolicyUtil } from '@nabarun-ngo/nestjs-shared-core';
 import { DocumentAccessDeniedError, DocumentNotFoundError } from '../../../domain/errors/document.errors';
 import { IDocumentEntityAccessPort } from '../../../domain/ports/entity-access.port';
 import { IStorageProvider } from '../../../domain/ports/storage.port';
@@ -14,8 +14,7 @@ import { RenameDocumentCommand } from './rename-document.command';
 @CommandHandler(RenameDocumentCommand)
 @Injectable()
 export class RenameDocumentHandler
-  implements ICommandHandler<RenameDocumentCommand, DocumentResponseDto>
-{
+  implements ICommandHandler<RenameDocumentCommand, DocumentResponseDto> {
   private readonly logger = new Logger(RenameDocumentHandler.name);
 
   constructor(
@@ -29,7 +28,7 @@ export class RenameDocumentHandler
     @Inject(IDocumentEntityAccessPort)
     private readonly accessPort: IDocumentEntityAccessPort | null,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute(command: RenameDocumentCommand): Promise<DocumentResponseDto> {
     const { documentId, newName, userId, userPermissions } = command;
@@ -60,8 +59,8 @@ export class RenameDocumentHandler
     if (!this.accessPort && doc.mappings.length > 0) {
       this.logger.warn(
         `[DMS2] IDocumentEntityAccessPort is not configured — record-level entity access check ` +
-          `is BYPASSED for document ${documentId}. Register IDocumentEntityAccessPort to enable ` +
-          `entity-level access control.`,
+        `is BYPASSED for document ${documentId}. Register IDocumentEntityAccessPort to enable ` +
+        `entity-level access control.`,
       );
     }
 
@@ -102,7 +101,7 @@ export class RenameDocumentHandler
       } catch (err: any) {
         this.logger.warn(
           `[DMS2] Storage rename failed for document ${documentId}: ${err?.message ?? err}. ` +
-            `The DB fileName was updated but the storage object display name was not synced.`,
+          `The DB fileName was updated but the storage object display name was not synced.`,
         );
       }
     }

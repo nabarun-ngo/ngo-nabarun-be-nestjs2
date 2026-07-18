@@ -1,8 +1,8 @@
 import { DynamicModule, Global, Module, ModuleMetadata } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
-import { JsonStoreModule } from '@ce/nestjs-shared-json-store';
-import { GOOGLE_SCOPES, TokenVaultModule } from '@ce/nestjs-shared-token-vault';
+import { JsonStoreModule } from '@nabarun-ngo/nestjs-shared-json-store';
+import { GOOGLE_SCOPES, TokenVaultModule } from '@nabarun-ngo/nestjs-shared-token-vault';
 import { Configkey } from '../config-keys';
 import { CACHE_PORT_PROVIDER } from './cache/cache-port.adapter';
 import { CRON_JOB_STORE_PROVIDER } from './cron/json-store-cron-job.adapter';

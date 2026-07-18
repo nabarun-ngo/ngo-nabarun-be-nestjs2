@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandBus, CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
 import { Expense } from '../../../domain/aggregates/expense/expense.aggregate';
 import { TransactionRefType, TransactionType } from '../../../domain/enums/transaction.enum';
 import { IAccountRepository } from '../../../domain/repositories/account.repository';
@@ -16,7 +16,7 @@ export class SettleExpenseHandler implements ICommandHandler<SettleExpenseComman
     @Inject(IAccountRepository) private readonly accountRepository: IAccountRepository,
     private readonly commandBus: CommandBus,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute({ params: request }: SettleExpenseCommand): Promise<Expense> {
     const expense = await this.expenseRepository.findById(request.id);

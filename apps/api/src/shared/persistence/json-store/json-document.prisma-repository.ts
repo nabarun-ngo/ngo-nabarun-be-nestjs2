@@ -3,15 +3,15 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient, Prisma } from '../prisma/client';
 import {
   JsonStoreDocumentWhereInput,
   JsonStoreDocumentWhereUniqueInput,
   JsonStoreDocumentOrderByWithRelationInput,
 } from '../prisma/models';
-import { IJsonDocumentRepository, JsonDocumentFilter } from '@ce/nestjs-shared-json-store';
-import { JsonDocument } from '@ce/nestjs-shared-json-store/domain/aggregates/json-document.aggregate';
+import { IJsonDocumentRepository, JsonDocumentFilter } from '@nabarun-ngo/nestjs-shared-json-store';
+import { JsonDocument } from '@nabarun-ngo/nestjs-shared-json-store/domain/aggregates/json-document.aggregate';
 
 type JsonStoreDocumentRow = {
   id: string;
@@ -37,8 +37,7 @@ export class JsonDocumentPrismaRepository
     any,
     JsonStoreDocumentOrderByWithRelationInput
   >
-  implements IJsonDocumentRepository
-{
+  implements IJsonDocumentRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'jsonStoreDocument');
   }

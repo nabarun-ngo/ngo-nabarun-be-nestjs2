@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { WorkflowTaskHandler, WorkflowTaskHandlerContract } from '@ce/nestjs-shared-workflow';
+import { WorkflowTaskHandler, WorkflowTaskHandlerContract } from '@nabarun-ngo/nestjs-shared-workflow';
 import { ReportGenerationService } from '../services/report-generation.service';
 
 @Injectable()
 @WorkflowTaskHandler('FinalizeReportApprovalHandler')
 export class FinalizeReportApprovalHandler implements WorkflowTaskHandlerContract {
-  constructor(private readonly reportGenerationService: ReportGenerationService) {}
+  constructor(private readonly reportGenerationService: ReportGenerationService) { }
 
   async execute(params: {
     instanceId: string;

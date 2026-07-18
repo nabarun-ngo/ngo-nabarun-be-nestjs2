@@ -1,14 +1,14 @@
 /**
  * GetUserNotificationsHandler unit tests.
  */
-import { GetUserNotificationsHandler } from '@ce/nestjs-shared-correspondence/application/queries/get-user-notifications/get-user-notifications.handler';
-import { GetUserNotificationsQuery } from '@ce/nestjs-shared-correspondence/application/queries/get-user-notifications/get-user-notifications.query';
-import { IUserNotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
-import { INotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/notification.repository';
-import { UserNotification } from '@ce/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
-import { Notification } from '@ce/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
-import { NotificationType, NotificationCategory } from '@ce/nestjs-shared-correspondence/domain/enums/notification-type.enum';
-import { Page } from '@ce/nestjs-shared-core';
+import { GetUserNotificationsHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/queries/get-user-notifications/get-user-notifications.handler';
+import { GetUserNotificationsQuery } from '@nabarun-ngo/nestjs-shared-correspondence/application/queries/get-user-notifications/get-user-notifications.query';
+import { IUserNotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/user-notification.repository';
+import { INotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/notification.repository';
+import { UserNotification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
+import { Notification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
+import { NotificationType, NotificationCategory } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/notification-type.enum';
+import { Page } from '@nabarun-ngo/nestjs-shared-core';
 
 function makeNotification(id: string) {
   const n = Notification.create({

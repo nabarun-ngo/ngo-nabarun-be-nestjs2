@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EventBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { IUserAccessPort } from '@ce/nestjs-shared-auth';
-import { CorrespondenceRequestEvent } from '@ce/nestjs-shared-correspondence';
+import { IUserAccessPort } from '@nabarun-ngo/nestjs-shared-auth';
+import { CorrespondenceRequestEvent } from '@nabarun-ngo/nestjs-shared-correspondence';
 import { UserDeletedEvent } from '../../../domain/events/user-deleted.event';
 
 /**

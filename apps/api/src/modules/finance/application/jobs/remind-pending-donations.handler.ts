@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
-import { QueueHandler, IQueueHandler, Job } from '@ce/nestjs-shared-queue';
-import { formatDate } from '@ce/nestjs-shared-core';
-import { CorrespondenceRequestEvent } from '@ce/nestjs-shared-correspondence';
+import { QueueHandler, IQueueHandler, Job } from '@nabarun-ngo/nestjs-shared-queue';
+import { formatDate } from '@nabarun-ngo/nestjs-shared-core';
+import { CorrespondenceRequestEvent } from '@nabarun-ngo/nestjs-shared-correspondence';
 import { DonationStatus } from '../../domain/enums/donation-status.enum';
 import { IDonationRepository } from '../../domain/repositories/donation.repository';
 import { RemindPendingDonationsJob } from './remind-pending-donations.job';
@@ -13,7 +13,7 @@ export class RemindPendingDonationsHandler implements IQueueHandler<RemindPendin
   constructor(
     @Inject(IDonationRepository) private readonly donationRepository: IDonationRepository,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute(job: Job<RemindPendingDonationsJob>): Promise<void> {
     const userId = job.data.payload?.userId;

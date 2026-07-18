@@ -2,15 +2,15 @@
  * OnUserNotificationReadHandler unit tests.
  */
 import { Logger } from '@nestjs/common';
-import { OnUserNotificationReadHandler } from '@ce/nestjs-shared-correspondence/application/event-handlers/on-user-notification-read/on-user-notification-read.handler';
-import { UserNotificationReadEvent, type UserNotificationReadSnapshot } from '@ce/nestjs-shared-correspondence/domain/events/user-notification-read.event';
-import { UserNotification } from '@ce/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
+import { OnUserNotificationReadHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/event-handlers/on-user-notification-read/on-user-notification-read.handler';
+import { UserNotificationReadEvent, type UserNotificationReadSnapshot } from '@nabarun-ngo/nestjs-shared-correspondence/domain/events/user-notification-read.event';
+import { UserNotification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
 
 describe('OnUserNotificationReadHandler', () => {
   let handler: OnUserNotificationReadHandler;
 
   beforeEach(() => {
-    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => { });
     handler = new OnUserNotificationReadHandler();
   });
 

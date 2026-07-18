@@ -3,42 +3,42 @@
  * Inspects the returned DynamicModule without running NestJS DI.
  */
 
-jest.mock('@ce/nestjs-shared-cron/application/commands/trigger-cron-jobs/trigger-cron-jobs.handler', () => ({
-  TriggerCronJobsHandler: class TriggerCronJobsHandler {},
+jest.mock('@nabarun-ngo/nestjs-shared-cron/application/commands/trigger-cron-jobs/trigger-cron-jobs.handler', () => ({
+  TriggerCronJobsHandler: class TriggerCronJobsHandler { },
 }));
-jest.mock('@ce/nestjs-shared-cron/application/commands/create-cron-job/create-cron-job.handler', () => ({
-  CreateCronJobHandler: class CreateCronJobHandler {},
+jest.mock('@nabarun-ngo/nestjs-shared-cron/application/commands/create-cron-job/create-cron-job.handler', () => ({
+  CreateCronJobHandler: class CreateCronJobHandler { },
 }));
-jest.mock('@ce/nestjs-shared-cron/application/commands/update-cron-job/update-cron-job.handler', () => ({
-  UpdateCronJobHandler: class UpdateCronJobHandler {},
+jest.mock('@nabarun-ngo/nestjs-shared-cron/application/commands/update-cron-job/update-cron-job.handler', () => ({
+  UpdateCronJobHandler: class UpdateCronJobHandler { },
 }));
-jest.mock('@ce/nestjs-shared-cron/application/commands/delete-cron-job/delete-cron-job.handler', () => ({
-  DeleteCronJobHandler: class DeleteCronJobHandler {},
+jest.mock('@nabarun-ngo/nestjs-shared-cron/application/commands/delete-cron-job/delete-cron-job.handler', () => ({
+  DeleteCronJobHandler: class DeleteCronJobHandler { },
 }));
-jest.mock('@ce/nestjs-shared-cron/application/commands/run-cron-job/run-cron-job.handler', () => ({
-  RunCronJobHandler: class RunCronJobHandler {},
+jest.mock('@nabarun-ngo/nestjs-shared-cron/application/commands/run-cron-job/run-cron-job.handler', () => ({
+  RunCronJobHandler: class RunCronJobHandler { },
 }));
-jest.mock('@ce/nestjs-shared-cron/application/queries/get-cron-jobs/get-cron-jobs.handler', () => ({
-  GetCronJobsHandler: class GetCronJobsHandler {},
+jest.mock('@nabarun-ngo/nestjs-shared-cron/application/queries/get-cron-jobs/get-cron-jobs.handler', () => ({
+  GetCronJobsHandler: class GetCronJobsHandler { },
 }));
-jest.mock('@ce/nestjs-shared-cron/presentation/controllers/cron.controller', () => ({
-  Cron2Controller: class Cron2Controller {},
+jest.mock('@nabarun-ngo/nestjs-shared-cron/presentation/controllers/cron.controller', () => ({
+  Cron2Controller: class Cron2Controller { },
 }));
 jest.mock('@nestjs/cqrs', () => ({
-  CqrsModule: class CqrsModule {},
-  CommandHandler: () => () => {},
-  QueryHandler: () => () => {},
-  EventsHandler: () => () => {},
-  CommandBus: class CommandBus {},
-  QueryBus: class QueryBus {},
-  ICommandHandler: class {},
-  IQueryHandler: class {},
+  CqrsModule: class CqrsModule { },
+  CommandHandler: () => () => { },
+  QueryHandler: () => () => { },
+  EventsHandler: () => () => { },
+  CommandBus: class CommandBus { },
+  QueryBus: class QueryBus { },
+  ICommandHandler: class { },
+  IQueryHandler: class { },
 }));
 
-import { Cron2Module } from '@ce/nestjs-shared-cron/cron.module';
-import { CRON2_OPTIONS } from '@ce/nestjs-shared-cron/infrastructure/cron-options.token';
-import { CRON_JOB_STORE_PORT } from '@ce/nestjs-shared-cron/domain/ports/cron-job-store.port';
-import { CRON_JOB_QUEUE_PORT } from '@ce/nestjs-shared-cron/domain/ports/cron-job-queue.port';
+import { Cron2Module } from '@nabarun-ngo/nestjs-shared-cron/cron.module';
+import { CRON2_OPTIONS } from '@nabarun-ngo/nestjs-shared-cron/infrastructure/cron-options.token';
+import { CRON_JOB_STORE_PORT } from '@nabarun-ngo/nestjs-shared-cron/domain/ports/cron-job-store.port';
+import { CRON_JOB_QUEUE_PORT } from '@nabarun-ngo/nestjs-shared-cron/domain/ports/cron-job-queue.port';
 
 describe('Cron2Module', () => {
   describe('forRoot()', () => {

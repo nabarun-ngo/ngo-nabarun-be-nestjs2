@@ -1,6 +1,6 @@
 import { EventBus } from '@nestjs/cqrs';
-import { BusinessException } from '@ce/nestjs-shared-core';
-import { LockingService } from '@ce/nestjs-shared-persistence';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
+import { LockingService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { CreateTransactionHandler } from './create-transaction.handler';
 import { CreateTransactionCommand } from './create-transaction.command';
 import { TransactionRefType } from '../../../domain/enums/transaction.enum';

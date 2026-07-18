@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { AggregateRoot } from '@ce/nestjs-shared-core';
+import { AggregateRoot } from '@nabarun-ngo/nestjs-shared-core';
 import { EncryptedToken } from '../../value-objects/encrypted-token.vo';
 import { TokenScope } from '../../value-objects/token-scope.vo';
 import { TokenRefreshedEvent, type TokenRefreshedSnapshot } from '../../events/token-refreshed.event';

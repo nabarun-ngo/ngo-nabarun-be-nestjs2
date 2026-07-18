@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { Expense } from '../aggregates/expense/expense.aggregate';
 import { ExpenseStatus } from '../enums/expense.enum';
 
@@ -13,4 +13,4 @@ export interface ExpenseFilter {
 
 export const IExpenseRepository = Symbol('IExpenseRepository');
 
-export interface IExpenseRepository extends IRepository<Expense, string, ExpenseFilter> {}
+export interface IExpenseRepository extends IRepository<Expense, string, ExpenseFilter> { }

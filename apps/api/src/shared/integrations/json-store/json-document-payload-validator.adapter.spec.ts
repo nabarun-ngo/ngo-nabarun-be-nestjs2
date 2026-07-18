@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { JsonDocumentInvalidError } from '@ce/nestjs-shared-json-store';
+import { JsonDocumentInvalidError } from '@nabarun-ngo/nestjs-shared-json-store';
 import { ZodJsonDocumentPayloadValidatorAdapter } from './json-document-payload-validator.adapter';
 import {
   formatZodValidationErrors,

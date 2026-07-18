@@ -1,4 +1,4 @@
-import { DomainEvent } from '@ce/nestjs-shared-core';
+import { DomainEvent } from '@nabarun-ngo/nestjs-shared-core';
 import type { FormFieldValue } from '../entities/form-field-value/form-field-value.entity';
 
 export type FormFieldValuesUpdatedSnapshot = Pick<

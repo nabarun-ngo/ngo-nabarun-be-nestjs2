@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import {
   IWorkflowInstanceRepository,
   WorkflowInstanceFilter,
   WorkflowInstanceRecord,
   WorkflowInstanceStatus,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { Prisma, PrismaClient } from '../prisma/client';
 import {
   WorkflowInstanceWhereInput,
@@ -60,8 +60,7 @@ export class WorkflowInstancePrismaRepository
     any,
     WorkflowInstanceOrderByWithRelationInput
   >
-  implements IWorkflowInstanceRepository
-{
+  implements IWorkflowInstanceRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'workflowInstance');
   }

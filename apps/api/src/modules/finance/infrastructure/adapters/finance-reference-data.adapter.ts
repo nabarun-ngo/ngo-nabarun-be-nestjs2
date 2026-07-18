@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { JsonStoreFacade } from '@ce/nestjs-shared-json-store';
+import { JsonStoreFacade } from '@nabarun-ngo/nestjs-shared-json-store';
 import { IFinanceReferenceDataPort, KeyValueOption } from '../../application/ports/finance-reference-data.port';
 import { FinanceReferenceDataPayloadSchema } from '../../finance-reference-data.schema';
 
@@ -8,7 +8,7 @@ export class FinanceReferenceDataAdapter implements IFinanceReferenceDataPort {
   private static readonly NAMESPACE = 'finance-reference-data';
   private readonly logger = new Logger(FinanceReferenceDataAdapter.name);
 
-  constructor(private readonly jsonStore: JsonStoreFacade) {}
+  constructor(private readonly jsonStore: JsonStoreFacade) { }
 
   async getDonationReferenceData(): Promise<Record<string, KeyValueOption[]>> {
     const [donationStatuses, donationTypes, paymentMethods, upiOptions] = await Promise.all([

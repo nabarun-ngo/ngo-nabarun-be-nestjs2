@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import {
   FormEntityAccessAction,
   IFormEntityAccessPort,
   IFormRepository,
-} from '@ce/nestjs-shared-custom-forms';
+} from '@nabarun-ngo/nestjs-shared-custom-forms';
 
 const WORKFLOW_ENTITY_TYPE = 'workflow';
 const ADMIN_WORKFLOWS_PERMISSION = 'admin:workflows';
@@ -18,7 +18,7 @@ export class WorkflowFormAccessAdapter implements IFormEntityAccessPort {
     @Inject(IFormRepository)
     private readonly formRepo: IFormRepository,
     private readonly prisma: BasePrismaService,
-  ) {}
+  ) { }
 
   async canAccess(params: {
     formId: string;

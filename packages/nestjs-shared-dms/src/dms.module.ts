@@ -18,7 +18,7 @@ import {
   DynamicModuleAsyncOptions,
   MissingRequiredPortError,
   OAUTH_ACCESS_TOKEN_PORT,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';
 import { Dms2ModuleOptions, Dms2OptionsSchema } from './dms.schema';
 import { DMS2_OPTIONS } from './infrastructure/dms-options.token';
 import { FIREBASE_ADMIN } from './infrastructure/firebase-admin.token';
@@ -59,7 +59,7 @@ class Dms2EntityAccessServiceGuard implements OnApplicationBootstrap {
     @Optional()
     @Inject(IDocumentEntityAccessPort)
     private readonly accessPort: IDocumentEntityAccessPort | null,
-  ) {}
+  ) { }
 
   onApplicationBootstrap(): void {
     if (this.accessPort) return;
@@ -72,7 +72,7 @@ class DmsRequiredPortsGuard implements OnModuleInit {
   constructor(
     private readonly moduleRef: ModuleRef,
     @Inject(DMS2_OPTIONS) private readonly options: Dms2ModuleOptions,
-  ) {}
+  ) { }
 
   onModuleInit(): void {
     const repo = this.moduleRef.get(IDocumentRepository, { strict: false });

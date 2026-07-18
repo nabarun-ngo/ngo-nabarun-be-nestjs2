@@ -1,4 +1,4 @@
-import type { Auth2SeedData } from '@ce/nestjs-shared-auth';
+import { AuthSeedData } from '@nabarun-ngo/nestjs-shared-auth';
 
 // Comma-separated IdP subs to auto-assign to the SUPER_ADMINS group.
 // Example .env entry:  SEED_SUPER_ADMIN_IDP_SUBS=auth0|abc123,auth0|def456
@@ -169,7 +169,7 @@ const MEETING_ALL = [
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const AUTH2_SEED: Auth2SeedData = {
+export const AUTH2_SEED: AuthSeedData = {
   permissions: [
     // ── auth (self) ────────────────────────────────────────────────────────
     { key: 'read:roles', description: 'View all RBAC roles' },
@@ -429,7 +429,7 @@ export const AUTH2_SEED: Auth2SeedData = {
       ],
     },
     {
-      key: 'ASSISTANT_SECRETARY',
+      key: 'ASST_SECRETARY',
       description: 'Junior administrative officer. Read-heavy access with limited write capabilities.',
       permissionKeys: [
         ...RBAC_READ,
@@ -450,6 +450,54 @@ export const AUTH2_SEED: Auth2SeedData = {
     {
       key: 'TREASURER',
       description: 'Financial officer. Manages and reports on donation and financial records.',
+      permissionKeys: [
+        ...FINANCE_ALL,
+        'read:documents',
+        'create:documents',
+        'read:custom_forms',
+        'read:form_submissions',
+        'write:form_submissions',
+        'submit:form_submissions',
+        ...REPORTS_ALL,
+        'read:meeting',
+        'read:notifications',
+      ],
+    },
+    {
+      key: 'CASHIER',
+      description: 'Cashier officer. Manages and reports on donation and financial records.',
+      permissionKeys: [
+        ...FINANCE_ALL,
+        'read:documents',
+        'create:documents',
+        'read:custom_forms',
+        'read:form_submissions',
+        'write:form_submissions',
+        'submit:form_submissions',
+        ...REPORTS_ALL,
+        'read:meeting',
+        'read:notifications',
+      ],
+    },
+    {
+      key: 'GROUP_COORDINATOR',
+      description: 'Financial officer. Manages and reports on donation and financial records.',
+      permissionKeys: [
+        ...FINANCE_ALL,
+        'read:documents',
+        'create:documents',
+        'read:custom_forms',
+        'read:form_submissions',
+        'write:form_submissions',
+        'submit:form_submissions',
+        ...REPORTS_ALL,
+        'read:meeting',
+        'read:notifications',
+      ],
+    },
+    {
+      key: 'COMMUNITY_MANAGER',
+      description: 'Community Manager. Manages and reports on community and financial records.',
       permissionKeys: [
         ...FINANCE_ALL,
         'read:documents',

@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@ce/nestjs-shared-queue';
+import { QueueHandler, IQueueHandler, Job, JobExecutionContext } from '@nabarun-ngo/nestjs-shared-queue';
 import { CorrespondenceDispatchJob } from '../../application/jobs/correspondence-dispatch.job';
 import { IEmailDispatchPort } from '../../application/ports/email-dispatch.port';
 import { IPushNotificationPort, PUSH_NOTIFICATION_PORT } from '../../domain/ports/push-notification.port';
@@ -11,8 +11,7 @@ import { IUserNotificationRepository } from '../../domain/repositories/user-noti
   backoff: { type: 'exponential', delay: 5000 },
 })
 export class CorrespondenceDispatchHandler
-  implements IQueueHandler<CorrespondenceDispatchJob>
-{
+  implements IQueueHandler<CorrespondenceDispatchJob> {
   private readonly logger = new Logger(CorrespondenceDispatchHandler.name);
 
   constructor(
@@ -24,7 +23,7 @@ export class CorrespondenceDispatchHandler
     private readonly notificationRepo: INotificationRepository,
     @Inject(IUserNotificationRepository)
     private readonly userNotificationRepo: IUserNotificationRepository,
-  ) {}
+  ) { }
 
   async execute(
     job: Job<CorrespondenceDispatchJob>,

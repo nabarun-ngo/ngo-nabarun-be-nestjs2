@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { UserNotification, UserNotificationFilter } from '../aggregates/user-notification.aggregate';
 
 export interface IUserNotificationRepository

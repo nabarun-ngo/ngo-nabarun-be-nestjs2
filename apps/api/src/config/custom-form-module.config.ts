@@ -1,4 +1,4 @@
-import { CustomFormsModule } from "@ce/nestjs-shared-custom-forms";
+import { CustomFormsModule } from "@nabarun-ngo/nestjs-shared-custom-forms";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Configkey } from "../shared/config-keys";
 

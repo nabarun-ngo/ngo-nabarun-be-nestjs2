@@ -1,4 +1,4 @@
-import { DomainEvent } from '@ce/nestjs-shared-core';
+import { DomainEvent } from '@nabarun-ngo/nestjs-shared-core';
 import { UserStatus } from '../enums/user-status.enum';
 
 export type UserStatusChangedSnapshot = {

@@ -1,4 +1,4 @@
-import { RootEvent } from '@ce/nestjs-shared-core';
+import { RootEvent } from '@nabarun-ngo/nestjs-shared-core';
 
 /**
  * Emitted by FormSubmission.submit() when a draft submission is finalised.

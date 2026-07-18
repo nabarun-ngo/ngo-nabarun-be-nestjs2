@@ -1,4 +1,4 @@
-import { AggregateRoot, generateUniqueNDigitNumber } from '@ce/nestjs-shared-core';
+import { AggregateRoot, generateUniqueNDigitNumber } from '@nabarun-ngo/nestjs-shared-core';
 import { ReportApprovedEvent } from '../../events/report-approved.event';
 import { ReportStatus } from '../../enums/report-status.enum';
 

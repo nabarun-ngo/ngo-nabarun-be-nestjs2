@@ -22,7 +22,7 @@ function toInputJson(payload: Record<string, unknown>): any {
  *
  * ```ts
  * import { PrismaClient } from '@prisma/client';
- * import { seedJsonStore } from '@ce/nestjs-shared-json-store';
+ * import { seedJsonStore } from '@nabarun-ngo/nestjs-shared-json-store';
  *
  * const prisma = new PrismaClient();
  * await seedJsonStore(prisma, {

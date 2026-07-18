@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { QueueJob } from '../aggregates/queue-job.aggregate';
 import { JobStatus } from '../enums/job-status.enum';
 
@@ -11,4 +11,4 @@ export interface QueueJobFilter {
 export const IQueueJobRepository = Symbol('IQueueJobRepository');
 
 export interface IQueueJobRepository
-  extends IRepository<QueueJob, string, QueueJobFilter> {}
+  extends IRepository<QueueJob, string, QueueJobFilter> { }

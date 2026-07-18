@@ -1,6 +1,6 @@
 import { DynamicModule, FactoryProvider, Module, ModuleMetadata, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { createRequiredPortsGuard } from '@ce/nestjs-shared-core';
+import { createRequiredPortsGuard } from '@nabarun-ngo/nestjs-shared-core';
 import { MeetingModuleInput, MeetingModuleOptions, MeetingModuleOptionsSchema } from './meeting.schema';
 import { MEETING_OPTIONS } from './infrastructure/meeting-options.token';
 import { IMeetingRepository } from './domain/repositories/meeting.repository';

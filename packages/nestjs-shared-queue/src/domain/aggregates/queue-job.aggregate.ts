@@ -1,4 +1,4 @@
-import { AggregateRoot } from '@ce/nestjs-shared-core';
+import { AggregateRoot } from '@nabarun-ngo/nestjs-shared-core';
 import { JobStatus } from '../enums/job-status.enum';
 import { QueueJobEnqueuedEvent } from '../events/queue-job-enqueued.event';
 import { QueueJobStartedEvent } from '../events/queue-job-started.event';
@@ -36,15 +36,15 @@ export class QueueJob extends AggregateRoot<string> {
     updatedAt?: Date,
   ) {
     super(id, createdAt, updatedAt);
-    this.#jobName      = props.jobName;
-    this.#queueName    = props.queueName;
-    this.#status       = props.status;
-    this.#payload      = props.payload;
+    this.#jobName = props.jobName;
+    this.#queueName = props.queueName;
+    this.#status = props.status;
+    this.#payload = props.payload;
     this.#failedReason = props.failedReason;
     this.#attemptsMade = props.attemptsMade;
-    this.#enqueuedAt   = props.enqueuedAt;
-    this.#startedAt    = props.startedAt;
-    this.#finishedAt   = props.finishedAt;
+    this.#enqueuedAt = props.enqueuedAt;
+    this.#startedAt = props.startedAt;
+    this.#finishedAt = props.finishedAt;
   }
 
   /**
@@ -59,19 +59,19 @@ export class QueueJob extends AggregateRoot<string> {
   }): QueueJob {
     const now = new Date();
     const job = new QueueJob(params.jobId, {
-      jobName:       params.jobName,
-      queueName:     params.queueName,
-      status:        JobStatus.Waiting,
-      payload:       params.payload,
-      attemptsMade:  0,
-      enqueuedAt:    now,
+      jobName: params.jobName,
+      queueName: params.queueName,
+      status: JobStatus.Waiting,
+      payload: params.payload,
+      attemptsMade: 0,
+      enqueuedAt: now,
     });
     job.addDomainEvent(
       new QueueJobEnqueuedEvent({
-        id:          job.id,
-        jobName:     job.jobName,
-        queueName:   job.queueName,
-        enqueuedAt:  job.enqueuedAt.toISOString(),
+        id: job.id,
+        jobName: job.jobName,
+        queueName: job.queueName,
+        enqueuedAt: job.enqueuedAt.toISOString(),
       }),
     );
     return job;
@@ -98,13 +98,13 @@ export class QueueJob extends AggregateRoot<string> {
     if (this.#status !== JobStatus.Waiting && this.#status !== JobStatus.Delayed) {
       throw new QueueJobInvalidStateTransitionError(this.id, this.#status, JobStatus.Active);
     }
-    this.#status    = JobStatus.Active;
+    this.#status = JobStatus.Active;
     this.#startedAt = new Date();
     this.touch();
     this.addDomainEvent(
       new QueueJobStartedEvent({
-        id:        this.id,
-        jobName:   this.#jobName,
+        id: this.id,
+        jobName: this.#jobName,
         startedAt: this.#startedAt.toISOString(),
       }),
     );
@@ -115,13 +115,13 @@ export class QueueJob extends AggregateRoot<string> {
    * Raises QueueJobCompletedEvent.
    */
   markCompleted(): void {
-    this.#status     = JobStatus.Completed;
+    this.#status = JobStatus.Completed;
     this.#finishedAt = new Date();
     this.touch();
     this.addDomainEvent(
       new QueueJobCompletedEvent({
-        id:         this.id,
-        jobName:    this.#jobName,
+        id: this.id,
+        jobName: this.#jobName,
         finishedAt: this.#finishedAt.toISOString(),
       }),
     );
@@ -132,29 +132,29 @@ export class QueueJob extends AggregateRoot<string> {
    * Raises QueueJobFailedEvent.
    */
   markFailed(reason: string, attemptsMade: number): void {
-    this.#status       = JobStatus.Failed;
+    this.#status = JobStatus.Failed;
     this.#failedReason = reason;
     this.#attemptsMade = attemptsMade;
-    this.#finishedAt   = new Date();
+    this.#finishedAt = new Date();
     this.touch();
     this.addDomainEvent(
       new QueueJobFailedEvent({
-        id:           this.id,
-        jobName:      this.#jobName,
+        id: this.id,
+        jobName: this.#jobName,
         failedReason: reason,
         attemptsMade,
-        finishedAt:   this.#finishedAt.toISOString(),
+        finishedAt: this.#finishedAt.toISOString(),
       }),
     );
   }
 
-  get jobName(): string        { return this.#jobName; }
-  get queueName(): string      { return this.#queueName; }
-  get status(): JobStatus      { return this.#status; }
+  get jobName(): string { return this.#jobName; }
+  get queueName(): string { return this.#queueName; }
+  get status(): JobStatus { return this.#status; }
   get payload(): Record<string, any> { return { ...this.#payload }; }
   get failedReason(): string | undefined { return this.#failedReason; }
-  get attemptsMade(): number   { return this.#attemptsMade; }
-  get enqueuedAt(): Date       { return this.#enqueuedAt; }
-  get startedAt(): Date | undefined  { return this.#startedAt; }
+  get attemptsMade(): number { return this.#attemptsMade; }
+  get enqueuedAt(): Date { return this.#enqueuedAt; }
+  get startedAt(): Date | undefined { return this.#startedAt; }
   get finishedAt(): Date | undefined { return this.#finishedAt; }
 }

@@ -1,6 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { LockingService } from '@ce/nestjs-shared-persistence';
+import { LockingService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { RefreshTokenCommand } from './refresh-token.command';
 import { OAUTH_PROVIDER_REGISTRY } from '../../ports/oauth-provider.port';
 import type { IOAuthProvider } from '../../ports/oauth-provider.port';
@@ -36,7 +36,7 @@ export class RefreshTokenHandler implements ICommandHandler<RefreshTokenCommand,
     @Inject(TOKEN_VAULT2_OPTIONS) private readonly options: TokenVault2ModuleOptions,
     private readonly lockingService: LockingService,
     private readonly eventBus: EventBus,
-  ) {}
+  ) { }
 
   async execute(command: RefreshTokenCommand): Promise<string> {
     const { tokenId, provider } = command.params;

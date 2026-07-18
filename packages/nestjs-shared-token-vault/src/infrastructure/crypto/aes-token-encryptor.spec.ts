@@ -1,5 +1,5 @@
-import { AesTokenEncryptor } from '@ce/nestjs-shared-token-vault/infrastructure/crypto/aes-token-encryptor';
-import { EncryptedToken } from '@ce/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
+import { AesTokenEncryptor } from '@nabarun-ngo/nestjs-shared-token-vault/infrastructure/crypto/aes-token-encryptor';
+import { EncryptedToken } from '@nabarun-ngo/nestjs-shared-token-vault/domain/value-objects/encrypted-token.vo';
 
 const SECRET = 'super-secret-key-that-is-at-least-32chars!!';
 

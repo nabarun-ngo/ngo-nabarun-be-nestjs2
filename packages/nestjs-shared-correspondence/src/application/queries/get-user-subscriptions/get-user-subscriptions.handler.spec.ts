@@ -1,11 +1,11 @@
 /**
  * GetUserSubscriptionsHandler unit tests.
  */
-import { GetUserSubscriptionsHandler } from '@ce/nestjs-shared-correspondence/application/queries/get-user-subscriptions/get-user-subscriptions.handler';
-import { GetUserSubscriptionsQuery } from '@ce/nestjs-shared-correspondence/application/queries/get-user-subscriptions/get-user-subscriptions.query';
-import { IResourceSubscriptionRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { GetUserSubscriptionsHandler } from '@nabarun-ngo/nestjs-shared-correspondence/application/queries/get-user-subscriptions/get-user-subscriptions.handler';
+import { GetUserSubscriptionsQuery } from '@nabarun-ngo/nestjs-shared-correspondence/application/queries/get-user-subscriptions/get-user-subscriptions.query';
+import { IResourceSubscriptionRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/resource-subscription.repository';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
 
 function makeSub(userId: string) {
   return ResourceSubscription.createUserSubscription({

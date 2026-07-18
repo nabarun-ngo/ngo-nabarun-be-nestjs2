@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { EntityTypePolicyUtil } from '@ce/nestjs-shared-core';
+import { EntityTypePolicyUtil } from '@nabarun-ngo/nestjs-shared-core';
 import { DocumentAccessDeniedError, DocumentNotFoundError } from '../../../domain/errors/document.errors';
 import { IDocumentEntityAccessPort } from '../../../domain/ports/entity-access.port';
 import { IStorageProvider } from '../../../domain/ports/storage.port';
@@ -24,7 +24,7 @@ export class GetSignedUrlHandler implements IQueryHandler<GetSignedUrlQuery, str
     @Optional()
     @Inject(IDocumentEntityAccessPort)
     private readonly accessPort: IDocumentEntityAccessPort | null,
-  ) {}
+  ) { }
 
   async execute(query: GetSignedUrlQuery): Promise<string> {
     const { documentId, userId, userPermissions } = query;
@@ -58,8 +58,8 @@ export class GetSignedUrlHandler implements IQueryHandler<GetSignedUrlQuery, str
       if (!this.accessPort && doc.mappings.length > 0) {
         this.logger.warn(
           `[DMS2] IDocumentEntityAccessPort is not configured — record-level entity access check ` +
-            `is BYPASSED for document ${documentId}. Register IDocumentEntityAccessPort to enable ` +
-            `entity-level access control.`,
+          `is BYPASSED for document ${documentId}. Register IDocumentEntityAccessPort to enable ` +
+          `entity-level access control.`,
         );
       }
 

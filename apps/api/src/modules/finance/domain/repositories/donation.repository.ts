@@ -1,4 +1,4 @@
-import { IRepository } from '@ce/nestjs-shared-core';
+import { IRepository } from '@nabarun-ngo/nestjs-shared-core';
 import { Donation } from '../aggregates/donation/donation.aggregate';
 import { DonationStatus } from '../enums/donation-status.enum';
 import { DonationType } from '../enums/donation-type.enum';
@@ -23,4 +23,4 @@ export interface DonationFilter {
 
 export const IDonationRepository = Symbol('IDonationRepository');
 
-export interface IDonationRepository extends IRepository<Donation, string, DonationFilter> {}
+export interface IDonationRepository extends IRepository<Donation, string, DonationFilter> { }

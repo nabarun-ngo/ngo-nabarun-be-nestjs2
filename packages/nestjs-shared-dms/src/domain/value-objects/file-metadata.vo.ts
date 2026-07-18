@@ -1,11 +1,11 @@
-import { BusinessError } from '@ce/nestjs-shared-core';
+import { BusinessError } from '@nabarun-ngo/nestjs-shared-core';
 
 export class FileMetadata {
   private constructor(
     readonly fileName: string,
     readonly contentType: string,
     readonly fileSize: number,
-  ) {}
+  ) { }
 
   static of(fileName: string, contentType: string, fileSize: number): FileMetadata {
     if (!fileName?.trim()) {

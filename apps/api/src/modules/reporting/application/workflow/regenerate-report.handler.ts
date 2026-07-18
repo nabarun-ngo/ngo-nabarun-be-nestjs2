@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { WorkflowTaskHandler, WorkflowTaskHandlerContract } from '@ce/nestjs-shared-workflow';
+import { WorkflowTaskHandler, WorkflowTaskHandlerContract } from '@nabarun-ngo/nestjs-shared-workflow';
 import { ReportGenerationService } from '../services/report-generation.service';
 import { IReportDefinitionsPort } from '../../domain/ports/report-definitions.port';
 import { Inject } from '@nestjs/common';
@@ -10,7 +10,7 @@ export class RegenerateReportHandler implements WorkflowTaskHandlerContract {
   constructor(
     private readonly reportGenerationService: ReportGenerationService,
     @Inject(IReportDefinitionsPort) private readonly definitionsPort: IReportDefinitionsPort,
-  ) {}
+  ) { }
 
   async execute(params: {
     instanceId: string;

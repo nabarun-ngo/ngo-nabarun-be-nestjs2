@@ -4,7 +4,7 @@ import { HttpModule } from '@nestjs/axios';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { DiscoveryModule } from '@nestjs/core';
-import { BaseDynamicModule, DynamicModuleAsyncOptions } from '@ce/nestjs-shared-core';
+import { BaseDynamicModule, DynamicModuleAsyncOptions } from '@nabarun-ngo/nestjs-shared-core';
 
 import { Auth2ModuleOptions } from './auth-options';
 import { Auth2OptionsSchema } from './auth.schema';
@@ -75,7 +75,7 @@ import { RoleGroupsController } from './presentation/controllers/role-groups.con
 import { UserRolesController } from './presentation/controllers/user-roles.controller';
 
 export interface Auth2ModuleAsyncOptions
-  extends DynamicModuleAsyncOptions<Auth2ModuleOptions> {}
+  extends DynamicModuleAsyncOptions<Auth2ModuleOptions> { }
 
 const COMMAND_HANDLERS = [
   GenerateApiKeyHandler,
@@ -173,11 +173,11 @@ export class Auth2Module extends BaseDynamicModule {
         { provide: APP_GUARD, useClass: RoleGroupsGuard },
         { provide: APP_GUARD, useClass: ScopedPermissionsGuard },
 
-        { provide: IUserAccessPort,      useClass: UserAccessAdapter },
-        { provide: IJwtVerifierPort,     useClass: JwtVerifierAdapter },
-        { provide: IApiKeyVerifierPort,  useClass: ApiKeyVerifierAdapter },
-        { provide: IRecaptchaPort,       useClass: RecaptchaAdapter },
-        { provide: IUserRolePort,        useClass: UserRoleAdapter },
+        { provide: IUserAccessPort, useClass: UserAccessAdapter },
+        { provide: IJwtVerifierPort, useClass: JwtVerifierAdapter },
+        { provide: IApiKeyVerifierPort, useClass: ApiKeyVerifierAdapter },
+        { provide: IRecaptchaPort, useClass: RecaptchaAdapter },
+        { provide: IUserRolePort, useClass: UserRoleAdapter },
         AuthFacade,
 
         ...COMMAND_HANDLERS,

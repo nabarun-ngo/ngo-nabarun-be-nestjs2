@@ -16,5 +16,5 @@ export { AlertMessage } from './domain/value-objects/alert-message.vo';
 export type { AlertMessageProps } from './domain/value-objects/alert-message.vo';
 export type { AlertType } from './domain/enums/alert-type.enum';
 
-// Application event — re-exported from @ce/nestjs-shared-core for consumer convenience
+// Application event — re-exported from @nabarun-ngo/nestjs-shared-core for consumer convenience
 export { AppTechnicalError } from './application/events/app-technical-error.event';

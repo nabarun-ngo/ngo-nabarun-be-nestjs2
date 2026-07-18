@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BaseFilter, Page } from '@ce/nestjs-shared-core';
-import { CacheService } from '@ce/nestjs-shared-persistence';
+import { BaseFilter, Page } from '@nabarun-ngo/nestjs-shared-core';
+import { CacheService } from '@nabarun-ngo/nestjs-shared-persistence';
 import { JsonDocument } from '../../domain/aggregates/json-document.aggregate';
 import {
   IJsonDocumentRepository,
@@ -42,7 +42,7 @@ export class JsonDocumentCachedRepository implements IJsonDocumentRepository {
     private readonly db: IJsonDocumentRepository,
     private readonly cache: CacheService,
     readonly ttlMs: number,
-  ) {}
+  ) { }
 
   // ── Cache key helpers ──────────────────────────────────────────────────────
 

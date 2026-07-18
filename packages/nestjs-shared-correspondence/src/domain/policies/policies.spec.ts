@@ -2,13 +2,13 @@
  * Domain policy tests — EmailRecipientPolicy & PushRecipientPolicy.
  * Pure unit tests, no framework imports.
  */
-import { EmailRecipientPolicy } from '@ce/nestjs-shared-correspondence/domain/policies/email-recipient.policy';
-import { PushRecipientPolicy } from '@ce/nestjs-shared-correspondence/domain/policies/push-recipient.policy';
-import { ResourceSubscription } from '@ce/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
-import { SubscriptionChannel } from '@ce/nestjs-shared-correspondence/domain/entities/subscription-channel.entity';
-import { ChannelType } from '@ce/nestjs-shared-correspondence/domain/enums/channel-type.enum';
-import { EmailRole } from '@ce/nestjs-shared-correspondence/domain/enums/email-role.enum';
-import { SubscribedVia } from '@ce/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
+import { EmailRecipientPolicy } from '@nabarun-ngo/nestjs-shared-correspondence/domain/policies/email-recipient.policy';
+import { PushRecipientPolicy } from '@nabarun-ngo/nestjs-shared-correspondence/domain/policies/push-recipient.policy';
+import { ResourceSubscription } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/resource-subscription.aggregate';
+import { SubscriptionChannel } from '@nabarun-ngo/nestjs-shared-correspondence/domain/entities/subscription-channel.entity';
+import { ChannelType } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/channel-type.enum';
+import { EmailRole } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/email-role.enum';
+import { SubscribedVia } from '@nabarun-ngo/nestjs-shared-correspondence/domain/enums/subscribed-via.enum';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

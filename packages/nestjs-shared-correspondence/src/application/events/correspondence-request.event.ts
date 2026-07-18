@@ -10,4 +10,4 @@ export {
   type PushChannelOptions,
   type CorrespondenceChannels,
   type NotificationAction,
-} from '@ce/nestjs-shared-core';
+} from '@nabarun-ngo/nestjs-shared-core';

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   BasePrismaService,
   PrismaCrudRepositoryBase,
-} from '@ce/nestjs-shared-persistence';
+} from '@nabarun-ngo/nestjs-shared-persistence';
 import { PrismaClient } from '../prisma/client';
 import {
   AuthUserRoleWhereInput,
@@ -13,8 +13,8 @@ import {
   AuthUserRoleUncheckedUpdateInput,
   AuthUserRoleOrderByWithRelationInput,
 } from '../prisma/models';
-import { UserRole, UserRoleFilter } from '@ce/nestjs-shared-auth/domain/aggregates/user-role/user-role.aggregate';
-import { DirectRolePermissionView, IUserRoleRepository } from '@ce/nestjs-shared-auth/domain/repositories/user-role.repository';
+import { UserRole, UserRoleFilter } from '@nabarun-ngo/nestjs-shared-auth/domain/aggregates/user-role/user-role.aggregate';
+import { DirectRolePermissionView, IUserRoleRepository } from '@nabarun-ngo/nestjs-shared-auth/domain/repositories/user-role.repository';
 
 type UserRoleRow = {
   id: string;
@@ -46,8 +46,7 @@ export class UserRolePrismaRepository
     ({} & AuthUserRoleUncheckedUpdateInput) | ({} & AuthUserRoleUpdateInput),
     AuthUserRoleOrderByWithRelationInput
   >
-  implements IUserRoleRepository
-{
+  implements IUserRoleRepository {
   constructor(database: BasePrismaService<PrismaClient>) {
     super(database, 'authUserRole');
   }

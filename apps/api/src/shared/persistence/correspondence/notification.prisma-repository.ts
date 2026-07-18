@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence'
-import { BaseFilter, Page } from '@ce/nestjs-shared-core';
-import { Notification, NotificationFilter, NotificationType, NotificationCategory, NotificationPriority } from '@ce/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
-import { UserNotification } from '@ce/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
-import { INotificationRepository } from '@ce/nestjs-shared-correspondence/domain/repositories/notification.repository';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence'
+import { BaseFilter, Page } from '@nabarun-ngo/nestjs-shared-core';
+import { Notification, NotificationFilter, NotificationType, NotificationCategory, NotificationPriority } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/notification.aggregate';
+import { UserNotification } from '@nabarun-ngo/nestjs-shared-correspondence/domain/aggregates/user-notification.aggregate';
+import { INotificationRepository } from '@nabarun-ngo/nestjs-shared-correspondence/domain/repositories/notification.repository';
 
 @Injectable()
 export class NotificationPrismaRepository implements INotificationRepository {
-  constructor(private readonly prisma: BasePrismaService) {}
+  constructor(private readonly prisma: BasePrismaService) { }
 
   async create(notification: Notification): Promise<Notification> {
     const row = await (this.prisma).corr2Notification.create({
@@ -127,11 +127,11 @@ export class NotificationPrismaRepository implements INotificationRepository {
       ...(filter.dispatchId ? { dispatchId: filter.dispatchId } : {}),
       ...(filter.fromDate || filter.toDate
         ? {
-            createdAt: {
-              ...(filter.fromDate ? { gte: filter.fromDate } : {}),
-              ...(filter.toDate ? { lte: filter.toDate } : {}),
-            },
-          }
+          createdAt: {
+            ...(filter.fromDate ? { gte: filter.fromDate } : {}),
+            ...(filter.toDate ? { lte: filter.toDate } : {}),
+          },
+        }
         : {}),
     };
   }

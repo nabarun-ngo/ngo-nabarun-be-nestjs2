@@ -2,7 +2,7 @@ import { AccountType } from '../../enums/account-type.enum';
 import { AccountStatus } from '../../enums/account-status.enum';
 import { BankDetail } from '../../value-objects/bank-detail.vo';
 import { UPIDetail } from '../../value-objects/upi-detail.vo';
-import { AggregateRoot, BusinessException, generateUniqueNDigitNumber } from '@ce/nestjs-shared-core';
+import { AggregateRoot, BusinessException, generateUniqueNDigitNumber } from '@nabarun-ngo/nestjs-shared-core';
 import { AccountCreatedEvent } from '../../events/account-created.event';
 import { Transaction } from '../../entities/transaction.entity';
 import { TransactionRefType, TransactionType } from '../../enums/transaction.enum';

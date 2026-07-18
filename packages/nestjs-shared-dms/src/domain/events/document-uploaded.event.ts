@@ -1,4 +1,4 @@
-import { DomainEvent } from '@ce/nestjs-shared-core';
+import { DomainEvent } from '@nabarun-ngo/nestjs-shared-core';
 import type { Document } from '../aggregates/document.aggregate';
 
 export type DocumentUploadedSnapshot = Pick<Document, 'id' | 'fileName' | 'remotePath' | 'publicToken' | 'uploadedById'>;

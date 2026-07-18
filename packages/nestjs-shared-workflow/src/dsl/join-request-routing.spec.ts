@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { evaluateCondition } from '@ce/nestjs-shared-core';
+import { evaluateCondition } from '@nabarun-ngo/nestjs-shared-core';
 import {
   TransitionRouter,
   parseWorkflowDefinition,
   WorkflowDefinition,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 
 describe('JOIN_REQUEST routing contract', () => {
   const definitionPath = join(

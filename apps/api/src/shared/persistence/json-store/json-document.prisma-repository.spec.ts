@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { JsonDocumentPrismaRepository } from './json-document.prisma-repository';
-import { JsonDocument } from '@ce/nestjs-shared-json-store/domain/aggregates/json-document.aggregate';
+import { JsonDocument } from '@nabarun-ngo/nestjs-shared-json-store/domain/aggregates/json-document.aggregate';
 
 // ─── types ────────────────────────────────────────────────────────────────────
 

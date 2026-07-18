@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { BusinessException } from '@ce/nestjs-shared-core';
-import { BasePrismaService } from '@ce/nestjs-shared-persistence';
+import { BusinessException } from '@nabarun-ngo/nestjs-shared-core';
+import { BasePrismaService } from '@nabarun-ngo/nestjs-shared-persistence';
 import {
   WorkflowTaskHandler,
   WorkflowTaskHandlerContract,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 import { PrismaClient } from '../../../shared/persistence/prisma/client';
 
 @Injectable()
 @WorkflowTaskHandler('UserNotRegisteredTaskHandler')
 export class UserNotRegisteredTaskHandler implements WorkflowTaskHandlerContract {
-  constructor(private readonly prisma: BasePrismaService<PrismaClient>) {}
+  constructor(private readonly prisma: BasePrismaService<PrismaClient>) { }
 
   async execute(params: {
     instanceId: string;

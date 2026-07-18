@@ -1,4 +1,4 @@
-import { QueueOptionsSchema } from '@ce/nestjs-shared-queue/queue.schema';
+import { QueueOptionsSchema } from '@nabarun-ngo/nestjs-shared-queue/queue.schema';
 
 describe('QueueOptionsSchema', () => {
   it('accepts a URL-based connection', () => {

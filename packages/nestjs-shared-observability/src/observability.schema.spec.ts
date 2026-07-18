@@ -1,4 +1,4 @@
-import { ObservabilityOptionsSchema, normalizeEnvironment } from '@ce/nestjs-shared-observability';
+import { ObservabilityOptionsSchema, normalizeEnvironment } from '@nabarun-ngo/nestjs-shared-observability';
 
 describe('ObservabilityOptionsSchema', () => {
   it('accepts an empty object (all optional)', () => {

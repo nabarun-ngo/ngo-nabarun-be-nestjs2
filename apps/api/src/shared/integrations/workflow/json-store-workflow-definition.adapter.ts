@@ -1,12 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { JsonStoreFacade } from '@ce/nestjs-shared-json-store';
+import { JsonStoreFacade } from '@nabarun-ngo/nestjs-shared-json-store';
 import {
   IWorkflowDefinitionPort,
   parseStoredWorkflowDefinition,
   WORKFLOW_DEFINITION_PORT,
   WorkflowDefinition,
   WorkflowDefinitionSchema,
-} from '@ce/nestjs-shared-workflow';
+} from '@nabarun-ngo/nestjs-shared-workflow';
 
 const NAMESPACE = 'workflow';
 
@@ -22,7 +22,7 @@ function definitionToPayload(definition: WorkflowDefinition): Record<string, unk
 export class JsonStoreWorkflowDefinitionAdapter implements IWorkflowDefinitionPort {
   private readonly logger = new Logger(JsonStoreWorkflowDefinitionAdapter.name);
 
-  constructor(private readonly jsonStore: JsonStoreFacade) {}
+  constructor(private readonly jsonStore: JsonStoreFacade) { }
 
   async getDefinition(
     definitionId: string,

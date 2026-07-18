@@ -1,5 +1,5 @@
 {
-  "name": "@ce/nestjs-shared-document-generator",
+  "name": "@nabarun-ngo/nestjs-shared-document-generator",
   "version": "1.0.0",
   "private": true,
   "main": "dist/index.js",
