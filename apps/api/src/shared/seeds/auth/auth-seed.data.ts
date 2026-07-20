@@ -410,7 +410,7 @@ export const AUTH2_SEED: Auth2SeedData = {
     },
     {
       key: 'VICE_PRESIDENT',
-      description: 'Second in command. Broad governance access; cannot manage RBAC or revoke API keys.',
+      description: 'Second in command. Broad governance access.',
       permissionKeys: [
         ...RBAC_MANAGE,
         ...DOCS_ALL,
@@ -431,7 +431,7 @@ export const AUTH2_SEED: Auth2SeedData = {
       ],
     },
     {
-      key: 'ASST_SECRETARY',
+      key: 'ASSISTANT_SECRETARY',
       description: 'Junior administrative officer. Read-heavy access with limited write capabilities.',
       permissionKeys: [
         ...RBAC_MANAGE,
@@ -467,7 +467,6 @@ export const AUTH2_SEED: Auth2SeedData = {
       permissionKeys: [
         'update:users',
         'read:user_connections',
-
       ],
     },
     {
@@ -480,7 +479,7 @@ export const AUTH2_SEED: Auth2SeedData = {
 
     // ── Technical roles ───────────────────────────────────────────────────────
     {
-      key: 'TECHNICAL_SPECIALIST',
+      key: 'TECH_ADMIN',
       description: 'Technical administrator. Manages platform infrastructure, integrations, and system configuration.',
       permissionKeys: [
         ...API_KEYS_ALL,
@@ -520,7 +519,7 @@ export const AUTH2_SEED: Auth2SeedData = {
     {
       key: 'FINANCE_TEAM',
       description: 'Financial oversight — Treasurer.',
-      roleKeys: ['TREASURER'],
+      roleKeys: ['TREASURER', 'CASHIER'],
     },
     {
       key: 'GOVERNING_COMMITTEE',
@@ -546,6 +545,9 @@ export const AUTH2_SEED: Auth2SeedData = {
         'SECRETARY',
         'ASSISTANT_SECRETARY',
         'TREASURER',
+        'COMMUNITY_MANAGER',
+        'GROUP_COORDINATOR',
+        'CASHIER',
         'TECH_ADMIN',
         'ADMIN',
         'MEMBER',

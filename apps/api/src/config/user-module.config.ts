@@ -12,7 +12,7 @@ export const USER_MODULE = UserModule.forRootAsync({
             clientSecret: config.getOrThrow(Configkey.AUTH0_MANAGEMENT_CLIENT_SECRET),
             connections: {
                 default: { name: 'Username-Password-Authentication', type: 'password' },
-                passwordless: { name: 'email', type: 'passwordless' },
+                passwordless_email: { name: 'email', type: 'passwordless' },
             },
         },
         defaultRoleKeys: ['MEMBER'],
